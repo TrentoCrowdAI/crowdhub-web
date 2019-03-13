@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Navbar, Container} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Sidebar from './Sidebar';
-import menu from '../images/menu.svg'
+import Sidebar from './Sidebar/Sidebar';
+import AppBar from "./AppBar";
 
 export default class Layout extends Component {
 
@@ -19,13 +19,7 @@ export default class Layout extends Component {
 
         {/* Main content */}
         <div className="content">
-          <Navbar bg="light" expand="lg">
-            <a onClick={this.onToggleSidebar}>
-              <img src={menu} className="menu-icon"/>
-            </a>
-
-            <Navbar.Brand href="#home">Servant</Navbar.Brand>
-          </Navbar>
+          <AppBar onToggleSidebar={this.onToggleSidebar}/>
 
           <Container>
             <h1>Main content</h1>

@@ -1,0 +1,41 @@
+:root {
+    --sidebarWidth: 300px;
+    --sidebarBackground: #404E67;
+    --sidebarActiveLink: #F8877C;
+    --sidebarLink: #FDFDFE;
+}
+
+
+#sidebar {
+    width: var(--sidebarWidth);
+    height: 100vh;
+
+
+    top: 0;
+    left: 0;
+    z-index: 999;
+    margin-left: calc(-1 * var(--sidebarWidth));
+
+    background: var(--sidebarBackground);
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar h2.app-title {
+    padding: .5em;
+}
+
+#sidebar.open {
+    margin-left: 0;
+}
+
+li.sidebar-link {
+    color: var(--sidebarLink);
+    cursor: pointer;
+}
+
+li.sidebar-link.active {
+    color: var(--sidebarActiveLink);
+    background-color: initial;
+    border: none;
+}
