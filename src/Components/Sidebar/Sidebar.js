@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {NavLink} from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import './Sidebar.css';
 
@@ -10,8 +11,10 @@ export default class Sidebar extends Component {
         <h2 className="app-title">Servant</h2>
 
         <ListGroup as="ul">
-          <ListGroup.Item as="li" className="sidebar-link" active>
-            <a>Jobs</a>
+          <ListGroup.Item as="li" className="sidebar-link">
+            <NavLink to="/jobs">
+              Jobs
+            </NavLink>
           </ListGroup.Item>
         </ListGroup>
       </nav>

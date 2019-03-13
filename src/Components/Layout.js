@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import {Navbar, Container} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./AppBar";
+import {Jobs} from "./Jobs/Jobs";
+
+
 
 export default class Layout extends Component {
 
@@ -13,20 +16,22 @@ export default class Layout extends Component {
 
   render() {
     return (
-      <div className="wrapper">
-        {/* Left collapsable sidebar */}
-        <Sidebar sidebarOpen={this.state.sidebarOpen}/>
+      <Router>
+        <div className="wrapper">
+          {/* Left collapsable sidebar */}
+          <Sidebar sidebarOpen={this.state.sidebarOpen}/>
 
-        {/* Main content */}
-        <div className="content">
-          <AppBar onToggleSidebar={this.onToggleSidebar}/>
+          {/* Main content */}
+          <div className="content">
+            <AppBar onToggleSidebar={this.onToggleSidebar}/>
 
-          <Container>
-            <h1>Main content</h1>
-          </Container>
-
+            <Switch>
+              <Route path="/jobs" component={Jobs}/>
+              <Route render={ () => (<Redirect to="/jobs"/>)} />
+            </Switch>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 

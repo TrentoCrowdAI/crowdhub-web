@@ -32,9 +32,10 @@
 li.sidebar-link {
     color: var(--sidebarLink);
     cursor: pointer;
+    background-color: initial;
 }
 
-li.sidebar-link.active {
+li.sidebar-link a.active {
     color: var(--sidebarActiveLink);
     background-color: initial;
     border: none;
