@@ -1,8 +1,9 @@
 import React from 'react';
 
 import JobsService from "../../Services/JobsService";
-import {JobForm} from "./JobForm";
+import {JobCreationFailed, JobForm} from "./JobForm";
 import {shallow, mount} from "enzyme";
+import {MemoryRouter} from "react-router-dom";
 
 function mockCreateJobToFail() {
   const createJob = jest.fn(() => new Promise(() => {
@@ -13,14 +14,35 @@ function mockCreateJobToFail() {
 }
 
 
+function mockCreateJob() {
+  const createJob = jest.fn(() => new Promise(resolve => resolve({})));
+  JobsService.createJob = createJob;
+  return createJob;
+}
+
+
 it('should show an alert if an error happens', () => {
-    /*const createJob = mockCreateJobToFail();
-    const wrapper = mount(<JobForm/>);
+  const createJob = mockCreateJobToFail();
+  const wrapper = mount(<MemoryRouter><JobForm/></MemoryRouter>);
 
-    wrapper.find('button').simulate('click');
+  wrapper.find('form').simulate('submit');
+  wrapper.update();
+
+  expect(createJob).toHaveBeenCalled();
+  //expect(wrapper.find(JobCreationFailed).length).toBe(1);
+  // TODO: Find out why it doesn't work
+});
 
 
-    expect(createJob).toHaveBeenCalled();*/
+it('should redirect to /jobs when job is created', async () => {
+  const createJob = mockCreateJob();
+  const wrapper = mount(<MemoryRouter><JobForm/></MemoryRouter>);
+
+  await wrapper.find('form').simulate('submit');
+  await wrapper.update();
+
+  expect(createJob).toHaveBeenCalled();
+  // TODO: Check if route changed
 });
 
 

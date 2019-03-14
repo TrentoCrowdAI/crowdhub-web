@@ -48,6 +48,7 @@ class UnwrappedJobForm extends Component {
         num_votes: this.state.num_votes,
         max_votes: this.state.max_votes,
         reward: this.state.reward,
+        items_csv: this.state.items_csv
       });
       this.onJobCreated();
     } catch (e) {

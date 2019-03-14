@@ -1,7 +1,7 @@
 import {getJson, postJson} from "./utils";
 import mockedJobs from "../mock-data/jobs";
 
-const APP_URL = "http://localhost:4000";
+export const APP_URL = "http://localhost:4000";
 
 export default {
   async getJobs () {
