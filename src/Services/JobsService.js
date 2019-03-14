@@ -5,8 +5,7 @@ const APP_URL = "http://localhost:4000";
 
 export default {
   async getJobs () {
-    return mockedJobs;
-    //return getJson('/jobs');
+    return getJson(`${APP_URL}/jobs`);
   },
 
   async createJob (job) {
