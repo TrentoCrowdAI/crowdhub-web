@@ -9,5 +9,5 @@ it("it should call 'props.onToggleSidebar' when the hamburger menu is clicked", 
   const wrapper = shallow(<AppBar onToggleSidebar={listener}/>);
 
   wrapper.find('a.navbar-toggle').simulate('click');
-  expect(listener.mock.calls.length).toBe(1);
+  expect(listener).toHaveBeenCalled();
 });

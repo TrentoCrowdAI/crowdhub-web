@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Route, Switch} from "react-router-dom";
-import Container from "react-bootstrap/Container";
+import {Container, Row, Col} from "react-bootstrap";
 import {JobsList} from "./JobsList";
 import {JobForm} from "./JobForm";
 
@@ -17,10 +17,12 @@ export class Jobs extends Component {
       <Container>
         <h1>Jobs</h1>
 
-        <Switch>
-          <Route exact path={`${this.match.path}`} component={JobsList}/>
-          <Route path={`${this.match.path}/new`} component={JobForm}/>
-        </Switch>
+        <Row>
+          <Switch>
+            <Route exact path={`${this.match.path}`} component={JobsList}/>
+            <Route path={`${this.match.path}/new`} component={JobForm}/>
+          </Switch>
+        </Row>
       </Container>
     );
   }
