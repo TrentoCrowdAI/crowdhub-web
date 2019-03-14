@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Route, Switch} from "react-router-dom";
-import {Container, Row, Col} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import {JobsList} from "./JobsList";
 import {JobForm} from "./JobForm";
 

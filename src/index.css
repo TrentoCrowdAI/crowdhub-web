@@ -12,4 +12,5 @@
 img.menu-icon {
   width: 1.5em;
   margin: .3em 1em .3em .3em;
+  cursor: pointer;
 }
