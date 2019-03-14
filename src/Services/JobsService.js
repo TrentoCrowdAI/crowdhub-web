@@ -12,8 +12,7 @@ export default {
   async createJob (job) {
     return await postJson(`${APP_URL}/jobs`, {
       data: {
-        ...job,
-        items_csv: 'path/'
+        ...job
       }
     });
   }

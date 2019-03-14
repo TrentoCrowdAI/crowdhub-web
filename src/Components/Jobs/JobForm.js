@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Container, Col, Row, Form, InputGroup, Button, Alert} from "react-bootstrap";
 import JobsService from "../../Services/JobsService";
+import {withRouter} from "react-router-dom";
 
-export class JobForm extends Component {
+class UnwrappedJobForm extends Component {
 
   constructor(props, context) {
     super(props);
@@ -44,8 +45,8 @@ export class JobForm extends Component {
       await JobsService.createJob({
         name: this.state.name,
         description: this.state.description,
-        numVotes: this.state.numVotes,
-        maxVotes: this.state.maxVotes,
+        num_votes: this.state.num_votes,
+        max_votes: this.state.max_votes,
         reward: this.state.reward,
       });
       this.onJobCreated();
@@ -60,7 +61,7 @@ export class JobForm extends Component {
   }
 
   redirectToJobsList() {
-    this.context.history.push('/jobs');
+    this.props.history.push('/jobs');
   }
 
   onJobCreationFailed() {
@@ -101,14 +102,10 @@ export class JobForm extends Component {
           <Row>
             <Col>
               <Form.Group>
-                <Form.Label>Golden CSV data</Form.Label>
-                <Form.Control as="input" type="file" />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group>
-                <Form.Label>Item CSV data</Form.Label>
-                <Form.Control as="input" type="file" />
+                <Form.Label>Path to CSV file</Form.Label>
+                <Form.Control name="items_csv" type="text" value={this.items_csv}
+                              onChange={this.handleChange} required
+                              placeholder="Ex: https://raw.githubusercontent.com/TrentoCrowdAI/servant-api/develop/src/example/papers-short.csv"/>
               </Form.Group>
             </Col>
           </Row>
@@ -118,14 +115,14 @@ export class JobForm extends Component {
             <Col xs="12" sm="6">
               <Form.Group>
                 <Form.Label>Votes for item</Form.Label>
-                <Form.Control type="number" name="numVotes" value={this.numVotes} onChange={this.handleChange}
+                <Form.Control type="number" name="num_votes" value={this.num_votes} onChange={this.handleChange}
                               required/>
               </Form.Group>
             </Col>
             <Col xs="12" sm="6">
               <Form.Group>
                 <Form.Label>Max votes per worker</Form.Label>
-                <Form.Control type="number" step="1" name="maxVotes" value={this.maxVotes} onChange={this.handleChange}
+                <Form.Control type="number" step="1" name="max_votes" value={this.max_votes} onChange={this.handleChange}
                               required/>
               </Form.Group>
             </Col>
@@ -162,6 +159,8 @@ export class JobForm extends Component {
   }
 }
 
+// Wrap using withRouter to obtaint the history object in the props
+export const JobForm = withRouter(UnwrappedJobForm);
 
 export const JobCreationFailed = () => (
   <Col>
