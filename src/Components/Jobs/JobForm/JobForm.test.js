@@ -1,6 +1,6 @@
 import React from 'react';
 
-import JobsService from "../../Services/JobsService";
+import JobsService from "../../../Services/JobsService";
 import {JobCreationFailed, JobForm} from "./JobForm";
 import {shallow, mount} from "enzyme";
 import {MemoryRouter} from "react-router-dom";

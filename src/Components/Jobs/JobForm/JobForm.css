@@ -1,0 +1,6 @@
+
+.form-buttons button:first-child {
+    margin-left: auto;
+    margin-right: .5em;
+}
+
