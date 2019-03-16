@@ -1,11 +1,10 @@
-import {getJson, postJson} from "./utils";
-import mockedJobs from "../mock-data/jobs";
+import {postJson, sendAndParseJSON, sendDelete} from "./utils";
 
 export const APP_URL = "http://localhost:4000";
 
 export default {
   async getJobs () {
-    return getJson(`${APP_URL}/jobs`);
+    return sendAndParseJSON(`${APP_URL}/jobs`);
   },
 
   async createJob (job) {
@@ -14,6 +13,10 @@ export default {
         ...job
       }
     });
+  },
+
+  async deleteJob (job) {
+    return await sendDelete(`${APP_URL}/jobs/${job.id}`);
   }
 
 }

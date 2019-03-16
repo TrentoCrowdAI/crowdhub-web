@@ -1,10 +1,10 @@
-export async function getJson(url, params) {
+export async function sendAndParseJSON(url, params) {
   const res = await fetch(url, params);
   return await res.json();
 }
 
 export async function postJson(url, data) {
-  return await getJson(url, {
+  return await sendAndParseJSON(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -13,3 +13,8 @@ export async function postJson(url, data) {
   })
 }
 
+export async function sendDelete(url) {
+  return await fetch(url, {
+    method: 'DELETE'
+  });
+}

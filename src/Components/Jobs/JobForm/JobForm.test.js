@@ -1,49 +1,65 @@
 import React from 'react';
+import {mount} from "enzyme";
 
-import JobsService from "../../../Services/JobsService";
-import {JobCreationFailed, JobForm} from "./JobForm";
-import {shallow, mount} from "enzyme";
-import {MemoryRouter} from "react-router-dom";
+import JobForm from "./JobForm";
+import mockedJobs from '../../../mock-data/jobs';
 
-function mockCreateJobToFail() {
-  const createJob = jest.fn(() => new Promise(() => {
-    throw new Error("can't create jobs");
-  }));
-  JobsService.createJob = createJob;
-  return createJob;
+
+function expectElementToHaveValue (element, value) {
+  expect(element.prop('value')).toEqual(value);
 }
 
-
-function mockCreateJob() {
-  const createJob = jest.fn(() => new Promise(resolve => resolve({})));
-  JobsService.createJob = createJob;
-  return createJob;
+function expectInputToHaveValue (wrapper, field, value) {
+  expectElementToHaveValue(wrapper.find(`input[name="${field}"]`), value);
 }
 
+function expectTextAreaToHaveValue (wrapper, field, value) {
+  expectElementToHaveValue(wrapper.find(`textarea[name="${field}"]`), value);
+}
 
-it('should show an alert if an error happens', () => {
-  const createJob = mockCreateJobToFail();
-  const wrapper = mount(<MemoryRouter><JobForm/></MemoryRouter>);
+it('Should call onCancel when the cancel button is pressed', () => {
+  const listener = jest.fn();
+  const wrapper = mount(<JobForm onCancel={listener}/>);
 
-  wrapper.find('form').simulate('submit');
-  wrapper.update();
+  wrapper.find('button.cancel-job-form').simulate('click');
 
-  expect(createJob).toHaveBeenCalled();
-  //expect(wrapper.find(JobCreationFailed).length).toBe(1);
-  // TODO: Find out why it doesn't work
+  expect(listener).toHaveBeenCalled();
+});
+
+it('Should call initialize te form with previous values', () => {
+  const job = mockedJobs[0].data;
+  const wrapper = mount(<JobForm job={job}/>);
+
+
+  expectInputToHaveValue(wrapper, 'name', job.name);
+  expectTextAreaToHaveValue(wrapper, 'description', job.description);
+
+  expectInputToHaveValue(wrapper, 'max_votes', job.max_votes);
+  expectInputToHaveValue(wrapper, 'num_votes', job.num_votes);
+  expectInputToHaveValue(wrapper, 'reward', job.reward / 100);
+
+  expectTextAreaToHaveValue(wrapper, 'html', job.design.html);
+  expectTextAreaToHaveValue(wrapper, 'css', job.design.css);
+  expectTextAreaToHaveValue(wrapper, 'js', job.design.js);
 });
 
 
-it('should redirect to /jobs when job is created', async () => {
-  const createJob = mockCreateJob();
-  const wrapper = mount(<MemoryRouter><JobForm/></MemoryRouter>);
+it('Should call initialize te form with default values if no job specified', () => {
+  const wrapper = mount(<JobForm/>);
 
-  await wrapper.find('form').simulate('submit');
-  await wrapper.update();
 
-  expect(createJob).toHaveBeenCalled();
-  // TODO: Check if route changed
+  expectInputToHaveValue(wrapper, 'name', '');
+  expectTextAreaToHaveValue(wrapper, 'description', '');
+
+  expectInputToHaveValue(wrapper, 'max_votes', 10);
+  expectInputToHaveValue(wrapper, 'num_votes', 3);
+  expectInputToHaveValue(wrapper, 'reward', 0.01);
+
+  expectTextAreaToHaveValue(wrapper, 'html', '');
+  expectTextAreaToHaveValue(wrapper, 'css', '');
+  expectTextAreaToHaveValue(wrapper, 'js', '');
 });
 
 
+// TODO: Tests about validation
 

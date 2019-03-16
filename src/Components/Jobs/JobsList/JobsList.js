@@ -1,7 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
 import Link from "react-router-dom/Link";
-import {Container, Row, Col, Table, Alert} from "react-bootstrap";
-import JobsService from "../../Services/JobsService";
+import {Alert, Col, Container, Row, Table} from "react-bootstrap";
+import JobsService from "../../../Services/JobsService";
+import DeleteJobModal from "./DeleteJobModal";
 
 export class JobsList extends Component {
 
@@ -34,10 +36,28 @@ export class JobsList extends Component {
     }
   }
 
+  onUserWantToDeleteJob = (job) => this.setState({jobToDelete: job});
+
+  onUserConfirmDeletion = async () => {
+    const job = this.state.jobToDelete;
+    this.setState({jobs: null, jobToDelete: null});
+
+    await JobsService.deleteJob(job);
+
+    await this.fetchJobs();
+  };
+
   render() {
 
     return (
       <Container>
+        {
+          this.state.jobToDelete &&
+          <DeleteJobModal jobToDelete={this.state.jobToDelete}
+                          onCancel={() => this.setState({jobToDelete: null})}
+                          onConfirmDeletion={this.onUserConfirmDeletion}/>
+        }
+
         <Row>
           <Col>
             <h2>List</h2>
@@ -66,7 +86,7 @@ export class JobsList extends Component {
 
           {
             this.state.jobs && this.state.jobs.length > 0 &&
-            <JobsTable jobs={this.state.jobs}/>
+            <JobsTable jobs={this.state.jobs} onUserWantToDeleteJob={this.onUserWantToDeleteJob}/>
           }
 
         </Row>
@@ -97,32 +117,38 @@ export const FetchJobsError = () => (
   </Col>
 );
 
-export const JobsTable = ({jobs}) => (
+export const JobsTable = ({jobs, onUserWantToDeleteJob}) => (
   <Col>
-    <Table>
+    <Table hover>
       <thead>
       <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Description</th>
         <th>Platforms</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
       {jobs.map(job => (
-        <JobsTableRow job={job} key={job.id}/>
+        <JobsTableRow job={job} key={job.id} onUserWantToDeleteJob={onUserWantToDeleteJob}/>
       ))}
       </tbody>
     </Table>
   </Col>
 );
 
-export const JobsTableRow = ({job}) => (
+export const JobsTableRow = ({job, onUserWantToDeleteJob}) => (
   <tr>
     <td>{job.id}</td>
     <td>{job.data.name}</td>
     <td>{job.data.description}</td>
-    <td></td>
+    <td/>
+    <td>
+
+      <a href="#" onClick={() => onUserWantToDeleteJob(job)}>
+        <i className="fas fa-trash-alt"/>
+      </a>
+    </td>
   </tr>
 );
-

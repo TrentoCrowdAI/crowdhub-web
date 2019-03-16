@@ -2,8 +2,8 @@ import React from 'react';
 import {mount, shallow} from "enzyme";
 import {FetchingJobs, JobsList, NoJobs, JobsTable, FetchJobsError, JobsTableRow} from "./JobsList";
 import {MemoryRouter} from "react-router-dom";
-import JobsService from "../../Services/JobsService";
-import mockedJobs from "../../mock-data/jobs";
+import JobsService from "../../../Services/JobsService";
+import mockedJobs from "../../../mock-data/jobs";
 
 describe("should fetch the list of jobs", () => {
 
