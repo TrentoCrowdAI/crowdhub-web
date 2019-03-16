@@ -27,10 +27,10 @@ export class JobsList extends Component {
         this.setState({jobs});
       }
     } catch (e) {
-        this.setState({
-          jobs: null,
-          fetchError: true
-        })
+      this.setState({
+        jobs: null,
+        fetchError: true
+      })
     }
   }
 
@@ -89,9 +89,11 @@ export const NoJobs = () => (
 
 export const FetchJobsError = () => (
   <Col>
-    <Alert variant="danger">
-      There's been an error while fetching the jobs
-    </Alert>
+    <Container>
+      <Alert variant="danger">
+        There's been an error while fetching the jobs
+      </Alert>
+    </Container>
   </Col>
 );
 

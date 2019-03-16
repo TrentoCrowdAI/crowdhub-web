@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Route, Switch} from "react-router-dom";
 import {Container, Row} from "react-bootstrap";
 import {JobsList} from "./JobsList";
-import {JobForm} from "./JobForm";
+import CreateJob from "./CreateJob";
 
 export class Jobs extends Component {
 
@@ -20,7 +20,7 @@ export class Jobs extends Component {
         <Row>
           <Switch>
             <Route exact path={`${this.match.path}`} component={JobsList}/>
-            <Route path={`${this.match.path}/new`} component={JobForm}/>
+            <Route path={`${this.match.path}/new`} component={CreateJob}/>
           </Switch>
         </Row>
       </Container>
