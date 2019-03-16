@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Route, Switch} from "react-router-dom";
 import {Container, Row} from "react-bootstrap";
-import {JobsList} from "./JobsList";
-import CreateJob from "./CreateJob";
+import {JobsList} from "./JobsList/JobsList";
+import CreateJob from "./CreateJob/CreateJob";
 
 export class Jobs extends Component {
 

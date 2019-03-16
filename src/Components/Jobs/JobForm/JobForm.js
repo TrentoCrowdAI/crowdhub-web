@@ -31,7 +31,8 @@ export default class JobForm extends Component {
     };
   };
 
-  jobToValues = (job) => {
+  jobToValues = (jobFromProps) => {
+    const job = jobFromProps || {};
     return {
       name: job.name || '',
       description: job.description || '',
@@ -250,10 +251,10 @@ export default class JobForm extends Component {
 
 
               <ButtonToolbar className="form-buttons">
-                <Button variant="secondary" onClick={this.props.onCancel}>
+                <Button variant="secondary" onClick={this.props.onCancel} className="cancel-job-form">
                   {this.props.cancelText}
                 </Button>
-                <Button variant="primary" type="submit" id="submit-create-job">
+                <Button variant="primary" type="submit" className="submit-job-form">
                   {this.props.submitText}
                 </Button>
               </ButtonToolbar>

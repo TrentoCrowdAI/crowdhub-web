@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import JobForm from "./JobForm/JobForm";
+import JobForm from "../JobForm/JobForm";
 import Container from "react-bootstrap/Container";
-import JobsService from "../../Services/JobsService";
+import JobsService from "../../../Services/JobsService";
 import {Alert, Col} from "react-bootstrap";
 
 export default class CreateJob extends Component {

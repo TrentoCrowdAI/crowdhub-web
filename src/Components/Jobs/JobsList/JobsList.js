@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Link from "react-router-dom/Link";
 import {Container, Row, Col, Table, Alert} from "react-bootstrap";
-import JobsService from "../../Services/JobsService";
+import JobsService from "../../../Services/JobsService";
 
 export class JobsList extends Component {
 
