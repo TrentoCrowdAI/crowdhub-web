@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import {Container, Row, Col} from "react-bootstrap";
+
 import JobsService from "../../../Services/JobsService";
 import JobForm from "../JobForm/JobForm";
-import Container from "react-bootstrap/Container";
 
 export default class EditJob extends Component {
 
@@ -36,6 +37,14 @@ export default class EditJob extends Component {
   render() {
     return (
       <Container>
+        <Row>
+          <Col>
+            <h1>
+              Edit job { this.state.job && `#${this.state.job.id}`}
+            </h1>
+          </Col>
+        </Row>
+
         {
           !this.state.job &&
           <FetchingJob/>

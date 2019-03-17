@@ -2,23 +2,26 @@ import React, {Component} from 'react';
 import {Col, Row, Form, InputGroup, Button, Alert, ButtonToolbar} from "react-bootstrap";
 import {Formik} from "formik";
 import * as Yup from 'yup';
+
+import {rewardFloatToInteger, rewardIntegerToString} from '../utils';
 import "./JobForm.css";
+
 
 export default class JobForm extends Component {
 
   handleSubmit = (values, formikBag) => {
-    const job = this.valuesToJob(values);
+    const job = this.valuesToJobData(values);
     this.props.onSubmit(job, formikBag)
   };
 
-  valuesToJob = (values) => {
+  valuesToJobData = (values) => {
     return {
       name: values.name,
       description: values.description,
 
       num_votes: values.num_votes,
       max_votes: values.max_votes,
-      reward: Math.floor(values.reward * 100), // TODO: Improve
+      reward: rewardFloatToInteger(values.reward),
 
       items_csv: values.items_csv,
       items_gold_csv: values.items_gold_csv,
@@ -31,26 +34,26 @@ export default class JobForm extends Component {
     };
   };
 
-  jobToValues = (jobFromProps) => {
-    const job = jobFromProps || {};
+  jobDataToValues = (jobDataFromProps) => {
+    const data = jobDataFromProps || {};
     return {
-      name: job.name || '',
-      description: job.description || '',
+      name: data.name || '',
+      description: data.description || '',
 
-      num_votes: job.num_votes || 3,
-      max_votes: job.max_votes || 10,
-      reward: (job.reward && job.reward / 100) || 0.01,
+      num_votes: data.num_votes || 3,
+      max_votes: data.max_votes || 10,
+      reward: (data.reward && rewardIntegerToString(data.reward)) || 0.01,
 
-      items_csv: job.items_csv || '',
-      items_gold_csv: job.items_gold_csv || '',
+      items_csv: data.items_csv || '',
+      items_gold_csv: data.items_gold_csv || '',
 
-      html: (job.design && job.design.html) || '',
-      css: (job.design && job.design.css) || '',
-      js: (job.design && job.design.js) || ''
+      html: (data.design && data.design.html) || '',
+      css: (data.design && data.design.css) || '',
+      js: (data.design && data.design.js) || ''
     };
   };
 
-  validationSchema = Yup.object().shape({ // TODO: Maybe move schemas in a common place
+  validationSchema = Yup.object().shape({
     name: Yup.string()
       .required('Name is required'),
     description: Yup.string()
@@ -85,7 +88,7 @@ export default class JobForm extends Component {
 
     return (
       <Formik
-        initialValues={this.jobToValues(this.props.jobData)}
+        initialValues={this.jobDataToValues(this.props.jobData)}
         onSubmit={this.handleSubmit}
         validationSchema={this.validationSchema}>
 

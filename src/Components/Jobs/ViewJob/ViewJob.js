@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 
 import JobsService from "../../../Services/JobsService";
 import {makeCancellable} from "../../../Services/utils";
+import {rewardIntegerToString} from "../utils";
+import Button from "react-bootstrap/es/Button";
 
 export default class ViewJob extends Component {
 
@@ -55,6 +57,14 @@ function JobData({job}) {
   return (
     <Container>
       <Row>
+        <Col>
+          <Link to="/jobs" className="btn btn-outline-info">
+            <i className="fas fa-arrow-left"/> Return to jobs list
+          </Link>
+        </Col>
+      </Row>
+
+      <Row>
         <Col><h1>Job #{job.id}</h1></Col>
         <Col className="d-flex flex-row-reverse">
           <div>
@@ -77,7 +87,7 @@ function JobData({job}) {
         <Col md="3" lg="2">
           <strong>Reward:</strong>
         </Col>
-        <Col>{job.data.reward / 100} $</Col>{/* TODO: Move */}
+        <Col>{rewardIntegerToString(job.data.reward)} $</Col>
       </Row>
     </Container>
   );

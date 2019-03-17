@@ -32,7 +32,7 @@ export class JobsList extends Component {
 
   onUserWantToDeleteJob = (job) => this.setState({jobToDelete: job});
 
-  onOpenJobView = (job) => this.props.history.push(`/jobs/${job.id}`)
+  onOpenJobView = (job) => this.props.history.push(`/jobs/${job.id}`);
 
   onUserConfirmDeletion = async () => {
     const job = this.state.jobToDelete;
@@ -146,6 +146,7 @@ export const JobsTableRow = ({job, onUserWantToDeleteJob, onOpenJobView}) => (
     <td>{job.data.description}</td>
     <td/>
     <td>
+
 
       <a href="#" onClick={() => onUserWantToDeleteJob(job)}>
         <i className="fas fa-trash-alt"/>
