@@ -4,8 +4,10 @@ import {Link} from "react-router-dom";
 
 import JobsService from "../../../Services/JobsService";
 import {makeCancellable} from "../../../Services/utils";
-import {rewardIntegerToString} from "../utils";
-import Button from "react-bootstrap/es/Button";
+import {rewardIntegerToString} from "../utils/job";
+import PublishButtons from "./PublishButtons";
+import BackButton from "../../common/BackButton";
+
 
 export default class ViewJob extends Component {
 
@@ -31,41 +33,37 @@ export default class ViewJob extends Component {
   redirectToJobsList = () => this.props.history.push('/jobs');
 
   render() {
-    return (
-      <Container>
-
-        {
-          !this.state.job &&
-          <FetchingJob/>
-        }
-
-        {
-          this.state.job &&
-          <JobData job={this.state.job}/>
-        }
-
-      </Container>
-    );
+    if (!this.state.job) {
+      return <FetchingJob/>;
+    } else {
+      return (
+        <Container>
+          <Row>
+            <JobData job={this.state.job}/>
+          </Row>
+          <hr/>
+          <Row>
+            <PublishButtons job={this.state.job}/>
+          </Row>
+        </Container>
+      );
+    }
   }
 }
 
 const FetchingJob = () => (
-  <p>Fetching ...</p>
+  <Container>
+    <p>Fetching ...</p>
+  </Container>
 );
 
 function JobData({job}) {
   return (
     <Container>
-      <Row>
-        <Col>
-          <Link to="/jobs" className="btn btn-outline-info">
-            <i className="fas fa-arrow-left"/> Return to jobs list
-          </Link>
-        </Col>
-      </Row>
+      <BackButton to="/jobs" text="Return to jobs list"/>
 
       <Row>
-        <Col><h1>Job #{job.id}</h1></Col>
+        <Col><h2>Job #{job.id}</h2></Col>
         <Col className="d-flex flex-row-reverse">
           <div>
             <Link to={`/jobs/${job.id}/edit`} className="btn btn-primary">Edit</Link>
@@ -92,3 +90,4 @@ function JobData({job}) {
     </Container>
   );
 }
+
