@@ -36,3 +36,14 @@ describe('create new job', () => {
     });
   });
 });
+
+
+describe('delete a job', () => {
+  it('should send a PUT to/job/:id', async () => {
+    const job = mockedJobs[0];
+    mockFetchToReturnJson(mockedJobs);
+    await JobsService.deleteJob(job);
+
+    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/jobs/${job.id}`, {method: 'DELETE'});
+  });
+});

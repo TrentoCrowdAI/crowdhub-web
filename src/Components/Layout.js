@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css'
+
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./AppBar";
 import {Jobs} from "./Jobs/Jobs";
-
 
 
 export default class Layout extends Component {

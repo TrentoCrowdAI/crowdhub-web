@@ -1,0 +1,37 @@
+import {Button, Modal} from "react-bootstrap";
+import React, {Component} from 'react';
+
+export default class DeleteJobModal extends Component {
+  state = {
+    show: true
+  };
+
+  afterCloseAnimation = (callback) => () => {
+    this.setState({show:false});
+    setTimeout(callback, 100);
+  };
+
+  onCancelPressed = this.afterCloseAnimation(() => this.props.onCancel());
+  onConfirmPressed = this.afterCloseAnimation(() => this.props.onConfirmDeletion());
+
+  render() {
+    const job = this.props.jobToDelete;
+
+    return (
+      <Modal show={this.state.show}>
+        <Modal.Header>
+          <Modal.Title>Delete job <span className="job-id">#{job.id}</span></Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          Are you sure you want to delete "<strong>{job.data.name}</strong>"?
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.onCancelPressed}>Cancel</Button>
+          <Button variant="danger" onClick={this.onConfirmPressed}>Delete</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+}
