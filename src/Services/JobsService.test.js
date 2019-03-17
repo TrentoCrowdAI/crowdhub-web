@@ -21,6 +21,17 @@ describe('get list of jobs', () => {
   });
 });
 
+describe('get a single job', function () {
+  it('should send a GET to /jobs/:id and return the job', async () => {
+    const job = mockedJobs[0];
+    mockFetchToReturnJson(job);
+    const res = await JobsService.getJob(job.id);
+
+    expect(fetch).toHaveBeenCalled();
+    expect(res).toEqual(job);
+  });
+});
+
 describe('create new job', () => {
   it('should send a POST to /job', async () => {
     const job = mockedJobs[0];

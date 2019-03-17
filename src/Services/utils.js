@@ -1,6 +1,10 @@
-export async function sendAndParseJSON(url, params) {
+async function sendAndParseJSON(url, params) {
   const res = await fetch(url, params);
   return await res.json();
+}
+
+export async function getJSON(url, params) {
+  return await sendAndParseJSON(url, params);
 }
 
 export async function postJson(url, data) {

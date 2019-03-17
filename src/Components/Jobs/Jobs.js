@@ -3,6 +3,7 @@ import {Route, Switch} from "react-router-dom";
 import {Container, Row} from "react-bootstrap";
 import {JobsList} from "./JobsList/JobsList";
 import CreateJob from "./CreateJob/CreateJob";
+import ViewJob from "./ViewJob/ViewJob";
 
 export class Jobs extends Component {
 
@@ -15,12 +16,12 @@ export class Jobs extends Component {
   render() {
     return (
       <Container>
-        <h1>Jobs</h1>
-
         <Row>
           <Switch>
             <Route exact path={`${this.match.path}`} component={JobsList}/>
             <Route path={`${this.match.path}/new`} component={CreateJob}/>
+            <Route exact path={`${this.match.path}/:id/edit`} component={EditJob}/>
+            <Route path={`${this.match.path}/:id`} component={ViewJob}/>
           </Switch>
         </Row>
       </Container>

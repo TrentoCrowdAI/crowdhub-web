@@ -119,6 +119,7 @@ export const FetchJobsError = () => (
 
 export const JobsTable = ({jobs, onUserWantToDeleteJob}) => (
   <Col>
+    <h1>Jobs</h1>
     <Table hover>
       <thead>
       <tr>

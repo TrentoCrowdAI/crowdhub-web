@@ -1,10 +1,14 @@
-import {postJson, sendAndParseJSON, sendDelete} from "./utils";
+import {getJSON, postJson, sendDelete} from "./utils";
 
 export const APP_URL = "http://localhost:4000";
 
 export default {
   async getJobs () {
-    return sendAndParseJSON(`${APP_URL}/jobs`);
+    return await getJSON(`${APP_URL}/jobs`);
+  },
+
+  async getJob (id) {
+    return await getJSON(`${APP_URL}/jobs/${id}`);
   },
 
   async createJob (job) {
