@@ -19,8 +19,6 @@ function JSONtoJob(json) {
     css: json.data.design.css
   };
 
-  json.data.instructions = 'not implemented yet';
-
   return json;
 }
 
@@ -36,8 +34,6 @@ function jobToJSON(job) {
     javascript: job.data.design.js,
     css: job.data.design.css
   };
-
-  job.data.instructions = 'not implemented yet';
 
   return job;
 }

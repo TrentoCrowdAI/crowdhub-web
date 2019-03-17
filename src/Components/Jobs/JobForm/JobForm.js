@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Col, Row, Form, InputGroup, Button, ButtonToolbar} from "react-bootstrap";
 import {Formik} from "formik";
 import * as Yup from 'yup';
+import {Editor} from '@tinymce/tinymce-react';
 
 import {rewardFloatToInteger, rewardIntegerToString} from '../utils/job';
 import "./JobForm.css";
@@ -10,9 +11,14 @@ import "./JobForm.css";
 export default class JobForm extends Component {
 
   handleSubmit = (values, formikBag) => {
-    const job = this.valuesToJobData(values);
+    const job = this.valuesToJobData({
+      ...values,
+      instructions: this._instructions
+    });
     this.props.onSubmit(job, formikBag)
   };
+
+  handleEditorChange = (e) => this._instructions = e;
 
   valuesToJobData = (values) => {
     return {
@@ -25,6 +31,8 @@ export default class JobForm extends Component {
 
       items_csv: values.items_csv,
       items_gold_csv: values.items_gold_csv,
+
+      instructions: values.instructions,
 
       design: {
         html: values.html,
@@ -46,6 +54,8 @@ export default class JobForm extends Component {
 
       items_csv: data.items_csv || '',
       items_gold_csv: data.items_gold_csv || '',
+
+      instructions: data.instructions || '',
 
       html: (data.design && data.design.html) || '',
       css: (data.design && data.design.css) || '',
@@ -78,6 +88,8 @@ export default class JobForm extends Component {
     items_gold_csv: Yup.string()
       .required('URL of CSV of gold items is required')
       .url('Must be a valid URL'),
+
+    instructions: Yup.string(),
 
     html: Yup.string(),
     css: Yup.string(),
@@ -218,6 +230,18 @@ export default class JobForm extends Component {
                         {errors.reward}
                       </Form.Control.Feedback>
                     </InputGroup>
+                  </Form.Group>
+                </Col>
+              </Row>
+
+
+              {/* instructions */}
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Instructions</Form.Label>
+                    <Editor textareaName="instructions" onEditorChange={this.handleEditorChange}
+                            initialValue={values.instructions}/>
                   </Form.Group>
                 </Col>
               </Row>
