@@ -28,7 +28,7 @@ export default class Layout extends Component {
 
             <Switch>
               <Route path="/jobs" component={Jobs}/>
-              <Route render={ () => (<Redirect to="/jobs"/>)} />
+              <Route render={() => (<Redirect to="/jobs"/>)}/>
             </Switch>
           </div>
         </div>
@@ -36,9 +36,8 @@ export default class Layout extends Component {
     );
   }
 
-  onToggleSidebar = () => {
-    this.setState(previousState => {
-      return {sidebarOpen: !previousState.sidebarOpen}
-    });
-  };
+  onToggleSidebar = () => this.setState(previousState => {
+    return {sidebarOpen: !previousState.sidebarOpen}
+  });
+
 }

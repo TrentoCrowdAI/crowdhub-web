@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import JobForm from "../JobForm/JobForm";
-import Container from "react-bootstrap/Container";
+import {Alert, Col, Container} from "react-bootstrap";
+
 import JobsService from "../../../Services/JobsService";
-import {Alert, Col} from "react-bootstrap";
+import JobForm from "../JobForm/JobForm";
 
 export default class CreateJob extends Component {
 
@@ -10,14 +10,11 @@ export default class CreateJob extends Component {
     super(props);
     this.context = context;
     this.state = {
-      job: {},
       creationError: false
     }
   }
 
-
   render() {
-    // Wrap using withRouter to obtain the history object in the props
     return (
       <Container>
 
@@ -26,23 +23,26 @@ export default class CreateJob extends Component {
           <JobCreationFailed/>
         }
 
-        <JobForm job={this.state.job} onSubmit={this.handleJobSubmission} onCancel={this.onCancel}
-                 submitText="Create" cancelText="Return to job list"/>
+        <JobForm onSubmit={this.handleJobSubmission}
+                 onCancel={this.onCancel}
+                 submitText="Create"
+                 cancelText="Return to job list"/>
       </Container>
     );
   }
 
-  handleJobSubmission = async (job, {setSubmitting}) => {
+  handleJobSubmission = async (jobData, {setSubmitting}) => {
     setSubmitting(true);
 
     try {
-      await JobsService.createJob(job);
+      await JobsService.createJob({data: jobData});
+      this.redirectToJobsList();
     } catch (e) {
+      console.log(e);
       this.onJobCreationFailed();
     }
 
     setSubmitting(false);
-    this.redirectToJobsList();
   };
 
   onCancel = () => this.redirectToJobsList();

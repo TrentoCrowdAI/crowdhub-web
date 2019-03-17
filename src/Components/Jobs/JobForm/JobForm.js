@@ -85,7 +85,7 @@ export default class JobForm extends Component {
 
     return (
       <Formik
-        initialValues={this.jobToValues(this.props.job)}
+        initialValues={this.jobToValues(this.props.jobData)}
         onSubmit={this.handleSubmit}
         validationSchema={this.validationSchema}>
 

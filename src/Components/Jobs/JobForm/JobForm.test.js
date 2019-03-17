@@ -28,7 +28,7 @@ it('Should call onCancel when the cancel button is pressed', () => {
 
 it('Should call initialize te form with previous values', () => {
   const job = mockedJobs[0].data;
-  const wrapper = mount(<JobForm job={job}/>);
+  const wrapper = mount(<JobForm jobData={job}/>);
 
 
   expectInputToHaveValue(wrapper, 'name', job.name);

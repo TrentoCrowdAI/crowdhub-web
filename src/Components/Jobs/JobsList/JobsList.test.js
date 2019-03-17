@@ -69,6 +69,7 @@ describe("should fetch the list of jobs", () => {
     expect(getJobs).toHaveBeenCalled();
 
     wrapper.update();
+    console.log(wrapper.debug());
 
     expect(wrapper.find(FetchJobsError).length).toBe(1);
   });

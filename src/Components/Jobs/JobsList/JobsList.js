@@ -2,32 +2,26 @@
 import React, {Component} from 'react';
 import Link from "react-router-dom/Link";
 import {Alert, Col, Container, Row, Table} from "react-bootstrap";
+
 import JobsService from "../../../Services/JobsService";
 import DeleteJobModal from "./DeleteJobModal";
+import {makeCancellable} from "../../../Services/utils";
+import "./JobsList.css";
 
 export class JobsList extends Component {
 
-  constructor(props) {
-    super(props);
-    this.match = this.props.match;
-    this.state = {};
-  }
+  state = {};
 
-  async componentDidMount() {
-    await this.fetchJobs();
-  }
+  componentDidMount = () => this.fetchJobs();
 
-  componentWillUnmount() {
-    this.componentUnoumnted = true;
-  }
+  componentWillUnmount = () => this.pendingJobsRequest.cancel();
 
   async fetchJobs() {
     try {
-      const jobs = await JobsService.getJobs();
+      this.pendingJobsRequest = makeCancellable(JobsService.getJobs());
+      const jobs = await this.pendingJobsRequest.result;
 
-      if (!this.componentUnoumnted) {
-        this.setState({jobs});
-      }
+      this.setState({jobs});
     } catch (e) {
       this.setState({
         jobs: null,
@@ -37,6 +31,8 @@ export class JobsList extends Component {
   }
 
   onUserWantToDeleteJob = (job) => this.setState({jobToDelete: job});
+
+  onOpenJobView = (job) => this.props.history.push(`/jobs/${job.id}`)
 
   onUserConfirmDeletion = async () => {
     const job = this.state.jobToDelete;
@@ -64,7 +60,7 @@ export class JobsList extends Component {
           </Col>
           <Col className="d-flex flex-row-reverse">
             <div>
-              <Link to={`${this.match.url}/new`} className="btn btn-primary">Add</Link>
+              <Link to="/jobs/new" className="btn btn-primary">Add</Link>
             </div>
           </Col>
         </Row>
@@ -86,7 +82,9 @@ export class JobsList extends Component {
 
           {
             this.state.jobs && this.state.jobs.length > 0 &&
-            <JobsTable jobs={this.state.jobs} onUserWantToDeleteJob={this.onUserWantToDeleteJob}/>
+            <JobsTable jobs={this.state.jobs}
+                       onUserWantToDeleteJob={this.onUserWantToDeleteJob}
+                       onOpenJobView={this.onOpenJobView}/>
           }
 
         </Row>
@@ -117,7 +115,7 @@ export const FetchJobsError = () => (
   </Col>
 );
 
-export const JobsTable = ({jobs, onUserWantToDeleteJob}) => (
+export const JobsTable = ({jobs, onUserWantToDeleteJob, onOpenJobView}) => (
   <Col>
     <h1>Jobs</h1>
     <Table hover>
@@ -132,15 +130,17 @@ export const JobsTable = ({jobs, onUserWantToDeleteJob}) => (
       </thead>
       <tbody>
       {jobs.map(job => (
-        <JobsTableRow job={job} key={job.id} onUserWantToDeleteJob={onUserWantToDeleteJob}/>
+        <JobsTableRow job={job} key={job.id}
+                      onUserWantToDeleteJob={onUserWantToDeleteJob}
+                      onOpenJobView={onOpenJobView}/>
       ))}
       </tbody>
     </Table>
   </Col>
 );
 
-export const JobsTableRow = ({job, onUserWantToDeleteJob}) => (
-  <tr>
+export const JobsTableRow = ({job, onUserWantToDeleteJob, onOpenJobView}) => (
+  <tr onClick={() => onOpenJobView(job)} className="clickable-row">
     <td>{job.id}</td>
     <td>{job.data.name}</td>
     <td>{job.data.description}</td>

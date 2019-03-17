@@ -1,25 +1,55 @@
 import React, {Component} from 'react';
-import {Container, Row} from "react-bootstrap";
-import mockedJobs from "../../../mock-data/jobs";
-import Col from "react-bootstrap/es/Col";
+import {Container, Row, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
+
+import JobsService from "../../../Services/JobsService";
+import {makeCancellable} from "../../../Services/utils";
 
 export default class ViewJob extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      job: mockedJobs[0]
+  state = {};
+
+  componentDidMount = () => this.fetchJob();
+
+  componentWillUnmount = () => this.pendingJobRequest.cancel();
+
+  async fetchJob() {
+    const id = this.props.match.params.id;
+
+    try {
+      this.pendingJobRequest = makeCancellable(JobsService.getJob(id));
+      const job = await this.pendingJobRequest.result;
+
+      this.setState({job});
+    } catch (e) {
+      this.redirectToJobsList();
     }
   }
 
+  redirectToJobsList = () => this.props.history.push('/jobs');
 
   render() {
     return (
-      <JobData job={this.state.job}/>
+      <Container>
+
+        {
+          !this.state.job &&
+          <FetchingJob/>
+        }
+
+        {
+          this.state.job &&
+          <JobData job={this.state.job}/>
+        }
+
+      </Container>
     );
   }
 }
+
+const FetchingJob = () => (
+  <p>Fetching ...</p>
+);
 
 function JobData({job}) {
   return (
@@ -33,7 +63,7 @@ function JobData({job}) {
         </Col>
       </Row>
       <Row>
-        <h2>{job.data.name}</h2>
+        <Col><h2>{job.data.name}</h2></Col>
       </Row>
 
       <Row>
