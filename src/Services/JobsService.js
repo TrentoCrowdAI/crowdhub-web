@@ -13,7 +13,7 @@ function JSONtoJob(json) {
   delete json.data.maxVotes;
   delete json.data.numVotes;
 
-  json.design = {
+  json.data.design = {
     html: json.data.design.markup,
     js: json.data.design.javascript,
     css: json.data.design.css
