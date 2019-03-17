@@ -3,18 +3,23 @@ import {Container, Row, Col} from "react-bootstrap";
 
 import JobsService from "../../../Services/JobsService";
 import JobForm from "../JobForm/JobForm";
+import BackButton from "../../common/BackButton";
 
 export default class EditJob extends Component {
 
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: props.match.params.id
+    };
+  }
 
   async componentDidMount() {
     await this.fetchJob();
   }
 
   fetchJob = async () => {
-    const id = this.props.match.params.id;
-    const job = await JobsService.getJob(id);
+    const job = await JobsService.getJob(this.state.id);
     this.setState({job});
   };
 
@@ -37,10 +42,12 @@ export default class EditJob extends Component {
   render() {
     return (
       <Container>
+        <BackButton to={`/jobs/${this.state.id}`} text="Cancel"/>
+
         <Row>
           <Col>
             <h1>
-              Edit job { this.state.job && `#${this.state.job.id}`}
+              Edit job {this.state.job && `#${this.state.id}`}
             </h1>
           </Col>
         </Row>
@@ -54,8 +61,7 @@ export default class EditJob extends Component {
           <JobForm jobData={this.state.job.data}
                    onSubmit={this.handleJobSubmission}
                    onCancel={this.onCancel}
-                   submitText="Save"
-                   cancelText="Cancel"/>
+                   submitText="Save"/>
         }
       </Container>
     );

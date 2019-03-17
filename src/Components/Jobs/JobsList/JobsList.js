@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
 import Link from "react-router-dom/Link";
-import {Alert, Col, Container, Row, Table} from "react-bootstrap";
+import {Alert, Col, Container, Row, Table, Button} from "react-bootstrap";
 
 import JobsService from "../../../Services/JobsService";
 import DeleteJobModal from "./DeleteJobModal";
@@ -33,6 +33,8 @@ export class JobsList extends Component {
   onUserWantToDeleteJob = (job) => this.setState({jobToDelete: job});
 
   onOpenJobView = (job) => this.props.history.push(`/jobs/${job.id}`);
+
+  onOpenEditJob = (job) => this.props.history.push(`/jobs/${job.id}/edit`);
 
   onUserConfirmDeletion = async () => {
     const job = this.state.jobToDelete;
@@ -84,7 +86,8 @@ export class JobsList extends Component {
             this.state.jobs && this.state.jobs.length > 0 &&
             <JobsTable jobs={this.state.jobs}
                        onUserWantToDeleteJob={this.onUserWantToDeleteJob}
-                       onOpenJobView={this.onOpenJobView}/>
+                       onOpenJobView={this.onOpenJobView}
+                       onOpenEditJob={this.onOpenEditJob}/>
           }
 
         </Row>
@@ -115,7 +118,7 @@ export const FetchJobsError = () => (
   </Col>
 );
 
-export const JobsTable = ({jobs, onUserWantToDeleteJob, onOpenJobView}) => (
+export const JobsTable = ({jobs, onUserWantToDeleteJob, onOpenJobView, onOpenEditJob}) => (
   <Col>
     <h1>Jobs</h1>
     <Table hover>
@@ -132,6 +135,7 @@ export const JobsTable = ({jobs, onUserWantToDeleteJob, onOpenJobView}) => (
       {jobs.map(job => (
         <JobsTableRow job={job} key={job.id}
                       onUserWantToDeleteJob={onUserWantToDeleteJob}
+                      onOpenEditJob={onOpenEditJob}
                       onOpenJobView={onOpenJobView}/>
       ))}
       </tbody>
@@ -139,7 +143,13 @@ export const JobsTable = ({jobs, onUserWantToDeleteJob, onOpenJobView}) => (
   </Col>
 );
 
-export const JobsTableRow = ({job, onUserWantToDeleteJob, onOpenJobView}) => (
+const ignoreEventAnd = (callback) => (e) => {
+  e.stopPropagation();
+  //e.preventDefault();
+  callback();
+};
+
+export const JobsTableRow = ({job, onUserWantToDeleteJob, onOpenJobView, onOpenEditJob}) => (
   <tr onClick={() => onOpenJobView(job)} className="clickable-row">
     <td>{job.id}</td>
     <td>{job.data.name}</td>
@@ -147,8 +157,13 @@ export const JobsTableRow = ({job, onUserWantToDeleteJob, onOpenJobView}) => (
     <td/>
     <td>
 
+      <a className="icon-button"
+         onClick={ignoreEventAnd(() => onOpenEditJob(job))}>
+        <i className="fas fa-edit"/>
+      </a>
 
-      <a href="#" onClick={() => onUserWantToDeleteJob(job)}>
+      <a className="icon-button"
+         onClick={ignoreEventAnd(() => onUserWantToDeleteJob(job))}>
         <i className="fas fa-trash-alt"/>
       </a>
     </td>

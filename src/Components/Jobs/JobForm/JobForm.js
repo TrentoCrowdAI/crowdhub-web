@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Col, Row, Form, InputGroup, Button, Alert, ButtonToolbar} from "react-bootstrap";
+import {Col, Row, Form, InputGroup, Button, ButtonToolbar} from "react-bootstrap";
 import {Formik} from "formik";
 import * as Yup from 'yup';
 
-import {rewardFloatToInteger, rewardIntegerToString} from '../utils';
+import {rewardFloatToInteger, rewardIntegerToString} from '../utils/job';
 import "./JobForm.css";
 
 
@@ -254,9 +254,14 @@ export default class JobForm extends Component {
 
 
               <ButtonToolbar className="form-buttons">
-                <Button variant="secondary" onClick={this.props.onCancel} className="cancel-job-form">
-                  {this.props.cancelText}
-                </Button>
+                {
+                  this.props.cancelText &&
+                  <Button variant="secondary" onClick={this.props.onCancel}
+                          className="cancel-job-form">
+                    {this.props.cancelText}
+                  </Button>
+                }
+
                 <Button variant="primary" type="submit" className="submit-job-form">
                   {this.props.submitText}
                 </Button>

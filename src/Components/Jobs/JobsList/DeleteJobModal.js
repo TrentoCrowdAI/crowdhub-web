@@ -1,18 +1,14 @@
 import {Button, Modal} from "react-bootstrap";
 import React, {Component} from 'react';
+import {closeAndAfterAnimation} from "../utils/modal";
 
 export default class DeleteJobModal extends Component {
   state = {
     show: true
   };
 
-  afterCloseAnimation = (callback) => () => {
-    this.setState({show:false});
-    setTimeout(callback, 100);
-  };
-
-  onCancelPressed = this.afterCloseAnimation(() => this.props.onCancel());
-  onConfirmPressed = this.afterCloseAnimation(() => this.props.onConfirmDeletion());
+  onCancelPressed = closeAndAfterAnimation(this, () => this.props.onCancel());
+  onConfirmPressed = closeAndAfterAnimation(this, () => this.props.onConfirmDeletion());
 
   render() {
     const job = this.props.jobToDelete;

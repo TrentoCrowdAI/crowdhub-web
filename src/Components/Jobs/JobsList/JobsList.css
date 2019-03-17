@@ -1,3 +1,7 @@
 tr.clickable-row {
     cursor: pointer;
 }
+
+a.icon-button {
+    margin-right: .5em;
+}

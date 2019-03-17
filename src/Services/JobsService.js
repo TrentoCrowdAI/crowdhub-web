@@ -24,7 +24,7 @@ function JSONtoJob(json) {
   return json;
 }
 
-function jobToJSON (job) {
+function jobToJSON(job) {
   job.data.maxVotes = job.data.max_votes;
   job.data.numVotes = job.data.num_votes;
 
@@ -65,6 +65,11 @@ export default {
 
   async deleteJob(job) {
     return await sendDelete(`${APP_URL}/jobs/${job.id}`);
+  },
+
+  async publish(job, platform) {
+    const jsonJob = await postJSON(`${APP_URL}/jobs/${job.id}/publish`, {platform});
+    return JSONtoJob(jsonJob);
   }
 
 }

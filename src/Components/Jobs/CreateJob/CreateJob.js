@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Alert, Col, Container} from "react-bootstrap";
+import {Alert, Col, Row, Container} from "react-bootstrap";
 
 import JobsService from "../../../Services/JobsService";
 import JobForm from "../JobForm/JobForm";
+import BackButton from "../../common/BackButton";
 
 export default class CreateJob extends Component {
 
@@ -17,6 +18,11 @@ export default class CreateJob extends Component {
   render() {
     return (
       <Container>
+        <BackButton to="/jobs" text="Return to jobs list"/>
+
+        <Row>
+          <Col><h1>Create new job</h1></Col>
+        </Row>
 
         {
           this.state.creationError &&
@@ -25,8 +31,7 @@ export default class CreateJob extends Component {
 
         <JobForm onSubmit={this.handleJobSubmission}
                  onCancel={this.onCancel}
-                 submitText="Create"
-                 cancelText="Return to job list"/>
+                 submitText="Create"/>
       </Container>
     );
   }
@@ -44,8 +49,6 @@ export default class CreateJob extends Component {
 
     setSubmitting(false);
   };
-
-  onCancel = () => this.redirectToJobsList();
 
   onJobCreationFailed = () => this.setState({creationError: true});
 
