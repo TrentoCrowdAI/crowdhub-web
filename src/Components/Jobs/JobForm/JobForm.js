@@ -6,6 +6,7 @@ import {Editor} from '@tinymce/tinymce-react';
 
 import {rewardFloatToInteger, rewardIntegerToString} from '../utils/job';
 import "./JobForm.css";
+import DesignEditor from "./DesignEditor/DesignEditor";
 
 
 export default class JobForm extends Component {
@@ -246,36 +247,12 @@ export default class JobForm extends Component {
                 </Col>
               </Row>
 
-              {/* template */}
               <Row>
-                {/* HTML */}
-                <Col xs="12" sm="4">
-                  <Form.Group>
-                    <Form.Label>HTML</Form.Label>
-                    <Form.Control name="html" value={values.html} as="textarea" rows="3" onChange={handleChange}
-                                  isInvalid={isInvalid('html')} isValid={isValid('html')}/>
-                  </Form.Group>
-                </Col>
-
-                {/* CSS */}
-                <Col xs="12" sm="4">
-                  <Form.Group>
-                    <Form.Label>CSS</Form.Label>
-                    <Form.Control name="css" value={values.css} as="textarea" rows="3" onChange={handleChange}
-                                  isInvalid={isInvalid('css')} isValid={isValid('css')}/>
-                  </Form.Group>
-                </Col>
-
-                {/* JS */}
-                <Col xs="12" sm="4">
-                  <Form.Group>
-                    <Form.Label>JS</Form.Label>
-                    <Form.Control name="js" value={values.js} as="textarea" rows="3" onChange={handleChange}
-                                  isInvalid={isInvalid('js')} isValid={isValid('js')}/>
-                  </Form.Group>
+                <Col>
+                  <Form.Label>Design</Form.Label>
+                  <DesignEditor/>
                 </Col>
               </Row>
-
 
               <ButtonToolbar className="form-buttons">
                 {

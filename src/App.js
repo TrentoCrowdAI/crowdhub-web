@@ -20,7 +20,6 @@ tinymce.init({
 });
 /* End of TinyMCE initialization */
 
-
 class App extends Component {
   render() {
     return (<Layout />);
