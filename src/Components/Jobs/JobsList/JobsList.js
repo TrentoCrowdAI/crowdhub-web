@@ -26,7 +26,7 @@ export class JobsList extends Component {
       this.setState({
         jobs: null,
         fetchError: true
-      })
+      });
     }
   }
 

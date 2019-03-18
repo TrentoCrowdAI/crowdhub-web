@@ -3,6 +3,7 @@ import {mount} from "enzyme";
 
 import JobForm from "./JobForm";
 import mockedJobs from '../../../mock-data/jobs';
+import {rewardIntegerToString} from "../utils/job";
 
 
 function expectElementToHaveValue (element, value) {
@@ -19,7 +20,7 @@ function expectTextAreaToHaveValue (wrapper, field, value) {
 
 it('Should call onCancel when the cancel button is pressed', () => {
   const listener = jest.fn();
-  const wrapper = mount(<JobForm onCancel={listener}/>);
+  const wrapper = mount(<JobForm onCancel={listener} cancelText="Cancel"/>);
 
   wrapper.find('button.cancel-job-form').simulate('click');
 
@@ -36,7 +37,7 @@ it('Should call initialize te form with previous values', () => {
 
   expectInputToHaveValue(wrapper, 'max_votes', job.max_votes);
   expectInputToHaveValue(wrapper, 'num_votes', job.num_votes);
-  expectInputToHaveValue(wrapper, 'reward', job.reward / 100);
+  expectInputToHaveValue(wrapper, 'reward', rewardIntegerToString(job.reward));
 
   expectTextAreaToHaveValue(wrapper, 'html', job.design.html);
   expectTextAreaToHaveValue(wrapper, 'css', job.design.css);

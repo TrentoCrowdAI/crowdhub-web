@@ -22,7 +22,7 @@ describe("should fetch the list of jobs", () => {
   }
 
   function mockGetJobsToFail() {
-    const getJobs = jest.fn(() => new Promise(() => {
+    const getJobs = jest.fn(() => new Promise((resolve, reject) => {
       throw new Error("can't fetch jobs");
     }));
     JobsService.getJobs = getJobs;
@@ -62,16 +62,16 @@ describe("should fetch the list of jobs", () => {
     expect(wrapper.find(JobsTable).length).toBe(1);
   });
 
-  it("shows an error if jobs can't be loaded", async () => {
+  it("shows an error if jobs can't be loaded", async (done) => {
     const getJobs = mockGetJobsToFail();
     const wrapper = await mountJobsList();
 
     expect(getJobs).toHaveBeenCalled();
 
     wrapper.update();
-    console.log(wrapper.debug());
 
     expect(wrapper.find(FetchJobsError).length).toBe(1);
+
   });
 });
 
