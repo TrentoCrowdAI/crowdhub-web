@@ -1,120 +1,139 @@
 import React, {Component} from 'react';
+import {Col, Row} from "react-bootstrap";
+import uuid from 'uuid';
+
 import Dragula from 'dragula';
-import "./DesignEditor.css";
 import "dragula/dist/dragula.css";
-import OutputDynamicText from "./blocks/OutputDynamicText";
-import InputOpenQuestion from "./blocks/InputOpenQuestion";
-import {Container, Row, Col, Card} from "react-bootstrap";
+
+import BlocksColumn from "./BlocksColumn";
+import blockDefinitionsMap from './blocks/definitions';
+
+const tools = Object.keys(blockDefinitionsMap).map(type => {
+  return {type}
+});
+
+const findSiblingIndex = (sibling, siblingsContainer) => {
+  for (let i = 0; i < siblingsContainer.children.length; i++) {
+    if (siblingsContainer.children[i] === sibling) {
+      return i;
+    }
+  }
+
+  return -1;
+};
 
 export default class DesignEditor extends Component {
 
-  state = {
-    blocks: []
-  };
-
   constructor(props) {
     super(props);
-    this.toolsRef = React.createRef();
-    this.designRef = React.createRef();
+
+    this.toolsBlocksRef = React.createRef();
+    this.designBlocksRef = React.createRef();
   }
 
   componentDidMount() {
-    this.initDracula();
+    this.setupDragula();
   }
 
-  initDracula = () => {
+  setupDragula = () => {
+    const toolsBlocks = this.toolsBlocksRef.current;
+    const designBlocks = this.designBlocksRef.current;
     const containers = [
-      this.toolsRef.current,
-      this.designRef.current
+      this.toolsBlocksRef.current,
+      this.designBlocksRef.current
     ];
 
-    const drake = Dragula(containers, {
-      copy: true
-    });
+    this.drake = Dragula(containers, {
+      copy: (el, source) => source === toolsBlocks,
+      accepts: (el, target) => target === designBlocks
+    }).on('drop', (element, target, source, sibling) => {
+      if (target === designBlocks) {
+
+        // trovo l'indice
+        const siblingIndex = findSiblingIndex(sibling, designBlocks);
 
 
-    drake.on('drop', (el, target, source, sibling) => {
-      if (source.classList.contains('tools')) {
-        this.setState(old => {
-          return {
-            blocks: [...old.blocks, {
-              type: el.getAttribute('data-type')
-            }]
-          }
-        });
-        el.parentNode.removeChild(el);
-      } else {
-        console.log(sibling);
+        if (source === toolsBlocks) {
+          this.onBlockAdded(element, siblingIndex);
+          element.parentNode.removeChild(element);
+        } else {
+          this.onBlockSorted(element, siblingIndex);
+        }
+
       }
 
-    })
+    });
   };
 
-  DOMToJSON = () => {
-    const container = this.designRef.current;
-    const items = [];
-    for (let i = 0; i < container.children.length; i++) {
-      const element = container.children[i];
-      items.push({
-        type: element.getAttribute('data-type'),
-        csvVariable: element.getAttribute('data-csv-variable')
-      });
-    }
+  onBlockAdded = (element, nextSiblingIndex) => {
+    this.assertNextSiblingIndexIsValidGivenInitialBlocks(nextSiblingIndex);
 
-    return items;
+    const blocks = this.props.initialBlocks;
+    const newBlockIndex = this.getNewBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
+    const newBlock = this.buildNewBlockDataGivenClonedElement(element);
+
+    blocks.splice(newBlockIndex, 0, newBlock);
+
+    this.props.onChange(blocks);
+  };
+
+  onBlockSorted = (element, nextSiblingIndex) => {
+    this.assertNextSiblingIndexIsValidGivenInitialBlocks(nextSiblingIndex);
+
+    const blocks = this.props.initialBlocks;
+    const blockAIndex = this.getMovedBlockIndex(element);
+    const blockBIndex=this.getBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
+
+    const temp = blocks[blockAIndex];
+    blocks[blockAIndex] = blocks[blockBIndex];
+    blocks[blockBIndex] = temp;
+
+    this.props.onChange(blocks);
+  };
+
+  assertNextSiblingIndexIsValidGivenInitialBlocks = (nextSiblingIndex) => {
+    if (nextSiblingIndex === 0 || nextSiblingIndex > this.props.initialBlocks.length) {
+      throw new Error('invalid nextSiblingIndex given the current blocks array');
+    }
+  };
+
+  getNewBlockIndexGivenNextSiblingIndex = (nextSibling) => nextSibling === -1 ? this.props.initialBlocks.length : nextSibling - 1;
+
+  getBlockIndexGivenNextSiblingIndex = (nextSibling) => nextSibling === -1 ? this.props.initialBlocks.length - 1 : nextSibling - 1;
+
+  buildNewBlockDataGivenClonedElement = (element) => {
+    return {
+      type: element.getAttribute('data-block-type'),
+      id: uuid()
+    };
+  };
+
+  getMovedBlockIndex = (element) => {
+    const blocks = this.props.initialBlocks;
+    const id = element.getAttribute('data-block-id');
+
+    return blocks.findIndex(block => block.id === id);
   };
 
   render() {
     return (
-      <div>
-        <Row>
-          <Col md="6" lg="4">
-            <Card border="primary">
-              <Card.Header>Available blocks</Card.Header>
-              <Card.Body>
-                <div className="tools blocks-container" ref={this.toolsRef}>
-                  <div data-type="output_dynamic_text">
-                    <OutputDynamicText expanded={false}/>
-                  </div>
+      <Row>
+        <Col md="6" lg="4">
+          <BlocksColumn componentsContainerRef={this.toolsBlocksRef}
+                        title="Available blocks"
+                        blockDefinitionsMap={blockDefinitionsMap}
+                        blocksList={tools}
+                        expandable={false}/>
+        </Col>
 
-                  <div data-type="aaaa">
-                    <InputOpenQuestion expanded={false}/>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col md="6" lg="8">
-            <Card border="primary">
-              <Card.Header>Job layout</Card.Header>
-              <Card.Body>
-                <div className="design blocks-container" ref={this.designRef}>
-                  {
-                    this.state.blocks.map((b) => {
-                      console.log(b)
-                      if (b.type === 'output_dynamic_text') {
-                        return <OutputDynamicText key={Math.random()} expanded={true}/>
-                      } else {
-                        return <InputOpenQuestion key={Math.random()} expanded={true}/>
-                      }
-                    })
-                  }
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
-        <button onClick={(e) => {
-          e.preventDefault();
-          console.log(this.DOMToJSON());
-
-        }}>Print JSON
-        </button>
-      </div>
+        <Col md="6" lg="4">
+          <BlocksColumn componentsContainerRef={this.designBlocksRef}
+                        title="Your job design"
+                        blockDefinitionsMap={blockDefinitionsMap}
+                        blocksList={this.props.initialBlocks}
+                        expandable={false}/>
+        </Col>
+      </Row>
     );
   }
 }
-
-
