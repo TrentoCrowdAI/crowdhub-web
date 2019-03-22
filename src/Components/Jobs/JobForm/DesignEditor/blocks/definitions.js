@@ -1,6 +1,7 @@
 import React from 'react';
 
 import InputDynamicText from './input/InputDynamicText';
+import InputStaticText from "./input/InputStaticText";
 
 const mapBlocksDefinitionArrayToMap = (blockDefinitions) => {
   const map = {};
@@ -9,5 +10,6 @@ const mapBlocksDefinitionArrayToMap = (blockDefinitions) => {
 };
 
 export default mapBlocksDefinitionArrayToMap([
-  InputDynamicText
+  InputDynamicText,
+  InputStaticText
 ]);

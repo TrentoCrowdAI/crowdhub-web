@@ -13,12 +13,6 @@ function JSONtoJob(json) {
   delete json.data.maxVotes;
   delete json.data.numVotes;
 
-  json.data.design = {
-    html: json.data.design.markup,
-    js: json.data.design.javascript,
-    css: json.data.design.css
-  };
-
   return json;
 }
 
@@ -28,12 +22,6 @@ function jobToJSON(job) {
 
   delete job.data.max_votes;
   delete job.data.num_votes;
-
-  job.data.design = {
-    markup: job.data.design.html,
-    javascript: job.data.design.js,
-    css: job.data.design.css
-  };
 
   return job;
 }

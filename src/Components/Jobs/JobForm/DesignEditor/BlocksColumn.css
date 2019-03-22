@@ -1,4 +1,7 @@
 div.blocks-container {
     min-height: 2em;
-    background-color: lightblue;
+}
+
+div.card.block-card {
+    margin-bottom: .5em;
 }

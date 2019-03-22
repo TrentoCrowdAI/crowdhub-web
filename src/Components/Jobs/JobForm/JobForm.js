@@ -11,15 +11,16 @@ import DesignEditor from "./DesignEditor/DesignEditor";
 
 export default class JobForm extends Component {
 
-  state = {
-    designBlocks: []
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      design: props.jobData.design
+    }
+    this._instructions = props.jobData.instructions;
+  }
 
   handleSubmit = (values, formikBag) => {
-    const job = this.valuesToJobData({
-      ...values,
-      instructions: this._instructions
-    });
+    const job = this.valuesToJobData(values);
     this.props.onSubmit(job, formikBag)
   };
 
@@ -37,13 +38,9 @@ export default class JobForm extends Component {
       items_csv: values.items_csv,
       items_gold_csv: values.items_gold_csv,
 
-      instructions: values.instructions,
+      instructions: this._instructions,
 
-      design: {
-        html: values.html,
-        css: values.css,
-        js: values.js
-      }
+      design: this.state.design
     };
   };
 
@@ -101,10 +98,7 @@ export default class JobForm extends Component {
     js: Yup.string()
   });
 
-  onDesignChanged = (designBlocks) => {
-    console.log('design  changed', designBlocks);
-    this.setState({designBlocks});
-  };
+  onDesignChanged = design => this.setState({design});
 
   render() {
 
@@ -113,7 +107,7 @@ export default class JobForm extends Component {
         <Row>
           <Col>
             <Form.Label>Design</Form.Label>
-            <DesignEditor initialBlocks={this.state.designBlocks} onChange={this.onDesignChanged}/>
+            <DesignEditor initialBlocks={this.state.design} onChange={this.onDesignChanged}/>
           </Col>
         </Row>
 

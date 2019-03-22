@@ -46,49 +46,42 @@ export default class DesignEditor extends Component {
     this.drake = Dragula(containers, {
       copy: (el, source) => source === toolsBlocks,
       accepts: (el, target) => target === designBlocks
-    }).on('drop', (element, target, source, sibling) => {
+    });
+
+    this.drake.on('drop', (element, target, source, sibling) => {
       if (target === designBlocks) {
-
-        // trovo l'indice
         const siblingIndex = findSiblingIndex(sibling, designBlocks);
+        const isAddingToolToDesign = source === toolsBlocks;
 
-
-        if (source === toolsBlocks) {
+        if (isAddingToolToDesign) {
           this.onBlockAdded(element, siblingIndex);
-          element.parentNode.removeChild(element);
         } else {
           this.onBlockSorted(element, siblingIndex);
         }
-
       }
-
     });
   };
 
   onBlockAdded = (element, nextSiblingIndex) => {
     this.assertNextSiblingIndexIsValidGivenInitialBlocks(nextSiblingIndex);
 
-    const blocks = this.props.initialBlocks;
     const newBlockIndex = this.getNewBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
     const newBlock = this.buildNewBlockDataGivenClonedElement(element);
 
-    blocks.splice(newBlockIndex, 0, newBlock);
+    this.addBlockDataToTheDesignAndNotify(newBlock, newBlockIndex);
 
-    this.props.onChange(blocks);
+    // Dragula cloned the div of the block from the tools container, but react don't know this. React will render a new
+    // div (for the new block added to the design), so we need to remove the block that Dragula created (the cloned div)
+    element.parentNode.removeChild(element);
   };
 
   onBlockSorted = (element, nextSiblingIndex) => {
     this.assertNextSiblingIndexIsValidGivenInitialBlocks(nextSiblingIndex);
 
-    const blocks = this.props.initialBlocks;
     const blockAIndex = this.getMovedBlockIndex(element);
-    const blockBIndex=this.getBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
+    const blockBIndex = this.getBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
 
-    const temp = blocks[blockAIndex];
-    blocks[blockAIndex] = blocks[blockBIndex];
-    blocks[blockBIndex] = temp;
-
-    this.props.onChange(blocks);
+    this.swapBlockAndNotify(blockAIndex, blockBIndex);
   };
 
   assertNextSiblingIndexIsValidGivenInitialBlocks = (nextSiblingIndex) => {
@@ -104,7 +97,8 @@ export default class DesignEditor extends Component {
   buildNewBlockDataGivenClonedElement = (element) => {
     return {
       type: element.getAttribute('data-block-type'),
-      id: uuid()
+      id: uuid(),
+      expanded: true
     };
   };
 
@@ -113,6 +107,24 @@ export default class DesignEditor extends Component {
     const id = element.getAttribute('data-block-id');
 
     return blocks.findIndex(block => block.id === id);
+  };
+
+  addBlockDataToTheDesignAndNotify = (newBlock, newBlockIndex) => {
+    const blocks = this.props.initialBlocks;
+
+    blocks.splice(newBlockIndex, 0, newBlock);
+
+    this.props.onChange(blocks);
+  };
+
+  swapBlockAndNotify = (a, b) => {
+    const blocks = this.props.initialBlocks;
+    const temp = blocks[a];
+
+    blocks[a] = blocks[b];
+    blocks[b] = temp;
+
+    this.props.onChange(blocks);
   };
 
   render() {
@@ -126,12 +138,13 @@ export default class DesignEditor extends Component {
                         expandable={false}/>
         </Col>
 
-        <Col md="6" lg="4">
+        <Col md="6" lg="8">
           <BlocksColumn componentsContainerRef={this.designBlocksRef}
                         title="Your job design"
                         blockDefinitionsMap={blockDefinitionsMap}
                         blocksList={this.props.initialBlocks}
-                        expandable={false}/>
+                        expandable={false}
+                        onChange={blocks => this.props.onChange(blocks)}/>
         </Col>
       </Row>
     );

@@ -5,6 +5,12 @@ import './BlocksColumn.css'
 
 export default class BlocksColumn extends Component {
 
+  handleBlockDataChange = (index) => (data) => {
+    const blocks = this.props.blocksList;
+    blocks[index] = data;
+    this.props.onChange(blocks);
+  };
+
   render() {
     return (
       <Card border="primary">
@@ -18,7 +24,7 @@ export default class BlocksColumn extends Component {
 
                 if (definition) {
                   const Component = definition.Component;
-                  return <Component key={key} data={data}/>
+                  return <Component key={key} data={data} onChange={this.handleBlockDataChange(index)}/>
                 } else {
                   return <ComponentNotFoundError key={key} type={data.type}/>
                 }
