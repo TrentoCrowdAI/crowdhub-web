@@ -1,25 +1,39 @@
 import React, {Component} from 'react';
-import {Card, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
+import {Editor} from '@tinymce/tinymce-react';
+import BlockCard from "../BlockCard";
 
-const BLOCK_TYPE = 'input_static_component';
+const BLOCK_TYPE = 'input_static_text';
 
 class InputStaticText extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
-      csvVariable: props.data.csvVariable
-    }
+      id: props.data.id,
+      type: props.data.type,
+      expanded: props.data.expanded || false
+    };
   }
+
+  handleEditorChange = text => this.props.onChange({text})
+
+  onToggleExpansion = expanded => this.setState(
+    {expanded},
+    () => this.props.onChange(this.state)
+  );
+
 
   render() {
     return (
-      <Card bg="dark block-card" text="white" data-block-type={BLOCK_TYPE} data-block-id={this.props.data.id}>
-        <Card.Header>Input Static Text</Card.Header>
-        <Card.Body>
-
-        </Card.Body>
-      </Card>
+      <BlockCard onToggleExpansion={this.onToggleExpansion} expanded={this.state.expanded} id={this.state.id}
+                 title="Input Static Text" type={BLOCK_TYPE} expandable={this.props.expandable}>
+        <Form.Group>
+          <Editor onEditorChange={this.handleEditorChange}
+                  initialValue={this.props.data.text}
+                  init={{menubar: false}}/>
+        </Form.Group>
+      </BlockCard>
     );
   }
 }
