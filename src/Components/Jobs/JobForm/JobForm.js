@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Row, Form, InputGroup, Button, ButtonToolbar} from "react-bootstrap";
+import {Button, ButtonToolbar, Col, Form, InputGroup, Row} from "react-bootstrap";
 import {Formik} from "formik";
 import * as Yup from 'yup';
 import {Editor} from '@tinymce/tinymce-react';
@@ -11,12 +11,12 @@ import DesignEditor from "./DesignEditor/DesignEditor";
 
 export default class JobForm extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      design: props.jobData.design
-    }
-    this._instructions = props.jobData.instructions;
+      design: (props.jobData && props.jobData.design) || []
+    };
+    this._instructions = (props.jobData && props.jobData.instructions) || '';
   }
 
   handleSubmit = (values, formikBag) => {
@@ -253,7 +253,8 @@ export default class JobForm extends Component {
                     <Form.Group>
                       <Form.Label>Instructions</Form.Label>
                       <Editor textareaName="instructions" onEditorChange={this.handleEditorChange}
-                              initialValue={values.instructions}/>
+                              initialValue={values.instructions}
+                              init={{menubar: false}}/>
                     </Form.Group>
                   </Col>
                 </Row>

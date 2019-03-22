@@ -143,7 +143,7 @@ export default class DesignEditor extends Component {
                         title="Your job design"
                         blockDefinitionsMap={blockDefinitionsMap}
                         blocksList={this.props.initialBlocks}
-                        expandable={false}
+                        expandable={true}
                         onChange={blocks => this.props.onChange(blocks)}/>
         </Col>
       </Row>

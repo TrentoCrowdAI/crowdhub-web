@@ -1,0 +1,13 @@
+.card-header a {
+    display: flex;
+    cursor: pointer;
+}
+
+.card-header a i.fa-caret-down {
+    margin: auto 0 auto auto;
+    transition-duration: 0.5s;
+}
+
+i.fa-caret-down.expanded {
+    transform: rotate(180deg);
+}
