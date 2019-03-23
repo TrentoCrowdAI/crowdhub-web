@@ -4,6 +4,7 @@ import InputDynamicText from './input/InputDynamicText';
 import InputStaticText from "./input/InputStaticText";
 import OutputOpenQuestion from "./output/OutputOpenQuestion";
 import OutputChoices from "./output/OutputChoices";
+import InputDynamicImage from "./input/InputDynamicImage";
 
 const mapBlocksDefinitionArrayToMap = (blockDefinitions) => {
   const map = {};
@@ -14,6 +15,7 @@ const mapBlocksDefinitionArrayToMap = (blockDefinitions) => {
 export default mapBlocksDefinitionArrayToMap([
   InputDynamicText,
   InputStaticText,
+  InputDynamicImage,
 
   OutputOpenQuestion,
   OutputChoices
