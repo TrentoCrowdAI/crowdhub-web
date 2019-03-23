@@ -44,7 +44,7 @@ class OutputOpenQuestion extends Component {
           </Col>
           <Col md="12" lg="6">
             <Form.Group>
-              <Form.Label>CSV Title Variable</Form.Label>
+              <Form.Label>CSV Variable</Form.Label>
               <Form.Control name="csvVariable" type="text" value={this.state.csvVariable}
                             onChange={textChangeHandler(this)}
                             onBlur={textBlurHandler(this)}/>
