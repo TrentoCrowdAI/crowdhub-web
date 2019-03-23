@@ -2,6 +2,7 @@ import React from 'react';
 
 import InputDynamicText from './input/InputDynamicText';
 import InputStaticText from "./input/InputStaticText";
+import OutputOpenQuestion from "./output/OutputOpenQuestion";
 
 const mapBlocksDefinitionArrayToMap = (blockDefinitions) => {
   const map = {};
@@ -11,5 +12,7 @@ const mapBlocksDefinitionArrayToMap = (blockDefinitions) => {
 
 export default mapBlocksDefinitionArrayToMap([
   InputDynamicText,
-  InputStaticText
+  InputStaticText,
+
+  OutputOpenQuestion
 ]);

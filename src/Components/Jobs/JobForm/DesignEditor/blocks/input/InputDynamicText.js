@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Col, Form, Row} from "react-bootstrap";
 import BlockCard from "../BlockCard";
+import {textBlurHandler, textChangeHandler, toggleExpansionHandler} from "../utils";
 
 const BLOCK_TYPE = 'input_dynamic_text';
 
@@ -23,18 +24,6 @@ class InputDynamicText extends Component {
     };
   }
 
-  handleTextChange = (e) => {
-    const field = e.target;
-    this.setState({[field.name]: field.value});
-  };
-
-  handleTextBlur = () => this.props.onChange(this.state);
-
-  onToggleExpansion = expanded => this.setState(
-    {expanded},
-    () => this.props.onChange(this.state)
-  );
-
   onChangeHighlightable = (e) => this.setState(
     {highlightable: e.target.checked},
     () => this.props.onChange(this.state)
@@ -42,23 +31,23 @@ class InputDynamicText extends Component {
 
   render() {
     return (
-      <BlockCard onToggleExpansion={this.onToggleExpansion} id={this.state.id} expanded={this.state.expanded}
+      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} id={this.state.id} expanded={this.state.expanded}
                  title="Input Dynamic Text" type={BLOCK_TYPE} expandable={this.props.expandable}>
         <Row>
           <Col md="12" lg="6">
             <Form.Group>
               <Form.Label>CSV Title Variable</Form.Label>
               <Form.Control name="csvTitleVariable" type="text" value={this.state.csvTitleVariable}
-                            onChange={this.handleTextChange}
-                            onBlur={this.handleTextBlur}/>
+                            onChange={textChangeHandler(this)}
+                            onBlur={textBlurHandler(this)}/>
             </Form.Group>
           </Col>
           <Col md="12" lg="6">
             <Form.Group>
               <Form.Label>CSV Variable</Form.Label>
               <Form.Control name="csvVariable" type="text" value={this.state.csvVariable}
-                            onChange={this.handleTextChange}
-                            onBlur={this.handleTextBlur}/>
+                            onChange={textChangeHandler(this)}
+                            onBlur={textBlurHandler(this)}/>
             </Form.Group>
           </Col>
         </Row>
@@ -75,8 +64,8 @@ class InputDynamicText extends Component {
               <Form.Group>
                 <Form.Label>Question</Form.Label>
                 <Form.Control name="question" type="text" value={this.state.question}
-                              onChange={this.handleTextChange}
-                              onBlur={this.handleTextBlur}/>
+                              onChange={textChangeHandler(this)}
+                              onBlur={textBlurHandler(this)}/>
               </Form.Group>
             </Col>
             <Col md="12" lg="6">
@@ -84,8 +73,8 @@ class InputDynamicText extends Component {
                 <Form.Label>Highlighted CSV Variable</Form.Label>
                 <Form.Control name="highlightedCsvVariable" type="text"
                               value={this.state.highlightedCsvVariable}
-                              onChange={this.handleTextChange}
-                              onBlur={this.handleTextBlur}/>
+                              onChange={textChangeHandler(this)}
+                              onBlur={textBlurHandler(this)}/>
               </Form.Group>
             </Col>
           </Row>
