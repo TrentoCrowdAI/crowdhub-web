@@ -45,7 +45,8 @@ export default class DesignEditor extends Component {
 
     this.drake = Dragula(containers, {
       copy: (el, source) => source === toolsBlocks,
-      accepts: (el, target) => target === designBlocks
+      accepts: (el, target) => target === designBlocks,
+      removeOnSpill: true
     });
 
     this.drake.on('drop', (element, target, source, sibling) => {
@@ -60,6 +61,15 @@ export default class DesignEditor extends Component {
         }
       }
     });
+
+    this.drake.on('remove', (element, container) => {
+      // Dragula removed the element from the design blocks container, but react don't know this.
+      // We need to re-append the element to the container: react will re-remove it when the state gets updated
+      container.appendChild(element);
+
+      const id = element.getAttribute('data-block-id');
+      this.removeBlockDataByIdAndNotify(id);
+    });
   };
 
   onBlockAdded = (element, nextSiblingIndex) => {
@@ -70,7 +80,7 @@ export default class DesignEditor extends Component {
 
     this.addBlockDataToTheDesignAndNotify(newBlock, newBlockIndex);
 
-    // Dragula cloned the div of the block from the tools container, but react don't know this. React will render a new
+    // Dragula cloned the element from the tools container, but react don't know this. React will render a new
     // div (for the new block added to the design), so we need to remove the block that Dragula created (the cloned div)
     element.parentNode.removeChild(element);
   };
@@ -81,7 +91,7 @@ export default class DesignEditor extends Component {
     const blockAIndex = this.getMovedBlockIndex(element);
     const blockBIndex = this.getBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
 
-    this.swapBlockAndNotify(blockAIndex, blockBIndex);
+    this.swapBlockDataAndNotify(blockAIndex, blockBIndex);
   };
 
   assertNextSiblingIndexIsValidGivenInitialBlocks = (nextSiblingIndex) => {
@@ -117,12 +127,21 @@ export default class DesignEditor extends Component {
     this.props.onChange(blocks);
   };
 
-  swapBlockAndNotify = (a, b) => {
+  swapBlockDataAndNotify = (a, b) => {
     const blocks = this.props.initialBlocks;
     const temp = blocks[a];
 
     blocks[a] = blocks[b];
     blocks[b] = temp;
+
+    this.props.onChange(blocks);
+  };
+
+  removeBlockDataByIdAndNotify = id => {
+    const blocks = this.props.initialBlocks;
+    const blockToRemoveIndex = blocks.findIndex(data => data.id === id);
+
+    blocks.splice(blockToRemoveIndex, 1);
 
     this.props.onChange(blocks);
   };
