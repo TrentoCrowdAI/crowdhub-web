@@ -2,6 +2,10 @@ import {getJSON, postJSON, sendDelete, putJSON} from "./utils";
 
 export const APP_URL = "http://localhost:4000";
 
+export const Errors = {
+    INVALID_JOB_DATA: 'invalid_job_data'
+};
+
 function JSONtoJob(json) {
   json.created_at = new Date(json.created_at);
   json.updated_at = new Date(json.updated_at);
@@ -28,7 +32,7 @@ function jobToJSON(job) {
 
 export default {
   async getJobs() {
-    const jsonList = await getJSON(`${APP_URL}/jobs`)
+    const jsonList = await getJSON(`${APP_URL}/jobs`);
     return jsonList.map(JSONtoJob);
   },
 
@@ -43,8 +47,16 @@ export default {
   },
 
   async updateJob(job) {
-    const json = jobToJSON(job);
-    return await putJSON(`${APP_URL}/jobs/${job.id}`, json);
+    try {
+      const json = jobToJSON(job);
+      return await putJSON(`${APP_URL}/jobs/${job.id}`, json);
+    } catch (e) {
+      if (e.response === 400) {
+        throw new Error(Errors.INVALID_JOB_DATA);
+      } else {
+        throw e;
+      }
+    }
   },
 
   async deleteJob(job) {

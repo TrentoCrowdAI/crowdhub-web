@@ -4,6 +4,7 @@ import JobsService, {APP_URL} from "./JobsService";
 function mockFetchToReturnJson(object) {
   jest.spyOn(global, 'fetch').mockImplementation(() => {
     return new Promise(resolve => resolve({
+      status: 200,
       async json() {
         return object
       }
@@ -32,8 +33,8 @@ describe('get a single job', function () {
   });
 });
 
-// TODO: Riabilita il test
-/*describe('create new job', () => {
+
+describe('create new job', () => {
   it('should send a POST to /job', async () => {
     const job = mockedJobs[0];
     mockFetchToReturnJson(mockedJobs);
@@ -44,10 +45,10 @@ describe('get a single job', function () {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({data: job})
+      body: JSON.stringify(job)
     });
   });
-});*/
+});
 
 
 describe('delete a job', () => {

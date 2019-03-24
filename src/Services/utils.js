@@ -1,7 +1,16 @@
 async function sendAndParseJSON(url, params) {
   const res = await fetch(url, params);
+
+  if (!isResponseOk(res)) {
+    const error = new Error('HTTP response code not 200');
+    error.status = res.status;
+    throw error;
+  }
+
   return await res.json();
 }
+
+const isResponseOk = (res) => res.status >= 200 && res.status <= 299;
 
 export async function getJSON(url, params) {
   return await sendAndParseJSON(url, params);
@@ -28,7 +37,7 @@ export async function putJSON(url, data) {
 }
 
 export async function sendDelete(url) {
-  return await fetch(url, {
+  return await sendAndParseJSON(url, {
     method: 'DELETE'
   });
 }

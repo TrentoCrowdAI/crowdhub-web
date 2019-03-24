@@ -9,10 +9,6 @@ export default [{
     reward: 3,
     num_votes: 5,
     max_votes: 15,
-    design: {
-      html: '<form></form>',
-      css: 'dov { width: 250px; }',
-      js: 'console.log("Hello world");'
-    }
+    design: []
   }
 }];

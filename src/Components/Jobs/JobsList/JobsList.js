@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
 import Link from "react-router-dom/Link";
-import {Alert, Col, Container, Row, Table, Button} from "react-bootstrap";
+import {Alert, Col, Container, Row, Table} from "react-bootstrap";
 
 import JobsService from "../../../Services/JobsService";
 import DeleteJobModal from "./DeleteJobModal";

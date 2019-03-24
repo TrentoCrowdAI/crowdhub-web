@@ -7,8 +7,7 @@ import {
   toggleExpansionHandler
 } from "../utils";
 import BlockCard from "../BlockCard";
-import {Col, Form, Button} from "react-bootstrap";
-import Table from "react-bootstrap/es/Table";
+import {Col, Form, Button, Table} from "react-bootstrap";
 
 const BLOCK_TYPE = 'output_choices';
 

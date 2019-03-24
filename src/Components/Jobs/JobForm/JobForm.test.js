@@ -27,7 +27,7 @@ it('Should call onCancel when the cancel button is pressed', () => {
   expect(listener).toHaveBeenCalled();
 });
 
-it('Should call initialize te form with previous values', () => {
+it('Should initialize the form with previous values', () => {
   const job = mockedJobs[0].data;
   const wrapper = mount(<JobForm jobData={job}/>);
 
@@ -38,14 +38,10 @@ it('Should call initialize te form with previous values', () => {
   expectInputToHaveValue(wrapper, 'max_votes', job.max_votes);
   expectInputToHaveValue(wrapper, 'num_votes', job.num_votes);
   expectInputToHaveValue(wrapper, 'reward', rewardIntegerToString(job.reward));
-
-  expectTextAreaToHaveValue(wrapper, 'html', job.design.html);
-  expectTextAreaToHaveValue(wrapper, 'css', job.design.css);
-  expectTextAreaToHaveValue(wrapper, 'js', job.design.js);
 });
 
 
-it('Should call initialize te form with default values if no job specified', () => {
+it('Should initialize the form with default values if no job specified', () => {
   const wrapper = mount(<JobForm/>);
 
 
@@ -55,10 +51,6 @@ it('Should call initialize te form with default values if no job specified', () 
   expectInputToHaveValue(wrapper, 'max_votes', 10);
   expectInputToHaveValue(wrapper, 'num_votes', 3);
   expectInputToHaveValue(wrapper, 'reward', 0.01);
-
-  expectTextAreaToHaveValue(wrapper, 'html', '');
-  expectTextAreaToHaveValue(wrapper, 'css', '');
-  expectTextAreaToHaveValue(wrapper, 'js', '');
 });
 
 

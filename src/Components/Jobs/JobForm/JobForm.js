@@ -57,11 +57,7 @@ export default class JobForm extends Component {
       items_csv: data.items_csv || '',
       items_gold_csv: data.items_gold_csv || '',
 
-      instructions: data.instructions || '',
-
-      html: (data.design && data.design.html) || '',
-      css: (data.design && data.design.css) || '',
-      js: (data.design && data.design.js) || ''
+      instructions: data.instructions || ''
     };
   };
 
@@ -104,12 +100,6 @@ export default class JobForm extends Component {
 
     return (
       <div>
-        <Row>
-          <Col>
-            <Form.Label>Design</Form.Label>
-            <DesignEditor initialBlocks={this.state.design} onChange={this.onDesignChanged}/>
-          </Col>
-        </Row>
 
         <Formik
           initialValues={this.jobDataToValues(this.props.jobData)}
@@ -256,6 +246,13 @@ export default class JobForm extends Component {
                               initialValue={values.instructions}
                               init={{menubar: false}}/>
                     </Form.Group>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Form.Label>Design</Form.Label>
+                    <DesignEditor initialBlocks={this.state.design} onChange={this.onDesignChanged}/>
                   </Col>
                 </Row>
 

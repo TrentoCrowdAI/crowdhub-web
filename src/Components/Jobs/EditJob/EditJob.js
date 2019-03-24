@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Container, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Alert} from "react-bootstrap";
 
-import JobsService from "../../../Services/JobsService";
+import JobsService, {Errors} from "../../../Services/JobsService";
 import JobForm from "../JobForm/JobForm";
 import BackButton from "../../common/BackButton";
 
@@ -14,9 +14,7 @@ export default class EditJob extends Component {
     };
   }
 
-  async componentDidMount() {
-    await this.fetchJob();
-  }
+  componentDidMount = () => this.fetchJob();
 
   fetchJob = async () => {
     const job = await JobsService.getJob(this.state.id);
@@ -26,18 +24,24 @@ export default class EditJob extends Component {
   handleJobSubmission = async (jobData, {setSubmitting}) => {
     setSubmitting(true);
 
-    await JobsService.updateJob({
-      id: this.state.job.id,
-      data: jobData
-    });
+    try {
+      await JobsService.updateJob({
+        id: this.state.job.id,
+        data: jobData
+      });
+      this.returnToJobPage();
+    } catch (e) {
+      this.onUpdateJobFailed(e);
+    }
 
     setSubmitting(false);
-    this.returnToJobPage();
   };
 
   onCancel = () => this.returnToJobPage();
 
   returnToJobPage = () => this.props.history.push(`/jobs/${this.state.job.id}`);
+
+  onUpdateJobFailed = (e) => this.setState({updateError: e});
 
   render() {
     return (
@@ -51,6 +55,11 @@ export default class EditJob extends Component {
             </h1>
           </Col>
         </Row>
+
+        {
+          this.state.updateError &&
+          <UpdateJobError error={this.state.updateError}/>
+        }
 
         {
           !this.state.job &&
@@ -72,3 +81,17 @@ export default class EditJob extends Component {
 function FetchingJob() {
   return (<p>Fetching job...</p>);
 }
+
+
+export const UpdateJobError = ({error}) => (
+  <Col>
+    <Alert variant="danger">
+      {
+        error === Errors.INVALID_JOB_DATA ?
+          "Validation of the Job failer. Please check all the data" :
+          "There's been an error while creating the job"
+      }
+
+    </Alert>
+  </Col>
+);
