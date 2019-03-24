@@ -1,28 +1,31 @@
 import React, {Component} from 'react';
 import {Col, Form, Row} from "react-bootstrap";
 import BlockCard from "../BlockCard";
-import {textBlurHandler, textChangeHandler, toggleExpansionHandler} from "../utils";
+import {blockState, textBlurHandler, textChangeHandler, toggleExpansionHandler} from "../utils";
 
 const BLOCK_TYPE = 'input_dynamic_text';
-
-const valueOrDefaultIfStringEmptyOrNull = (value, defaultValue) => (value && value.length > 0) ? value : defaultValue;
 
 class InputDynamicText extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      id: props.data.id,
-      type: props.data.type,
-      expanded: props.data.expanded || false,
-
-      csvVariable: valueOrDefaultIfStringEmptyOrNull(props.data.csvVariable, 'text_column_name'),
-      csvTitleVariable: valueOrDefaultIfStringEmptyOrNull(props.data.csvTitleVariable, 'title_column_name'),
+    this.state = blockState(props, {
+      csvVariable: props.data.csvVariable || '',
+      csvTitleVariable: props.data.csvTitleVariable || '',
       highlightable: props.data.highlightable || false,
       question: props.data.question || '',
-      highlightedCsvVariable: valueOrDefaultIfStringEmptyOrNull(props.data.highlightedCsvVariable, 'highlighted_column_name')
-    };
+      highlightedCsvVariable: props.data.highlightedCsvVariable || ''
+    });
   }
+
+  validate = () => {
+    const data = this.state;
+    if (data.csvVariable === '' || data.csvTitleVariable === '') {
+      return false;
+    }
+
+    return !(data.highlightable && (data.question === '' || data.highlightedCsvVariable === ''));
+  };
 
   onChangeHighlightable = (e) => this.setState(
     {highlightable: e.target.checked},
@@ -31,7 +34,7 @@ class InputDynamicText extends Component {
 
   render() {
     return (
-      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} id={this.state.id} expanded={this.state.expanded}
+      <BlockCard {...this.state} onToggleExpansion={toggleExpansionHandler(this)}
                  title="Input Dynamic Text" type={BLOCK_TYPE} expandable={this.props.expandable}>
         <Row>
           <Col md="12" lg="6">
@@ -40,6 +43,10 @@ class InputDynamicText extends Component {
               <Form.Control name="csvTitleVariable" type="text" value={this.state.csvTitleVariable}
                             onChange={textChangeHandler(this)}
                             onBlur={textBlurHandler(this)}/>
+
+              <Form.Control.Feedback type="invalid">
+                You must provide a CSV column name
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md="12" lg="6">

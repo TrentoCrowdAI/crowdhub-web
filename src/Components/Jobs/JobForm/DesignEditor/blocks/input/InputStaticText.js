@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Form} from "react-bootstrap";
 import {Editor} from '@tinymce/tinymce-react';
 import BlockCard from "../BlockCard";
-import {toggleExpansionHandler} from "../utils";
+import {blockState, toggleExpansionHandler} from "../utils";
 
 const BLOCK_TYPE = 'input_static_text';
 
@@ -10,21 +10,20 @@ class InputStaticText extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      id: props.data.id,
-      type: props.data.type,
-      expanded: props.data.expanded || false,
-
-      text: props.data.text || 'some static text'
-    };
+    this.state = blockState(props, {
+      text: props.data.text || 'some static text',
+      valid: true
+    });
   }
 
-  handleEditorChange = text => this.props.onChange({text});
+  validate = () => true;
+
+  handleEditorChange = text => this.props.onChange({...this.state, text});
 
   render() {
     return (
-      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} expanded={this.state.expanded} id={this.state.id}
-                 title="Input Static Text" type={BLOCK_TYPE} expandable={this.props.expandable}>
+      <BlockCard {...this.state} onToggleExpansion={toggleExpansionHandler(this)} title="Input Static Text"
+                 type={BLOCK_TYPE} expandable={this.props.expandable}>
         <Form.Group>
           <Editor onEditorChange={this.handleEditorChange}
                   initialValue={this.props.data.text}

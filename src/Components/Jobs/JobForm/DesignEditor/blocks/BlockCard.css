@@ -8,6 +8,13 @@
     transition-duration: 0.5s;
 }
 
+.card-header a i.fa-exclamation-triangle {
+    margin-right: .5em;
+    margin-top: .25em;
+}
+
+
 i.fa-caret-down.expanded {
     transform: rotate(180deg);
 }
+

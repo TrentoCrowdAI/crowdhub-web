@@ -24,7 +24,8 @@ export default class BlocksColumn extends Component {
 
                 if (definition) {
                   const Component = definition.Component;
-                  return <Component key={key} data={data} onChange={this.handleBlockDataChange(index)} expandable={this.props.expandable}/>
+                  return <Component key={key} data={data} onChange={this.handleBlockDataChange(index)}
+                                    expandable={this.props.expandable}/>
                 } else {
                   return <ComponentNotFoundError key={key} type={data.type}/>
                 }

@@ -26,6 +26,12 @@ export default class BlockCard extends Component {
           {
             this.props.expandable &&
             <a onClick={this.toggleExpansion}>
+              {
+                /* Hacky: show the warning icon only if card is expandable */
+                this.props.valid === false &&
+                <i className="fas fa-exclamation-triangle"/>
+              }
+
               {this.props.title}
 
               <i className={`fas fa-caret-down ${this.state.expanded ? 'expanded' : 'collapsed'}`}/>

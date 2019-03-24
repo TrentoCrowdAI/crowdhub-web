@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BlockCard from "../BlockCard";
-import {textBlurHandler, textChangeHandler, toggleExpansionHandler} from "../utils";
+import {blockState, textBlurHandler, textChangeHandler, toggleExpansionHandler} from "../utils";
 import {Col, Form, Row} from "react-bootstrap";
 
 const BLOCK_TYPE = "input_dynamic_image";
@@ -9,17 +9,23 @@ class InputDynamicImage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      id: props.data.id,
-      type: props.data.type,
-      expanded: props.data.expanded || false,
+    this.state = blockState(props, {
 
       csvVariable: props.data.csvVariable || '',
       highlightable: props.data.highlightable || false,
       question: props.data.question || '',
       highlightedCsvVariable: props.data.highlightedCsvVariable || ''
-    };
+    });
   }
+
+  validate = () => {
+    const data = this.state;
+    if (data.csvVariable === '') {
+      return false;
+    }
+
+    return !(data.highlightable && (data.question === '' || data.highlightedCsvVariable === ''));
+  };
 
 
   onChangeHighlightable = (e) => this.setState(
@@ -29,7 +35,7 @@ class InputDynamicImage extends Component {
 
   render() {
     return (
-      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} id={this.state.id} expanded={this.state.expanded}
+      <BlockCard {...this.state} onToggleExpansion={toggleExpansionHandler(this)}
                  title="Input Dynamic Image" type={BLOCK_TYPE} expandable={this.props.expandable}>
 
         <Form.Group>

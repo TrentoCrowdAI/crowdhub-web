@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, ButtonToolbar, Col, Form, InputGroup, Row} from "react-bootstrap";
+import {Alert, Button, ButtonToolbar, Col, Form, InputGroup, Row} from "react-bootstrap";
 import {Formik} from "formik";
 import * as Yup from 'yup';
 import {Editor} from '@tinymce/tinymce-react';
@@ -16,12 +16,15 @@ export default class JobForm extends Component {
     this.state = {
       design: (props.jobData && props.jobData.design) || []
     };
+    this.state.designValid = this.isDesignValid();
     this._instructions = (props.jobData && props.jobData.instructions) || '';
   }
 
   handleSubmit = (values, formikBag) => {
-    const job = this.valuesToJobData(values);
-    this.props.onSubmit(job, formikBag)
+    if (this.state.designValid) {
+      const job = this.valuesToJobData(values);
+      this.props.onSubmit(job, formikBag);
+    }
   };
 
   handleEditorChange = (e) => this._instructions = e;
@@ -94,7 +97,12 @@ export default class JobForm extends Component {
     js: Yup.string()
   });
 
-  onDesignChanged = design => this.setState({design});
+  onDesignChanged = design => {
+    const designValid = this.isDesignValid();
+    this.setState({designValid, design});
+  };
+
+  isDesignValid = () => this.state.design.find(block => !block.valid) == null;
 
   render() {
 
@@ -254,7 +262,18 @@ export default class JobForm extends Component {
                     <Form.Label>Design</Form.Label>
                     <DesignEditor initialBlocks={this.state.design} onChange={this.onDesignChanged}/>
                   </Col>
+
                 </Row>
+                {
+                  !this.state.designValid &&
+                  <Row>
+                    <Col>
+                      <Alert variant="danger">
+                        One or more blocks are not correctly configured.
+                      </Alert>
+                    </Col>
+                  </Row>
+                }
 
                 <ButtonToolbar className="form-buttons">
                   {

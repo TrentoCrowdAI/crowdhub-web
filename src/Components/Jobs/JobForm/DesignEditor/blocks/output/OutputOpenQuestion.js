@@ -3,6 +3,7 @@ import {Row, Col, Form} from "react-bootstrap";
 
 import BlockCard from "../BlockCard";
 import {
+  blockState,
   checkboxChangeHandler,
   selectChangeHandler,
   textBlurHandler,
@@ -16,21 +17,19 @@ class OutputOpenQuestion extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      id: props.data.id,
-      type: props.data.type,
-      expanded: props.data.expanded || false,
-
+    this.state = blockState(props, {
       question: props.data.question || '',
       csvVariable: props.data.csvVariable || '',
       required: props.data.required || false,
       size: props.data.size || 'slim'
-    };
+    });
   }
+
+  validate = () => this.state.csvVariable !== '' && this.state.question !== '';
 
   render() {
     return (
-      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} expanded={this.state.expanded} id={this.state.id}
+      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} {...this.state}
                  title="Output Open Question" type={BLOCK_TYPE} expandable={this.props.expandable}>
 
         <Row>

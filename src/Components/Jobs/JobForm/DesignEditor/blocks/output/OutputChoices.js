@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  blockState,
   checkboxChangeHandler,
   selectChangeHandler,
   textBlurHandler,
@@ -15,24 +16,31 @@ class OutputChoices extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      id: props.data.id,
-      type: props.data.type,
-      expanded: props.data.expanded || false,
+    this.state = blockState(props, {
 
       question: props.data.question || '',
       choices: props.data.choices || [],
       csvVariable: props.data.csvVariable || '',
       required: props.data.required || false,
       choice_type: props.data.choice_type || 'multiple_checkbox'
-    };
+    });
   }
 
   onChoicesChanged = choices => this.setState({choices}, () => this.props.onChange(this.state));
 
+  validate = () => {
+    const data = this.state;
+
+    if (data.csvVariable === '' || data.csvTitleVariable === '') {
+      return false;
+    }
+
+    return data.choices.length !== 0;
+  };
+
   render() {
     return (
-      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} expanded={this.state.expanded} id={this.state.id}
+      <BlockCard onToggleExpansion={toggleExpansionHandler(this)} {...this.state}
                  title="Output Choices" type={BLOCK_TYPE} expandable={this.props.expandable}>
         <Form.Row>
           <Col md="12" lg="6">
@@ -105,6 +113,8 @@ class Choices extends Component {
     this.props.onChange(choices);
   };
 
+  isNewChoiceValid = () => this.state.newLabel.trim() !== '' && this.state.newValue.trim() !== '';
+
   render() {
     return (
       <div>
@@ -149,7 +159,7 @@ class Choices extends Component {
             </Form.Group>
           </Col>
           <Col md="12" className="">
-            <Button onClick={this.onAddChoice}>Add</Button>
+            <Button onClick={this.onAddChoice} disabled={!this.isNewChoiceValid()}>Add</Button>
           </Col>
         </Form.Row>
       </div>

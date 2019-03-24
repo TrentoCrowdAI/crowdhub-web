@@ -8,6 +8,8 @@ import "dragula/dist/dragula.css";
 import BlocksColumn from "./BlocksColumn";
 import blockDefinitionsMap from './blocks/definitions';
 
+// Array of all the possible blocks, without any data. This array is used to show the tools column from which the user
+// drags out the tools
 const tools = Object.keys(blockDefinitionsMap).map(type => {
   return {type}
 });
@@ -31,9 +33,7 @@ export default class DesignEditor extends Component {
     this.designBlocksRef = React.createRef();
   }
 
-  componentDidMount() {
-    this.setupDragula();
-  }
+  componentDidMount = () => this.setupDragula();
 
   setupDragula = () => {
     const toolsBlocks = this.toolsBlocksRef.current;
@@ -45,7 +45,11 @@ export default class DesignEditor extends Component {
 
     this.drake = Dragula(containers, {
       copy: (el, source) => source === toolsBlocks,
+
+      // Blocks can be dragged only into the design column
       accepts: (el, target) => target === designBlocks,
+
+      // Removes blocks when they are spilled (this applies only to blocks not copiable)
       removeOnSpill: true
     });
 
