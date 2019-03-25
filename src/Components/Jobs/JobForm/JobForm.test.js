@@ -4,19 +4,7 @@ import {mount} from "enzyme";
 import JobForm from "./JobForm";
 import mockedJobs from '../../../mock-data/jobs';
 import {rewardIntegerToString} from "../utils/job";
-
-
-function expectElementToHaveValue (element, value) {
-  expect(element.prop('value')).toEqual(value);
-}
-
-function expectInputToHaveValue (wrapper, field, value) {
-  expectElementToHaveValue(wrapper.find(`input[name="${field}"]`), value);
-}
-
-function expectTextAreaToHaveValue (wrapper, field, value) {
-  expectElementToHaveValue(wrapper.find(`textarea[name="${field}"]`), value);
-}
+import {expectInputToHaveValue, expectTextAreaToHaveValue} from "../../../testHelpers/inputs";
 
 it('Should call onCancel when the cancel button is pressed', () => {
   const listener = jest.fn();

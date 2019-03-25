@@ -12,6 +12,17 @@ import {Col, Form, Button, Table} from "react-bootstrap";
 
 const BLOCK_TYPE = 'output_choices';
 
+const ChoiceTypes = [{
+  label: 'Multiple choice</',
+  value: 'multiple_checkbox'
+}, {
+  label: 'Single choice radio',
+  value: 'single_radio'
+}, {
+  label: 'Single choice dropdown',
+  value: 'single_dropdown'
+}];
+
 class OutputChoices extends Component {
 
   constructor(props) {
@@ -73,9 +84,11 @@ class OutputChoices extends Component {
               <Form.Label>Choice type</Form.Label>
               <Form.Control as="select" name="choice_type" onChange={selectChangeHandler(this)}
                             value={this.state.choice_type}>
-                <option value="multiple_checkbox">Multiple choice</option>
-                <option value="single_radio">Single choice radio</option>
-                <option value="single_dropdown">Single choice dropdown</option>
+                {
+                  ChoiceTypes.map(choice => (
+                    <option key={choice.value} value={choice.value}>{choice.label}</option>
+                  ))
+                }
               </Form.Control>
             </Form.Group>
           </Col>

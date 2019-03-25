@@ -14,7 +14,6 @@
     "react-dom": "^16.8.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
-    "react-test-renderer": "^16.8.4",
     "tinymce": "^5.0.2",
     "uuid": "^3.3.2",
     "yup": "^0.27.0"
@@ -36,6 +35,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.7.2"
+    "@fortawesome/fontawesome-free": "^5.7.2",
+    "react-test-renderer": "^16.8.5"
   }
 }
