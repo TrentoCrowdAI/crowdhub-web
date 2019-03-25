@@ -43,10 +43,6 @@ class InputDynamicText extends Component {
               <Form.Control name="csvTitleVariable" type="text" value={this.state.csvTitleVariable}
                             onChange={textChangeHandler(this)}
                             onBlur={textBlurHandler(this)}/>
-
-              <Form.Control.Feedback type="invalid">
-                You must provide a CSV column name
-              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md="12" lg="6">

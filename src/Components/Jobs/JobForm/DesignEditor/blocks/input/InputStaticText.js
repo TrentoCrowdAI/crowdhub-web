@@ -11,7 +11,7 @@ class InputStaticText extends Component {
   constructor(props) {
     super(props);
     this.state = blockState(props, {
-      text: props.data.text || 'some static text',
+      text: props.data.text || '',
       valid: true
     });
   }
