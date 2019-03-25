@@ -7,6 +7,7 @@ import {makeCancellable} from "../../../Services/utils";
 import {rewardIntegerToString} from "../utils/job";
 import PublishButtons from "./PublishButtons";
 import BackButton from "../../common/BackButton";
+import {redirectToJobsList} from "../utils/route";
 
 
 export default class ViewJob extends Component {
@@ -26,11 +27,9 @@ export default class ViewJob extends Component {
 
       this.setState({job});
     } catch (e) {
-      this.redirectToJobsList();
+      redirectToJobsList(this);
     }
   }
-
-  redirectToJobsList = () => this.props.history.push('/jobs');
 
   render() {
     if (!this.state.job) {

@@ -4,6 +4,7 @@ import {Container, Row, Col, Alert} from "react-bootstrap";
 import JobsService, {Errors} from "../../../Services/JobsService";
 import JobForm from "../JobForm/JobForm";
 import BackButton from "../../common/BackButton";
+import {redirectToJobsList} from "../utils/route";
 
 export default class EditJob extends Component {
 
@@ -17,8 +18,12 @@ export default class EditJob extends Component {
   componentDidMount = () => this.fetchJob();
 
   fetchJob = async () => {
-    const job = await JobsService.getJob(this.state.id);
-    this.setState({job});
+    try {
+      const job = await JobsService.getJob(this.state.id);
+      this.setState({job});
+    } catch (e) {
+      redirectToJobsList(this);
+    }
   };
 
   handleJobSubmission = async (jobData, {setSubmitting}) => {
