@@ -10,7 +10,7 @@ async function sendAndParseJSON(url, params) {
   return await res.json();
 }
 
-const isResponseOk = (res) => res.status >= 200 && res.status <= 299;
+export const isResponseOk = (res) => res.status >= 200 && res.status <= 299;
 
 export async function getJSON(url, params) {
   return await sendAndParseJSON(url, params);

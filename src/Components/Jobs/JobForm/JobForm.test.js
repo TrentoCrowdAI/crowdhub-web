@@ -4,7 +4,7 @@ import {mount} from "enzyme";
 import JobForm from "./JobForm";
 import mockedJobs from '../../../mock-data/jobs';
 import {rewardIntegerToString} from "../utils/job";
-import {expectInputToHaveValue, expectTextAreaToHaveValue} from "../../../testHelpers/inputs";
+import {expectInputToHaveValue, expectTextAreaToHaveValue, simulateBlurOnAnInput} from "../../../testHelpers/inputs";
 
 it('Should call onCancel when the cancel button is pressed', () => {
   const listener = jest.fn();
@@ -40,7 +40,4 @@ it('Should initialize the form with default values if no job specified', () => {
   expectInputToHaveValue(wrapper, 'num_votes', 3);
   expectInputToHaveValue(wrapper, 'reward', 0.01);
 });
-
-
-// TODO: Tests about validation
 
