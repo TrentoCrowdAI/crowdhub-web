@@ -112,7 +112,8 @@ export default class DesignEditor extends Component {
     return {
       type: element.getAttribute('data-block-type'),
       id: uuid(),
-      expanded: true
+      expanded: true,
+      valid: true
     };
   };
 

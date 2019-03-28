@@ -21,7 +21,7 @@ export default class BlockCard extends Component {
 
   render() {
     return (
-      <Card bg="dark block-card" text="white" data-block-type={this.props.type} data-block-id={this.props.id}>
+      <Card className="block-card" data-block-type={this.props.type} data-block-id={this.props.id}>
         <Card.Header>
           {
             this.props.expandable &&

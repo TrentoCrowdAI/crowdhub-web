@@ -6,6 +6,7 @@ import {
   expectInputToHaveValue,
   simulateBlurOnAnInput
 } from "../../../../../../testHelpers/inputs";
+import {objectClonerWithoutField} from "../../../../../../testHelpers/objects";
 
 const validData ={
   id: '1',
@@ -32,7 +33,6 @@ it('renders the block with the specified data', () => {
 });
 
 
-
 it("renders the block with empty field when data have missing fields", () => {
   const data = {
     id: '1',
@@ -47,15 +47,9 @@ it("renders the block with empty field when data have missing fields", () => {
 
 });
 
-// TODO: Generalize
-const validDataWithoutField = field => {
-  const data = {...validData};
-  delete data[field];
-  return data;
-};
+const validDataWithoutField = objectClonerWithoutField(validData);
 
-// TODO: Generalize
-export const expectInvalidWithoutField = fieldName => {
+const expectInvalidWithoutField = fieldName => {
   const wrapper = mountBlock(validDataWithoutField(fieldName));
 
   simulateBlurOnAnInput(wrapper);

@@ -2,7 +2,7 @@
 
 exports[`renders a collapsed expandable BlockCard 1`] = `
 <div
-  className="card bg-dark block-card text-white"
+  className="block-card card"
   data-block-id="1"
   data-block-type="mock"
 >
@@ -35,7 +35,7 @@ exports[`renders a collapsed expandable BlockCard 1`] = `
 
 exports[`renders a collapsed expandable BlockCard with not valid data 1`] = `
 <div
-  className="card bg-dark block-card text-white"
+  className="block-card card"
   data-block-id="1"
   data-block-type="mock"
 >
@@ -71,7 +71,7 @@ exports[`renders a collapsed expandable BlockCard with not valid data 1`] = `
 
 exports[`renders a collapsed not-expandable BlockCard 1`] = `
 <div
-  className="card bg-dark block-card text-white"
+  className="block-card card"
   data-block-id="1"
   data-block-type="mock"
 >
@@ -104,7 +104,7 @@ exports[`renders a collapsed not-expandable BlockCard 1`] = `
 
 exports[`renders a expanded BlockCard 1`] = `
 <div
-  className="card bg-dark block-card text-white"
+  className="block-card card"
   data-block-id="1"
   data-block-type="mock"
 >

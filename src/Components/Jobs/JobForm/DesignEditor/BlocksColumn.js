@@ -11,9 +11,11 @@ export default class BlocksColumn extends Component {
     this.props.onChange(blocks);
   };
 
+
+
   render() {
     return (
-      <Card border="primary">
+      <Card>
         <Card.Header>{this.props.title}</Card.Header>
         <Card.Body>
           <div className="blocks-container" ref={this.props.componentsContainerRef}>

@@ -133,7 +133,7 @@ class Choices extends Component {
       <div>
         <h5>Choices</h5>
         <hr/>
-        <Table striped bordered hover variant="dark">
+        <Table striped bordered hover >
           <thead>
           <tr>
             <th>Label</th>

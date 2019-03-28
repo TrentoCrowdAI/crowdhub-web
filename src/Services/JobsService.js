@@ -1,4 +1,5 @@
 import {getJSON, postJSON, sendDelete, putJSON} from "./utils";
+import uuid from 'uuid';
 
 export const APP_URL = "http://localhost:4000";
 
@@ -16,6 +17,18 @@ function JSONtoJob(json) {
 
   delete json.data.maxVotes;
   delete json.data.numVotes;
+
+  if (json.data.design) {
+    json.data.design.forEach(block => {
+      // The server may have remove the id of the block, so we generate a new one
+      block.id = block.id || uuid();
+
+      // We consider valid blocks that were stored on the server
+      block.valid = true;
+    });
+  } else {
+    json.data.design = [];
+  }
 
   return json;
 }
