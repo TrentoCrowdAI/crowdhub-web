@@ -42,7 +42,7 @@ class OutputChoices extends Component {
   validate = () => {
     const data = this.state;
 
-    if (data.csvVariable === '' || data.csvTitleVariable === '') {
+    if (data.csvVariable === '' || data.question === '') {
       return false;
     }
 

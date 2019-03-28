@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 
 export const textChangeHandler = component => e => {
   const field = e.target;

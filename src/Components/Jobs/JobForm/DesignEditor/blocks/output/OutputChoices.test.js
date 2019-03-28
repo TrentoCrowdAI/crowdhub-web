@@ -37,7 +37,12 @@ it('renders the block with the specified data', () => {
   expectInputToHaveValue(wrapper, 'csvVariable', validData.csvVariable);
   expectSelectToHaveValue(wrapper, 'choice_type', validData.choice_type);
   expectCheckboxToHaveValue(wrapper, 'required', validData.required);
-  // TODO: Check if the choices are displayed in the table
+
+  const table = wrapper.find('table').html();
+  for (let choice of validData.choices) {
+    expect(table.indexOf(choice.label) >= 0).toBe(true);
+    expect(table.indexOf(choice.value) >= 0).toBe(true);
+  }
 });
 
 
@@ -67,9 +72,20 @@ const expectInvalidWithoutField = fieldName => {
 };
 
 
-
-// TODO: Validation tests
 describe('test the validation', () => {
   it('is invalid if the csvVariable is missing', () =>
     expectInvalidWithoutField('csvVariable'));
+
+  it('is invalid if question is missing', () =>
+    expectInvalidWithoutField('question'));
+
+  it('is invalid if there are no choices', () => {
+    const data = validDataWithoutField('choices');
+    data.choices = [];
+    const wrapper = mountBlock(data);
+
+    simulateBlurOnAnInput(wrapper);
+
+    expect(wrapper.state('valid')).toBe(false);
+  })
 });
