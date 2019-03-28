@@ -1,7 +1,7 @@
 import {getJSON, postJSON, sendDelete, putJSON} from "./utils";
 import uuid from 'uuid';
 
-export const APP_URL = "http://localhost:4000";
+export const APP_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
 export const Errors = {
     INVALID_JOB_DATA: 'invalid_job_data'
