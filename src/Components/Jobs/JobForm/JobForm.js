@@ -107,7 +107,7 @@ export default class JobForm extends Component {
   render() {
 
     return (
-      <div>
+      <div className="job-form-container">
 
         <Formik
           initialValues={this.jobDataToValues(this.props.jobData)}

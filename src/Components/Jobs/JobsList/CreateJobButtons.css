@@ -1,0 +1,24 @@
+
+div.template-card {
+    padding: .5em;
+}
+
+div.template-card .card {
+    height: 100%;
+}
+
+div.template-card .card-body {
+    display: flex;
+    flex-direction: column;
+    padding: .75em;
+}
+
+div.select-template-button-container {
+    width: 100%;
+    display: flex;
+    margin-top: auto;
+}
+
+div.select-template-button-container a {
+    margin-left: auto;
+}

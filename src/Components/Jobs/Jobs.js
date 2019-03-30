@@ -8,7 +8,7 @@ import EditJob from "./EditJob/EditJob";
 export const Jobs = () => (
   <Switch>
     <Route path="/jobs" exact component={JobsList}/>
-    <Route path="/jobs/new" component={CreateJob}/>
+    <Route path="/jobs/new/:template_id" component={CreateJob}/>
     <Route path="/jobs/:id/edit" exact component={EditJob}/>
     <Route path="/jobs/:id" component={ViewJob}/>
   </Switch>

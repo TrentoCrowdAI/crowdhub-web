@@ -4,16 +4,30 @@ import {Alert, Col, Row, Container} from "react-bootstrap";
 import JobsService from "../../../Services/JobsService";
 import JobForm from "../JobForm/JobForm";
 import BackButton from "../../common/BackButton";
+import Templates from "./Templates";
+
+const DEFAULT_TEMPLATE_ID = 'blank';
 
 export default class CreateJob extends Component {
 
-  constructor(props, context) {
+  constructor(props) {
     super(props);
-    this.context = context;
+    const templateId = props.match.params.template_id || DEFAULT_TEMPLATE_ID;
+    const template = Templates[templateId] || Templates[DEFAULT_TEMPLATE_ID];
+
     this.state = {
-      creationError: false
+      creationError: false,
+      jobData: this.buildJobStartingFromTemplate(template)
     }
   }
+
+  buildJobStartingFromTemplate = template => {
+    console.log(template)
+      return {
+        name: `My ${template.name}`,
+        design: template.design
+      }
+  };
 
   render() {
     return (
@@ -29,7 +43,8 @@ export default class CreateJob extends Component {
           <JobCreationFailed/>
         }
 
-        <JobForm onSubmit={this.handleJobSubmission}
+        <JobForm jobData={this.state.jobData}
+          onSubmit={this.handleJobSubmission}
                  onCancel={this.onCancel}
                  submitText="Create"/>
       </Container>
@@ -43,7 +58,6 @@ export default class CreateJob extends Component {
       await JobsService.createJob({data: jobData});
       this.redirectToJobsList();
     } catch (e) {
-      console.log(e);
       this.onJobCreationFailed();
     }
 

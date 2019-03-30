@@ -7,6 +7,7 @@ import JobsService from "../../../Services/JobsService";
 import DeleteJobModal from "./DeleteJobModal";
 import {makeCancellable} from "../../../Services/utils";
 import "./JobsList.css";
+import CreateJobButton from "./CreateJobButton";
 
 export class JobsList extends Component {
 
@@ -60,9 +61,7 @@ export class JobsList extends Component {
             <h2>List</h2>
           </Col>
           <Col className="d-flex flex-row-reverse">
-            <div>
-              <Link to="/jobs/new" className="btn btn-primary">Add</Link>
-            </div>
+            <CreateJobButton/>
           </Col>
         </Row>
         <Row>

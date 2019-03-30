@@ -7,7 +7,7 @@ import "./BackButton.css";
 export default ({to, text}) => (
   <Row>
     <Col>
-      <Link to={to} className="btn btn-outline-info back-button">
+      <Link to={to} className="btn btn-outline-primary back-button">
         <i className="fas fa-arrow-left"/> {text}
       </Link>
     </Col>

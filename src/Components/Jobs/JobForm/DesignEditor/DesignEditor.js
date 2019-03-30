@@ -153,7 +153,7 @@ export default class DesignEditor extends Component {
 
   render() {
     return (
-      <Row>
+      <Row className="job-design-editor-container">
         <Col md="6" lg="4">
           <BlocksColumn componentsContainerRef={this.toolsBlocksRef}
                         title="Available blocks"

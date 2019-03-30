@@ -4,3 +4,9 @@
     margin-right: .5em;
 }
 
+div.job-form-container,
+div.job-design-editor-container {
+    margin-bottom: 1em;
+}
+
+

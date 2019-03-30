@@ -13,7 +13,7 @@ import {Col, Form, Button, Table} from "react-bootstrap";
 const BLOCK_TYPE = 'output_choices';
 
 const ChoiceTypes = [{
-  label: 'Multiple choice</',
+  label: 'Multiple choice',
   value: 'multiple_checkbox'
 }, {
   label: 'Single choice radio',
