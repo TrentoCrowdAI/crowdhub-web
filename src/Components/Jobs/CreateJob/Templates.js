@@ -8,7 +8,7 @@ const Templates = {
       question: "Select which phrase best summarizes the abstract",
       csvVariable: "abstract",
       highlightable: true,
-      csvTitleVariable: "yitle",
+      csvTitleVariable: "title",
       highlightedCsvVariable: "highlighted_parts"
     }, {
       type: "output_choices",

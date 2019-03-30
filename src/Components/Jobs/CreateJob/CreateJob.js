@@ -22,11 +22,10 @@ export default class CreateJob extends Component {
   }
 
   buildJobStartingFromTemplate = template => {
-    console.log(template)
-      return {
-        name: `My ${template.name}`,
-        design: template.design
-      }
+    return {
+      name: `My ${template.name}`,
+      design: template.design
+    }
   };
 
   render() {
@@ -44,7 +43,7 @@ export default class CreateJob extends Component {
         }
 
         <JobForm jobData={this.state.jobData}
-          onSubmit={this.handleJobSubmission}
+                 onSubmit={this.handleJobSubmission}
                  onCancel={this.onCancel}
                  submitText="Create"/>
       </Container>
