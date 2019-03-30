@@ -147,9 +147,9 @@ class Choices extends Component {
               <td>{choice.label}</td>
               <td>{choice.value}</td>
               <td>
-                <a className="icon-button" onClick={() => this.onRemoveChoice(index)}>
+                <button className="icon-button button-link" onClick={() => this.onRemoveChoice(index)}>
                   <i className="fas fa-trash-alt"/>
-                </a>
+                </button>
               </td>
             </tr>
           ))}

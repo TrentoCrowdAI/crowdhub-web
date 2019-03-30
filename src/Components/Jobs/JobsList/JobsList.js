@@ -49,12 +49,11 @@ export class JobsList extends Component {
 
     return (
       <Container>
-        {
-          this.state.jobToDelete &&
-          <DeleteJobModal jobToDelete={this.state.jobToDelete}
-                          onCancel={() => this.setState({jobToDelete: null})}
-                          onConfirmDeletion={this.onUserConfirmDeletion}/>
-        }
+
+        { /* Confirm delete job modal */}
+        <DeleteJobModal jobToDelete={this.state.jobToDelete} show={!!this.state.jobToDelete}
+                        onCancel={() => this.setState({jobToDelete: null})}
+                        onConfirmDeletion={this.onUserConfirmDeletion}/>
 
         <Row>
           <Col>

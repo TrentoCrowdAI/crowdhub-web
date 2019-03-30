@@ -1,14 +1,14 @@
-.card-header a {
+.card-header > div {
     display: flex;
     cursor: pointer;
 }
 
-.card-header a i.fa-caret-down {
+.card-header i.fa-caret-down {
     margin: auto 0 auto auto;
     transition-duration: 0.5s;
 }
 
-.card-header a i.fa-exclamation-triangle {
+.card-header i.fa-exclamation-triangle {
     margin-right: .5em;
     margin-top: .25em;
 }

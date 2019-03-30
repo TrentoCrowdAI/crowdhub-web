@@ -1,30 +1,42 @@
 import React, {Component} from "react";
-import {Button, Col, Row, Modal, Container} from "react-bootstrap";
+import {Button, Col, Row, Modal, Container, ProgressBar} from "react-bootstrap";
 
 import JobsService from "../../../Services/JobsService";
-import {closeAndAfterAnimation} from "../utils/modal";
 import "./PublishButtons.css";
 
 export default class PublishButtons extends Component {
 
   state = {};
 
-  onUserWantsToPublish = publishOn => () => this.setState({publishOn});
+  openConfirmDialogForPlatform = platform => () => this.setState({publishOnPlatform: platform});
 
   publish = async () => {
-    const platform = this.state.publishOn;
-    this.setState({
-      publishOn: null,
-      isPublishing: true
-    });
+    const platform = this.state.publishOnPlatform;
+    this.onPublishing();
 
-    await JobsService.publish(this.props.job, platform);
-
-    this.setState({
-      isPublishing: false,
-      published: true
-    });
+    try {
+      await JobsService.publish(this.props.job, platform);
+      this.onJobPublished();
+    } catch (e) {
+      this.onPublishError();
+    }
   };
+
+  onPublishing = () => this.setState({
+    publishOnPlatform: null, // closes the modal
+    isPublishing: true
+  });
+
+  onJobPublished = () => this.setState({
+    isPublishing: false,
+    published: true
+  });
+
+  onPublishError = () => this.setState({
+    isPublishing: false,
+    publishError: true,
+    published: false
+  });
 
   render() {
     return (
@@ -33,27 +45,34 @@ export default class PublishButtons extends Component {
           <Col><h4>Publish</h4></Col>
         </Row>
 
-        {
-          this.state.publishOn &&
-          <PublishJobModal job={this.props.job}
-                           onCancel={() => this.setState({publishOn: null})}
-                           onConfirm={this.publish}/>
-        }
+        { /* Confirm to publish on platform modal */}
+        <PublishJobModal job={this.props.job} show={!!this.state.publishOnPlatform}
+                         onCancel={() => this.setState({publishOnPlatform: null})}
+                         onConfirm={this.publish}/>
 
-        {
-          this.state.published &&
-          <PublishedModal job={this.props.job}/>
-        }
+        { /* Publishing job modal */}
+        <PublishingModal job={this.props.job} show={this.state.isPublishing}/>
 
+        { /* Job published modal */}
+        <PublishedModal job={this.props.job} show={this.state.published}
+                        onClose={() => this.setState({published: false})}/>
+
+        { /* Error while published job modal */}
+        <PublishFailedModal job={this.props.job} show={this.state.publishError}
+                            onClose={() => this.setState({publishError: false})}/>
+
+        { /* Buttons to select the platform */}
         <Row>
           <Col md="4">
-            <Button onClick={this.onUserWantsToPublish('MTurk')} block>Amazon Mechanical Turk</Button>
+            <Button className="MTurk-publish" onClick={this.openConfirmDialogForPlatform('MTurk')} block>Amazon
+              Mechanical Turk</Button>
           </Col>
           <Col md="4">
-            <Button onClick={this.onUserWantsToPublish('F8')} block>Figure Eight</Button>
+            <Button className="F8-publish" onClick={this.openConfirmDialogForPlatform('F8')} block>Figure Eight</Button>
           </Col>
           <Col md="4">
-            <Button onClick={this.onUserWantsToPublish('Toloka')} block>Yandex.Toloka</Button>
+            <Button className="Toloka-publish" onClick={this.openConfirmDialogForPlatform('Toloka')}
+                    block>Yandex.Toloka</Button>
           </Col>
         </Row>
       </Container>
@@ -61,58 +80,64 @@ export default class PublishButtons extends Component {
   }
 }
 
-class PublishJobModal extends Component {
+export const PublishJobModal = ({show, job, onCancel, onConfirm}) => (
+  <Modal show={show}>
+    <Modal.Header>
+      <Modal.Title>Publish job <span className="job-id">#{job.id}</span></Modal.Title>
+    </Modal.Header>
 
-  state = {show: true};
+    <Modal.Body>
+      Are you sure you want to publish "<strong>{job.data.name}</strong>"?
+    </Modal.Body>
 
-  onCancelPressed = closeAndAfterAnimation(this, () => this.props.onCancel());
+    <Modal.Footer>
+      <Button variant="secondary" className="cancel" onClick={onCancel}>Cancel</Button>
+      <Button variant="primary" className="confirm" onClick={onConfirm}>Publish</Button>
+    </Modal.Footer>
+  </Modal>
+);
 
-  onConfirmPressed = closeAndAfterAnimation(this, () => this.props.onConfirm());
+export const PublishingModal = ({show, job}) => (
+  <Modal show={show}>
+    <Modal.Header>
+      <Modal.Title>Publishing Job #{job.id}</Modal.Title>
+    </Modal.Header>
 
-  render() {
-    const job = this.props.job;
-    return (
-      <Modal show={this.state.show}>
-        <Modal.Header>
-          <Modal.Title>Publish job <span className="job-id">#{job.id}</span></Modal.Title>
-        </Modal.Header>
+    <Modal.Body>
+      Please wait while Job #{job.id} is being published.
+      <ProgressBar animated now={100}/>
+    </Modal.Body>
+  </Modal>
+);
 
-        <Modal.Body>
-          Are you sure you want to publish "<strong>{job.data.name}</strong>"?
-        </Modal.Body>
+export const PublishedModal = ({show, job, onClose}) => (
+  <Modal show={show}>
+    <Modal.Header>
+      <Modal.Title>Job #{job.id} published</Modal.Title>
+    </Modal.Header>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={this.onCancelPressed}>Cancel</Button>
-          <Button variant="primary" onClick={this.onConfirmPressed}>Publish</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+    <Modal.Body>
+      Job "<strong>{job.data.name}</strong>" was published!
+    </Modal.Body>
 
-}
+    <Modal.Footer>
+      <Button variant="primary" onClick={onClose}>Close</Button>
+    </Modal.Footer>
+  </Modal>
+);
 
-class PublishedModal extends Component {
+export const PublishFailedModal = ({show, job, onClose}) => (
+  <Modal show={show}>
+    <Modal.Header>
+      <Modal.Title>Something went wrong</Modal.Title>
+    </Modal.Header>
 
-  state = {show: true};
+    <Modal.Body>
+      Something went wrong while publishing Job #{job.id}.
+    </Modal.Body>
 
-  onClose = closeAndAfterAnimation(this, () => {});
-
-  render() {
-    const job = this.props.job;
-    return (
-      <Modal show={this.state.show}>
-        <Modal.Header>
-          <Modal.Title>Job #{job.id} published</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          Job "<strong>{job.data.name}</strong>" was published!
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="primary" onClick={this.onClose}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-}
+    <Modal.Footer>
+      <Button variant="primary" onClick={onClose}>Close</Button>
+    </Modal.Footer>
+  </Modal>
+);

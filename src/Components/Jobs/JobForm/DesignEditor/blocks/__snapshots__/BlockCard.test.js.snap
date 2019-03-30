@@ -9,14 +9,16 @@ exports[`renders a collapsed expandable BlockCard 1`] = `
   <div
     className="card-header"
   >
-    <a
+    <div
       onClick={[Function]}
     >
-      Mocked Block
+      <div>
+        Mocked Block
+      </div>
       <i
         className="fas fa-caret-down collapsed"
       />
-    </a>
+    </div>
   </div>
   <div
     aria-expanded={null}
@@ -42,17 +44,19 @@ exports[`renders a collapsed expandable BlockCard with not valid data 1`] = `
   <div
     className="card-header"
   >
-    <a
+    <div
       onClick={[Function]}
     >
-      <i
-        className="fas fa-exclamation-triangle"
-      />
-      Mocked Block
+      <div>
+        <i
+          className="fas fa-exclamation-triangle"
+        />
+        Mocked Block
+      </div>
       <i
         className="fas fa-caret-down collapsed"
       />
-    </a>
+    </div>
   </div>
   <div
     aria-expanded={null}
@@ -78,14 +82,16 @@ exports[`renders a collapsed not-expandable BlockCard 1`] = `
   <div
     className="card-header"
   >
-    <a
+    <div
       onClick={[Function]}
     >
-      Mocked Block
+      <div>
+        Mocked Block
+      </div>
       <i
         className="fas fa-caret-down collapsed"
       />
-    </a>
+    </div>
   </div>
   <div
     aria-expanded={null}
@@ -111,14 +117,16 @@ exports[`renders a expanded BlockCard 1`] = `
   <div
     className="card-header"
   >
-    <a
+    <div
       onClick={[Function]}
     >
-      Mocked Block
+      <div>
+        Mocked Block
+      </div>
       <i
         className="fas fa-caret-down expanded"
       />
-    </a>
+    </div>
   </div>
   <div
     aria-expanded={null}
