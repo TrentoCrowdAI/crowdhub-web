@@ -8,6 +8,7 @@ import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./AppBar";
 import {Jobs} from "./Jobs/Jobs";
 
+const BASENAME = process.env.REACT_APP_BASENAME || "";
 
 export default class Layout extends Component {
 
@@ -17,7 +18,7 @@ export default class Layout extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={BASENAME}>
         <div className="wrapper">
           {/* Left collapsable sidebar */}
           <Sidebar sidebarOpen={this.state.sidebarOpen}/>

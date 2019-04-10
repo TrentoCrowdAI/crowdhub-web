@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Col, Row, Modal, Container, ProgressBar} from "react-bootstrap";
+import {Button, Col, Container, Modal, ProgressBar, Row} from "react-bootstrap";
 
 import JobsService from "../../../Services/JobsService";
 import "./PublishButtons.css";
@@ -117,7 +117,7 @@ export const PublishedModal = ({show, job, onClose}) => (
     </Modal.Header>
 
     <Modal.Body>
-      Job "<strong>{job.data.name}</strong>" was published!
+      Job "<strong>{job.data.name}</strong>" published!
     </Modal.Body>
 
     <Modal.Footer>
