@@ -1,48 +1,51 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
-import {Alert, Col, Container, Row, Table} from "react-bootstrap";
+import {Alert, Breadcrumb, Col, Container, Row, Table} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
-import JobsService from "../../../Services/JobsService";
-import DeleteJobModal from "./DeleteJobModal";
+import ProjectsService from "../../../Services/ProjectsService";
+import DeleteProjectModal from "./DeleteProjectModal";
 import {makeCancellable} from "../../../Services/utils";
-import "./JobsList.css";
-import CreateJobButton from "./CreateJobButton";
+import "./ProjectsList.css";
+import {PROJECTS_PATH} from "../Projects";
+import {SimpleBreadcrumb} from "../../common/Breadcrumbs";
+
 
 export class ProjectsList extends Component {
 
   state = {};
 
-  componentDidMount = () => this.fetchJobs();
+  componentDidMount = () => this.fetchProjects();
 
-  componentWillUnmount = () => this.pendingJobsRequest.cancel();
+  componentWillUnmount = () => this.pendingProjectsRequest.cancel();
 
-  async fetchJobs() {
+  async fetchProjects() {
     try {
-      this.pendingJobsRequest = makeCancellable(JobsService.getProjects());
-      const jobs = await this.pendingJobsRequest.result;
+      this.pendingProjectsRequest = makeCancellable(ProjectsService.getProjects());
+      const projects = await this.pendingProjectsRequest.result;
 
-      this.setState({jobs});
+      this.setState({projects});
     } catch (e) {
       this.setState({
-        jobs: null,
+        projects: null,
         fetchError: true
       });
     }
   }
 
-  onUserWantToDeleteJob = (job) => this.setState({jobToDelete: job});
+  onUserWantToDeleteProject = (projectToDelete) => this.setState({projectToDelete});
 
-  onOpenJobView = (job) => this.props.history.push(`/jobs/${job.id}`);
+  onOpenProjectView = (project) => this.props.history.push(`${PROJECTS_PATH}/${project.id}`);
 
-  onOpenEditJob = (job) => this.props.history.push(`/jobs/${job.id}/edit`);
+  onOpenEditProject = (project) => this.props.history.push(`${PROJECTS_PATH}/${project.id}/edit`);
 
   onUserConfirmDeletion = async () => {
-    const job = this.state.jobToDelete;
-    this.setState({jobs: null, jobToDelete: null});
+    const project = this.state.projectToDelete;
+    this.setState({projects: null, projectToDelete: null});
 
-    await JobsService.deleteProject(job);
+    await ProjectsService.deleteProject(project);
 
-    await this.fetchJobs();
+    await this.fetchProjects();
   };
 
   render() {
@@ -50,41 +53,45 @@ export class ProjectsList extends Component {
     return (
       <Container>
 
-        { /* Confirm delete job modal */}
-        <DeleteJobModal jobToDelete={this.state.jobToDelete} show={!!this.state.jobToDelete}
-                        onCancel={() => this.setState({jobToDelete: null})}
+        { /* Confirm delete project modal */}
+        <DeleteProjectModal projectToDelete={this.state.projectToDelete} show={!!this.state.projectToDelete}
+                        onCancel={() => this.setState({projectToDelete: null})}
                         onConfirmDeletion={this.onUserConfirmDeletion}/>
+
+        <Breadcrumb>
+          <SimpleBreadcrumb>Projects</SimpleBreadcrumb>
+        </Breadcrumb>
 
         <Row>
           <Col>
-            <h2>List</h2>
+            <h3>Projects list</h3>
           </Col>
           <Col className="d-flex flex-row-reverse">
-            <CreateJobButton/>
+            <Link className="btn btn-primary" to={`${PROJECTS_PATH}/new`}>New</Link>
           </Col>
         </Row>
         <Row>
           {
-            !this.state.jobs && !this.state.fetchError &&
-            <FetchingJobs/>
+            !this.state.projects && !this.state.fetchError &&
+            <FetchingProjects/>
           }
 
           {
-            !this.state.jobs && this.state.fetchError &&
-            <FetchJobsError/>
+            !this.state.projects && this.state.fetchError &&
+            <FetchProjectsError/>
           }
 
           {
-            this.state.jobs && this.state.jobs.length === 0 &&
-            <NoJobs/>
+            this.state.projects && this.state.projects.length === 0 &&
+            <NoProjects/>
           }
 
           {
-            this.state.jobs && this.state.jobs.length > 0 &&
-            <JobsTable jobs={this.state.jobs}
-                       onUserWantToDeleteJob={this.onUserWantToDeleteJob}
-                       onOpenJobView={this.onOpenJobView}
-                       onOpenEditJob={this.onOpenEditJob}/>
+            this.state.projects && this.state.projects.length > 0 &&
+            <ProjectsTable projects={this.state.projects}
+                           onUserWantToDeleteProject={this.onUserWantToDeleteProject}
+                           onOpenProjectView={this.onOpenProjectView}
+                           onOpenEditProject={this.onOpenEditProject}/>
           }
 
         </Row>
@@ -93,47 +100,45 @@ export class ProjectsList extends Component {
   }
 }
 
-export const FetchingJobs = () => (
+export const FetchingProjects = () => (
   <Col>
-    <p>Fetching jobs ...</p>
+    <p>Fetching projects ...</p>
   </Col>
 );
 
-export const NoJobs = () => (
+export const NoProjects = () => (
   <Col>
-    <p>You haven't created any jobs yet. Use the 'Add' button to create a new one</p>
+    <p>You haven't created any project yet. Use the 'Add' button to create a new one</p>
   </Col>
 );
 
-export const FetchJobsError = () => (
+export const FetchProjectsError = () => (
   <Col>
     <Container>
       <Alert variant="danger">
-        There's been an error while fetching the jobs
+        There's been an error while fetching the projects
       </Alert>
     </Container>
   </Col>
 );
 
-export const JobsTable = ({jobs, onUserWantToDeleteJob, onOpenJobView, onOpenEditJob}) => (
+export const ProjectsTable = ({projects, onUserWantToDeleteProject, onOpenProjectView, onOpenEditProject}) => (
   <Col>
-    <h1>Jobs</h1>
     <Table hover>
       <thead>
       <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Description</th>
-        <th>Platforms</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
-      {jobs.map(job => (
-        <JobsTableRow job={job} key={job.id}
-                      onUserWantToDeleteJob={onUserWantToDeleteJob}
-                      onOpenEditJob={onOpenEditJob}
-                      onOpenJobView={onOpenJobView}/>
+      {projects.map(project => (
+        <ProjectsTableRow project={project} key={project.id}
+                          onUserWantToDeleteProject={onUserWantToDeleteProject}
+                          onOpenEditProject={onOpenEditProject}
+                          onOpenProjectView={onOpenProjectView}/>
       ))}
       </tbody>
     </Table>
@@ -146,21 +151,20 @@ const ignoreEventAnd = (callback) => (e) => {
   callback();
 };
 
-export const JobsTableRow = ({job, onUserWantToDeleteJob, onOpenJobView, onOpenEditJob}) => (
-  <tr onClick={() => onOpenJobView(job)} className="clickable-row">
-    <td>{job.id}</td>
-    <td>{job.data.name}</td>
-    <td>{job.data.description}</td>
-    <td/>
+export const ProjectsTableRow = ({project, onUserWantToDeleteProject, onOpenProjectView, onOpenEditProject}) => (
+  <tr onClick={() => onOpenProjectView(project)} className="clickable-row">
+    <td>{project.id}</td>
+    <td>{project.data.name}</td>
+    <td>{project.data.description}</td>
     <td>
 
       <a className="icon-button"
-         onClick={ignoreEventAnd(() => onOpenEditJob(job))}>
+         onClick={ignoreEventAnd(() => onOpenEditProject(project))}>
         <i className="fas fa-edit"/>
       </a>
 
       <a className="icon-button"
-         onClick={ignoreEventAnd(() => onUserWantToDeleteJob(job))}>
+         onClick={ignoreEventAnd(() => onUserWantToDeleteProject(project))}>
         <i className="fas fa-trash-alt"/>
       </a>
     </td>

@@ -1,5 +1,5 @@
-import mockedJobs from '../mock-data/jobs';
-import JobsService, {APP_URL} from "./JobsService";
+import mockedProjects from '../mock-data/projects';
+import ProjectsService, {APP_URL} from "./ProjectsService";
 
 function mockFetchToReturnJson(object) {
   jest.spyOn(global, 'fetch').mockImplementation(() => {
@@ -12,51 +12,51 @@ function mockFetchToReturnJson(object) {
   });
 }
 
-describe('get list of jobs', () => {
-  it('should send a GET to /jobs and return the array of jobs', async () => {
-    mockFetchToReturnJson(mockedJobs);
-    const res = await JobsService.getProjects();
+describe('get list of projects', () => {
+  it('should send a GET to /jobs and return the array of projects', async () => {
+    mockFetchToReturnJson(mockedProjects);
+    const res = await ProjectsService.getProjects();
 
     expect(fetch).toHaveBeenCalled();
-    expect(res).toEqual(mockedJobs);
+    expect(res).toEqual(mockedProjects);
   });
 });
 
-describe('get a single job', function () {
-  it('should send a GET to /jobs/:id and return the job', async () => {
-    const job = mockedJobs[0];
-    mockFetchToReturnJson(job);
-    const res = await JobsService.getProject(job.id);
+describe('get a single project', function () {
+  it('should send a GET to /jobs/:id and return the project', async () => {
+    const project = mockedProjects[0];
+    mockFetchToReturnJson(project);
+    const res = await ProjectsService.getProject(project.id);
 
     expect(fetch).toHaveBeenCalled();
-    expect(res).toEqual(job);
+    expect(res).toEqual(project);
   });
 });
 
 
-describe('create new job', () => {
-  it('should send a POST to /job', async () => {
-    const job = mockedJobs[0];
-    mockFetchToReturnJson(mockedJobs);
-    await JobsService.createProject(job);
+describe('create new project', () => {
+  it('should send a POST to /projects', async () => {
+    const project = mockedProjects[0];
+    mockFetchToReturnJson(mockedProjects);
+    await ProjectsService.createProject(project);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/jobs`, {
+    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/projects`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(job)
+      body: JSON.stringify(project)
     });
   });
 });
 
 
-describe('delete a job', () => {
-  it('should send a PUT to/job/:id', async () => {
-    const job = mockedJobs[0];
-    mockFetchToReturnJson(mockedJobs);
-    await JobsService.deleteProject(job);
+describe('delete a project', () => {
+  it('should send a PUT to /projects/:id', async () => {
+    const project = mockedProjects[0];
+    mockFetchToReturnJson(mockedProjects);
+    await ProjectsService.deleteProject(project);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/jobs/${job.id}`, {method: 'DELETE'});
+    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/projects/${project.id}`, {method: 'DELETE'});
   });
 });

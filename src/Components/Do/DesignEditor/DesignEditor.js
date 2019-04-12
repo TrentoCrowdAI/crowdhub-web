@@ -153,7 +153,7 @@ export default class DesignEditor extends Component {
 
   render() {
     return (
-      <Row className="job-design-editor-container">
+      <Row className="project-design-editor-container">
         <Col md="6" lg="4">
           <BlocksColumn componentsContainerRef={this.toolsBlocksRef}
                         title="Available blocks"
@@ -164,7 +164,7 @@ export default class DesignEditor extends Component {
 
         <Col md="6" lg="8">
           <BlocksColumn componentsContainerRef={this.designBlocksRef}
-                        title="Your job design"
+                        title="Your project design"
                         blockDefinitionsMap={blockDefinitionsMap}
                         blocksList={this.props.initialBlocks}
                         expandable={true}

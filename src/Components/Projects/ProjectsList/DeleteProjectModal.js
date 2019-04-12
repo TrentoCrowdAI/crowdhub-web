@@ -1,14 +1,14 @@
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
 
-export default ({show, jobToDelete, onCancel, onConfirmDeletion}) => (
+export default ({show, projectToDelete, onCancel, onConfirmDeletion}) => (
   <Modal show={show}>
     <Modal.Header>
-      <Modal.Title>Delete job <span className="job-id">#{show && jobToDelete.id}</span></Modal.Title>
+      <Modal.Title>Delete project <span className="project-id">#{show && projectToDelete.id}</span></Modal.Title>
     </Modal.Header>
 
     <Modal.Body>
-      Are you sure you want to delete "<strong>{show && jobToDelete.data.name}</strong>"?
+      Are you sure you want to delete "<strong>{show && projectToDelete.data.name}</strong>"?
     </Modal.Body>
 
     <Modal.Footer>

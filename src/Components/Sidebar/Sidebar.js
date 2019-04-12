@@ -12,8 +12,8 @@ export default class Sidebar extends Component {
 
         <ListGroup as="ul">
           <ListGroup.Item as="li" className="sidebar-link">
-            <NavLink to="/jobs">
-              Jobs
+            <NavLink to="/projects">
+              Projects
             </NavLink>
           </ListGroup.Item>
         </ListGroup>

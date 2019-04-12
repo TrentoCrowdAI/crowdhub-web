@@ -1,86 +1,93 @@
 import React from 'react';
 import {mount, shallow} from "enzyme";
-import {FetchingJobs, JobsList, NoJobs, JobsTable, FetchJobsError, JobsTableRow} from "./ProjectsList";
+import {
+  FetchingProjects,
+  FetchProjectsError,
+  NoProjects,
+  ProjectsList,
+  ProjectsTable,
+  ProjectsTableRow
+} from "./ProjectsList";
 import {MemoryRouter} from "react-router-dom";
-import JobsService from "../../../Services/JobsService";
-import mockedJobs from "../../../mock-data/jobs";
+import ProjectsService from "../../../Services/ProjectsService";
+import mockedProjects from "../../../mock-data/projects";
 
-describe("should fetch the list of jobs", () => {
+describe("should fetch the list of projects", () => {
 
-  async function mountJobsList() {
+  async function mountProjectsList() {
     return await mount(
-      <MemoryRouter initialEntries={['jobs']}>
-        <JobsList match={{url: '/jobs'}}/>
+      <MemoryRouter initialEntries={['projects']}>
+        <ProjectsList match={{url: '/projects'}}/>
       </MemoryRouter>
     )
   }
 
-  function mockGetJobsToReturn(result) {
-    const getJobs = jest.fn(() => new Promise(resolve => resolve(result)));
-    JobsService.getJobs = getJobs;
-    return getJobs;
+  function mockGetProjectsToReturn(result) {
+    const getProjects = jest.fn(() => new Promise(resolve => resolve(result)));
+    ProjectsService.getProjects = getProjects;
+    return getProjects;
   }
 
-  function mockGetJobsToFail() {
-    const getJobs = jest.fn(() => new Promise(() => {
-      throw new Error("can't fetch jobs");
+  function mockGetProjectsToFail() {
+    const getProjects = jest.fn(() => new Promise(() => {
+      throw new Error("can't fetch projects");
     }));
-    JobsService.getJobs = getJobs;
-    return getJobs;
+    ProjectsService.getProjects = getProjects;
+    return getProjects;
   }
 
 
   it('shows a loading message while loading', async () => {
-    const getJobs = mockGetJobsToReturn([]);
-    const wrapper = await mountJobsList();
+    const getProjects = mockGetProjectsToReturn([]);
+    const wrapper = await mountProjectsList();
 
-    expect(getJobs).toHaveBeenCalled();
-    expect(wrapper.find(FetchingJobs).length).toBe(1);
+    expect(getProjects).toHaveBeenCalled();
+    expect(wrapper.find(FetchingProjects).length).toBe(1);
 
   });
 
   it('shows a loading message while loading', async () => {
-    const getJobs = mockGetJobsToReturn([]);
-    const wrapper = await mountJobsList();
+    const getProjects = mockGetProjectsToReturn([]);
+    const wrapper = await mountProjectsList();
 
-    expect(getJobs).toHaveBeenCalled();
+    expect(getProjects).toHaveBeenCalled();
 
     wrapper.update();
 
-    expect(wrapper.find(NoJobs).length).toBe(1);
+    expect(wrapper.find(NoProjects).length).toBe(1);
   });
 
 
-  it('shows the list of jobs after loading', async () => {
-    const getJobs = mockGetJobsToReturn(mockedJobs);
-    const wrapper = await mountJobsList();
+  it('shows the list of projects after loading', async () => {
+    const getProjects = mockGetProjectsToReturn(mockedProjects);
+    const wrapper = await mountProjectsList();
 
-    expect(getJobs).toHaveBeenCalled();
+    expect(getProjects).toHaveBeenCalled();
 
     wrapper.update();
 
-    expect(wrapper.find(JobsTable).length).toBe(1);
+    expect(wrapper.find(ProjectsTable).length).toBe(1);
   });
 
-  test.skip("shows an error if jobs can't be loaded", async () => {
-    const getJobs = mockGetJobsToFail();
-    const wrapper = await mountJobsList();
+  test.skip("shows an error if projects can't be loaded", async () => {
+    const getProjects = mockGetProjectsToFail();
+    const wrapper = await mountProjectsList();
 
-    expect(getJobs).toHaveBeenCalled();
+    expect(getProjects).toHaveBeenCalled();
 
     wrapper.update();
 
-    expect(wrapper.find(FetchJobsError).length).toBe(1);
+    expect(wrapper.find(FetchProjectsError).length).toBe(1);
   });
 });
 
-describe('table should show jobs data', () => {
+describe('table should show project data', () => {
 
 
-  it('renders a row for each job', () => {
-    const wrapper = shallow(<JobsTable jobs={mockedJobs}/>);
+  it('renders a row for each project', () => {
+    const wrapper = shallow(<ProjectsTable projects={mockedProjects}/>);
 
-    expect(wrapper.find(JobsTableRow).length).toEqual(mockedJobs.length);
+    expect(wrapper.find(ProjectsTableRow).length).toEqual(mockedProjects.length);
   });
 
 });

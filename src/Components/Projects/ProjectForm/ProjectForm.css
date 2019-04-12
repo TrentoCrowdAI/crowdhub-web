@@ -1,11 +1,13 @@
 
-.form-buttons button:first-child {
-    margin-left: auto;
-    margin-right: .5em;
+.form-buttons a:first-child {
+    margin-right: auto;
 }
 
-div.job-form-container,
-div.job-design-editor-container {
+.form-buttons button.submit-project-form {
+    max-height: 38px;
+}
+
+div.project-form-container {
     margin-bottom: 1em;
 }
 

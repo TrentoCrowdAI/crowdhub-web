@@ -1,4 +1,4 @@
-import {rewardFloatToInteger, rewardIntegerToString} from "./job";
+import {rewardFloatToInteger, rewardIntegerToString} from "./do";
 
 describe('test functions to convert rewards from user representation to data', () => {
 

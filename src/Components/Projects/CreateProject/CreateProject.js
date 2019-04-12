@@ -1,78 +1,65 @@
 import React, {Component} from 'react';
-import {Alert, Col, Row, Container} from "react-bootstrap";
+import {Alert, Breadcrumb, Col, Container, Row} from "react-bootstrap";
 
-import JobsService from "../../../Services/JobsService";
-import ProjectForm from "../ProjectForm/JobForm";
-import BackButton from "../../common/BackButton";
-import Templates from "./Templates";
-
-const DEFAULT_TEMPLATE_ID = 'blank';
+import ProjectsService from "../../../Services/ProjectsService";
+import ProjectForm from "../ProjectForm/ProjectForm";
+import {PROJECTS_PATH} from "../Projects";
+import {LinkBreadcrumb, SimpleBreadcrumb} from "../../common/Breadcrumbs";
 
 export default class CreateProject extends Component {
 
-  constructor(props) {
-    super(props);
-    const templateId = props.match.params.template_id || DEFAULT_TEMPLATE_ID;
-    const template = Templates[templateId] || Templates[DEFAULT_TEMPLATE_ID];
-
-    this.state = {
-      creationError: false,
-      jobData: this.buildJobStartingFromTemplate(template)
-    }
-  }
-
-  buildJobStartingFromTemplate = template => {
-    return {
-      name: `My ${template.name}`,
-      design: template.design
-    }
+  state = {
+    creationError: false
   };
 
   render() {
     return (
       <Container>
-        <BackButton to="/jobs" text="Return to jobs list"/>
+        <Breadcrumb>
+          <LinkBreadcrumb to={PROJECTS_PATH}>Projects</LinkBreadcrumb>
+          <SimpleBreadcrumb>New</SimpleBreadcrumb>
+        </Breadcrumb>
 
         <Row>
-          <Col><h1>Create new job</h1></Col>
+          <Col><h1>Create new project</h1></Col>
         </Row>
 
         {
           this.state.creationError &&
-          <JobCreationFailed/>
+          <ProjectCreationFailed/>
         }
 
-        <ProjectForm jobData={this.state.jobData}
-                     onSubmit={this.handleJobSubmission}
-                     onCancel={this.onCancel}
+        <ProjectForm cancelButtonUrlDestination={PROJECTS_PATH}
+                     cancelText="Back to Projects"
+                     onSubmit={this.handleProjectSubmission}
                      submitText="Create"/>
       </Container>
     );
   }
 
-  handleJobSubmission = async (jobData, {setSubmitting}) => {
+  handleProjectSubmission = async (projectData, {setSubmitting}) => {
     setSubmitting(true);
 
     try {
-      await JobsService.createProject({data: jobData});
-      this.redirectToJobsList();
+      await ProjectsService.createProject({data: projectData});
+      this.redirectToProjectsList();
     } catch (e) {
-      this.onJobCreationFailed();
+      this.onProjectCreationFailed();
     }
 
     setSubmitting(false);
   };
 
-  onJobCreationFailed = () => this.setState({creationError: true});
+  onProjectCreationFailed = () => this.setState({creationError: true});
 
-  redirectToJobsList = () => this.props.history.push('/jobs');
+  redirectToProjectsList = () => this.props.history.push(PROJECTS_PATH);
 
 }
 
-export const JobCreationFailed = () => (
+export const ProjectCreationFailed = () => (
   <Col>
     <Alert variant="danger">
-      There's been an error while creating the job
+      There's been an error while creating the project
     </Alert>
   </Col>
 );

@@ -3,7 +3,8 @@ import InputDynamicText from "./InputDynamicText";
 import {mount} from "enzyme";
 import {
   expectCheckboxToHaveValue,
-  expectInputToHaveValue, simulateBlurOnAnInput
+  expectInputToHaveValue,
+  simulateBlurOnAnInput
 } from "../../../../../testHelpers/inputs";
 import {objectClonerWithoutField} from "../../../../../testHelpers/objects";
 

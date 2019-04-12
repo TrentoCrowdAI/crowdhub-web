@@ -6,8 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./AppBar";
-import {Projects} from "./Projects/Projects";
-import {PROJECTS_PATH} from "./Projects/Projects";
+import {Projects, PROJECTS_PATH} from "./Projects/Projects";
 
 const BASENAME = process.env.REACT_APP_BASENAME || "";
 

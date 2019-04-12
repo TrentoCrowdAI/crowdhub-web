@@ -1,40 +1,40 @@
-import JobsService from '../../../Services/JobsService';
+import ProjectsService from '../../../Services/ProjectsService';
 import {mount} from "enzyme";
 import EditProject from "./EditProject";
 import React from "react";
 import {MemoryRouter} from "react-router-dom";
 import {createMockForServiceMethod} from "../../../testHelpers/services";
-import mockedJobs from '../../../mock-data/jobs';
+import mockedProjects from '../../../mock-data/projects';
 
-function mockUpdateJobToFail() {
-  const updateJob = jest.fn(() => new Promise(() => {
-    throw new Error("can't update jobs");
+function mockUpdateProjectToFail() {
+  const updateProject = jest.fn(() => new Promise(() => {
+    throw new Error("can't update project");
   }));
-  JobsService.updateJob = updateJob;
-  return updateJob;
+  ProjectsService.updateProject = updateProject;
+  return updateProject;
 }
 
-const mockGetJobToReturn = createMockForServiceMethod(JobsService, 'getProject');
+const mockGetProjectToReturn = createMockForServiceMethod(ProjectsService, 'getProject');
 
-async function mountEditJob() {
+async function mountEditProject() {
   return await mount(
-    <MemoryRouter initialEntries={['jobs', '1', 'edit']}>
-      <EditProject match={{url: '/jobs/edit', params: {id: 1}}}/>
+    <MemoryRouter initialEntries={['projects', '1', 'edit']}>
+      <EditProject match={{url: '/projects/edit', params: {id: 1}}}/>
     </MemoryRouter>
   )
 }
 
 
 
-it("should show an error if the job can't be updated", async () => {
-  const job = mockedJobs[0];
-  mockGetJobToReturn(job);
-  const updateJob = mockUpdateJobToFail();
-  const wrapper = await mountEditJob();
+it("should show an error if the project can't be updated", async () => {
+  const project = mockedProjects[0];
+  mockGetProjectToReturn(project);
+  const updateProject = mockUpdateProjectToFail();
+  const wrapper = await mountEditProject();
 
   wrapper.update();
-  const editJobComponent = wrapper.find(EditProject).instance();
-  await editJobComponent.handleJobSubmission(job.data, {setSubmitting: () => null});
+  const editProjectComponent = wrapper.find(EditProject).instance();
+  await editProjectComponent.handleProjectSubmission(project.data, {setSubmitting: () => null});
 
-  expect(updateJob).toHaveBeenCalled();
+  expect(updateProject).toHaveBeenCalled();
 });

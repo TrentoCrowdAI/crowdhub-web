@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
-import {Container, Row, Col, Alert} from "react-bootstrap";
+import {Alert, Breadcrumb, Col, Container, Row} from "react-bootstrap";
 
-import JobsService, {Errors} from "../../../Services/JobsService";
-import ProjectForm from "../ProjectForm/JobForm";
-import BackButton from "../../common/BackButton";
-import {redirectToJobsList} from "../utils/route";
+import ProjectsService from "../../../Services/ProjectsService";
+import ProjectForm from "../ProjectForm/ProjectForm";
+import {redirectToProjectsList} from "../utils/route";
+import {PROJECTS_PATH} from "../Projects";
+import {LinkBreadcrumb, SimpleBreadcrumb} from "../../common/Breadcrumbs";
 
 export default class EditProject extends Component {
+
+  state = {};
 
   constructor(props) {
     super(props);
@@ -15,67 +18,75 @@ export default class EditProject extends Component {
     };
   }
 
-  componentDidMount = () => this.fetchJob();
+  componentDidMount = () => this.fetchProject();
 
-  fetchJob = async () => {
+  fetchProject = async () => {
     try {
-      const job = await JobsService.getProject(this.state.id);
-      this.setState({job});
+      const project = await ProjectsService.getProject(this.state.id);
+      this.setState({project});
     } catch (e) {
-      redirectToJobsList(this);
+      redirectToProjectsList(this);
     }
   };
 
-  handleJobSubmission = async (jobData, {setSubmitting}) => {
+  handleProjectSubmission = async (projectData, {setSubmitting}) => {
     setSubmitting(true);
 
     try {
-      await JobsService.updateProject({
-        id: this.state.job.id,
-        data: jobData
+      await ProjectsService.updateProject({
+        id: this.state.project.id,
+        data: projectData
       });
-      this.returnToJobPage();
+      this.returnToProjectPage();
     } catch (e) {
-      this.onUpdateJobFailed(e);
+      this.onUpdateProjectFailed(e);
     }
 
     setSubmitting(false);
   };
 
-  onCancel = () => this.returnToJobPage();
+  onCancel = () => this.returnToProjectPage();
 
-  returnToJobPage = () => this.props.history.push(`/jobs/${this.state.job.id}`);
+  returnToProjectPage = () => this.props.history.push(`${PROJECTS_PATH}/${this.state.project.id}`);
 
-  onUpdateJobFailed = (e) => this.setState({updateError: e});
+  onUpdateProjectFailed = (e) => this.setState({updateError: e});
 
   render() {
     return (
       <Container>
-        <BackButton to={`/jobs/${this.state.id}`} text="Cancel"/>
+
+        <Breadcrumb>
+          <LinkBreadcrumb to={PROJECTS_PATH}>Projects</LinkBreadcrumb>
+          <LinkBreadcrumb to={`${PROJECTS_PATH}/${this.props.match.params.id}`}>
+            {this.state.project ? this.state.project.data.name : '...'}
+          </LinkBreadcrumb>
+          <SimpleBreadcrumb>Edit</SimpleBreadcrumb>
+        </Breadcrumb>
 
         <Row>
           <Col>
-            <h1>
-              Edit job {this.state.job && `#${this.state.id}`}
-            </h1>
+            <h4>
+              Edit project {this.state.project && this.state.project.data.name}
+            </h4>
           </Col>
         </Row>
 
         {
           this.state.updateError &&
-          <UpdateJobError error={this.state.updateError}/>
+          <UpdateProjectError error={this.state.updateError}/>
         }
 
         {
-          !this.state.job &&
-          <FetchingJob/>
+          !this.state.project &&
+          <FetchingProject/>
         }
         {
-          this.state.job &&
-          <ProjectForm jobData={this.state.job.data}
-                       onSubmit={this.handleJobSubmission}
-                       onCancel={this.onCancel}
-                       submitText="Save"/>
+          this.state.project &&
+          <ProjectForm projectData={this.state.project.data}
+                       onSubmit={this.handleProjectSubmission}
+                       submitText="Save"
+                       cancelText="Back to Project"
+                       cancelButtonUrlDestination={`${PROJECTS_PATH}/${this.state.project.id}`}/>
         }
       </Container>
     );
@@ -83,20 +94,15 @@ export default class EditProject extends Component {
 
 }
 
-function FetchingJob() {
-  return (<p>Fetching job...</p>);
+function FetchingProject() {
+  return (<p>Fetching Project...</p>);
 }
 
 
-export const UpdateJobError = ({error}) => (
+export const UpdateProjectError = ({error}) => (
   <Col>
     <Alert variant="danger">
-      {
-        error === Errors.INVALID_JOB_DATA ?
-          "Validation of the Job failer. Please check all the data" :
-          "There's been an error while creating the job"
-      }
-
+      There's been an updating the project.
     </Alert>
   </Col>
 );

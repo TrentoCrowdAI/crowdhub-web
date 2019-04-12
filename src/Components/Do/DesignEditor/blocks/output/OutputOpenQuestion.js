@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Col, Form} from "react-bootstrap";
+import {Col, Form, Row} from "react-bootstrap";
 
 import BlockCard from "../BlockCard";
 import {

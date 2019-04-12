@@ -4,7 +4,8 @@ import {mount} from "enzyme";
 import {
   expectCheckboxToHaveValue,
   expectInputToHaveValue,
-  expectSelectToHaveValue, simulateBlurOnAnInput
+  expectSelectToHaveValue,
+  simulateBlurOnAnInput
 } from "../../../../../testHelpers/inputs";
 import {objectClonerWithoutField} from "../../../../../testHelpers/objects";
 
