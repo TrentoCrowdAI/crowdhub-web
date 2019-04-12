@@ -9,6 +9,7 @@ import {makeCancellable} from "../../../Services/utils";
 import "./ProjectsList.css";
 import {PROJECTS_PATH} from "../Projects";
 import {SimpleBreadcrumb} from "../../common/Breadcrumbs";
+import {ignoreEventAnd} from "../../utils/events";
 
 
 export class ProjectsList extends Component {
@@ -145,11 +146,7 @@ export const ProjectsTable = ({projects, onUserWantToDeleteProject, onOpenProjec
   </Col>
 );
 
-const ignoreEventAnd = (callback) => (e) => {
-  e.stopPropagation();
-  //e.preventDefault();
-  callback();
-};
+
 
 export const ProjectsTableRow = ({project, onUserWantToDeleteProject, onOpenProjectView, onOpenEditProject}) => (
   <tr onClick={() => onOpenProjectView(project)} className="clickable-row">
