@@ -1,5 +1,6 @@
 import mockedProjects from '../mock-data/projects';
-import ProjectsService, {APP_URL} from "./ProjectsService";
+import ProjectsService from "./ProjectsService";
+import {APP_URL} from "../config";
 
 function mockFetchToReturnJson(object) {
   jest.spyOn(global, 'fetch').mockImplementation(() => {

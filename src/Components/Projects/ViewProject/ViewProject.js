@@ -7,6 +7,7 @@ import ProjectsService from "../../../Services/ProjectsService";
 import {makeCancellable} from "../../../Services/utils";
 import {redirectToProjectsList} from "../utils/route";
 import {PROJECTS_PATH} from "../Projects";
+import EmbeddableWorkflowsList from "../../Workflows/WorkflowsList/EmbeddableWorkflowsList";
 
 
 export default class ViewProject extends Component {
@@ -49,6 +50,8 @@ export default class ViewProject extends Component {
           this.state.project &&
           <Row>
             <ProjectData project={this.state.project}/>
+            <hr style={{width: '100%'}}/>
+            <EmbeddableWorkflowsList project={this.state.project}/>
           </Row>
         }
 
@@ -62,7 +65,6 @@ const FetchingProject = () => (<p>Fetching ...</p>);
 function ProjectData({project}) {
   return (
     <Container>
-
 
       <Row>
 

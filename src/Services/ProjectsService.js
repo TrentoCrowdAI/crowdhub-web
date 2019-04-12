@@ -1,10 +1,11 @@
 import {getJSON, postJSON, putJSON, sendDelete} from "./utils";
+import {APP_URL} from "../config";
 
-export const APP_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
+
 const PROJECTS_URL = `${APP_URL}/projects`;
 
 export const Errors = {
-    INVALID_PROJECT_DATA: 'invalid_project_data'
+    INVALID_WORKFLOW_DATA: 'invalid_project_data'
 };
 
 function JSONtoProject(json) {
@@ -16,9 +17,6 @@ function JSONtoProject(json) {
 }
 
 function projectToJSON(job) {
-  job.data.maxVotes = job.data.max_votes;
-  job.data.numVotes = job.data.num_votes;
-
   return job;
 }
 
@@ -33,15 +31,15 @@ export default {
     return JSONtoProject(jsonJob);
   },
 
-  async createProject(job) {
-    const json = projectToJSON(job);
+  async createProject(project) {
+    const json = projectToJSON(project);
     return await postJSON(`${PROJECTS_URL}`, json);
   },
 
-  async updateProject(job) {
+  async updateProject(project) {
     try {
-      const json = projectToJSON(job);
-      return await putJSON(`${PROJECTS_URL}/${job.id}`, json);
+      const json = projectToJSON(project);
+      return await putJSON(`${PROJECTS_URL}/${project.id}`, json);
     } catch (e) {
       if (e.response === 400) {
         throw new Error(Errors.INVALID_PROJECT_DATA);
@@ -51,8 +49,8 @@ export default {
     }
   },
 
-  async deleteProject(job) {
-    return await sendDelete(`${PROJECTS_URL}/${job.id}`);
+  async deleteProject(project) {
+    return await sendDelete(`${PROJECTS_URL}/${project.id}`);
   },
 
 }
