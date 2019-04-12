@@ -4,12 +4,12 @@ import {Formik} from "formik";
 import * as Yup from 'yup';
 import {Editor} from '@tinymce/tinymce-react';
 
-import {rewardFloatToInteger, rewardIntegerToString} from '../utils/job';
+import {rewardFloatToInteger, rewardIntegerToString} from '../../Do/utils/job';
 import "./JobForm.css";
 import DesignEditor from "./DesignEditor/DesignEditor";
 
 
-export default class JobForm extends Component {
+export default class ProjectForm extends Component {
 
   constructor(props) {
     super(props);

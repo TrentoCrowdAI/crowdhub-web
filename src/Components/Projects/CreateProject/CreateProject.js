@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {Alert, Col, Row, Container} from "react-bootstrap";
 
 import JobsService from "../../../Services/JobsService";
-import JobForm from "../JobForm/JobForm";
+import ProjectForm from "../ProjectForm/JobForm";
 import BackButton from "../../common/BackButton";
 import Templates from "./Templates";
 
 const DEFAULT_TEMPLATE_ID = 'blank';
 
-export default class CreateJob extends Component {
+export default class CreateProject extends Component {
 
   constructor(props) {
     super(props);
@@ -42,10 +42,10 @@ export default class CreateJob extends Component {
           <JobCreationFailed/>
         }
 
-        <JobForm jobData={this.state.jobData}
-                 onSubmit={this.handleJobSubmission}
-                 onCancel={this.onCancel}
-                 submitText="Create"/>
+        <ProjectForm jobData={this.state.jobData}
+                     onSubmit={this.handleJobSubmission}
+                     onCancel={this.onCancel}
+                     submitText="Create"/>
       </Container>
     );
   }
@@ -54,7 +54,7 @@ export default class CreateJob extends Component {
     setSubmitting(true);
 
     try {
-      await JobsService.createJob({data: jobData});
+      await JobsService.createProject({data: jobData});
       this.redirectToJobsList();
     } catch (e) {
       this.onJobCreationFailed();

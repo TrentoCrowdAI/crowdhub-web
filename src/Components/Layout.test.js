@@ -2,7 +2,7 @@ import React from "react";
 import {mount} from "enzyme";
 import MemoryRouter from "react-router-dom/MemoryRouter";
 import Layout from "./Layout";
-import {Jobs} from "./Jobs/Jobs";
+import {Projects} from "./Projects/Jobs";
 
 it("should redirect to '/jobs' if no other route is found", () => {
   const wrapper = mount(
@@ -11,7 +11,7 @@ it("should redirect to '/jobs' if no other route is found", () => {
     </MemoryRouter>
   );
 
-  expect(wrapper.find(Jobs).length).toBe(1);
+  expect(wrapper.find(Projects).length).toBe(1);
 
 });
 

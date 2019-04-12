@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {Container, Row, Col, Alert} from "react-bootstrap";
 
 import JobsService, {Errors} from "../../../Services/JobsService";
-import JobForm from "../JobForm/JobForm";
+import ProjectForm from "../ProjectForm/JobForm";
 import BackButton from "../../common/BackButton";
 import {redirectToJobsList} from "../utils/route";
 
-export default class EditJob extends Component {
+export default class EditProject extends Component {
 
   constructor(props) {
     super(props);
@@ -19,7 +19,7 @@ export default class EditJob extends Component {
 
   fetchJob = async () => {
     try {
-      const job = await JobsService.getJob(this.state.id);
+      const job = await JobsService.getProject(this.state.id);
       this.setState({job});
     } catch (e) {
       redirectToJobsList(this);
@@ -30,7 +30,7 @@ export default class EditJob extends Component {
     setSubmitting(true);
 
     try {
-      await JobsService.updateJob({
+      await JobsService.updateProject({
         id: this.state.job.id,
         data: jobData
       });
@@ -72,10 +72,10 @@ export default class EditJob extends Component {
         }
         {
           this.state.job &&
-          <JobForm jobData={this.state.job.data}
-                   onSubmit={this.handleJobSubmission}
-                   onCancel={this.onCancel}
-                   submitText="Save"/>
+          <ProjectForm jobData={this.state.job.data}
+                       onSubmit={this.handleJobSubmission}
+                       onCancel={this.onCancel}
+                       submitText="Save"/>
         }
       </Container>
     );

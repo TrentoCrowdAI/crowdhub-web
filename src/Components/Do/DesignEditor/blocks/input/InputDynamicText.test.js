@@ -4,8 +4,8 @@ import {mount} from "enzyme";
 import {
   expectCheckboxToHaveValue,
   expectInputToHaveValue, simulateBlurOnAnInput
-} from "../../../../../../testHelpers/inputs";
-import {objectClonerWithoutField} from "../../../../../../testHelpers/objects";
+} from "../../../../../testHelpers/inputs";
+import {objectClonerWithoutField} from "../../../../../testHelpers/objects";
 
 const validData = {
   id: '1',

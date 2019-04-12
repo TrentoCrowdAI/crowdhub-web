@@ -1,6 +1,6 @@
 import JobsService from '../../../Services/JobsService';
 import {mount} from "enzyme";
-import EditJob from "./EditJob";
+import EditProject from "./EditProject";
 import React from "react";
 import {MemoryRouter} from "react-router-dom";
 import {createMockForServiceMethod} from "../../../testHelpers/services";
@@ -14,12 +14,12 @@ function mockUpdateJobToFail() {
   return updateJob;
 }
 
-const mockGetJobToReturn = createMockForServiceMethod(JobsService, 'getJob');
+const mockGetJobToReturn = createMockForServiceMethod(JobsService, 'getProject');
 
 async function mountEditJob() {
   return await mount(
     <MemoryRouter initialEntries={['jobs', '1', 'edit']}>
-      <EditJob match={{url: '/jobs/edit', params: {id: 1}}}/>
+      <EditProject match={{url: '/jobs/edit', params: {id: 1}}}/>
     </MemoryRouter>
   )
 }
@@ -33,7 +33,7 @@ it("should show an error if the job can't be updated", async () => {
   const wrapper = await mountEditJob();
 
   wrapper.update();
-  const editJobComponent = wrapper.find(EditJob).instance();
+  const editJobComponent = wrapper.find(EditProject).instance();
   await editJobComponent.handleJobSubmission(job.data, {setSubmitting: () => null});
 
   expect(updateJob).toHaveBeenCalled();

@@ -1,14 +1,14 @@
 import React from 'react';
 import {mount} from "enzyme";
 
-import JobForm from "./JobForm";
+import ProjectForm from "./JobForm";
 import mockedJobs from '../../../mock-data/jobs';
-import {rewardIntegerToString} from "../utils/job";
+import {rewardIntegerToString} from "../../Do/utils/job";
 import {expectInputToHaveValue, expectTextAreaToHaveValue, simulateBlurOnAnInput} from "../../../testHelpers/inputs";
 
 it('Should call onCancel when the cancel button is pressed', () => {
   const listener = jest.fn();
-  const wrapper = mount(<JobForm onCancel={listener} cancelText="Cancel"/>);
+  const wrapper = mount(<ProjectForm onCancel={listener} cancelText="Cancel"/>);
 
   wrapper.find('button.cancel-job-form').simulate('click');
 
@@ -17,7 +17,7 @@ it('Should call onCancel when the cancel button is pressed', () => {
 
 it('Should initialize the form with previous values', () => {
   const job = mockedJobs[0].data;
-  const wrapper = mount(<JobForm jobData={job}/>);
+  const wrapper = mount(<ProjectForm jobData={job}/>);
 
 
   expectInputToHaveValue(wrapper, 'name', job.name);
@@ -30,7 +30,7 @@ it('Should initialize the form with previous values', () => {
 
 
 it('Should initialize the form with default values if no job specified', () => {
-  const wrapper = mount(<JobForm/>);
+  const wrapper = mount(<ProjectForm/>);
 
 
   expectInputToHaveValue(wrapper, 'name', '');

@@ -6,7 +6,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./AppBar";
-import {Jobs} from "./Jobs/Jobs";
+import {Projects} from "./Projects/Projects";
+import {PROJECTS_PATH} from "./Projects/Projects";
 
 const BASENAME = process.env.REACT_APP_BASENAME || "";
 
@@ -28,8 +29,8 @@ export default class Layout extends Component {
             <AppBar onToggleSidebar={this.onToggleSidebar}/>
 
             <Switch>
-              <Route path="/jobs" component={Jobs}/>
-              <Route render={() => (<Redirect to="/jobs"/>)}/>
+              <Route path={`${PROJECTS_PATH}`} component={Projects}/>
+              <Route render={() => (<Redirect to={`${PROJECTS_PATH}`}/>)}/>
             </Switch>
           </div>
         </div>

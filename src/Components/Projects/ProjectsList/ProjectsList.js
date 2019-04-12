@@ -8,7 +8,7 @@ import {makeCancellable} from "../../../Services/utils";
 import "./JobsList.css";
 import CreateJobButton from "./CreateJobButton";
 
-export class JobsList extends Component {
+export class ProjectsList extends Component {
 
   state = {};
 
@@ -18,7 +18,7 @@ export class JobsList extends Component {
 
   async fetchJobs() {
     try {
-      this.pendingJobsRequest = makeCancellable(JobsService.getJobs());
+      this.pendingJobsRequest = makeCancellable(JobsService.getProjects());
       const jobs = await this.pendingJobsRequest.result;
 
       this.setState({jobs});
@@ -40,7 +40,7 @@ export class JobsList extends Component {
     const job = this.state.jobToDelete;
     this.setState({jobs: null, jobToDelete: null});
 
-    await JobsService.deleteJob(job);
+    await JobsService.deleteProject(job);
 
     await this.fetchJobs();
   };

@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import JobsService from "../../../Services/JobsService";
 import {makeCancellable} from "../../../Services/utils";
-import {rewardIntegerToString} from "../utils/job";
+import {rewardIntegerToString} from "../../Do/utils/job";
 import PublishButtons from "./PublishButtons";
 import BackButton from "../../common/BackButton";
 import {redirectToJobsList} from "../utils/route";
@@ -22,7 +22,7 @@ export default class ViewJob extends Component {
     const id = this.props.match.params.id;
 
     try {
-      this.pendingJobRequest = makeCancellable(JobsService.getJob(id));
+      this.pendingJobRequest = makeCancellable(JobsService.getProject(id));
       const job = await this.pendingJobRequest.result;
 
       this.setState({job});
