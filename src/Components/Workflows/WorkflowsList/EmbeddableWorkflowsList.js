@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
-import {Container, Col, Row, Button, Alert, Table} from "react-bootstrap";
+import {Alert, Col, Container, Row, Table} from "react-bootstrap";
 
 import {makeCancellable} from "../../../Services/utils";
 import WorkflowsService from "../../../Services/WorkflowsService";
+import {CreateWorkflowButton} from "./CreateWorkflow";
 
 export default class EmbeddableWorkflowsList extends Component {
 
 
   constructor(props) {
     super(props);
-    this.state = {};
-    this.projectId = props.project.id;
+    this.state = {
+      projectId: props.project.id
+    };
   }
 
   componentDidMount = () => this.fetchWorkflows();
@@ -19,8 +21,10 @@ export default class EmbeddableWorkflowsList extends Component {
 
 
   async fetchWorkflows() {
+    this.setState({workflows: null});
+
     try {
-      const promise = WorkflowsService.getWorkflowsOfProject(this.projectId);
+      const promise = WorkflowsService.getWorkflowsOfProject(this.state.projectId);
       this.pendingWorkflowsRequest = makeCancellable(promise);
       const workflows = await this.pendingWorkflowsRequest.result;
 
@@ -33,6 +37,8 @@ export default class EmbeddableWorkflowsList extends Component {
     }
   }
 
+  onWorkflowCreated = () => this.fetchWorkflows();
+
   render() {
     return (
       <Container>
@@ -40,7 +46,7 @@ export default class EmbeddableWorkflowsList extends Component {
           <Col><h5>Workflows</h5></Col>
           <Col className="d-flex flex-row-reverse">
             <div>
-              <Button>Add workflow</Button>
+              <CreateWorkflowButton projectId={this.state.projectId} onWorkflowCreated={this.onWorkflowCreated}/>
             </div>
           </Col>
         </Row>
@@ -94,7 +100,7 @@ const WorkflowsTable = ({workflows}) => (
     <tbody>
     {
       workflows.map(workflow => (
-          <WorkflowsTableRow workflow={workflow} key={workflow.id}/>
+        <WorkflowsTableRow workflow={workflow} key={workflow.id}/>
       ))
     }
     </tbody>

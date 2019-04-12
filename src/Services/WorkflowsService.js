@@ -9,6 +9,9 @@ export const Errors = {
 };
 
 function JSONtoWorkflow(json) {
+  json.projectId = json.id_project;
+  delete json.id_project;
+
   json.created_at = new Date(json.created_at);
   json.updated_at = new Date(json.updated_at);
   json.deleted_ad = new Date(json.deleted_ad);
@@ -16,9 +19,11 @@ function JSONtoWorkflow(json) {
   return json;
 }
 
-function workflowToJSON(job) {
+function workflowToJSON(workflow) {
+  workflow.id_project = workflow.projectId;
+  delete workflow.projectId;
 
-  return job;
+  return workflow;
 }
 
 export default {
