@@ -3,7 +3,7 @@ import {Alert, Button, ButtonToolbar, Col, Form, Modal, Row} from "react-bootstr
 import {Formik} from "formik";
 import * as Yup from "yup";
 
-import WorkflowsService from "../../../Services/WorkflowsService";
+import WorkflowsService from "../../../../Services/WorkflowsService";
 import './CreateWorkflow.css';
 
 

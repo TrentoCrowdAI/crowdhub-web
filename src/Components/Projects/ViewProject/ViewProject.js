@@ -68,7 +68,7 @@ function ProjectData({project}) {
 
       <Row>
 
-        <Col><h4>Project {project.data.name}</h4></Col>
+        <Col><h2>{project.data.name}</h2></Col>
         <Col className="d-flex flex-row-reverse">
           <div>
             <Link to={`${PROJECTS_PATH}/${project.id}/edit`} className="btn btn-primary">Edit</Link>

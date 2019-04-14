@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router} from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./AppBar";
-import {Projects, PROJECTS_PATH} from "./Projects/Projects";
+import AppRouter from "./AppRouter";
 
 const BASENAME = process.env.REACT_APP_BASENAME || "";
 
@@ -27,10 +27,7 @@ export default class Layout extends Component {
           <div className="content">
             <AppBar onToggleSidebar={this.onToggleSidebar}/>
 
-            <Switch>
-              <Route path={`${PROJECTS_PATH}`} component={Projects}/>
-              <Route render={() => (<Redirect to={`${PROJECTS_PATH}`}/>)}/>
-            </Switch>
+            <AppRouter/>
           </div>
         </div>
       </Router>

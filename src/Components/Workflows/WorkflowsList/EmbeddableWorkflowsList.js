@@ -4,9 +4,8 @@ import {Alert, Col, Container, Row, Table} from "react-bootstrap";
 
 import {makeCancellable} from "../../../Services/utils";
 import WorkflowsService from "../../../Services/WorkflowsService";
-import {CreateWorkflowButton} from "./CreateWorkflow";
-import {ignoreEventAnd} from "../../utils/events";
-import DeleteWorkflowModal from "./DeleteWorkflowModal";
+import {CreateWorkflowButton} from "./CreateWorkflow/CreateWorkflow";
+import {WorkflowsTable} from "./WorkflowsTable";
 
 export default class EmbeddableWorkflowsList extends Component {
 
@@ -22,8 +21,7 @@ export default class EmbeddableWorkflowsList extends Component {
 
   componentWillUnmount = () => this.pendingWorkflowsRequest.cancel();
 
-
-  async fetchWorkflows() {
+  fetchWorkflows = async () => {
     this.setState({workflows: null});
 
     try {
@@ -38,18 +36,9 @@ export default class EmbeddableWorkflowsList extends Component {
         fetchError: true
       });
     }
-  }
-
-  onWorkflowCreated = () => this.fetchWorkflows();
-
-  onUserWantToDeleteWorkflow = (workflowToDelete) => this.setState({workflowToDelete});
-
-  onWorkflowDeleted = async () => {
-    this.hideDeleteWorkflowModal();
-    await this.fetchWorkflows();
   };
 
-  hideDeleteWorkflowModal = () => this.setState({workflowToDelete: null});
+  onWorkflowCreated = () => this.fetchWorkflows();
 
   render() {
     return (
@@ -62,11 +51,6 @@ export default class EmbeddableWorkflowsList extends Component {
             </div>
           </Col>
         </Row>
-
-        { /* Confirm delete workflow modal */}
-        <DeleteWorkflowModal workflowToDelete={this.state.workflowToDelete} show={!!this.state.workflowToDelete}
-                             onCancel={this.hideDeleteWorkflowModal}
-                             onWorkflowDeleted={this.onWorkflowDeleted}/>
 
         <Row>
           <Col>
@@ -83,7 +67,7 @@ export default class EmbeddableWorkflowsList extends Component {
             {
               this.state.workflows &&
               <WorkflowsTable workflows={this.state.workflows}
-                              onUserWantToDeleteWorkflow={this.onUserWantToDeleteWorkflow}/>
+                              onWorkflowDeleted={this.fetchWorkflows}/>
             }
           </Col>
         </Row>
@@ -103,39 +87,4 @@ const FetchingWorkflowsError = () => (
       </Alert>
     </Container>
   </Col>
-);
-
-const WorkflowsTable = ({workflows, onUserWantToDeleteWorkflow}) => (
-  <Table hover>
-    <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {
-      workflows.map(workflow => (
-        <WorkflowsTableRow workflow={workflow} key={workflow.id}
-                           onUserWantToDeleteWorkflow={onUserWantToDeleteWorkflow}/>
-      ))
-    }
-    </tbody>
-  </Table>
-);
-
-const WorkflowsTableRow = ({workflow, onUserWantToDeleteWorkflow}) => (
-  <tr>
-    <td>{workflow.id}</td>
-    <td>{workflow.data.name}</td>
-    <td>{workflow.data.description}</td>
-    <td>
-      <a className="icon-button"
-         onClick={ignoreEventAnd(() => onUserWantToDeleteWorkflow(workflow))}>
-        <i className="fas fa-trash-alt"/>
-      </a>
-    </td>
-  </tr>
 );

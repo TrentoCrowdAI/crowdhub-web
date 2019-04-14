@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
 
-export default ({show, projectToDelete, onCancel, onConfirmDeletion}) => (
+export default ({show, deleting, projectToDelete, onCancel, onConfirmDeletion}) => (
   <Modal show={show}>
     <Modal.Header>
       <Modal.Title>Delete project <span className="project-id">#{show && projectToDelete.id}</span></Modal.Title>
@@ -12,8 +12,8 @@ export default ({show, projectToDelete, onCancel, onConfirmDeletion}) => (
     </Modal.Body>
 
     <Modal.Footer>
-      <Button variant="secondary" onClick={onCancel}>Cancel</Button>
-      <Button variant="danger" onClick={onConfirmDeletion}>Delete</Button>
+      <Button variant="secondary" onClick={onCancel} disabled={deleting}>Cancel</Button>
+      <Button variant="danger" onClick={onConfirmDeletion}  disabled={deleting}>Delete</Button>
     </Modal.Footer>
   </Modal>
 );

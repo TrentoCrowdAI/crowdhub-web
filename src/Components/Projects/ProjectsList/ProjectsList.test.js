@@ -4,13 +4,12 @@ import {
   FetchingProjects,
   FetchProjectsError,
   NoProjects,
-  ProjectsList,
-  ProjectsTable,
-  ProjectsTableRow
+  ProjectsList
 } from "./ProjectsList";
 import {MemoryRouter} from "react-router-dom";
 import ProjectsService from "../../../Services/ProjectsService";
 import mockedProjects from "../../../mock-data/projects";
+import {ProjectsTable, ProjectsTableRow} from "./ProjectsTable";
 
 describe("should fetch the list of projects", () => {
 
