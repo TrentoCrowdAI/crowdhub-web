@@ -44,7 +44,7 @@ export default class EmbeddableWorkflowsList extends Component {
     return (
       <Container>
         <Row>
-          <Col><h5>Workflows</h5></Col>
+          <Col><h3>Workflows</h3></Col>
           <Col className="d-flex flex-row-reverse">
             <div>
               <CreateWorkflowButton projectId={this.state.projectId} onWorkflowCreated={this.onWorkflowCreated}/>

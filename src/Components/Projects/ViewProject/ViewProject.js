@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import {Breadcrumb, Col, Container, Row} from "react-bootstrap";
+import {Breadcrumb, Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../common/Breadcrumbs";
 import ProjectsService from "../../../Services/ProjectsService";
@@ -8,6 +8,7 @@ import {makeCancellable} from "../../../Services/utils";
 import {redirectToProjectsList} from "../utils/route";
 import {PROJECTS_PATH} from "../Projects";
 import EmbeddableWorkflowsList from "../../Workflows/WorkflowsList/EmbeddableWorkflowsList";
+import {EmbeddableItemsImporter} from "../../Items/ItemsImporter/EmbeddableItemsImporter";
 
 
 export default class ViewProject extends Component {
@@ -50,8 +51,19 @@ export default class ViewProject extends Component {
           this.state.project &&
           <Row>
             <ProjectData project={this.state.project}/>
-            <hr style={{width: '100%'}}/>
-            <EmbeddableWorkflowsList project={this.state.project}/>
+
+            <div style={{width: '100%'}}>
+              <hr/>
+
+              <Tabs defaultActiveKey="workflow">
+                <Tab eventKey="workflow" title="Workflows">
+                  <EmbeddableWorkflowsList project={this.state.project}/>
+                </Tab>
+                <Tab eventKey="items" title="Items">
+                  <EmbeddableItemsImporter project={this.state.project}/>
+                </Tab>
+              </Tabs>
+            </div>
           </Row>
         }
 
