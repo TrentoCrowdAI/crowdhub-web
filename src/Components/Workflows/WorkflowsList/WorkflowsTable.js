@@ -3,6 +3,8 @@ import {Table} from "react-bootstrap";
 
 import {ignoreEventAnd} from "../../utils/events";
 import DeleteWorkflowModal from "./DeleteWorkflowModal";
+import {WORKFLOWS_PATH} from "../Workflows";
+import {Link} from "react-router-dom";
 
 export const WorkflowsTable = ({workflows, onWorkflowDeleted}) => (
   <Table hover>
@@ -36,6 +38,7 @@ class WorkflowsTableRow extends Component {
 
   render() {
     const workflow = this.props.workflow;
+    const openWorkflowLink = `${WORKFLOWS_PATH}/${workflow.id}`;
 
     return (
       <tr>
@@ -44,8 +47,12 @@ class WorkflowsTableRow extends Component {
                              onCancel={this.onUserCancelDeletion}
                              onWorkflowDeleted={this.props.onWorkflowDeleted}/>
 
-        <td>{workflow.id}</td>
-        <td>{workflow.data.name}</td>
+        <td>
+          <Link to={openWorkflowLink}>{workflow.id}</Link>
+        </td>
+        <td>
+          <Link to={openWorkflowLink}>{workflow.data.name}</Link>
+        </td>
         <td>{workflow.data.description}</td>
         <td>
           <a className="icon-button"
