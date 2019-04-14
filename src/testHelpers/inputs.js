@@ -23,4 +23,3 @@ export function expectSelectToHaveValue (wrapper, field, value) {
 }
 
 export const simulateBlurOnAnInput = wrapper => wrapper.find('input').first().simulate('blur');
-
