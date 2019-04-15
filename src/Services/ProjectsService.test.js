@@ -1,17 +1,7 @@
 import mockedProjects from '../mock-data/projects';
 import ProjectsService from "./ProjectsService";
 import {APP_URL} from "../config";
-
-function mockFetchToReturnJson(object) {
-  jest.spyOn(global, 'fetch').mockImplementation(() => {
-    return new Promise(resolve => resolve({
-      status: 200,
-      async json() {
-        return object
-      }
-    }))
-  });
-}
+import {mockFetchToReturnJson} from "../testHelpers/services";
 
 describe('get list of projects', () => {
   it('should send a GET to /jobs and return the array of projects', async () => {
@@ -53,7 +43,7 @@ describe('create new project', () => {
 
 
 describe('delete a project', () => {
-  it('should send a PUT to /projects/:id', async () => {
+  it('should send a DELETE to /projects/:id', async () => {
     const project = mockedProjects[0];
     mockFetchToReturnJson(mockedProjects);
     await ProjectsService.deleteProject(project);

@@ -4,8 +4,9 @@ button.button-link {
 }
 
 /* Tables */
-tr.clickable-row {
-  cursor: pointer;
+td > a,
+td > a:hover {
+  color: black;
 }
 
 /* Forms */

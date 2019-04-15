@@ -1,4 +1,4 @@
-import {getJSON, postJSON, putJSON, sendDelete} from "./utils";
+import {getJSON, postJSON, sendDelete} from "./utils";
 import {APP_URL} from "../config";
 
 
@@ -32,17 +32,12 @@ export default {
     return jsonList.map(JSONtoWorkflow);
   },
 
-  async getWorkflow(id) {
-    const jsonJob = await getJSON(`${WORKFLOWS_URL}/${id}`);
-    return JSONtoWorkflow(jsonJob);
-  },
-
   async createWorkflow(workflow) {
     const json = workflowToJSON(workflow);
     return await postJSON(`${WORKFLOWS_URL}`, json);
   },
 
-  async updateWorkflow(workflow) {
+ /* async updateWorkflow(workflow) {
     try {
       const json = workflowToJSON(workflow);
       return await putJSON(`${WORKFLOWS_URL}/${workflow.id}`, json);
@@ -54,7 +49,7 @@ export default {
       }
     }
   },
-
+*/
   async deleteWorkflow(workflow) {
     return await sendDelete(`${WORKFLOWS_URL}/${workflow.id}`);
   },

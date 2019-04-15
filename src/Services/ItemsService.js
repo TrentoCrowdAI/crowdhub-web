@@ -1,9 +1,10 @@
-import {getJSON, postJSON, putJSON, sendDelete} from "./utils";
+import {postJSON} from "./utils";
 import {APP_URL} from "../config";
 
 
 const ITEMS_URL = `${APP_URL}/items`;
 
+/*
 function JSONtoItem(json) {
   json.created_at = new Date(json.created_at);
   json.updated_at = new Date(json.updated_at);
@@ -15,6 +16,7 @@ function JSONtoItem(json) {
 function itemToJSON(job) {
   return job;
 }
+*/
 
 export default {
 
@@ -26,7 +28,7 @@ export default {
     return await postJSON(ITEMS_URL, json);
   },
 
-  async getItems() {
+/*  async getItems() {
     const jsonList = await getJSON(ITEMS_URL);
     return jsonList.map(JSONtoItem);
   },
@@ -39,6 +41,6 @@ export default {
 
   async deleteItem(item) {
     return await sendDelete(`${ITEMS_URL}/${item.id}`);
-  },
+  },*/
 
 }

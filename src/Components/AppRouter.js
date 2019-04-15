@@ -2,8 +2,7 @@ import React from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 
 import {Projects, PROJECTS_PATH} from "./Projects/Projects";
-import {WORKFLOWS_PATH} from "./Workflows/Workflows";
-import Workflows from "./Workflows/Workflows";
+import Workflows, {WORKFLOWS_PATH} from "./Workflows/Workflows";
 
 export default () => (
   <Switch>

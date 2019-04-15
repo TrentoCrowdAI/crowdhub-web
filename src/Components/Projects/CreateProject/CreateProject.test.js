@@ -3,6 +3,7 @@ import {mount} from "enzyme";
 import React from "react";
 import {MemoryRouter} from "react-router-dom";
 import CreateProject, {ProjectCreationFailed} from "./CreateProject";
+import {expectComponent} from "../../../testHelpers/components";
 
 function mockCreateProjectToFail() {
   const createProject = jest.fn(() => new Promise(() => {
@@ -32,5 +33,5 @@ it("should show an error if the project can't be created", async () => {
   wrapper.update();
 
   expect(createProject).toHaveBeenCalled();
-  expect(wrapper.find(ProjectCreationFailed).length).toBe(1);
+  expectComponent(wrapper, ProjectCreationFailed);
 });

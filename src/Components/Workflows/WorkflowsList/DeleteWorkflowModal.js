@@ -46,8 +46,10 @@ export default class DeleteWorkflowModal extends Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={onCancel} disabled={this.state.deleting}>Cancel</Button>
-          <Button variant="danger" onClick={this.onDeleteWorkflow} disabled={this.state.deleting}>Delete</Button>
+          <Button variant="secondary" onClick={onCancel} disabled={this.state.deleting}
+                  className="cancel">Cancel</Button>
+          <Button variant="danger" onClick={this.onDeleteWorkflow} disabled={this.state.deleting}
+                  className="confirm">Delete</Button>
         </Modal.Footer>
       </Modal>
     );

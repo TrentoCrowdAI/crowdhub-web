@@ -33,7 +33,7 @@ export class CreateWorkflowButton extends Component {
 }
 
 
-class CreateWorkflowModal extends Component {
+export class CreateWorkflowModal extends Component {
 
   state = {};
 
@@ -171,7 +171,7 @@ class CreateWorkflowModal extends Component {
 }
 
 
-const CreateWorkflowError = () => (
+export const CreateWorkflowError = () => (
   <Row>
     <Col>
       <Alert variant="danger">

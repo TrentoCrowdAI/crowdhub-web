@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
-import {Alert, Col, Container, Row, Table} from "react-bootstrap";
+import {Alert, Col, Container, Row} from "react-bootstrap";
 
 import {makeCancellable} from "../../../Services/utils";
 import WorkflowsService from "../../../Services/WorkflowsService";
@@ -77,9 +76,9 @@ export default class EmbeddableWorkflowsList extends Component {
 }
 
 
-const FetchingWorkflows = () => <p>Fetching workflows...</p>;
+export const FetchingWorkflows = () => <p>Fetching workflows...</p>;
 
-const FetchingWorkflowsError = () => (
+export const FetchingWorkflowsError = () => (
   <Col>
     <Container>
       <Alert variant="danger">

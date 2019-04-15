@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from "react";
-import {Col, Container, Table} from "react-bootstrap";
+import {Col, Table} from "react-bootstrap";
 
 import {ignoreEventAnd} from "../../utils/events";
 import {Link} from "react-router-dom";

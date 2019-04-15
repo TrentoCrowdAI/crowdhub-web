@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Container, Row, InputGroup, FormControl, Button, ProgressBar, Alert} from "react-bootstrap";
+import {Alert, Button, Col, Container, FormControl, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import ItemsService from "../../../Services/ItemsService";
 
 export class EmbeddableItemsImporter extends Component {
@@ -49,18 +49,14 @@ export class EmbeddableItemsImporter extends Component {
         {
           /* Error */
           this.state.importError &&
-          <Alert variant="danger">
-            There's been an error while importing the items.
-          </Alert>
+          <ImportItemsError/>
         }
 
 
         {
           /* Success */
           this.state.importCompleted &&
-          <Alert variant="success">
-            {this.state.importedItemsCount} items imported successfully!
-          </Alert>
+          <ImportItemsSuccess count={this.state.importedItemsCount}/>
         }
 
 
@@ -71,6 +67,7 @@ export class EmbeddableItemsImporter extends Component {
             aria-label="URL of CSV file"
             onChange={this.onInputChange}
             disabled={this.state.importing}
+            name="csvUrl"
           />
 
           <InputGroup.Append>
@@ -87,10 +84,27 @@ export class EmbeddableItemsImporter extends Component {
         {
           /* Importing */
           this.state.importing &&
-          <ProgressBar animated now={100}/>
+          <ImportingItems/>
         }
 
       </Container>
     );
   }
 }
+
+
+export const ImportItemsError = () => (
+  <Alert variant="danger">
+    There's been an error while importing the items.
+  </Alert>
+);
+
+export const ImportItemsSuccess = ({count}) => (
+  <Alert variant="success">
+    {count} items imported successfully!
+  </Alert>
+);
+
+export const ImportingItems = () => (
+  <ProgressBar animated now={100}/>
+);

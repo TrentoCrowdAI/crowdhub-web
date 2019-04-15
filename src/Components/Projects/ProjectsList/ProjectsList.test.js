@@ -1,17 +1,13 @@
 import React from 'react';
 import {mount, shallow} from "enzyme";
-import {
-  FetchingProjects,
-  FetchProjectsError,
-  NoProjects,
-  ProjectsList
-} from "./ProjectsList";
+import {FetchingProjects, FetchProjectsError, ProjectsList} from "./ProjectsList";
 import {MemoryRouter} from "react-router-dom";
 import ProjectsService from "../../../Services/ProjectsService";
 import mockedProjects from "../../../mock-data/projects";
 import {ProjectsTable, ProjectsTableRow} from "./ProjectsTable";
+import {expectComponent} from "../../../testHelpers/components";
 
-describe("should fetch the list of projects", () => {
+describe("should show the list of projects", () => {
 
   async function mountProjectsList() {
     return await mount(
@@ -41,19 +37,8 @@ describe("should fetch the list of projects", () => {
     const wrapper = await mountProjectsList();
 
     expect(getProjects).toHaveBeenCalled();
-    expect(wrapper.find(FetchingProjects).length).toBe(1);
+    expectComponent(wrapper, FetchingProjects);
 
-  });
-
-  it('shows a loading message while loading', async () => {
-    const getProjects = mockGetProjectsToReturn([]);
-    const wrapper = await mountProjectsList();
-
-    expect(getProjects).toHaveBeenCalled();
-
-    wrapper.update();
-
-    expect(wrapper.find(NoProjects).length).toBe(1);
   });
 
 
@@ -65,7 +50,7 @@ describe("should fetch the list of projects", () => {
 
     wrapper.update();
 
-    expect(wrapper.find(ProjectsTable).length).toBe(1);
+    expectComponent(wrapper, ProjectsTable);
   });
 
   test.skip("shows an error if projects can't be loaded", async () => {
@@ -76,7 +61,7 @@ describe("should fetch the list of projects", () => {
 
     wrapper.update();
 
-    expect(wrapper.find(FetchProjectsError).length).toBe(1);
+    expectComponent(wrapper, FetchProjectsError);
   });
 });
 
