@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from "enzyme";
 
-import {EmbeddableItemsImporter, ImportingItems, ImportItemsError, ImportItemsSuccess} from "./EmbeddableItemsImporter";
+import {ImportItemsError, ItemsImporter} from "./ItemsImporter";
 import ItemsService from "../../../Services/ItemsService";
 import mockedItems from "../../../mock-data/items";
 import mockedProjects from "../../../mock-data/projects";
@@ -35,7 +35,7 @@ function mockImportItemsToFail() {
 
 
 const mountItemsImporter = () => mount(
-  <EmbeddableItemsImporter project={project}/>
+  <ItemsImporter project={project}/>
 );
 
 const startImport = async (wrapper) => {

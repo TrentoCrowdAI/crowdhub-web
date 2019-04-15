@@ -24,7 +24,7 @@ export default class EmbeddableWorkflowsList extends Component {
     this.setState({workflows: null});
 
     try {
-      const promise = WorkflowsService.getWorkflowsOfProject(this.state.projectId);
+      const promise = WorkflowsService.getWorkflowsOfProject(this.props.project);
       this.pendingWorkflowsRequest = makeCancellable(promise);
       const workflows = await this.pendingWorkflowsRequest.result;
 

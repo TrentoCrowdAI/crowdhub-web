@@ -5,11 +5,11 @@ import WorkflowsService from "./WorkflowsService";
 
 describe('get list of workflows of project', () => {
   it('should send a GET to /workflow?project=id and return the array of workflows', async () => {
-    const projectId = 0;
+    const project = {id: 0};
     mockFetchToReturnJson(mockedWorkflows);
-    const res = await WorkflowsService.getWorkflowsOfProject(projectId);
+    const res = await WorkflowsService.getWorkflowsOfProject(project);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/workflows?project=${projectId}`, undefined);
+    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/workflows?project=${project.id}`, undefined);
     expect(res).toEqual(mockedWorkflows);
   });
 });

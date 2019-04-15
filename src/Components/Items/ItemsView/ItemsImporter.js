@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Alert, Button, Col, Container, FormControl, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import ItemsService from "../../../Services/ItemsService";
 
-export class EmbeddableItemsImporter extends Component {
+export class ItemsImporter extends Component {
 
   state = {
     csvUrl: '',
@@ -43,7 +43,7 @@ export class EmbeddableItemsImporter extends Component {
     return (
       <Container>
         <Row>
-          <Col><h3>Items</h3></Col>
+          <Col><h3>Import new items</h3></Col>
         </Row>
 
         {

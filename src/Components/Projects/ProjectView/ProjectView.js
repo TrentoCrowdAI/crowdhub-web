@@ -8,10 +8,10 @@ import {makeCancellable} from "../../../Services/utils";
 import {redirectToProjectsList} from "../utils/route";
 import {PROJECTS_PATH} from "../Projects";
 import EmbeddableWorkflowsList from "../../Workflows/WorkflowsList/EmbeddableWorkflowsList";
-import {EmbeddableItemsImporter} from "../../Items/ItemsImporter/EmbeddableItemsImporter";
+import {ItemsView} from "../../Items/ItemsView/ItemsView";
 
 
-export default class ViewProject extends Component {
+export default class ProjectView extends Component {
 
   state = {};
 
@@ -60,7 +60,7 @@ export default class ViewProject extends Component {
                   <EmbeddableWorkflowsList project={this.state.project}/>
                 </Tab>
                 <Tab eventKey="items" title="Items">
-                  <EmbeddableItemsImporter project={this.state.project}/>
+                  <ItemsView project={this.state.project}/>
                 </Tab>
               </Tabs>
             </div>

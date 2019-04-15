@@ -1,10 +1,10 @@
-import {postJSON} from "./utils";
+import {postJSON, getJSON} from "./utils";
 import {APP_URL} from "../config";
 
 
 const ITEMS_URL = `${APP_URL}/items`;
 
-/*
+
 function JSONtoItem(json) {
   json.created_at = new Date(json.created_at);
   json.updated_at = new Date(json.updated_at);
@@ -12,7 +12,7 @@ function JSONtoItem(json) {
 
   return json;
 }
-
+/*
 function itemToJSON(job) {
   return job;
 }
@@ -28,11 +28,12 @@ export default {
     return await postJSON(ITEMS_URL, json);
   },
 
-/*  async getItems() {
-    const jsonList = await getJSON(ITEMS_URL);
+  async getItemsOfProject(project) {
+    const jsonList = await getJSON(`${ITEMS_URL}?project=${project.id}`);
     return jsonList.map(JSONtoItem);
   },
 
+  /*
   async createItems(item) {
     const json = itemToJSON(item);
     return await postJSON(ITEMS_URL, json);
