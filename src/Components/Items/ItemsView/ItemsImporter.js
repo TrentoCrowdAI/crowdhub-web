@@ -45,7 +45,7 @@ export class ItemsImporter extends Component {
   render() {
     return (
       <Container>
-        <Row>
+        <Row className="header-row">
           <Col><h3>Import new items</h3></Col>
         </Row>
 

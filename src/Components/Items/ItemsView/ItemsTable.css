@@ -3,6 +3,11 @@
     padding: 8px;
 }
 
-.items-table-container {
+.items-table-container,
+.delete-item-table-container {
     overflow-x: auto;
+}
+
+.delete-item-table {
+    margin-top: .5em;
 }

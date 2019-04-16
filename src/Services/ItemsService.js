@@ -1,4 +1,4 @@
-import {postJSON, getJSON} from "./utils";
+import {getJSON, postJSON, sendDelete} from "./utils";
 import {APP_URL} from "../config";
 
 
@@ -29,7 +29,7 @@ export default {
   },
 
   async getItemsOfProject(project) {
-    const jsonList = await getJSON(`${ITEMS_URL}?project=${project.id}`);
+    const jsonList = await getJSON(`${ITEMS_URL}?projectId=${project.id}`);
     return jsonList.map(JSONtoItem);
   },
 
@@ -38,10 +38,10 @@ export default {
     const json = itemToJSON(item);
     return await postJSON(ITEMS_URL, json);
   },
-
+*/
 
   async deleteItem(item) {
     return await sendDelete(`${ITEMS_URL}/${item.id}`);
-  },*/
+  },
 
 }

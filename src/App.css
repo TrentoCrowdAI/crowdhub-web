@@ -13,3 +13,17 @@ td > a:hover {
 .form-buttons .btn:first-child{
   margin-right: auto;
 }
+
+
+/* Headers */
+div.row.header-row {
+  margin-top: .5em;
+  margin-bottom: 1em;
+}
+
+
+/* Icons */
+a.icon-button {
+  margin-right: .5em;
+  cursor: pointer;
+}

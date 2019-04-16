@@ -28,7 +28,7 @@ function workflowToJSON(workflow) {
 
 export default {
   async getWorkflowsOfProject(project) {
-    const jsonList = await getJSON(`${WORKFLOWS_URL}?project=${project.id}`);
+    const jsonList = await getJSON(`${WORKFLOWS_URL}?projectId=${project.id}`);
     return jsonList.map(JSONtoWorkflow);
   },
 

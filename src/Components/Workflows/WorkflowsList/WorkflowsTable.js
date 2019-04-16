@@ -48,10 +48,10 @@ const WorkflowsTableRow = ({workflow, onWorkflowDeleted}) => {
   );
 };
 
-const DeleteWorkflowButton = ({workflow, onDeleted}) => (
+const DeleteWorkflowButton = ({workflow, onWorkflowDeleted}) => (
   <DeleteButtonAndModal
-    onDeleted={onDeleted}
-    serivceCall={() => WorkflowsService.deleteWorkflow(workflow)}
+    onDeleted={onWorkflowDeleted}
+    serviceCall={() => WorkflowsService.deleteWorkflow(workflow)}
 
     header={
       <Modal.Title>Delete worflow <span className="project-id">{workflow.name}</span></Modal.Title>

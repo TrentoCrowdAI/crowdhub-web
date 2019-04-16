@@ -77,10 +77,10 @@ const DeleteItemButton = ({item, onDeleted}) => (
     }
 
     body={
-      <div>
+      <div className="delete-item-table-container">
         Are you sure you want to following item?
 
-        <table>
+        <Table striped bordered hover className="delete-item-table">
           <thead>
           <tr>
             <th>Key</th>
@@ -105,7 +105,7 @@ const DeleteItemButton = ({item, onDeleted}) => (
             ))
           }
           </tbody>
-        </table>
+        </Table>
       </div>
     }
   />

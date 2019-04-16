@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 
 import {ItemsImporter} from "./ItemsImporter";
 import {ItemsTable} from "./ItemsTable";
@@ -44,8 +44,15 @@ export class ItemsView extends Component {
         <ItemsImporter project={project} onItemsImported={this.fetchItems}/>
 
         {/* View uploaded items */}
+        <Container>
+          <Row className="header-row">
+            <Col>
+              <h3>Uploaded Items</h3>
+            </Col>
+          </Row>
+        </Container>
+
         <Container className="items-table-container">
-          <h3>Uploaded Items</h3>
           {
             !this.state.items &&
             <FetchingItems/>
@@ -53,7 +60,7 @@ export class ItemsView extends Component {
 
           {
             this.state.items &&
-            <ItemsTable items={this.state.items} onItemDeleted={this.onItemDeleted} />
+            <ItemsTable items={this.state.items} onItemDeleted={this.onItemDeleted}/>
           }
         </Container>
       </div>

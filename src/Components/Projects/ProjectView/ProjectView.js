@@ -59,6 +59,7 @@ export default class ProjectView extends Component {
                 <Tab eventKey="workflow" title="Workflows">
                   <EmbeddableWorkflowsList project={this.state.project}/>
                 </Tab>
+
                 <Tab eventKey="items" title="Items">
                   <ItemsView project={this.state.project}/>
                 </Tab>
@@ -77,10 +78,10 @@ const FetchingProject = () => (<p>Fetching ...</p>);
 function ProjectData({project}) {
   return (
     <Container>
-
-      <Row>
-
-        <Col><h2>{project.data.name}</h2></Col>
+      <Row className="header-row">
+        <Col>
+          <h2>{project.data.name}</h2>
+        </Col>
         <Col className="d-flex flex-row-reverse">
           <div>
             <Link to={`${PROJECTS_PATH}/${project.id}/edit`} className="btn btn-primary">Edit</Link>

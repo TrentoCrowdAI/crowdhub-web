@@ -8,7 +8,6 @@ import {WorkflowsTable} from "./WorkflowsTable";
 
 export default class EmbeddableWorkflowsList extends Component {
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +41,7 @@ export default class EmbeddableWorkflowsList extends Component {
   render() {
     return (
       <Container>
-        <Row>
+        <Row className="header-row">
           <Col><h3>Workflows</h3></Col>
           <Col className="d-flex flex-row-reverse">
             <div>

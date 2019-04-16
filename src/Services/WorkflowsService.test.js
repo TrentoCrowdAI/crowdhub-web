@@ -9,7 +9,7 @@ describe('get list of workflows of project', () => {
     mockFetchToReturnJson(mockedWorkflows);
     const res = await WorkflowsService.getWorkflowsOfProject(project);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/workflows?project=${project.id}`, undefined);
+    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/workflows?projectId=${project.id}`, undefined);
     expect(res).toEqual(mockedWorkflows);
   });
 });

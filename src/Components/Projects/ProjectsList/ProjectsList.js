@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 
 import ProjectsService from "../../../Services/ProjectsService";
 import {makeCancellable} from "../../../Services/utils";
-import "./ProjectsList.css";
 import {PROJECTS_PATH} from "../Projects";
 import {SimpleBreadcrumb} from "../../common/Breadcrumbs";
 import {ProjectsTable} from "./ProjectsTable";
@@ -41,7 +40,7 @@ export class ProjectsList extends Component {
           <SimpleBreadcrumb>Projects</SimpleBreadcrumb>
         </Breadcrumb>
 
-        <Row>
+        <Row className="header-row">
           <Col>
             <h3>Projects list</h3>
           </Col>
