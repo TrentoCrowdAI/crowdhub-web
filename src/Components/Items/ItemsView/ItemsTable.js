@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {Col, Row, Table} from "react-bootstrap";
+import {Col, Modal, Row, Table} from "react-bootstrap";
 
 import './ItemsTable.css';
+import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
+import ItemsService from "../../../Services/ItemsService";
 
 export class ItemsTable extends Component {
 
@@ -25,12 +27,15 @@ export class ItemsTable extends Component {
           <Table striped bordered hover className="items-table">
             <thead>
             <tr>
-              <th>id</th>
+              <th>Id</th>
+
               {
                 columnNames.map(name => (
                   <th key={name}>{name}</th>
                 ))
               }
+
+              <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -38,11 +43,17 @@ export class ItemsTable extends Component {
               items.map(item => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
+
                   {
+                    /* values */
                     columnNames.map(key => (
                       <td key={`${item.id}-${key}`}>{item.data[key] || ''}</td>
                     ))
                   }
+
+                  <td>
+                    <DeleteItemButton item={item} onDeleted={() => this.props.onItemDeleted(item)}/>
+                  </td>
                 </tr>
               ))
             }
@@ -55,3 +66,47 @@ export class ItemsTable extends Component {
   }
 
 }
+
+const DeleteItemButton = ({item, onDeleted}) => (
+  <DeleteButtonAndModal
+    onDeleted={onDeleted}
+    serviceCall={() => ItemsService.deleteItem(item)}
+
+    header={
+      <Modal.Title>Delete item <span className="project-id">#{item.id}</span></Modal.Title>
+    }
+
+    body={
+      <div>
+        Are you sure you want to following item?
+
+        <table>
+          <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          {/* Id */}
+          <tr>
+            <td>Id</td>
+            <td>item.id</td>
+          </tr>
+
+          {/* Data */}
+          {
+            Object.keys(item.data).map(key => (
+              <tr key={key}>
+                <td>{key}</td>
+                <td>{item.data[key]}</td>
+              </tr>
+            ))
+          }
+          </tbody>
+        </table>
+      </div>
+    }
+  />
+);

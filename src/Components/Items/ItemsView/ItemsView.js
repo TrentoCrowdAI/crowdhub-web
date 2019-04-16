@@ -8,6 +8,8 @@ import {makeCancellable} from "../../../Services/utils";
 
 export class ItemsView extends Component {
 
+  state = {};
+
   componentDidMount = () => this.fetchItems();
 
   componentWillUnmount = () => this.pendingItemsRequest.cancel();
@@ -27,17 +29,22 @@ export class ItemsView extends Component {
     }
   };
 
-  state = {};
+  onItemDeleted = (item) => {
+    const index = this.state.items.indexOf(item);
+    const items = this.state.items;
+    items.splice(index, 1);
+    this.setState({items});
+  };
 
   render() {
     const project = this.props.project;
     return (
       <div>
         {/* Add items */}
-        <ItemsImporter project={project}/>
+        <ItemsImporter project={project} onItemsImported={this.fetchItems}/>
 
         {/* View uploaded items */}
-        <Container>
+        <Container className="items-table-container">
           <h3>Uploaded Items</h3>
           {
             !this.state.items &&
@@ -46,7 +53,7 @@ export class ItemsView extends Component {
 
           {
             this.state.items &&
-            <ItemsTable items={this.state.items}/>
+            <ItemsTable items={this.state.items} onItemDeleted={this.onItemDeleted} />
           }
         </Container>
       </div>

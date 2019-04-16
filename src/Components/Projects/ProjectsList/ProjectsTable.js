@@ -1,11 +1,9 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {Component} from "react";
-import {Col, Table} from "react-bootstrap";
+import React from "react";
+import {Col, Modal, Table} from "react-bootstrap";
 
-import {ignoreEventAnd} from "../../utils/events";
 import {Link} from "react-router-dom";
 import {PROJECTS_PATH} from "../Projects";
-import DeleteProjectModal from "./DeleteProjectModal";
+import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
 import ProjectsService from "../../../Services/ProjectsService";
 
 export const ProjectsTable = ({projects, onProjectDeleted}) => (
@@ -30,57 +28,45 @@ export const ProjectsTable = ({projects, onProjectDeleted}) => (
   </Col>
 );
 
-export class ProjectsTableRow extends Component {
+export const ProjectsTableRow = ({project, onProjectDeleted}) => {
+  const openProjectLink = `${PROJECTS_PATH}/${project.id}`;
+  const editProjectLink = `${PROJECTS_PATH}/${project.id}/edit`;
 
-  state = {};
+  return (
+    <tr>
 
-  onUserWantToDeleteProject = () => this.setState({delete: true});
+      <td>
+        <Link to={openProjectLink}>{project.id}</Link>
+      </td>
+      <td>
+        <Link to={openProjectLink}>{project.data.name}</Link>
+      </td>
+      <td>{project.data.description}</td>
+      <td>
 
-  onUserConfirmDeletion = async () => {
-    const project = this.props.project;
-    this.onDeletingProject();
-    await ProjectsService.deleteProject(project);
-    this.props.onProjectDeleted(project);
-  };
+        <Link to={editProjectLink} className="icon-button">
+          <i className="fas fa-edit"/>
+        </Link>
 
-  onUserCancelDeletion = () => this.setState({delete: false});
+        <DeleteProjectButton project={project} onProjectDeleted={onProjectDeleted}/>
+      </td>
+    </tr>
+  );
+};
 
-  onDeletingProject = () => this.setState({deleting: true});
+const DeleteProjectButton = ({project, onProjectDeleted}) => (
+  <DeleteButtonAndModal
+    onDeleted={onProjectDeleted}
+    serviceCall={() => ProjectsService.deleteProject(project)}
 
-  render() {
-    const project = this.props.project;
-    const openProjectLink = `${PROJECTS_PATH}/${project.id}`;
-    const editProjectLink = `${PROJECTS_PATH}/${project.id}/edit`;
+    header={
+      <Modal.Title>Delete project <span className="project-id">#{project.id}</span></Modal.Title>
+    }
 
-    return (
-      <tr>
-        { /* Confirm delete project modal */}
-        <DeleteProjectModal projectToDelete={project}
-                            show={this.state.delete}
-                            deleting={this.state.deleting}
-                            onCancel={this.onUserCancelDeletion}
-                            onConfirmDeletion={this.onUserConfirmDeletion}/>
-
-        <td>
-          <Link to={openProjectLink}>{project.id}</Link>
-        </td>
-        <td>
-          <Link to={openProjectLink}>{project.data.name}</Link>
-        </td>
-        <td>{project.data.description}</td>
-        <td>
-
-          <Link to={editProjectLink} className="icon-button">
-            <i className="fas fa-edit"/>
-          </Link>
-
-          <a className="icon-button"
-             onClick={ignoreEventAnd(this.onUserWantToDeleteProject)}>
-            <i className="fas fa-trash-alt"/>
-          </a>
-        </td>
-      </tr>
-    );
-  }
-}
-
+    body={
+      <div>
+        Are you sure you want to delete the project <strong>{project.data.name}</strong>?
+      </div>
+    }
+  />
+);

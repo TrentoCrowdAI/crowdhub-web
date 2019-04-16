@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {Component} from "react";
-import {Table} from "react-bootstrap";
+import React from "react";
+import {Modal, Table} from "react-bootstrap";
 
-import {ignoreEventAnd} from "../../utils/events";
-import DeleteWorkflowModal from "./DeleteWorkflowModal";
 import {WORKFLOWS_PATH} from "../Workflows";
 import {Link} from "react-router-dom";
+import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
+import WorkflowsService from "../../../Services/WorkflowsService";
 
 export const WorkflowsTable = ({workflows, onWorkflowDeleted}) => (
   <Table hover>
@@ -29,39 +29,38 @@ export const WorkflowsTable = ({workflows, onWorkflowDeleted}) => (
   </Table>
 );
 
-class WorkflowsTableRow extends Component {
+const WorkflowsTableRow = ({workflow, onWorkflowDeleted}) => {
+  const openWorkflowLink = `${WORKFLOWS_PATH}/${workflow.id}`;
 
-  state = {};
+  return (
+    <tr>
+      <td>
+        <Link to={openWorkflowLink}>{workflow.id}</Link>
+      </td>
+      <td>
+        <Link to={openWorkflowLink}>{workflow.data.name}</Link>
+      </td>
+      <td>{workflow.data.description}</td>
+      <td>
+        <DeleteWorkflowButton workflow={workflow} onWorkflowDeleted={onWorkflowDeleted}/>
+      </td>
+    </tr>
+  );
+};
 
-  onUserWantToDeleteWorkflow = () => this.setState({delete: true});
+const DeleteWorkflowButton = ({workflow, onDeleted}) => (
+  <DeleteButtonAndModal
+    onDeleted={onDeleted}
+    serivceCall={() => WorkflowsService.deleteWorkflow(workflow)}
 
-  onUserCancelDeletion = () => this.setState({delete: false});
+    header={
+      <Modal.Title>Delete worflow <span className="project-id">{workflow.name}</span></Modal.Title>
+    }
 
-  render() {
-    const workflow = this.props.workflow;
-    const openWorkflowLink = `${WORKFLOWS_PATH}/${workflow.id}`;
-
-    return (
-      <tr>
-        { /* Confirm delete workflow modal */}
-        <DeleteWorkflowModal workflowToDelete={workflow} show={this.state.delete}
-                             onCancel={this.onUserCancelDeletion}
-                             onWorkflowDeleted={this.props.onWorkflowDeleted}/>
-
-        <td>
-          <Link to={openWorkflowLink}>{workflow.id}</Link>
-        </td>
-        <td>
-          <Link to={openWorkflowLink}>{workflow.data.name}</Link>
-        </td>
-        <td>{workflow.data.description}</td>
-        <td>
-          <a className="icon-button"
-             onClick={ignoreEventAnd(this.onUserWantToDeleteWorkflow)}>
-            <i className="fas fa-trash-alt"/>
-          </a>
-        </td>
-      </tr>
-    );
-  }
-}
+    body={
+      <div>
+        Are you sure you want to delete "<strong>{workflow.data.name}</strong>"?
+      </div>
+    }
+  />
+);

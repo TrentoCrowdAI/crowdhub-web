@@ -27,12 +27,15 @@ export class ItemsImporter extends Component {
     importError: false
   });
 
-  onImportCompleted = (importedItems) => this.setState({
-    importing: false,
-    importCompleted: true,
-    csvUrl: '',
-    importedItemsCount: importedItems.length
-  });
+  onImportCompleted = (importedItems) => {
+    this.setState({
+      importing: false,
+      importCompleted: true,
+      csvUrl: '',
+      importedItemsCount: importedItems.length
+    });
+    this.props.onItemsImported();
+  };
 
   onImportFailed = () => this.setState({
     importing: false,

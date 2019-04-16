@@ -2,3 +2,7 @@
 .table.items-table th {
     padding: 8px;
 }
+
+.items-table-container {
+    overflow-x: auto;
+}
