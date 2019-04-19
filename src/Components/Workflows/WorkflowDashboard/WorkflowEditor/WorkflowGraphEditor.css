@@ -1,0 +1,6 @@
+.srd-diagram {
+    height: 100%;
+
+    background-size: 50px 50px;
+    background-image: linear-gradient(0deg, transparent 24%, var(--lightBackgroundTransparent) 25%, var(--lightBackgroundTransparent) 26%, transparent 27%, transparent 74%, var(--lightBackgroundTransparent) 75%, var(--lightBackgroundTransparent) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, var(--lightBackgroundTransparent) 25%, var(--lightBackgroundTransparent) 26%, transparent 27%, transparent 74%, var(--lightBackgroundTransparent) 75%, var(--lightBackgroundTransparent) 76%, transparent 77%, transparent);
+}

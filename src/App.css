@@ -1,3 +1,13 @@
+:root {
+  --lightBackground: rgb(245, 246, 247);
+  --lightBackgroundTransparent: rgba(245, 246, 247, 0.9);
+}
+
+.light-background,
+.navbar.light-background {
+  background-color: var(--lightBackground);
+}
+
 button.button-link {
   border: none;
   background-color: transparent;

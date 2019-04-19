@@ -24,10 +24,10 @@ export default class Layout extends Component {
           <Sidebar sidebarOpen={this.state.sidebarOpen}/>
 
           {/* Main content */}
-          <div className="content">
+          <div className="content" style={{'display': 'flex', 'flexDirection': 'column'}}>
             <AppBar onToggleSidebar={this.onToggleSidebar}/>
 
-            <AppRouter/>
+            <AppRouter />
           </div>
         </div>
       </Router>

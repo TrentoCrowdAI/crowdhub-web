@@ -1,0 +1,11 @@
+div.container.full-width {
+    max-width: initial;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.light-background {
+    background-color: var(--lightBackground);
+}
