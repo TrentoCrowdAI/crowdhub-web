@@ -7,7 +7,6 @@ import uuid from 'uuid';
 export default class WorkflowGraphEditor extends Component {
 
   engine = new DiagramEngine();
-  model = new DiagramModel();
 
   constructor(props) {
     super(props);
@@ -16,57 +15,57 @@ export default class WorkflowGraphEditor extends Component {
 
   initGraph = () => {
     this.engine.installDefaultFactories();
-    this.engine.setDiagramModel(this.model);
+    // TODO: Deserialize
+    this.engine.setDiagramModel(this.getModel());
   };
 
   onDrop = (event) => {
-    if (this.isEventADroppedBlockType(event)) {
-      this.onDropBlockType(event);
+    if (this.isEventCausedByADroppedBlockType(event)) {
+      this.onBlockTypeDropped(event);
     }
   };
 
-  isEventADroppedBlockType = (event) => !!this.getBlockTypeFromEvent(event);
+  isEventCausedByADroppedBlockType = (event) => !!this.getBlockTypeFromEvent(event);
 
-  onDropBlockType = (event) => {
+  onBlockTypeDropped = (event) => {
     const blockType = this.getBlockTypeFromEvent(event);
     const position = this.getMousePosition(event);
-    this.addBlockFromDroppedBlockType(blockType, position);
+    this.createNodeFromDroppedBlockType(blockType, position);
   };
 
   getBlockTypeFromEvent = (event) => JSON.parse(event.dataTransfer.getData('blockType'));
 
   getMousePosition = (event) => this.engine.getRelativeMousePoint(event);
 
-  addBlockFromDroppedBlockType = (blockType, position) => {
-    const block = this.createBlockFromBlockType(blockType, position);
-    this.addBlock(block);
-    this.forceUpdate();
+  createNodeFromDroppedBlockType = (blockType, position) => {
+    const node = this.createNodeFromBlockType(blockType, position);
+    this.props.onNewNode(node, blockType);
+    this.addNodeToGraph(node, blockType);
   };
 
-  createBlockFromBlockType = ({data}, position) => ({
-    ...data.model,
-
-    id: uuid(),
-
-    ports: data.model.ports.map(port => ({
-      ...port,
-      id: uuid()
-    })),
-
-    x: position.x,
-    y: position.y
-  });
-
-  addBlock = (block) => {
-    const node = this.createNodeFromBlock(block);
-    this.addSelectedListener(node);
-    this.model.addNode(node);
-  };
-
-  createNodeFromBlock = (block) => {
+  createNodeFromBlockType = ({data}, position) => {
+    const {nodeDefinition} = data;
     const node = new DefaultNodeModel();
-    node.deSerialize(block, this.engine);
+    node.deSerialize({
+      ...nodeDefinition,
+
+      id: uuid(),
+
+      ports: nodeDefinition.ports.map(port => ({
+        ...port,
+        id: uuid()
+      })),
+
+      x: position.x,
+      y: position.y
+    }, this.engine);
     return node;
+  };
+
+  addNodeToGraph = (node) => {
+    this.addSelectedListener(node);
+    this.getModel().addNode(node);
+    this.forceUpdate();
   };
 
   addSelectedListener = (node) => node.addListener({
@@ -76,13 +75,16 @@ export default class WorkflowGraphEditor extends Component {
   onSelectedNodeChanged = () => {
     const selectedNodes = this.getSelectedNodes();
     if (selectedNodes.length === 1) {
-      this.props.onBlockSelected();
+      const node = selectedNodes[0];
+      this.props.onNodeSelected(node);
     } else {
-      this.props.onNoBlockSelected();
+      this.props.onNoNodeSelected();
     }
   };
 
-  getSelectedNodes = () => this.model.getSelectedItems('node');
+  getSelectedNodes = () => this.getModel().getSelectedItems('node');
+
+  getModel = () => this.props.graphModel;
 
   render() {
     return (

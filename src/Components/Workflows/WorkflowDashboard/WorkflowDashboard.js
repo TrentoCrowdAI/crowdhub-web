@@ -7,34 +7,42 @@ export default class WorkflowDashboard extends Component {
 
 
   state = {
-    tools: [{
+    blockTypes: [{
       id: 1,
       data: {
         type: 'do',
-        model: {
-          type: "default",
-          "ports": [
+
+        nodeDefinition: {
+          type: 'default',
+          ports: [
             {
-              "type": "default",
-              "name": "asp",
-              "in": true,
-              "label": "In"
+              type: "default",
+              name: "asp",
+              in: true,
+              label: "In"
             }, {
-              "type": "default",
-              "name": "out",
-              "out": true,
-              "label": "Out"
+              type: "default",
+              name: "out",
+              out: true,
+              label: "Out"
             }
           ],
-          "name": "Do",
-          "color": "rgb(0,192,255)"
-        }
+          name: "Do",
+          color: "rgb(0,192,255)"
+        },
+
+        parameters: [{
+          name: 'reward',
+          description: '',
+          type: 'number'
+        }]
       }
     }, {
       id: 2,
       data: {
         type: 'QRand',
-        model: {
+
+        nodeDefinition: {
           type: "default",
           "ports": [
             {
@@ -46,10 +54,16 @@ export default class WorkflowDashboard extends Component {
           ],
           "name": "QRand",
           "color": "rgb(0,192,255)"
-        }
+        },
+
+        parameters: []
       }
     }],
-    workflow: {}
+
+    workflow: {
+      graph: {},
+      blocks: {}
+    }
   };
 
 
@@ -70,7 +84,7 @@ export default class WorkflowDashboard extends Component {
     }
   }
 
-  render () {
-    return <WorkflowEditor tools={this.state.tools} workflow={this.state.workflow}/>;
+  render() {
+    return <WorkflowEditor blockTypes={this.state.blockTypes} workflow={this.state.workflow}/>;
   }
 }

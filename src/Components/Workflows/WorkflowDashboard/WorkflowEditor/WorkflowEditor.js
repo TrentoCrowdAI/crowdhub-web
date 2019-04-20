@@ -1,38 +1,76 @@
 import React, {Component} from 'react';
-import {Container, Row, Col, Breadcrumb, Form} from "react-bootstrap";
+import {Container, Row, Col, Breadcrumb} from "react-bootstrap";
 
 import './WorkflowEditor.css';
-import {makeCancellable} from "../../../../Services/utils";
-import ProjectsService from "../../../../Services/ProjectsService";
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../../common/Breadcrumbs";
 import {PROJECTS_PATH} from "../../../Projects/Projects";
-import WorkflowGraphEditor from "./WorkflowGraphEditor";
-import WorkflowTools from "./WorkflowTools";
+import GraphEditor from "./WorkflowGraphEditor";
+import DraggableBlockTypeList from "./DraggableBlockTypeList";
+import {DiagramModel} from "storm-react-diagrams";
 
 export default class WorkflowEditor extends Component {
 
-  state = {
-    selectedNode: null
-  };
+  graphModel = new DiagramModel();
+
+  constructor(props) {
+    super(props);
+    const {blocks, graph} = props;
+    this.state = {
+      blocks,
+      graph,
+      selectedBlock: null, // { id: 1, data: {} }
+    };
+  }
+
+
+  onNodeSelected = (node) => this.onBlockSelected(this.state.blocks[node.id]);
+
+  onNoNodeSelected = () => this.onNoBlockSelected();
+
+  onNewNode = (node, blockType) => this.setState((state) => ({
+    blocks: {
+      ...state.blocks,
+      [node.id]: {type: blockType.data.type}
+    }
+  }));
+
+  onNodeDeleted = (node) => this.setState((state) => {
+    const blocks = state.blocks;
+    delete blocks[node.id];
+    return {blocks};
+  });
+
+  // TODO: Handle deletion of selected block
+
+  onBlockSelected = (selectedBlock) => this.setState({selectedBlock});
+
+  onNoBlockSelected = () => this.setState({selectedBlock: null});
 
   render() {
+    const {workflow, blockTypes} = this.props;
     return (
       <Container className="full-width" style={{'flex': 1, 'marginTop': '-1em'}}>
         <Row className="full-height">
           <Col xs={2} className="light-background">
-            <WorkflowTools tools={this.props.tools}/>
+            <DraggableBlockTypeList blockTypes={this.props.blockTypes}/>
           </Col>
 
           <Col xs={7} style={{'position': 'relative'}}>
             {/*<WorkflowBreadcrumb/>*/}
-            <WorkflowGraphEditor onBlockSelected={console.log}
-                                 onNoBlockSelected={console.log} />
+            <GraphEditor graphModel={this.graphModel}
+                         graph={workflow.graph}
+
+                         onNewNode={this.onNewNode}
+                         onNodeDeleted={this.onNodeDeleted}
+
+                         onNodeSelected={this.onNodeSelected}
+                         onNoNodeSelected={this.onNoNodeSelected}/>
           </Col>
 
           <Col xs={3} className="light-background">
             {
-              this.state.selectedNode ?
-                <WorkflowNodeProperties/> :
+              this.state.selectedBlock ?
+                <BlockProperties blockTypes={blockTypes} block={this.state.selectedBlock}/> :
                 <WorkflowProperties/>
             }
           </Col>
@@ -52,9 +90,9 @@ const WorkflowBreadcrumb = () => (
   </Breadcrumb>
 );
 
-const WorkflowNodeProperties = () => (
-  <p>Node Properties</p>
+const BlockProperties = ({block}) => (
+  <p>{JSON.stringify(block)}</p>
 );
 const WorkflowProperties = () => (
-  <p>Properties</p>
+  <p>Workflow Properties</p>
 );
