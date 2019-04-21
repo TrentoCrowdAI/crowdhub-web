@@ -9,6 +9,7 @@ export const Errors = {
 };
 
 function JSONtoProject(json) {
+  json.id = parseInt(json.id);
   json.created_at = new Date(json.created_at);
   json.updated_at = new Date(json.updated_at);
   json.deleted_ad = new Date(json.deleted_ad);

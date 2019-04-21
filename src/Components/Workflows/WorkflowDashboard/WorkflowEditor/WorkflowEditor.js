@@ -1,50 +1,42 @@
 import React, {Component} from 'react';
-import {Container, Row, Col, Breadcrumb} from "react-bootstrap";
+import {Breadcrumb, Col, Container, Row} from "react-bootstrap";
 
 import './WorkflowEditor.css';
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../../common/Breadcrumbs";
 import {PROJECTS_PATH} from "../../../Projects/Projects";
-import GraphEditor from "./WorkflowGraphEditor";
-import DraggableBlockTypeList from "./DraggableBlockTypeList";
-import {DiagramModel} from "storm-react-diagrams";
+import GraphEditor from "./GraphEditor/GraphEditor";
+import DraggableBlockTypeListSidebar from "./DraggableBlockTypeListSidebar";
+import WorkflowDataEditorSidebar from "./WorkflowDataEditorSidebar";
+import NodeConfiguratorSidebar from "./NodeConfiguratorSidebar";
 
 export default class WorkflowEditor extends Component {
 
-  graphModel = new DiagramModel();
+  state = {
+    selectedNode: null
+  };
 
-  constructor(props) {
-    super(props);
-    const {blocks, graph} = props;
-    this.state = {
-      blocks,
-      graph,
-      selectedBlock: null, // { id: 1, data: {} }
-    };
-  }
+  onNodeSelected = (selectedNode) => this.setState({selectedNode});
 
+  onNoNodeSelected = () => this.setState({selectedNode: null});
 
-  onNodeSelected = (node) => this.onBlockSelected(this.state.blocks[node.id]);
+  onNodeEdited = (editedNode) => {
+    const graph = this.props.workflow.graph;
 
-  onNoNodeSelected = () => this.onNoBlockSelected();
+    const index = graph.nodes.findIndex(node => node.id === editedNode.id);
+    graph.nodes[index] = editedNode;
 
-  onNewNode = (node, blockType) => this.setState((state) => ({
-    blocks: {
-      ...state.blocks,
-      [node.id]: {type: blockType.data.type}
-    }
-  }));
+    this.onGraphEdited(graph);
+  };
 
-  onNodeDeleted = (node) => this.setState((state) => {
-    const blocks = state.blocks;
-    delete blocks[node.id];
-    return {blocks};
+  onGraphEdited = (graph) => this.onWorkflowEdited({
+    ...this.props.workflow,
+    graph
   });
 
+  onWorkflowEdited =(workflow) => this.props.onWorkflowEdited(workflow);
+
+
   // TODO: Handle deletion of selected block
-
-  onBlockSelected = (selectedBlock) => this.setState({selectedBlock});
-
-  onNoBlockSelected = () => this.setState({selectedBlock: null});
 
   render() {
     const {workflow, blockTypes} = this.props;
@@ -52,26 +44,30 @@ export default class WorkflowEditor extends Component {
       <Container className="full-width" style={{'flex': 1, 'marginTop': '-1em'}}>
         <Row className="full-height">
           <Col xs={2} className="light-background">
-            <DraggableBlockTypeList blockTypes={this.props.blockTypes}/>
+            <DraggableBlockTypeListSidebar blockTypes={this.props.blockTypes}/>
           </Col>
 
           <Col xs={7} style={{'position': 'relative'}}>
             {/*<WorkflowBreadcrumb/>*/}
-            <GraphEditor graphModel={this.graphModel}
-                         graph={workflow.graph}
 
-                         onNewNode={this.onNewNode}
-                         onNodeDeleted={this.onNodeDeleted}
+            <GraphEditor
+              graph={workflow.graph}
+              onGraphEdited={this.onGraphEdited}
 
-                         onNodeSelected={this.onNodeSelected}
-                         onNoNodeSelected={this.onNoNodeSelected}/>
+              onNodeSelected={this.onNodeSelected}
+              onNoNodeSelected={this.onNoNodeSelected}/>
+
+            <WorkflowSaveBar workflow={workflow}/>
           </Col>
 
           <Col xs={3} className="light-background">
             {
-              this.state.selectedBlock ?
-                <BlockProperties blockTypes={blockTypes} block={this.state.selectedBlock}/> :
-                <WorkflowProperties/>
+              this.state.selectedNode ?
+                // TODO: Rename
+                <NodeConfiguratorSidebar blockTypes={blockTypes}
+                                         node={this.state.selectedNode}
+                                         onNodeEdited={(node)=>this.onNodeEdited(node)}/> :
+                <WorkflowDataEditorSidebar workflow={this.state.workflow} onEdit={this.onWorkflowEdited}/>
             }
           </Col>
         </Row>
@@ -90,9 +86,10 @@ const WorkflowBreadcrumb = () => (
   </Breadcrumb>
 );
 
-const BlockProperties = ({block}) => (
-  <p>{JSON.stringify(block)}</p>
-);
-const WorkflowProperties = () => (
-  <p>Workflow Properties</p>
-);
+const WorkflowSaveBar = ({isValid}) => {
+  return (
+    <div style={{'position': 'absolute', 'top': 0}}>
+      ok {isValid}
+    </div>
+  )
+};

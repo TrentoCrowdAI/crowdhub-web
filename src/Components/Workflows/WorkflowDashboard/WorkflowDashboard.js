@@ -13,7 +13,7 @@ export default class WorkflowDashboard extends Component {
         type: 'do',
 
         nodeDefinition: {
-          type: 'default',
+          type: 'blockNode',
           ports: [
             {
               type: "default",
@@ -32,9 +32,12 @@ export default class WorkflowDashboard extends Component {
         },
 
         parameters: [{
-          name: 'reward',
-          description: '',
-          type: 'number'
+          name: 'platform',
+          displayName: 'Platform',
+          description: 'In which platform do you want to run the job?',
+          type: 'text',
+          default: 'F8',
+          required: true
         }]
       }
     }, {
@@ -43,7 +46,7 @@ export default class WorkflowDashboard extends Component {
         type: 'QRand',
 
         nodeDefinition: {
-          type: "default",
+          type: "blockNode",
           "ports": [
             {
               "type": "default",
@@ -60,10 +63,7 @@ export default class WorkflowDashboard extends Component {
       }
     }],
 
-    workflow: {
-      graph: {},
-      blocks: {}
-    }
+    workflow: {}
   };
 
 
@@ -84,7 +84,11 @@ export default class WorkflowDashboard extends Component {
     }
   }
 
+  onWorkflowEdited = (workflow) => this.setState({workflow});
+
   render() {
-    return <WorkflowEditor blockTypes={this.state.blockTypes} workflow={this.state.workflow}/>;
+    return <WorkflowEditor blockTypes={this.state.blockTypes}
+                           workflow={this.state.workflow}
+                           onWorkflowEdited={this.onWorkflowEdited}/>;
   }
 }
