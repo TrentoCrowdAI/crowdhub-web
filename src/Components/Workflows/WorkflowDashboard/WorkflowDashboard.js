@@ -31,14 +31,31 @@ export default class WorkflowDashboard extends Component {
           color: "rgb(0,192,255)"
         },
 
-        parameters: [{
-          name: 'platform',
-          displayName: 'Platform',
-          description: 'In which platform do you want to run the job?',
-          type: 'text',
-          default: 'F8',
-          required: true
-        }]
+        parameters: [
+          {
+            name: 'reward',
+            displayName: 'Reward',
+            description: 'Cents of dollars',
+            default: 3,
+            required: true,
+            type: 'number'
+          },
+          {
+            name: 'maxVotes',
+            displayName: 'Max votes',
+            description: 'Max votes per performer',
+            default: 3,
+            required: true,
+            type: 'number'
+          },
+          {
+            name: 'numVotes',
+            displayName: 'Number of votes',
+            description: 'Number of votes per each job',
+            default: 3,
+            required: true,
+            type: 'number'
+          }]
       }
     }, {
       id: 2,

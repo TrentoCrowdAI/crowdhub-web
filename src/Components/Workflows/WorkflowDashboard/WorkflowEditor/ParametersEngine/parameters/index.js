@@ -1,4 +1,5 @@
 import Text from './Text';
+import Number from './Number';
 
 const mapParametersArrayToMap = (parameters) => {
     const map = {};
@@ -7,5 +8,6 @@ const mapParametersArrayToMap = (parameters) => {
 };
 
 export const PrimitiveParameters = mapParametersArrayToMap([
-  Text
+  Text,
+  Number
 ]);
