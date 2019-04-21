@@ -44,7 +44,7 @@ export default class WorkflowEditor extends Component {
       <Container className="full-width" style={{'flex': 1, 'marginTop': '-1em'}}>
         <Row className="full-height">
           <Col xs={2} className="light-background">
-            <DraggableBlockTypeListSidebar blockTypes={this.props.blockTypes}/>
+            <DraggableBlockTypeListSidebar/>
           </Col>
 
           <Col xs={7} style={{'position': 'relative'}}>

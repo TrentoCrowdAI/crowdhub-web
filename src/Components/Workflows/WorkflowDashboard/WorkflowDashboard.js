@@ -7,90 +7,9 @@ export default class WorkflowDashboard extends Component {
 
 
   state = {
-    blockTypes: [{
-      id: 1,
-      data: {
-        type: 'do',
-
-        nodeDefinition: {
-          type: 'blockNode',
-          ports: [
-            {
-              type: "default",
-              name: "asp",
-              in: true,
-              label: "In"
-            }, {
-              type: "default",
-              name: "out",
-              out: true,
-              label: "Out"
-            }
-          ],
-          name: "Do",
-          color: "rgb(0,192,255)"
-        },
-
-        parameters: [
-          {
-            name: 'toCache',
-            displayName: 'Cache result',
-            description: 'Should the result be cached?',
-            default: true,
-            required: true,
-            type: 'boolean'
-          },
-          {
-            name: 'reward',
-            displayName: 'Reward',
-            description: 'Cents of dollars',
-            default: 3,
-            required: true,
-            type: 'number'
-          },
-          {
-            name: 'maxVotes',
-            displayName: 'Max votes',
-            description: 'Max votes per performer',
-            default: 3,
-            required: true,
-            type: 'number'
-          },
-          {
-            name: 'numVotes',
-            displayName: 'Number of votes',
-            description: 'Number of votes per each job',
-            default: 3,
-            required: true,
-            type: 'number'
-          }]
-      }
-    }, {
-      id: 2,
-      data: {
-        type: 'QRand',
-
-        nodeDefinition: {
-          type: "blockNode",
-          "ports": [
-            {
-              "type": "default",
-              "name": "Output",
-              "out": true,
-              "label": "Out"
-            }
-          ],
-          "name": "QRand",
-          "color": "rgb(0,192,255)"
-        },
-
-        parameters: []
-      }
-    }],
-
+    blockTypes: null,
     workflow: {}
   };
-
 
   componentDidMount = () => this.fetchWorkflow();
 
@@ -112,8 +31,7 @@ export default class WorkflowDashboard extends Component {
   onWorkflowEdited = (workflow) => this.setState({workflow});
 
   render() {
-    return <WorkflowEditor blockTypes={this.state.blockTypes}
-                           workflow={this.state.workflow}
+    return <WorkflowEditor workflow={this.state.workflow}
                            onWorkflowEdited={this.onWorkflowEdited}/>;
   }
 }
