@@ -33,6 +33,14 @@ export default class WorkflowDashboard extends Component {
 
         parameters: [
           {
+            name: 'toCache',
+            displayName: 'Cache result',
+            description: 'Should the result be cached?',
+            default: true,
+            required: true,
+            type: 'boolean'
+          },
+          {
             name: 'reward',
             displayName: 'Reward',
             description: 'Cents of dollars',

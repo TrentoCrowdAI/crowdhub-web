@@ -1,5 +1,6 @@
 import Text from './Text';
 import Number from './Number';
+import Boolean from './Boolean';
 
 const mapParametersArrayToMap = (parameters) => {
     const map = {};
@@ -9,5 +10,6 @@ const mapParametersArrayToMap = (parameters) => {
 
 export const PrimitiveParameters = mapParametersArrayToMap([
   Text,
-  Number
+  Number,
+  Boolean
 ]);
