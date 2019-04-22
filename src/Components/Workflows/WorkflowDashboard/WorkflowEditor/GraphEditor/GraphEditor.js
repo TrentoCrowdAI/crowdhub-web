@@ -90,12 +90,11 @@ export default class GraphEditor extends Component {
     this.addSelectedListener(node);
     this.getModel().addNode(node);
     this.forceUpdate();
-
-    //this.props.onGraphEdited(this.getModel().serializeDiagram());
   };
 
   addSelectedListener = (node) => node.addListener({
-    selectionChanged: this.onSelectedNodeChanged
+    selectionChanged: this.onSelectedNodeChanged,
+    entityRemoved: this.props.onNoNodeSelected
   });
 
   onSelectedNodeChanged = () => {

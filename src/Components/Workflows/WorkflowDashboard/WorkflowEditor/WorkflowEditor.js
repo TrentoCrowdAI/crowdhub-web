@@ -24,12 +24,22 @@ export default class WorkflowEditor extends Component {
   onNoNodeSelected = () => this.setState({selectedNode: null});
 
   onSavePressed = () => {
-    const graph = this.graphModel.serializeDiagram();
+    this.onWorkflowDataEdited();
+    this.props.onSave();
+  };
+
+  onWorkflowDataEdited = (data) => {
     const workflow = {
-        ...this.props.workflow
+      ...this.props.workflow
     };
-    workflow.data.graph = graph;
-    this.props.onSave(workflow);
+    if (data) {
+      workflow.data = {
+        ...workflow.data,
+        ...data
+      };
+    }
+    workflow.data.graph = this.graphModel.serializeDiagram();
+    this.props.onWorkflowEdited(workflow);
   };
 
   // TODO: Handle deletion of selected block
@@ -77,7 +87,8 @@ export default class WorkflowEditor extends Component {
             }
             {
               this.props.workflow && !this.state.selectedNode &&
-              <WorkflowDataEditorSidebar workflow={this.props.workflow} onEdit={this.onWorkflowEdited}/>
+              <WorkflowDataEditorSidebar workflowData={this.props.workflow.data}
+                                         onEdit={this.onWorkflowDataEdited}/>
             }
           </Col>
         </Row>

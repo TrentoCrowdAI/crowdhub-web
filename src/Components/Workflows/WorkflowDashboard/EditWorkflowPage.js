@@ -31,10 +31,10 @@ export default class EditWorkflowPage extends Component {
 
   onWorkflowEdited = (workflow) => this.setState({workflow});
 
-  onSave = async (workflow) => {
-    this.setState({workflow, isSaving: true});
+  onSave = async () => {
+    this.setState({isSaving: true});
     try {
-      await WorkflowsService.updateWorkflow(workflow)
+      await WorkflowsService.updateWorkflow(this.state.workflow)
     } catch (e) {
       this.setState({saveError: true});
     }
