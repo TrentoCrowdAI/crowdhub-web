@@ -9,3 +9,27 @@ div.container.full-width {
 .light-background {
     background-color: var(--lightBackground);
 }
+
+.graph-editor-container {
+    padding: 0;
+    position: relative;
+}
+
+.workflow-breadcrumb {
+    position: absolute;
+    top: 0;
+
+    margin-left: 15px;
+    padding-top: 15px;
+}
+
+
+.workflow-bottom-navbar {
+    position: absolute;
+    bottom: 0;
+
+    margin-left: 15px;
+    width: calc(100% - 30px);
+
+    border-radius: .25em;
+}

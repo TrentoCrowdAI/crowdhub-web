@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Breadcrumb, Col, Container, Row} from "react-bootstrap";
+import {Breadcrumb, Button, Col, Container, Navbar, Row} from "react-bootstrap";
 
 import './WorkflowEditor.css';
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../../common/Breadcrumbs";
@@ -8,6 +8,7 @@ import GraphEditor from "./GraphEditor/GraphEditor";
 import DraggableBlockTypeListSidebar from "./DraggableBlockTypeListSidebar";
 import WorkflowDataEditorSidebar from "./WorkflowDataEditorSidebar";
 import NodeConfiguratorSidebar from "./NodeConfiguratorSidebar";
+import BackButton from "../../../common/BackButton";
 
 export default class WorkflowEditor extends Component {
 
@@ -20,7 +21,7 @@ export default class WorkflowEditor extends Component {
   onNoNodeSelected = () => this.setState({selectedNode: null});
 
   onNodeEdited = (editedNode) => {
-    const graph = this.props.workflow.graph;
+    const graph = this.props.workflow.data.graph;
 
     const index = graph.nodes.findIndex(node => node.id === editedNode.id);
     graph.nodes[index] = editedNode;
@@ -28,12 +29,15 @@ export default class WorkflowEditor extends Component {
     this.onGraphEdited(graph);
   };
 
-  onGraphEdited = (graph) => this.onWorkflowEdited({
-    ...this.props.workflow,
-    graph
-  });
+  onGraphEdited = (graph) => {
+    const workflow = {
+      ...this.props.workflow
+    };
+    workflow.data.graph = graph;
+    this.onWorkflowEdited(workflow);
+  };
 
-  onWorkflowEdited =(workflow) => this.props.onWorkflowEdited(workflow);
+  onWorkflowEdited = (workflow) => this.props.onWorkflowEdited(workflow);
 
 
   // TODO: Handle deletion of selected block
@@ -47,27 +51,40 @@ export default class WorkflowEditor extends Component {
             <DraggableBlockTypeListSidebar/>
           </Col>
 
-          <Col xs={7} style={{'position': 'relative'}}>
-            {/*<WorkflowBreadcrumb/>*/}
+          <Col xs={7} className="graph-editor-container" style={{display: 'flex'}}>
+            {
+              !this.props.workflow &&
+              <p>Loading ...</p>
+            }
+            {
+              this.props.workflow &&
 
-            <GraphEditor
-              graph={workflow.graph}
-              onGraphEdited={this.onGraphEdited}
+              <div style={{flex: 1}}>
+                <GraphEditor
+                  graph={workflow.data.graph}
+                  onGraphEdited={this.onGraphEdited}
 
-              onNodeSelected={this.onNodeSelected}
-              onNoNodeSelected={this.onNoNodeSelected}/>
+                  onNodeSelected={this.onNodeSelected}
+                  onNoNodeSelected={this.onNoNodeSelected}/>
 
-            <WorkflowSaveBar workflow={workflow}/>
+                <WorkflowBreadcrumb/>
+                <WorkflowSaveBar workflow={workflow} isValid={true} onSavePressed={this.props.onSavePressed}
+                                 isSaving={this.props.isSaving}/>
+              </div>
+
+            }
           </Col>
 
           <Col xs={3} className="light-background">
             {
-              this.state.selectedNode ?
-                // TODO: Rename
-                <NodeConfiguratorSidebar blockTypes={blockTypes}
-                                         node={this.state.selectedNode}
-                                         onNodeEdited={(node)=>this.onNodeEdited(node)}/> :
-                <WorkflowDataEditorSidebar workflow={this.state.workflow} onEdit={this.onWorkflowEdited}/>
+              this.state.selectedNode &&
+              <NodeConfiguratorSidebar blockTypes={blockTypes}
+                                       node={this.state.selectedNode}
+                                       onNodeEdited={(node) => this.onNodeEdited(node)}/>
+            }
+            {
+              this.props.workflow && !this.state.selectedNode &&
+              <WorkflowDataEditorSidebar workflow={this.props.workflow} onEdit={this.onWorkflowEdited}/>
             }
           </Col>
         </Row>
@@ -78,18 +95,31 @@ export default class WorkflowEditor extends Component {
 
 
 const WorkflowBreadcrumb = () => (
-  <Breadcrumb>
-    <LinkBreadcrumb to={PROJECTS_PATH}>Projects</LinkBreadcrumb>
-    <SimpleBreadcrumb>Hello world</SimpleBreadcrumb>
-    <SimpleBreadcrumb>Workflows</SimpleBreadcrumb>
-    <SimpleBreadcrumb>First</SimpleBreadcrumb>
-  </Breadcrumb>
+  <div className="workflow-breadcrumb">
+    <Breadcrumb>
+      <LinkBreadcrumb to={PROJECTS_PATH}>Projects</LinkBreadcrumb>
+      <SimpleBreadcrumb>Hello world</SimpleBreadcrumb>
+      <SimpleBreadcrumb>Workflows</SimpleBreadcrumb>
+      <SimpleBreadcrumb>First</SimpleBreadcrumb>
+    </Breadcrumb>
+  </div>
 );
 
-const WorkflowSaveBar = ({isValid}) => {
+const WorkflowSaveBar = ({isValid, isSaving, onSavePressed}) => {
   return (
-    <div style={{'position': 'absolute', 'top': 0}}>
-      ok {isValid}
-    </div>
+    <Navbar className="light-background justify-content-between workflow-bottom-navbar">
+      <BackButton text="Return to project" to="/"/>
+
+      <div>
+        {
+          !isValid &&
+          <span>
+            <i className="fas fa-exclamation-triangle"/> Workflow contains some errors
+          </span>
+        }
+      </div>
+
+      <Button disabled={!isValid || isSaving} onClick={onSavePressed}>Save</Button>
+    </Navbar>
   )
 };
