@@ -5,11 +5,11 @@ import WorkflowsService from "../../../Services/WorkflowsService";
 
 export default class EditWorkflowPage extends Component {
 
-
   state = {
-    blockTypes: null,
     workflow: null,
-    isSaving: false
+    isSaving: false,
+
+    saveError: false,
   };
 
   componentDidMount = () => this.fetchWorkflow();
@@ -31,13 +31,12 @@ export default class EditWorkflowPage extends Component {
 
   onWorkflowEdited = (workflow) => this.setState({workflow});
 
-  onSave = async () => {
-    this.setState({isSaving: true});
+  onSave = async (workflow) => {
+    this.setState({workflow, isSaving: true});
     try {
-      await WorkflowsService.updateWorkflow(this.state.workflow)
+      await WorkflowsService.updateWorkflow(workflow)
     } catch (e) {
-      alert(e);
-      // TODO: Hanle
+      this.setState({saveError: true});
     }
     this.setState({isSaving: false});
   };
@@ -45,7 +44,8 @@ export default class EditWorkflowPage extends Component {
   render() {
     return <WorkflowEditor workflow={this.state.workflow}
                            onWorkflowEdited={this.onWorkflowEdited}
-                           onSavePressed={this.onSave}
-                           isSaving={this.state.isSaving}/>;
+                           onSave={this.onSave}
+                           isSaving={this.state.isSaving}
+                           saveError={this.state.saveError}/>;
   }
 }

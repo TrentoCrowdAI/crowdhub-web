@@ -9,8 +9,11 @@ import DraggableBlockTypeListSidebar from "./DraggableBlockTypeListSidebar";
 import WorkflowDataEditorSidebar from "./WorkflowDataEditorSidebar";
 import NodeConfiguratorSidebar from "./NodeConfiguratorSidebar";
 import BackButton from "../../../common/BackButton";
+import WorkflowGraphModel from "./GraphEditor/WorkflowGraphModel";
 
 export default class WorkflowEditor extends Component {
+
+  graphModel = new WorkflowGraphModel();
 
   state = {
     selectedNode: null
@@ -20,25 +23,14 @@ export default class WorkflowEditor extends Component {
 
   onNoNodeSelected = () => this.setState({selectedNode: null});
 
-  onNodeEdited = (editedNode) => {
-    const graph = this.props.workflow.data.graph;
-
-    const index = graph.nodes.findIndex(node => node.id === editedNode.id);
-    graph.nodes[index] = editedNode;
-
-    this.onGraphEdited(graph);
-  };
-
-  onGraphEdited = (graph) => {
+  onSavePressed = () => {
+    const graph = this.graphModel.serializeDiagram();
     const workflow = {
-      ...this.props.workflow
+        ...this.props.workflow
     };
     workflow.data.graph = graph;
-    this.onWorkflowEdited(workflow);
+    this.props.onSave(workflow);
   };
-
-  onWorkflowEdited = (workflow) => this.props.onWorkflowEdited(workflow);
-
 
   // TODO: Handle deletion of selected block
 
@@ -61,17 +53,18 @@ export default class WorkflowEditor extends Component {
 
               <div style={{flex: 1}}>
                 <GraphEditor
-                  graph={workflow.data.graph}
-                  onGraphEdited={this.onGraphEdited}
+                  initialGraph={workflow.data.graph}
+                  graphModel={this.graphModel}
 
                   onNodeSelected={this.onNodeSelected}
                   onNoNodeSelected={this.onNoNodeSelected}/>
 
                 <WorkflowBreadcrumb/>
-                <WorkflowSaveBar workflow={workflow} isValid={true} onSavePressed={this.props.onSavePressed}
+                <WorkflowSaveBar workflow={workflow}
+                                 graphModel={this.graphModel}
+                                 onSavePressed={this.onSavePressed}
                                  isSaving={this.props.isSaving}/>
               </div>
-
             }
           </Col>
 
@@ -80,7 +73,7 @@ export default class WorkflowEditor extends Component {
               this.state.selectedNode &&
               <NodeConfiguratorSidebar blockTypes={blockTypes}
                                        node={this.state.selectedNode}
-                                       onNodeEdited={(node) => this.onNodeEdited(node)}/>
+                                       onModelUpdate={() => this.forceUpdate()}/>
             }
             {
               this.props.workflow && !this.state.selectedNode &&
@@ -105,10 +98,11 @@ const WorkflowBreadcrumb = () => (
   </div>
 );
 
-const WorkflowSaveBar = ({isValid, isSaving, onSavePressed}) => {
+const WorkflowSaveBar = ({workflow, graphModel, isSaving, onSavePressed}) => {
+  const isValid = graphModel.isValid();
   return (
     <Navbar className="light-background justify-content-between workflow-bottom-navbar">
-      <BackButton text="Return to project" to="/"/>
+      <BackButton text="Return to project" to={`${PROJECTS_PATH}/${workflow.projectId}`}/>
 
       <div>
         {

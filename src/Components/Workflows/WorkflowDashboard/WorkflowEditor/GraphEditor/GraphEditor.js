@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {DefaultNodeFactory, DefaultNodeModel, DiagramEngine, DiagramModel, DiagramWidget} from "storm-react-diagrams";
+import {DiagramEngine, DiagramWidget} from "storm-react-diagrams";
 import 'storm-react-diagrams/dist/style.min.css';
 import './GraphEditor.css'
 import uuid from 'uuid';
@@ -8,32 +8,29 @@ import {BlockNodeFactory, BlockNodeModel} from "./BlockNode";
 export default class GraphEditor extends Component {
 
   engine = new DiagramEngine();
-  model = new DiagramModel();
 
   constructor(props) {
     super(props);
     this.initGraph();
-    this.deserializeGraph(props.graph);
+    this.deserializeGraph(props.initialGraph);
   }
-
-
-  deserializeGraph = (graph) => {
-    if (graph && graph.id) {
-      this.model.deSerializeDiagram(graph, this.engine);
-      this.addSelectedListenerToNodesOfModel();
-    }
-  };
 
   initGraph = () => {
     this.engine.installDefaultFactories();
     this.engine.registerNodeFactory(new BlockNodeFactory());
-    this.engine.setDiagramModel(this.model);
+    this.engine.setDiagramModel(this.getModel());
+  };
+
+  deserializeGraph = (graph) => {
+    if (graph && graph.id) {
+      this.getModel().deSerializeDiagram(graph, this.engine);
+      this.addSelectedListenerToNodesOfModel();
+    }
   };
 
   addSelectedListenerToNodesOfModel = () => {
-    Object.keys(this.model.nodes)
-      .map(id => this.model.nodes[id])
-      .forEach(node => this.addSelectedListener(node));
+    Object.values(this.getModel().getNodes())
+      .forEach(this.addSelectedListener);
   };
 
   onDrop = (event) => {
@@ -85,17 +82,16 @@ export default class GraphEditor extends Component {
     type: blockType.data.type,
     parameters: blockType.data.parameters.map(parameter => ({
       ...parameter,
-      value: parameter.default,
-      isValid: true
+      value: parameter.default
     }))
   });
 
   addNodeToGraph = (node) => {
     this.addSelectedListener(node);
-    this.model.addNode(node);
+    this.getModel().addNode(node);
     this.forceUpdate();
 
-    this.props.onGraphEdited(this.model.serializeDiagram());
+    //this.props.onGraphEdited(this.getModel().serializeDiagram());
   };
 
   addSelectedListener = (node) => node.addListener({
@@ -104,18 +100,19 @@ export default class GraphEditor extends Component {
 
   onSelectedNodeChanged = () => {
     const selectedNodes = this.getSelectedNodes();
-    setImmediate(() => { // TODO: Can we remove this? this is needed to fire the onBlur (of Text) before changing selected node
-      if (selectedNodes.length === 1) {
-        const node = selectedNodes[0];
-        this.props.onNodeSelected(node);
-      } else {
-        this.props.onNoNodeSelected();
-      }
-    });
+
+    if (selectedNodes.length === 1) {
+      const node = selectedNodes[0];
+      this.props.onNodeSelected(node);
+    } else {
+      this.props.onNoNodeSelected();
+    }
 
   };
 
-  getSelectedNodes = () => this.model.getSelectedItems('node');
+  getSelectedNodes = () => this.getModel().getSelectedItems('node');
+
+  getModel = () => this.props.graphModel;
 
   render() {
     return (

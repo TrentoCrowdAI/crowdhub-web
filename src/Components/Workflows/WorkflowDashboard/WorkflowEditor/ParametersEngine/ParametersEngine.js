@@ -1,42 +1,27 @@
 import React, {Component} from 'react';
 import {Alert} from "react-bootstrap";
-import uuid from 'uuid';
 
-export default class ParametersEngine extends Component {
+export default ({parameters, supportedParameters, parametersContainerId, onParameterModelUpdate}) => (
+  <div>
+    {
+      parameters.map((parameter) => {
+        const parameterComponent = supportedParameters[parameter.type];
+        const key = `${parametersContainerId}-${parameter.name}`;
 
-  onParameterValueChanged = (index) => (value, isValid) => {
-    const {parameters} = this.props;
-    parameters[index] = {
-      ...parameters[index],
-      value,
-      isValid
-    };
-    this.props.onParametersChanged(parameters);
-  };
-
-  render() {
-    const {parameters, supportedParameters} = this.props;
-    const objectId = uuid(); // TODO: Replace with node id
-    return (
-      <div>
-        {
-          parameters.map((parameter, index) => {
-            const parameterComponent = supportedParameters[parameter.type];
-            const key = `${objectId}-${parameter.name}`;
-
-            if (parameterComponent) {
-              const Component = parameterComponent.Component;
-              return <Component key={key} parameter={parameter} onValueChanged={this.onParameterValueChanged(index)}/>;
-            } else {
-              return <UnsupportedParameter key={key} parameter={parameter}/>
-            }
-
-          })
+        if (parameterComponent) {
+          const Component = parameterComponent.Widget;
+          return <Component key={key}
+                            model={parameter}
+                            onModelUpdated={onParameterModelUpdate}/>;
+        } else {
+          return <UnsupportedParameter key={key} parameter={parameter}/>
         }
-      </div>
-    )
-  }
-}
+
+      })
+    }
+  </div>
+);
+
 
 const UnsupportedParameter = ({parameter}) => (
   <Alert variant="danger">
