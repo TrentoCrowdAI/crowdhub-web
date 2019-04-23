@@ -63,6 +63,16 @@ export default class DesignEditor extends Component {
         }
       }
     });
+
+    this.drake.on('remove', (element, container) => {
+      // Dragula removed the element from the design blocks container, but react don't know this.
+      // We need to re-append the element to the container: react will re-remove it when the state gets updated
+      container.appendChild(element);
+
+      const id = element.getAttribute('data-block-id');
+      this.getModel().removeBlockById(id);
+      this.props.onModelUpdated();
+    });
   };
 
   onBlockAdded = (element, nextSiblingIndex) => {
@@ -103,7 +113,7 @@ export default class DesignEditor extends Component {
     const blockBIndex = this.getBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
 
     this.getModel().swapBlocks(blockAIndex, blockBIndex);
-    this.forceUpdate(); //T TODO: PRova a rimuovere aggiornando lo stato
+    this.props.onModelUpdated();
   };
 
 

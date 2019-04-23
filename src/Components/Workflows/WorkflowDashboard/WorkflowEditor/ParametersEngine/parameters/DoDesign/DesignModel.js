@@ -69,6 +69,16 @@ export class DesignBlocksModel {
     blocks[b] = temp;
   }
 
+  removeBlockById(id) {
+    console.log(id)
+    const blocks = this.getBlocks();
+    console.log(blocks)
+    const index = blocks.findIndex(block => block.id === id);
+    if (index >= 0) {
+      blocks.splice(index, 1);
+    }
+  }
+
   isValid() {
     return this.getBlocks().find(block => !block.isValid()) == null;
   }

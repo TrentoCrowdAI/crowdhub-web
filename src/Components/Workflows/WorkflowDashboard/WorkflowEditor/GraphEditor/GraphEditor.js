@@ -73,18 +73,11 @@ export default class GraphEditor extends Component {
       x: position.x,
       y: position.y,
 
-      data: this.createBlockDataFromBlockType(blockType)
+      data: blockType.data
     }, this.engine);
     return node;
   };
 
-  createBlockDataFromBlockType = (blockType) => ({
-    type: blockType.data.type,
-    parameters: blockType.data.parameters.map(parameter => ({
-      ...parameter,
-      value: parameter.default
-    }))
-  });
 
   addNodeToGraph = (node) => {
     this.addSelectedListener(node);
