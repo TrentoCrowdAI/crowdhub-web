@@ -11,12 +11,22 @@ export class DesignBlocksEditorModalAndButton extends Component {
     super(props);
     this.state = {
       show: false,
-      designBlocksClonedModel: new DesignBlocksModel(this.getModel().getBlocksModel())
+      designBlocksClonedModel: this.cloneModel()
     }
+  }
+
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // Hacky
+    this.state.designBlocksClonedModel = this.cloneModel();
   }
 
   getModel() {
     return this.props.designModel;
+  }
+
+  cloneModel () {
+    return new DesignBlocksModel(this.getModel().getBlocksModel());
   }
 
   showModal = () => this.setState({show: true});

@@ -3,6 +3,7 @@ import {Form} from "react-bootstrap";
 
 import {DesignBlocksEditorModalAndButton} from "./DesignBlocksEditorModal";
 import {DoDesignModel} from "./DesignModel";
+import {PickDesignTemplateModalAndButton} from "./PickDesignTemplateModal";
 
 
 class DoDesignWidget extends Component {
@@ -21,14 +22,11 @@ class DoDesignWidget extends Component {
           {model.getDescription()}
         </Form.Text>
 
-        {/*
-
         {
           model.isDesignEmpty() &&
           <PickDesignTemplateModalAndButton designModel={model}
                                     onModelUpdated={this.props.onModelUpdated}/>
         }
-*/}
 
         <DesignBlocksEditorModalAndButton designModel={model}
                                           onModelUpdated={this.props.onModelUpdated}
