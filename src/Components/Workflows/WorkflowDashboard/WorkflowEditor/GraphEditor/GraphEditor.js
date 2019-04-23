@@ -4,6 +4,7 @@ import 'storm-react-diagrams/dist/style.min.css';
 import './GraphEditor.css'
 import uuid from 'uuid';
 import {BlockNodeFactory, BlockNodeModel} from "./BlockNode";
+import BlackLinkFactory from "./BlackLinkFactory";
 
 export default class GraphEditor extends Component {
 
@@ -18,6 +19,7 @@ export default class GraphEditor extends Component {
   initGraph = () => {
     this.engine.installDefaultFactories();
     this.engine.registerNodeFactory(new BlockNodeFactory());
+    this.engine.registerLinkFactory(new BlackLinkFactory());
     this.engine.setDiagramModel(this.getModel());
   };
 

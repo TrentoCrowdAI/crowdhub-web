@@ -18,3 +18,6 @@ i.fa-caret-down.expanded {
     transform: rotate(180deg);
 }
 
+.block-card {
+    margin-bottom: 1em;
+}

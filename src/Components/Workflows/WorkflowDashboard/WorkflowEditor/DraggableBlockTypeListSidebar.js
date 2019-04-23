@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {makeCancellable} from "../../../../Services/utils";
 import BlockTypesService from "../../../../Services/BlockTypesService";
-import {Button} from "react-bootstrap";
+import {Button, Card, Col, Row} from "react-bootstrap";
 
 export default class DraggableBlockTypeListSidebar extends Component {
 
@@ -45,18 +45,24 @@ export default class DraggableBlockTypeListSidebar extends Component {
           <FetchBlockTypesError/>
         }
 
-        {
-          this.state.blockTypes && this.state.blockTypes.map(blockType => (
-            <Button
-              key={blockType.id}
-              className="btn-block"
-              style={{backgroundColor: blockType.data.nodeDefinition.color}}
-              draggable={true}
-              onDragStart={event => event.dataTransfer.setData('blockType', JSON.stringify(blockType))}>
-              {blockType.data.nodeDefinition.name}
-            </Button>
-          ))
-        }
+        <Row>
+          <Col>
+            {
+              this.state.blockTypes && this.state.blockTypes.map(blockType => (
+                <Card
+                  key={blockType.id}
+                  className="btn-block"
+                  style={{backgroundColor: blockType.data.nodeDefinition.color}}
+                  draggable={true}
+                  onDragStart={event => event.dataTransfer.setData('blockType', JSON.stringify(blockType))}>
+                  <Card.Header>
+                    {blockType.data.nodeDefinition.name}
+                  </Card.Header>
+                </Card>
+              ))
+            }
+          </Col>
+        </Row>
       </div>
     );
   }

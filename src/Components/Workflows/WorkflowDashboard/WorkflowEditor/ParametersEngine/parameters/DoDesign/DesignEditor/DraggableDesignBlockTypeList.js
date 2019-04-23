@@ -17,7 +17,7 @@ export default class DraggableDesignBlockTypeList extends Component {
           {
             this.state.designBlocks.map(blockType => {
               return (
-                <Card key={blockType.type} data-block-type={JSON.stringify(blockType)}>
+                <Card key={blockType.type} data-block-type={JSON.stringify(blockType)} className="mb-2">
                   <Card.Header>{blockType.name}</Card.Header>
                 </Card>
               );
