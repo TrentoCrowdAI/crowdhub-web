@@ -1,56 +1,11 @@
 import React, {Component} from 'react';
 import {Card} from "react-bootstrap";
+import DesignBlockTypesService from "../../../../../../../../Services/DesignBlockTypesService";
 
 export default class DraggableDesignBlockTypeList extends Component {
+
   state = {
-    designBlocks: [
-      {
-        "type": "input_dynamic_text",
-        "name": "Input dynamic text",
-        "parameters": [
-          {
-            "name": "csvVariable",
-            "displayName": "",
-            "description": "",
-            "value": "value",
-            "type": "text",
-
-          },
-          {
-            "name": "csvTitleVariable",
-            "displayName": "",
-            "description": "",
-            "value": "value",
-            "type": "text",
-
-          },
-          {
-            "name": "highlightable",
-            "displayName": "",
-            "description": "",
-            "value": false,
-            "type": "boolean",
-
-          },
-          {
-            "name": "question",
-            "displayName": "",
-            "description": "",
-            "value": "value",
-            "type": "text",
-            "required": "highlightable"
-          },
-          {
-            "name": "highlightedCsvVariable",
-            "displayName": "",
-            "description": "",
-            "value": "value",
-            "type": "text",
-            "required": "highlightable"
-          }
-        ]
-      }
-    ]
+    designBlocks: DesignBlockTypesService.getDesignBlockTypes()
   };
 
   render() {

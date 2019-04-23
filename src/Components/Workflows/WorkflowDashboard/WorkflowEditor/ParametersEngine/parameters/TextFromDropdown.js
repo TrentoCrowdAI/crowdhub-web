@@ -5,10 +5,6 @@ import AbstractParameterModel from "../AbstractParameterModel";
 
 class TextFromDropdownWidget extends Component {
 
-  constructor (props) {
-    super(props);
-  }
-
   getModel() {
     return this.props.model;
   }
@@ -32,7 +28,7 @@ class TextFromDropdownWidget extends Component {
         <Form.Control as="select" value={model.getValue()} onChange={this.onChangeValue}>
           {
             model.choices.map(choice => (
-              <option key={choice.value} value={choice.value}>{choice.name}</option>
+              <option key={choice.value} value={choice.value}>{choice.label}</option>
             ))
           }
         </Form.Control>

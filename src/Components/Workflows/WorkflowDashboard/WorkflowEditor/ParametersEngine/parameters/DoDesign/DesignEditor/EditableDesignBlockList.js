@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Card} from "react-bootstrap";
 
 import ParametersEngine from "../../../ParametersEngine";
 import {Parameters} from "../../index";

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import {Button, Modal} from 'react-bootstrap';
 import DesignEditor from "./DesignEditor/DesignEditor";
-import {DesignBlocksModel, DoDesignModel} from "./DesignModel";
+import {DesignBlocksModel} from "./DesignModel";
 
 
 export class DesignBlocksEditorModalAndButton extends Component {
