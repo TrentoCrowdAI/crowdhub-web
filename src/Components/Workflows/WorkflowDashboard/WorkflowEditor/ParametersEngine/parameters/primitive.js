@@ -1,9 +1,10 @@
 import Text from './Text';
 import Number from './Number';
 import Boolean from './Boolean';
-import TextFromDropdown from "./TextFromDropdown";
-import Html from "./Html";
-import ChoiceBuilder from "./ChoiceBuilder";
+import TextFromDropdown from './TextFromDropdown';
+import Html from './Html';
+import ChoiceBuilder from './ChoiceBuilder';
+import Code from './Code';
 
 const mapParametersArrayToMap = (parameters) => {
   const map = {};
@@ -17,5 +18,6 @@ export const PrimitiveParameters = mapParametersArrayToMap([
   Boolean,
   TextFromDropdown,
   Html,
-  ChoiceBuilder
+  ChoiceBuilder,
+  Code
 ]);
