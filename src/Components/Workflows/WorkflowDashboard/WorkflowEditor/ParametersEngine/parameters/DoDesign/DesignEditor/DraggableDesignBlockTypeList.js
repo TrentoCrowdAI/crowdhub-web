@@ -12,7 +12,7 @@ export default class DraggableDesignBlockTypeList extends Component {
             "name": "csvVariable",
             "displayName": "",
             "description": "",
-            "default": "value",
+            "value": "value",
             "type": "text",
 
           },
@@ -20,7 +20,7 @@ export default class DraggableDesignBlockTypeList extends Component {
             "name": "csvTitleVariable",
             "displayName": "",
             "description": "",
-            "default": "value",
+            "value": "value",
             "type": "text",
 
           },
@@ -28,7 +28,7 @@ export default class DraggableDesignBlockTypeList extends Component {
             "name": "highlightable",
             "displayName": "",
             "description": "",
-            "default": false,
+            "value": false,
             "type": "boolean",
 
           },
@@ -36,7 +36,7 @@ export default class DraggableDesignBlockTypeList extends Component {
             "name": "question",
             "displayName": "",
             "description": "",
-            "default": "value",
+            "value": "value",
             "type": "text",
             "required": "highlightable"
           },
@@ -44,17 +44,10 @@ export default class DraggableDesignBlockTypeList extends Component {
             "name": "highlightedCsvVariable",
             "displayName": "",
             "description": "",
-            "default": "value",
+            "value": "value",
             "type": "text",
             "required": "highlightable"
           }
-        ]
-      },
-      {
-        "type": "aaa",
-        "name": "AAA",
-        "parameters": [
-
         ]
       }
     ]

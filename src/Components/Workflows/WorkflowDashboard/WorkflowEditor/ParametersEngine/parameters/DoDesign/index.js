@@ -1,25 +1,15 @@
 import React, {Component} from 'react';
 import {Form} from "react-bootstrap";
 
-import {DesignEditorModalAndButton} from "./DesignEditorModal";
+import {DesignBlocksEditorModalAndButton} from "./DesignBlocksEditorModal";
 import {DoDesignModel} from "./DesignModel";
 
 
-// TODO: Transform in function
 class DoDesignWidget extends Component {
 
   getModel() {
-    console.log(this.props.model);
     return this.props.model;
   }
-
-  onDesignChange = (design) => {
-    console.log(design);
-    this.getModel().setValue(design.getValue());
-    this.props.onModelUpdated();
-  };
-
-  onTemplatePicked = this.onDesignChange;
 
   render() {
     const model = this.getModel();
@@ -35,18 +25,18 @@ class DoDesignWidget extends Component {
 
         {
           model.isDesignEmpty() &&
-          <PickDesignTemplateModalAndButton onTemplatePicked={this.onTemplatePicked}/>
+          <PickDesignTemplateModalAndButton designModel={model}
+                                    onModelUpdated={this.props.onModelUpdated}/>
         }
 */}
 
-        <DesignEditorModalAndButton designModel={model}
-                              onModelUpdated={this.onDesignChange}
-                              buttonText={model.isDesignEmpty() ? 'Create from scratch' : 'Open design editor'}/>
+        <DesignBlocksEditorModalAndButton designModel={model}
+                                          onModelUpdated={this.props.onModelUpdated}
+                                          buttonText={model.isDesignEmpty() ? 'Create from scratch' : 'Open design editor'}/>
       </Form.Group>
     );
   }
 }
-
 
 
 export default {

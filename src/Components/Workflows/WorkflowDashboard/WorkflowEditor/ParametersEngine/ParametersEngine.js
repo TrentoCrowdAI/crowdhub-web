@@ -12,7 +12,8 @@ export default ({parameters, supportedParameters, parametersContainerId, onParam
           const Component = parameterComponent.Widget;
           return (
             <div key={key}>
-              <Component model={parameter} onModelUpdated={onParameterModelUpdate}/>
+              <Component model={parameter}
+                         onModelUpdated={onParameterModelUpdate}/>
               <hr/>
             </div>
           );

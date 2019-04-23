@@ -92,7 +92,7 @@ export default class DesignEditor extends Component {
   };
 
   addBlockDataToTheDesignAndNotify = (newBlock, newBlockIndex) => {
-    this.getModel().addDesignBlock(newBlock, newBlockIndex);
+    this.getModel().addBlock(newBlock, newBlockIndex);
     this.forceUpdate(); //T TODO: PRova a rimuovere aggiornando lo stato
   };
 
@@ -102,7 +102,7 @@ export default class DesignEditor extends Component {
     const blockAIndex = this.getMovedBlockIndex(element);
     const blockBIndex = this.getBlockIndexGivenNextSiblingIndex(nextSiblingIndex);
 
-    this.getModel().swapDesignBlocks(blockAIndex, blockBIndex);
+    this.getModel().swapBlocks(blockAIndex, blockBIndex);
     this.forceUpdate(); //T TODO: PRova a rimuovere aggiornando lo stato
   };
 
@@ -116,8 +116,8 @@ export default class DesignEditor extends Component {
 
   getBlockIndexGivenNextSiblingIndex = (nextSibling) => nextSibling === -1 ? this.getModel().getBlocks().length - 1 : nextSibling - 1;
 
-  getModel () {
-    return this.props.designModel;
+  getModel() {
+    return this.props.designBlocksModel;
   }
 
 
@@ -129,7 +129,9 @@ export default class DesignEditor extends Component {
         </Col>
 
         <Col md="6" lg="8">
-          <EditableDesignBlockList designModel={this.getModel()} componentsContainerRef={this.blocksRef}/>
+          <EditableDesignBlockList componentsContainerRef={this.blocksRef}
+                                   designModel={this.getModel()}
+                                   onParameterModelUpdate={this.props.onModelUpdated}/>
         </Col>
       </Row>
     )

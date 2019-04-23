@@ -1,7 +1,6 @@
 import AbstractParameterModel from "../../AbstractParameterModel";
 import {deSerializeParameter} from "../index";
 
-
 import uuid from 'uuid';
 
 export class DoDesignModel extends AbstractParameterModel {
@@ -15,37 +14,63 @@ export class DoDesignModel extends AbstractParameterModel {
 
   deSerialize(data) {
     super.deSerialize(data);
-    data.value = data.value || [];
-    this.value = data.value.map(block => new DesignBlockModel(block));
+    this.setBlocksModel(new DesignBlocksModel(data.value));
+
   }
+
+  getBlocksModel() {
+    return this.getValue();
+  }
+
+  setBlocksModel(blocksModel) {
+    this.setValue(blocksModel)
+  };
 
   isValid() {
-    return this.getDesignBlocks().find(block => !block.isValid()) == null;
-  }
-
-  getBlocks() {
-    console.warn('deprecated');
-    return this.getDesignBlocks();
-  }
-
-  getDesignBlocks() {
-    return this.value;
+    return this.getBlocksModel().isValid();
   }
 
   isDesignEmpty() {
-    return this.getDesignBlocks().length === 0;
+    return this.getBlocksModel().isDesignEmpty();
+  }
+}
+
+export class DesignBlocksModel {
+
+  blocks = [];
+
+  constructor(data) {
+    if (data) {
+      this.deSerialize(data);
+    }
   }
 
-  addDesignBlock(newBlock, newBlockIndex) {
-    this.getDesignBlocks()
+  deSerialize(data) {
+    this.blocks = data.blocks.map(block => new DesignBlockModel(block));
+  }
+
+  getBlocks() {
+    return this.blocks;
+  }
+
+  isDesignEmpty() {
+    return this.getBlocks().length === 0;
+  }
+
+  addBlock(newBlock, newBlockIndex) {
+    this.getBlocks()
       .splice(newBlockIndex, 0, newBlock);
   }
 
-  swapDesignBlocks (a, b) {
-    const blocks = this.getDesignBlocks();
+  swapBlocks(a, b) {
+    const blocks = this.getBlocks();
     const temp = blocks[a];
     blocks[a] = blocks[b];
     blocks[b] = temp;
+  }
+
+  isValid() {
+    return this.getBlocks().find(block => !block.isValid()) == null;
   }
 }
 
@@ -53,22 +78,16 @@ export class DoDesignModel extends AbstractParameterModel {
 export class DesignBlockModel {
 
   constructor(data) {
-    this.deSerialize(data);
+    if (data) {
+      this.deSerialize(data);
+    }
   }
 
   deSerialize({type, parameters, id, name}) {
-    this.type = type;
-    parameters = parameters || [];
-    this.parameters = parameters.map(deSerializeParameter);
     this.id = id || uuid();
+    this.type = type;
     this.name = name;
-  }
-
-  serialize() {
-    return {
-      type: this.type,
-      parameters: this.parameters.map(parameter => parameter.serialize())
-    }
+    this.parameters = parameters ? parameters.map(deSerializeParameter) : [];
   }
 
   isValid() {
