@@ -7,15 +7,15 @@
     "bootstrap": "^4.3.1",
     "dragula": "^3.7.2",
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.10.0",
-    "formik": "^1.5.1",
-    "react": "^16.8.4",
-    "react-bootstrap": "^1.0.0-beta.5",
-    "react-dom": "^16.8.4",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "formik": "^1.5.2",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-dom": "^16.8.6",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
     "storm-react-diagrams": "^5.2.1",
-    "tinymce": "^5.0.2",
+    "tinymce": "^5.0.3",
     "uuid": "^3.3.2",
     "yup": "^0.27.0"
   },
@@ -38,9 +38,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.7.2",
+    "@fortawesome/fontawesome-free": "^5.8.1",
     "gh-pages": "^2.0.1",
-    "react-test-renderer": "^16.8.5"
+    "react-test-renderer": "^16.8.6"
   },
   "homepage": "https://trentocrowdai.github.io/servant-web"
 }
