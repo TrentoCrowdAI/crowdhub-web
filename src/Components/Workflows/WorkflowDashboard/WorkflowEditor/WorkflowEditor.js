@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Breadcrumb, Button, Col, Container, Navbar, Row} from "react-bootstrap";
+import {Breadcrumb, Button, Col, Container, Navbar, Row, Spinner} from "react-bootstrap";
 
 import './WorkflowEditor.css';
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../../common/Breadcrumbs";
@@ -69,7 +69,7 @@ export default class WorkflowEditor extends Component {
                   onNodeSelected={this.onNodeSelected}
                   onNoNodeSelected={this.onNoNodeSelected}/>
 
-                <WorkflowBreadcrumb/>
+                <WorkflowBreadcrumb workflow={workflow}/>
                 <WorkflowSaveBar workflow={workflow}
                                  graphModel={this.graphModel}
                                  onSavePressed={this.onSavePressed}
@@ -98,13 +98,13 @@ export default class WorkflowEditor extends Component {
 }
 
 
-const WorkflowBreadcrumb = () => (
+const WorkflowBreadcrumb = ({workflow}) => (
   <div className="workflow-breadcrumb">
     <Breadcrumb>
       <LinkBreadcrumb to={PROJECTS_PATH}>Projects</LinkBreadcrumb>
       <SimpleBreadcrumb>Hello world</SimpleBreadcrumb>
       <SimpleBreadcrumb>Workflows</SimpleBreadcrumb>
-      <SimpleBreadcrumb>First</SimpleBreadcrumb>
+      <SimpleBreadcrumb>{workflow.data.name}</SimpleBreadcrumb>
     </Breadcrumb>
   </div>
 );
@@ -124,7 +124,19 @@ const WorkflowSaveBar = ({workflow, graphModel, isSaving, onSavePressed}) => {
         }
       </div>
 
-      <Button disabled={!isValid || isSaving} onClick={onSavePressed}>Save</Button>
+      <Button disabled={!isValid || isSaving} onClick={onSavePressed}>
+        {
+          isSaving &&
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
+        }
+        <span> Save</span>
+      </Button>
     </Navbar>
   )
 };

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {makeCancellable} from "../../../../Services/utils";
 import BlockTypesService from "../../../../Services/BlockTypesService";
+import {Button} from "react-bootstrap";
 
 export default class DraggableBlockTypeListSidebar extends Component {
 
@@ -32,6 +33,8 @@ export default class DraggableBlockTypeListSidebar extends Component {
   render() {
     return (
       <div>
+        <h5>Workflow blocks</h5>
+
         {
           !this.state.blockTypes && !this.state.fetchError &&
           <FetchingBlockTypes/>
@@ -44,13 +47,14 @@ export default class DraggableBlockTypeListSidebar extends Component {
 
         {
           this.state.blockTypes && this.state.blockTypes.map(blockType => (
-            <div
+            <Button
               key={blockType.id}
-              style={{borderColor: blockType.data.nodeDefinition.color}}
+              className="btn-block"
+              style={{backgroundColor: blockType.data.nodeDefinition.color}}
               draggable={true}
               onDragStart={event => event.dataTransfer.setData('blockType', JSON.stringify(blockType))}>
               {blockType.data.nodeDefinition.name}
-            </div>
+            </Button>
           ))
         }
       </div>

@@ -10,9 +10,12 @@ export default ({parameters, supportedParameters, parametersContainerId, onParam
 
         if (parameterComponent) {
           const Component = parameterComponent.Widget;
-          return <Component key={key}
-                            model={parameter}
-                            onModelUpdated={onParameterModelUpdate}/>;
+          return (
+            <div key={key}>
+              <Component model={parameter} onModelUpdated={onParameterModelUpdate}/>
+              <hr/>
+            </div>
+          );
         } else {
           return <UnsupportedParameter key={key} parameter={parameter}/>
         }

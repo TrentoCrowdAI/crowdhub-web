@@ -1,6 +1,6 @@
 import React from 'react';
 import BlockCard from "./BlockCard";
-import {expectToMatchSnapshot} from "../../../../testHelpers/snpashots";
+import {expectToMatchSnapshot} from "../../../../../../../../../testHelpers/snpashots";
 
 const MockedContent = () => <p>mocked card content</p>;
 

@@ -1,13 +1,14 @@
 import React from 'react';
 import {Col, Row} from "react-bootstrap";
 import ParametersEngine from "./ParametersEngine/ParametersEngine";
-import {PrimitiveParameters} from "./ParametersEngine/parameters";
+import {Parameters} from "./ParametersEngine/parameters";
 
 export default ({node, onModelUpdate}) => (
   <BlockConfigurator block={node.data}
                      blockId={node.id}
                      onModelUpdate={onModelUpdate}/>
 );
+
 
 const BlockConfigurator = ({block, blockId, onModelUpdate}) => (
   <div>
@@ -21,6 +22,6 @@ const BlockConfigurator = ({block, blockId, onModelUpdate}) => (
       parametersContainerId={blockId}
       parameters={block.parameters}
       onParameterModelUpdate={onModelUpdate}
-      supportedParameters={PrimitiveParameters}/>
+      supportedParameters={Parameters}/>
   </div>
 );

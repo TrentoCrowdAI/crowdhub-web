@@ -4,8 +4,6 @@ import uuid from 'uuid';
 
 import Dragula from 'dragula';
 import "dragula/dist/dragula.css";
-
-import BlocksColumn from "./BlocksColumn";
 import blockDefinitionsMap from './blocks/definitions';
 
 // Array of all the possible blocks, without any data. This array is used to show the tools column from which the user
@@ -155,20 +153,22 @@ export default class DesignEditor extends Component {
     return (
       <Row className="project-design-editor-container">
         <Col md="6" lg="4">
-          <BlocksColumn componentsContainerRef={this.toolsBlocksRef}
+          <DraggableDesignBlockList/>
+          {/*<BlocksColumn componentsContainerRef={this.toolsBlocksRef}
                         title="Available blocks"
                         blockDefinitionsMap={blockDefinitionsMap}
                         blocksList={tools}
-                        expandable={false}/>
+                        expandable={false}/>*/}
         </Col>
 
         <Col md="6" lg="8">
-          <BlocksColumn componentsContainerRef={this.designBlocksRef}
+          <DesignBlockList />
+          {/*<BlocksColumn componentsContainerRef={this.designBlocksRef}
                         title="Your project design"
                         blockDefinitionsMap={blockDefinitionsMap}
                         blocksList={this.props.initialBlocks}
                         expandable={true}
-                        onChange={blocks => this.props.onChange(blocks)}/>
+                        onChange={blocks => this.props.onChange(blocks)}/>*/}
         </Col>
       </Row>
     );

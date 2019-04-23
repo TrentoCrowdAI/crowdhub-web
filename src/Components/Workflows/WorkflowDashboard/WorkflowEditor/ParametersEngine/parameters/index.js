@@ -1,18 +1,13 @@
-import Text from './Text';
-import Number from './Number';
-import Boolean from './Boolean';
+import {PrimitiveParameters} from './primitive';
+import DoDesign from "./DoDesign";
 
-const mapParametersArrayToMap = (parameters) => {
-  const map = {};
-  parameters.forEach(parameter => map[parameter.type] = parameter);
-  return map;
+export const Parameters = {
+  ...PrimitiveParameters,
+
+
+  // composed parameters:
+  [DoDesign.type]: DoDesign
 };
-
-export const PrimitiveParameters = mapParametersArrayToMap([
-  Text,
-  Number,
-  Boolean
-]);
 
 export const deSerializeParameter = (data) => {
   const Model = getModelByType(data.type);
@@ -21,9 +16,9 @@ export const deSerializeParameter = (data) => {
   return instance;
 };
 
-const getModelByType=(type) => {
-  const parameter = PrimitiveParameters[type];
-  if(!parameter) {
+const getModelByType = (type) => {
+  const parameter = Parameters[type];
+  if (!parameter) {
     throw new Error(`unknown parameter of type '${type}'`);
   }
   return parameter.Model;
