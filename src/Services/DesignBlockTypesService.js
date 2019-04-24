@@ -5,12 +5,12 @@ export default {
       {
         "type": "input_dynamic_text",
         "name": "Input dynamic text",
-        "parameters": [
+        "parameterDefinitions": [
           {
             "name": "csvVariable",
             "displayName": "CSV variable",
             "description": "CSV variable that contains the text",
-            "value": "text",
+            "default": "text",
             "type": "text",
             "required": true
           },
@@ -18,7 +18,7 @@ export default {
             "name": "csvTitleVariable",
             "displayName": "CSV title variable",
             "description": "CSV variable that contains the title",
-            "value": "title",
+            "default": "title",
             "type": "text",
             "required": true
           },
@@ -26,7 +26,7 @@ export default {
             "name": "highlightable",
             "displayName": "Highlightable",
             "description": "Allow the performer to highlight text",
-            "value": false,
+            "default": false,
             "type": "boolean",
             "required": true
           },
@@ -34,7 +34,7 @@ export default {
             "name": "question",
             "displayName": "Highlight question",
             "description": "Question that asks the performer to highlight the text",
-            "value": "Select where the title appears",
+            "default": "Select where the title appears",
             "type": "text",
             "required": "highlightable"
           },
@@ -42,7 +42,7 @@ export default {
             "name": "highlightedCsvVariable",
             "displayName": "Highlighted text CSV variable",
             "description": "Name of the CSV variable where to store the highlighted text",
-            "value": "highlighted_text",
+            "default": "highlighted_text",
             "type": "text",
             "required": "highlightable"
           }
@@ -51,12 +51,12 @@ export default {
       {
         "type": "input_dynamic_image",
         "name": "Input dynamic image",
-        "parameters": [
+        "parameterDefinitions": [
           {
             "name": "csvVariable",
             "displayName": "CSV variable",
             "description": "CSV variable that contains the image url",
-            "value": "image_url",
+            "default": "image_url",
             "type": "text",
             "required": true
           },
@@ -64,7 +64,7 @@ export default {
             "name": "highlightable",
             "displayName": "Highlightable",
             "description": "Allow the performer to highlight the image",
-            "value": false,
+            "default": false,
             "type": "boolean",
             "required": true
           },
@@ -72,7 +72,7 @@ export default {
             "name": "question",
             "displayName": "Highlight question",
             "description": "Question that asks the performer to highlight the image",
-            "value": "Highlight people in the image",
+            "default": "Highlight people in the image",
             "type": "text",
             "required": "highlightable"
           },
@@ -80,7 +80,7 @@ export default {
             "name": "highlightedCsvVariable",
             "displayName": "Highlighted text CSV variable",
             "description": "Name of the CSV variable where to store the highlighted coordinates",
-            "value": "highlighted_image",
+            "default": "highlighted_image",
             "type": "text",
             "required": "highlightable"
           }
@@ -89,12 +89,12 @@ export default {
       {
         "type": "input_static_text",
         "name": "Input static text",
-        "parameters": [
+        "parameterDefinitions": [
           {
             "name": "text",
             "displayName": "Text",
             "description": "Simple static text",
-            "value": "",
+            "default": "",
             "type": "html",
             "required": true
           }
@@ -103,12 +103,12 @@ export default {
       {
         "type": "output_open_question",
         "name": "Output open question",
-        "parameters": [
+        "parameterDefinitions": [
           {
             "name": "question",
             "displayName": "Question",
             "description": "Question to show to the performer",
-            "value": "Describe in few words ...",
+            "default": "Describe in few words ...",
             "type": "text",
             "required": true
           },
@@ -116,7 +116,7 @@ export default {
             "name": "csvVariable",
             "displayName": "CSV Variable",
             "description": "CSV variable where to store the answer of the performer",
-            "value": "answer",
+            "default": "answer",
             "type": "text",
             "required": true
           },
@@ -125,13 +125,13 @@ export default {
             "displayName": "Required",
             "description": "Is the user required to answer?",
             "type": "boolean",
-            "value": true
+            "default": true
           },
           {
             "name": "size",
             "displayName": "size",
             "type": "textFromDropdown",
-            "value": "slim",
+            "default": "slim",
             "choices": [
               {
                 "value": "slim",
@@ -148,12 +148,20 @@ export default {
       {
         "type": "output_choices",
         "name": "Output choices",
-        "parameters": [
+        "parameterDefinitions": [
           {
             "name": "question",
             "displayName": "Question",
             "description": "Question to show to the performer",
-            "value": "text",
+            "default": "text",
+            "type": "text",
+            "required": true
+          },
+          {
+            "name": "csvVariable",
+            "displayName": "CSV variable",
+            "description": "CSV variable where to store the answer",
+            "default": "text",
             "type": "text",
             "required": true
           },
@@ -161,7 +169,7 @@ export default {
             "name": "choices",
             "displayName": "Choices",
             "description": "Available choices",
-            "value": [
+            "default": [
               {
                 "value": "yes",
                 "label": "Yes"
@@ -179,13 +187,13 @@ export default {
             "displayName": "Required",
             "description": "Is the user required to answer?",
             "type": "boolean",
-            "value": true
+            "default": true
           },
           {
             "name": "choice_type",
             "displayName": "Choice type",
             "type": "textFromDropdown",
-            "value": "multiple_checkbox",
+            "default": "multiple_checkbox",
             "choices": [
               {
                 "value": "multiple_checkbox",
@@ -202,7 +210,7 @@ export default {
             ]
           }
         ]
-      },
+      }
     ];
   }
 }
