@@ -1,27 +1,21 @@
 import React from 'react';
 import {Col, Row} from "react-bootstrap";
 import ParametersEngine from "./ParametersEngine/ParametersEngine";
-import {Parameters} from "./ParametersEngine/parameters";
 
-export default ({node, onModelUpdate}) => (
-  <BlockConfigurator block={node.data}
-                     blockId={node.id}
-                     onModelUpdate={onModelUpdate}/>
-);
+export default ({node, onModelUpdate}) => {
 
+  return (
+    <div>
+      <Row>
+        <Col>
+          <h5>Block parameters</h5>
+        </Col>
+      </Row>
 
-const BlockConfigurator = ({block, blockId, onModelUpdate}) => (
-  <div>
-    <Row>
-      <Col>
-        <h5>Block parameters</h5>
-      </Col>
-    </Row>
+      <ParametersEngine
+        parametrizedBlock={node}
+        onParameterModelUpdate={onModelUpdate}/>
+    </div>
+  );
 
-    <ParametersEngine
-      parametersContainerId={blockId}
-      parameters={block.parameters}
-      onParameterModelUpdate={onModelUpdate}
-      supportedParameters={Parameters}/>
-  </div>
-);
+}

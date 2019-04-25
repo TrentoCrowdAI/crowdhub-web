@@ -1,4 +1,4 @@
-import {getJSON, postJSON, sendDelete} from "./utils";
+import {getJSON} from "./utils";
 import {APP_URL} from "../config";
 
 

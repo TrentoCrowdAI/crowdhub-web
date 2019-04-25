@@ -10,18 +10,40 @@ import WorkflowDataEditorSidebar from "./WorkflowDataEditorSidebar";
 import NodeConfiguratorSidebar from "./NodeConfiguratorSidebar";
 import BackButton from "../../../common/BackButton";
 import WorkflowGraphModel from "./GraphEditor/WorkflowGraphModel";
+import {makeCancellable} from "../../../../Services/utils";
+import BlockTypesService from "../../../../Services/BlockTypesService";
 
 export default class WorkflowEditor extends Component {
 
   graphModel = new WorkflowGraphModel();
 
   state = {
+    blockTypes: null,
+    fetchBlockTypesError: false,
+
     selectedNode: null
   };
 
-  onNodeSelected = (selectedNode) => this.setState({selectedNode});
+  // TODO: can we separate the loading of the block types from the editor?
+  componentDidMount = () => this.fetchBlockTypes();
 
-  onNoNodeSelected = () => this.setState({selectedNode: null});
+  componentWillUnmount = () => this.pendingBlockTypesRequest.cancel();
+
+  async fetchBlockTypes() {
+    try {
+      this.pendingBlockTypesRequest = makeCancellable(BlockTypesService.getBlockTypes());
+      const blockTypes = await this.pendingBlockTypesRequest.result;
+      this.setState({
+        blockTypes,
+        fetchBlockTypesError: false
+      });
+    } catch (e) {
+      this.setState({fetchBlockTypesError: true});
+    }
+  }
+
+
+  onNodeSelected = (selectedNode) => this.setState({selectedNode});
 
   onSavePressed = () => {
     this.onWorkflowDataEdited();
@@ -45,29 +67,30 @@ export default class WorkflowEditor extends Component {
   // TODO: Handle deletion of selected block
 
   render() {
-    const {workflow, blockTypes} = this.props;
+    const {workflow} = this.props;
+    const {blockTypes} = this.state;
+
     return (
       <Container className="full-width" style={{'flex': 1, 'marginTop': '-1em'}}>
-        <Row className="full-height">
-          <Col xs={2} className="light-background">
-            <DraggableBlockTypeListSidebar/>
-          </Col>
+        {
+          (!workflow || !blockTypes) &&
+          <p>Loading ...</p>
+        }
 
-          <Col xs={7} className="graph-editor-container" style={{display: 'flex'}}>
-            {
-              !this.props.workflow &&
-              <p>Loading ...</p>
-            }
-            {
-              this.props.workflow &&
+        {
+          workflow && blockTypes &&
+          <Row className="full-height">
+            <Col xs={2} className="light-background">
+              <DraggableBlockTypeListSidebar blockTypes={blockTypes}/>
+            </Col>
 
+            <Col xs={7} className="graph-editor-container" style={{display: 'flex'}}>
               <div style={{flex: 1}}>
                 <GraphEditor
                   initialGraph={workflow.data.graph}
                   graphModel={this.graphModel}
-
-                  onNodeSelected={this.onNodeSelected}
-                  onNoNodeSelected={this.onNoNodeSelected}/>
+                  blockTypes={blockTypes}
+                  onNodeSelected={this.onNodeSelected}/>
 
                 <WorkflowBreadcrumb workflow={workflow}/>
                 <WorkflowSaveBar workflow={workflow}
@@ -75,23 +98,22 @@ export default class WorkflowEditor extends Component {
                                  onSavePressed={this.onSavePressed}
                                  isSaving={this.props.isSaving}/>
               </div>
-            }
-          </Col>
+            </Col>
 
-          <Col xs={3} className="light-background">
-            {
-              this.state.selectedNode &&
-              <NodeConfiguratorSidebar blockTypes={blockTypes}
-                                       node={this.state.selectedNode}
-                                       onModelUpdate={() => this.forceUpdate()}/>
-            }
-            {
-              this.props.workflow && !this.state.selectedNode &&
-              <WorkflowDataEditorSidebar workflowData={this.props.workflow.data}
-                                         onEdit={this.onWorkflowDataEdited}/>
-            }
-          </Col>
-        </Row>
+            <Col xs={3} className="light-background">
+              {
+                this.state.selectedNode &&
+                <NodeConfiguratorSidebar node={this.state.selectedNode}
+                                         onModelUpdate={() => this.forceUpdate()}/>
+              }
+              {
+                !this.state.selectedNode &&
+                <WorkflowDataEditorSidebar workflowData={this.props.workflow.data}
+                                           onEdit={this.onWorkflowDataEdited}/>
+              }
+            </Col>
+          </Row>
+        }
       </Container>
     );
   }

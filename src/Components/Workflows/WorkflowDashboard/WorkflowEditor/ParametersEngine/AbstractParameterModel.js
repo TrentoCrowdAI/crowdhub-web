@@ -1,41 +1,41 @@
 export default class AbstractParameterModel {
-  deSerialize({required, name, type, value, displayName, description}) {
-    this.required = required;
-    this.name = name;
-    this.displayName = displayName || name;
-    this.type = type;
-    this.value = value;
-    this.description = description;
+
+  definition = null;
+  block = null;
+
+  constructor(definition, block) {
+    this.deSerialize(definition, block);
   }
 
-  serialize() {
-    return {
-      required: this.required,
-      name: this.name,
-      type: this.type,
-      value: this.value,
-      displayName: this.displayName,
-      description: this.description
+  deSerialize(definition, block) {
+    this.definition = definition;
+    this.block = block;
+    if (this.getValue() === undefined) {
+      this.setValue(this.getDefinition().default);
     }
+  }
+
+  serialize () {
+    return this.getValue();
   }
 
   isValid() {
     return false;
   }
 
-  getDescription() {
-    return this.description;
+  getDefinition () {
+    return this.definition;
   }
 
-  getDisplayName() {
-    return this.displayName;
+  getName () {
+    return this.getDefinition().name;
   }
 
   getValue() {
-    return this.value;
+    return this.block[this.getName()];
   }
 
   setValue(value) {
-    this.value = value;
+    this.block[this.getName()] = value;
   }
 }

@@ -4,7 +4,12 @@ import {APP_URL} from "../config";
 
 const BLOCK_TYPES_URL = `${APP_URL}/block-types`;
 
-const JSONtoBlockType = (json) => json;
+const JSONtoBlockType = (json) => {
+  json.data.blockType = json.data.type;
+  json.data.type = json.data.nodeType;
+
+  return json;
+};
 
 export default {
   async getBlockTypes() {

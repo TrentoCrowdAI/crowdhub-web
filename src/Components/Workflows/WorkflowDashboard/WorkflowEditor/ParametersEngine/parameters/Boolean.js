@@ -4,8 +4,7 @@ import AbstractParameterModel from "../AbstractParameterModel";
 
 const type = 'boolean';
 
-class Model extends AbstractParameterModel {
-
+class BooleanModel extends AbstractParameterModel {
 
   isValid() {
     return true;
@@ -13,7 +12,7 @@ class Model extends AbstractParameterModel {
 }
 
 // TODO: This is a copy and paste of Text, improve solution
-class Widget extends Component {
+class BooleanWidget extends Component {
 
   constructor(props) {
     super(props);
@@ -34,17 +33,18 @@ class Widget extends Component {
 
   render() {
     const model = this.getModel();
+    const definition = model.getDefinition();
 
     return (
       <Form.Group>
         <Form.Label>
-          {model.getDisplayName()}
+          {definition.displayName}
         </Form.Label>
         <Form.Text className="text-muted">
-          {model.getDescription()}
+          {definition.description}
         </Form.Text>
         <Form.Check type="checkbox"
-                    label={model.getDisplayName()}
+                    label={definition.displayName}
                     checked={this.state.value}
                     onChange={this.onChange}/>
       </Form.Group>
@@ -54,6 +54,6 @@ class Widget extends Component {
 
 export default {
   type,
-  Model,
-  Widget
+  Model: BooleanModel,
+  Widget: BooleanWidget
 }

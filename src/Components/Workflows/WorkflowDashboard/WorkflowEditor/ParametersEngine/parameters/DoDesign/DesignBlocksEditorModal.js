@@ -2,31 +2,31 @@ import React, {Component} from 'react';
 
 import {Button, Modal} from 'react-bootstrap';
 import DesignEditor from "./DesignEditor/DesignEditor";
-import {DesignBlocksModel} from "./DesignModel";
+import {DesignBlocksModel} from "./DesignBlocksModel";
 
 
 export class DesignBlocksEditorModalAndButton extends Component {
 
+  state = {
+    show: false
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      show: false,
-      designBlocksClonedModel: this.cloneModel()
-    }
+    this.designBlocksClonedModel = this.cloneDesignBlocksModel();
   }
 
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // Hacky
-    this.state.designBlocksClonedModel = this.cloneModel();
+    this.designBlocksClonedModel = this.cloneDesignBlocksModel();
   }
 
   getModel() {
     return this.props.designModel;
   }
 
-  cloneModel () {
-    return new DesignBlocksModel(this.getModel().getBlocksModel());
+  cloneDesignBlocksModel() {
+    return this.getModel().getBlocksModel().clone();
   }
 
   showModal = () => this.setState({show: true});
@@ -34,7 +34,7 @@ export class DesignBlocksEditorModalAndButton extends Component {
   hideModal = () => this.setState({show: false});
 
   onSave = () => {
-    this.getModel().setBlocksModel(this.state.designBlocksClonedModel);
+    this.getModel().setBlocksModel(this.designBlocksClonedModel);
     this.props.onModelUpdated();
     this.hideModal();
   };
@@ -43,7 +43,7 @@ export class DesignBlocksEditorModalAndButton extends Component {
     return (
       <div>
         <DesignBlocksEditorModal show={this.state.show}
-                                 designBlocksModel={this.state.designBlocksClonedModel}
+                                 designBlocksModel={this.designBlocksClonedModel}
                                  onClose={this.hideModal}
                                  onSave={this.onSave}/>
 
@@ -65,7 +65,7 @@ class DesignBlocksEditorModal extends Component {
         <Modal.Header>Do block design editor</Modal.Header>
 
         <Modal.Body>
-          <DesignEditor designBlocksModel={designBlocksModel} onModelUpdated={()=>this.forceUpdate()}/>
+          <DesignEditor designBlocksModel={designBlocksModel} onModelUpdated={() => this.forceUpdate()}/>
         </Modal.Body>
 
         <Modal.Footer>

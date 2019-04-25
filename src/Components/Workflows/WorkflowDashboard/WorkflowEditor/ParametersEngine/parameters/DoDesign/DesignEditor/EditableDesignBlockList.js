@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-
-import ParametersEngine from "../../../ParametersEngine";
-import {Parameters} from "../../index";
 import CollapsableCard from "./CollapsableCard";
+import ParametersEngine from "../../../ParametersEngine";
 
 export default class EditableDesignBlockList extends Component {
   render() {
@@ -13,7 +11,8 @@ export default class EditableDesignBlockList extends Component {
           {
             this.props.designModel.getBlocks().map(block => {
               return (
-                <DesignBlockConfigurator key={block.id} block={block}
+                <DesignBlockConfigurator designBlockTypes={this.props.designBlockTypes}
+                                         key={block.id} block={block}
                                          onParameterModelUpdate={this.props.onParameterModelUpdate}/>
               );
             })
@@ -27,20 +26,15 @@ export default class EditableDesignBlockList extends Component {
 
 class DesignBlockConfigurator extends Component {
 
-  state = {
-    expanded: false
-  };
-
   render() {
     const block = this.props.block;
+
     return (
       <div data-block-id={block.id}>
         <CollapsableCard title={block.name} invalid={!block.isValid()}>
           <ParametersEngine
-            parametersContainerId={block.id}
-            parameters={block.parameters}
-            onParameterModelUpdate={this.props.onParameterModelUpdate}
-            supportedParameters={Parameters}/>
+            parametrizedBlock={block}
+            onParameterModelUpdate={this.props.onParameterModelUpdate}/>
         </CollapsableCard>
       </div>
     );

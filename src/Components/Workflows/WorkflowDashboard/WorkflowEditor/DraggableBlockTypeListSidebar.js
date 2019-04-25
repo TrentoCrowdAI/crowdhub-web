@@ -1,73 +1,29 @@
-import React, {Component} from 'react';
-import {makeCancellable} from "../../../../Services/utils";
-import BlockTypesService from "../../../../Services/BlockTypesService";
-import {Button, Card, Col, Row} from "react-bootstrap";
+import React from 'react';
+import {Card, Col, Row} from "react-bootstrap";
 
-export default class DraggableBlockTypeListSidebar extends Component {
+const DraggableBlockTypeListSidebar = ({blockTypes}) => (
+  <div>
+    <h5>Workflow blocks</h5>
 
-  pendingBlockTypesRequest = null;
-
-  state = {
-    blockTypes: null,
-    fetchError: false
-  };
-
-  componentDidMount = () => this.fetchBlockTypes();
-
-  componentWillUnmount = () => this.pendingBlockTypesRequest.cancel();
-
-  async fetchBlockTypes() {
-    try {
-      this.pendingBlockTypesRequest = makeCancellable(BlockTypesService.getBlockTypes());
-      const blockTypes = await this.pendingBlockTypesRequest.result;
-      this.setState({
-        blockTypes,
-        fetchError: false
-      });
-    } catch (e) {
-      this.setState({fetchError: true});
-    }
-  }
-
-
-  render() {
-    return (
-      <div>
-        <h5>Workflow blocks</h5>
-
+    <Row>
+      <Col>
         {
-          !this.state.blockTypes && !this.state.fetchError &&
-          <FetchingBlockTypes/>
+          blockTypes.map(blockType => (
+            <Card
+              key={blockType.id}
+              className="btn-block"
+              style={{backgroundColor: blockType.data.color}}
+              draggable
+              onDragStart={event => event.dataTransfer.setData('blockType', JSON.stringify(blockType))}>
+              <Card.Header>
+                {blockType.data.name}
+              </Card.Header>
+            </Card>
+          ))
         }
+      </Col>
+    </Row>
+  </div>
+);
 
-        {
-          this.state.fetchError &&
-          <FetchBlockTypesError/>
-        }
-
-        <Row>
-          <Col>
-            {
-              this.state.blockTypes && this.state.blockTypes.map(blockType => (
-                <Card
-                  key={blockType.id}
-                  className="btn-block"
-                  style={{backgroundColor: blockType.data.nodeDefinition.color}}
-                  draggable={true}
-                  onDragStart={event => event.dataTransfer.setData('blockType', JSON.stringify(blockType))}>
-                  <Card.Header>
-                    {blockType.data.nodeDefinition.name}
-                  </Card.Header>
-                </Card>
-              ))
-            }
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
-
-const FetchingBlockTypes = () => <p>Loading...</p>;
-
-const FetchBlockTypesError = () => <p>Can't fetch BlockTypes, try to refresh the page</p>;
+export default DraggableBlockTypeListSidebar;

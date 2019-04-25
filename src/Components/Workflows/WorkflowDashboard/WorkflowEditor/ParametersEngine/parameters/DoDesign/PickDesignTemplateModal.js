@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Modal, Button, Alert, Row, Col, Card, Container} from 'react-bootstrap';
+import {Alert, Button, Card, Col, Container, Modal, Row} from 'react-bootstrap';
 
 import DoDesignTemplatesService from "../../../../../../../Services/DoDesignTemplatesService";
 import {makeCancellable} from "../../../../../../../Services/utils";
-import {DesignBlocksModel} from "./DesignModel";
+import {DesignBlocksModel} from "./DesignBlocksModel";
 
 export class PickDesignTemplateModalAndButton extends Component {
 

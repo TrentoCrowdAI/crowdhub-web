@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Form} from "react-bootstrap";
 
 import {DesignBlocksEditorModalAndButton} from "./DesignBlocksEditorModal";
-import {DoDesignModel} from "./DesignModel";
+import {DoDesignModel} from "./DoDesignModel";
 import {PickDesignTemplateModalAndButton} from "./PickDesignTemplateModal";
 
 
@@ -14,12 +14,13 @@ class DoDesignWidget extends Component {
 
   render() {
     const model = this.getModel();
+    const definition = model.getDefinition();
 
     return (
       <Form.Group>
-        <Form.Label>{model.getDisplayName()}</Form.Label>
+        <Form.Label>{definition.displayName}</Form.Label>
         <Form.Text className="text-muted">
-          {model.getDescription()}
+          {definition.description}
         </Form.Text>
 
         {

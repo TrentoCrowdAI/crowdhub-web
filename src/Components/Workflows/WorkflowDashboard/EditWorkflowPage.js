@@ -3,12 +3,14 @@ import WorkflowEditor from "./WorkflowEditor/WorkflowEditor";
 import {makeCancellable} from "../../../Services/utils";
 import WorkflowsService from "../../../Services/WorkflowsService";
 
+/**
+ * This component shows the WorkflowEditor and loads/save the workflow
+ */
 export default class EditWorkflowPage extends Component {
 
   state = {
     workflow: null,
     isSaving: false,
-
     saveError: false,
   };
 
@@ -22,7 +24,6 @@ export default class EditWorkflowPage extends Component {
     try {
       this.pendingWorkflowRequest = makeCancellable(WorkflowsService.getWorkflow(id));
       const workflow = await this.pendingWorkflowRequest.result;
-
       this.setState({workflow});
     } catch (e) {
       // TODO: redirectToProjectsList(this);

@@ -1,31 +1,47 @@
 import React from 'react';
 import {DefaultNodeFactory, DefaultNodeModel, DefaultNodeWidget} from "storm-react-diagrams";
 
-import {deSerializeParameter} from "../ParametersEngine/parameters";
+import {deSerializeParameters, serializeParameters} from "../ParametersEngine/parameters";
 
 export class BlockNodeModel extends DefaultNodeModel {
 
-  data = null;
+  blockType;
+  parameterModelsMap;
 
-  deSerialize(object, engine) {
-    super.deSerialize(object, engine);
-    this.data = object.data;
+  deSerialize(block, engine) {
+    super.deSerialize(block, engine);
 
-    this.data.parameters = this.data.parameters.map(deSerializeParameter)
+    // Find the BlockType definition given the id
+    // TODO: It is difficult to differentiate between actual BlockType and BlockType name
+    const blockType = this.blockType = engine.blockTypes.find(blockType => blockType.data.blockType === block.blockType).data;
+    this.setParameterModelsMap(deSerializeParameters(block, blockType.parameterDefinitions));
   }
-
 
   serialize() {
     return {
       ...super.serialize(),
-      data: {
-        ...this.data,
-        parameters: this.data.parameters.map(parameter => parameter.serialize())
-      }
+      blockType: this.blockType,
+      parameters: serializeParameters(this.parameters)
     }
   }
 
-  isValid = () => this.data.parameters.find(parameter => !parameter.isValid()) == null;
+  isValid = () => Object.values(this.getParameterModelsMap()).find(parameter => !parameter.isValid()) == null;
+
+  getId() {
+    return this.id;
+  }
+
+  getParameterModelsMap() {
+    return this.parameterModelsMap;
+  }
+
+  setParameterModelsMap(parameterModelsMap) {
+    this.parameterModelsMap = parameterModelsMap;
+  }
+
+  getParameterDefinitionList() {
+    return this.blockType.parameterDefinitions;
+  }
 }
 
 export class BlockNodeWidget extends DefaultNodeWidget {

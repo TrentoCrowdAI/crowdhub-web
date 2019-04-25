@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Modal, InputGroup, FormControl} from "react-bootstrap";
+import {Button, FormControl, InputGroup, Modal} from "react-bootstrap";
 import AceEditor from "react-ace";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';

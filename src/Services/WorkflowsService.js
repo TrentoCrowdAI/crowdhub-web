@@ -16,12 +16,26 @@ function JSONtoWorkflow(json) {
   json.updated_at = new Date(json.updated_at);
   json.deleted_ad = new Date(json.deleted_ad);
 
+  if (json.data.graph) {
+    json.data.graph.nodes.forEach(node => {
+      node.blockType = node.type;
+      node.type = node.nodeType;
+    });
+  }
+
   return json;
 }
 
 function workflowToJSON(workflow) {
   workflow.id_project = workflow.projectId;
   delete workflow.projectId;
+
+  if (workflow.data.graph) {
+    workflow.data.graph.nodes.forEach(node => {
+      node.nodeType = node.type;
+      node.type = node.blockType;
+    });
+  }
 
   return workflow;
 }

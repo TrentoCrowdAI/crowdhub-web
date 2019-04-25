@@ -5,7 +5,8 @@ import "dragula/dist/dragula.css";
 
 import DraggableDesignBlockTypeList from "./DraggableDesignBlockTypeList";
 import EditableDesignBlockList from "./EditableDesignBlockList";
-import {DesignBlockModel} from "../DesignModel";
+import {DesignBlockModel} from "../DesignBlockModel";
+import DesignBlockTypesService from "../../../../../../../../Services/DesignBlockTypesService";
 
 
 // TODO: Move in EditableDesignBlockList
@@ -21,6 +22,10 @@ const findSiblingIndex = (sibling, siblingsContainer) => {
 
 
 export default class DesignEditor extends Component {
+
+  state = {
+    designBlockTypes: DesignBlockTypesService.getDesignBlockTypes()
+  };
 
   blockTypesRef = null;
   blocksRef = null;
@@ -135,11 +140,13 @@ export default class DesignEditor extends Component {
     return (
       <Row>
         <Col md="6" lg="4">
-          <DraggableDesignBlockTypeList componentsContainerRef={this.blockTypesRef}/>
+          <DraggableDesignBlockTypeList designBlockTypes={this.state.designBlockTypes}
+                                        componentsContainerRef={this.blockTypesRef}/>
         </Col>
 
         <Col md="6" lg="8">
-          <EditableDesignBlockList componentsContainerRef={this.blocksRef}
+          <EditableDesignBlockList designBlockTypes={this.state.designBlockTypes}
+                                   componentsContainerRef={this.blocksRef}
                                    designModel={this.getModel()}
                                    onParameterModelUpdate={this.props.onModelUpdated}/>
         </Col>

@@ -3,14 +3,20 @@ import React, {Component} from 'react';
 import {Form} from 'react-bootstrap';
 import AbstractParameterModel from "../AbstractParameterModel";
 
-class Model extends AbstractParameterModel {
+class TextModel extends AbstractParameterModel {
 
   isValid() {
-    return !!this.value && this.value.length > 0
+    const definition = this.getDefinition();
+    if (definition.required) {
+      const value = this.getValue();
+      return value && value.length > 0
+    } else {
+      return true;
+    }
   }
 }
 
-class Widget extends Component {
+class TextWidget extends Component {
 
   constructor(props) {
     super(props);
@@ -35,12 +41,13 @@ class Widget extends Component {
 
   render() {
     const model = this.getModel();
+    const definition = model.getDefinition();
 
     return (
       <Form.Group>
-        <Form.Label>{model.getDisplayName()}</Form.Label>
+        <Form.Label>{definition.displayName}</Form.Label>
         <Form.Text className="text-muted">
-          {model.getDescription()}
+          {definition.description}
         </Form.Text>
         <Form.Control type="text"
                       value={this.state.value}
@@ -50,7 +57,7 @@ class Widget extends Component {
                       isInvalid={!model.isValid()}
         />{/*prevent block cancellation*/}
         <Form.Control.Feedback type="invalid">
-          {model.getDisplayName()} is required
+          {definition.displayName} is required
         </Form.Control.Feedback>
       </Form.Group>
     );
@@ -59,6 +66,6 @@ class Widget extends Component {
 
 export default {
   type: 'text',
-  Widget,
-  Model
+  Widget: TextWidget,
+  Model: TextModel
 }

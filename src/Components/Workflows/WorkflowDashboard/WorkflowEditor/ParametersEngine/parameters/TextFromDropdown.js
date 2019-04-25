@@ -3,6 +3,19 @@ import {Form} from "react-bootstrap";
 
 import AbstractParameterModel from "../AbstractParameterModel";
 
+class TextFromDropdownModel extends AbstractParameterModel {
+
+  isValid() {
+    const value = this.getValue();
+    const choices = this.getChoices();
+    return choices.find(choice => choice.value === value) !== null;
+  }
+
+  getChoices () {
+    return this.getDefinition().choices;
+  }
+}
+
 class TextFromDropdownWidget extends Component {
 
   getModel() {
@@ -17,45 +30,24 @@ class TextFromDropdownWidget extends Component {
 
   render() {
     const model = this.getModel();
+    const definition = model.getDefinition();
 
     return (
       <Form.Group>
-        <Form.Label>{model.getDisplayName()}</Form.Label>
+        <Form.Label>{definition.displayName}</Form.Label>
         <Form.Text className="text-muted">
-          {model.getDescription()}
+          {definition.description}
         </Form.Text>
 
         <Form.Control as="select" value={model.getValue()} onChange={this.onChangeValue}>
           {
-            model.choices.map(choice => (
+            model.getChoices().map(choice => (
               <option key={choice.value} value={choice.value}>{choice.label}</option>
             ))
           }
         </Form.Control>
       </Form.Group>
     );
-  }
-}
-
-class TextFromDropdownModel extends AbstractParameterModel {
-
-  choices = null;
-
-  deSerialize(data) {
-    super.deSerialize(data);
-    this.choices = data.choices;
-  }
-
-  serialize() {
-    return {
-      ...super.serialize(),
-      choices: this.choices
-    };
-  }
-
-  isValid() {
-    const value = this.getValue();
-    return this.choices.find(choice => choice.value === value) !== null;
   }
 }
 

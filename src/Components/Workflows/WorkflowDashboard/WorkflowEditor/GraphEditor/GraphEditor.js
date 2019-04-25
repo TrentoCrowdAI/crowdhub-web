@@ -21,6 +21,7 @@ export default class GraphEditor extends Component {
     this.engine.registerNodeFactory(new BlockNodeFactory());
     this.engine.registerLinkFactory(new BlackLinkFactory());
     this.engine.setDiagramModel(this.getModel());
+    this.engine.blockTypes = this.props.blockTypes;
   };
 
   deserializeGraph = (graph) => {
@@ -60,22 +61,20 @@ export default class GraphEditor extends Component {
 
   createNodeFromBlockType = (blockType, position) => {
     const {data} = blockType;
-    const {nodeDefinition} = data;
     const node = new BlockNodeModel();
+
     node.deSerialize({
-      ...nodeDefinition,
+      ...data,
 
       id: uuid(),
 
-      ports: nodeDefinition.ports.map(port => ({
+      ports: data.ports.map(port => ({
         ...port,
         id: uuid()
       })),
 
       x: position.x,
-      y: position.y,
-
-      data: blockType.data
+      y: position.y
     }, this.engine);
     return node;
   };
@@ -89,7 +88,7 @@ export default class GraphEditor extends Component {
 
   addSelectedListener = (node) => node.addListener({
     selectionChanged: this.onSelectedNodeChanged,
-    entityRemoved: this.props.onNoNodeSelected
+    entityRemoved: this.onSelectedNodeChanged
   });
 
   onSelectedNodeChanged = () => {
@@ -99,7 +98,7 @@ export default class GraphEditor extends Component {
       const node = selectedNodes[0];
       this.props.onNodeSelected(node);
     } else {
-      this.props.onNoNodeSelected();
+      this.props.onNodeSelected(null);
     }
 
   };

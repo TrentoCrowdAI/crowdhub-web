@@ -4,20 +4,14 @@ import AbstractParameterModel from "../AbstractParameterModel";
 
 const type = 'number';
 
-class Model extends AbstractParameterModel {
-
-  deSerialize(data) {
-    super.deSerialize(data);
-    this.value = parseInt(this.value) || 0
-  }
-
+class NumberModel extends AbstractParameterModel {
   isValid() {
     return true;
   }
 }
 
 // TODO: This is a copy and paste of Text, improve solution
-class Widget extends Component {
+class NumberWidget extends Component {
 
   constructor(props) {
     super(props);
@@ -42,12 +36,13 @@ class Widget extends Component {
 
   render() {
     const model = this.getModel();
+    const definition = model.getDefinition();
 
     return (
       <Form.Group>
-        <Form.Label>{model.getDisplayName()}</Form.Label>
+        <Form.Label>{definition.displayName}</Form.Label>
         <Form.Text className="text-muted">
-          {model.getDescription()}
+          {definition.description}
         </Form.Text>
         <Form.Control type="number"
                       value={this.state.value}
@@ -57,7 +52,7 @@ class Widget extends Component {
                       isInvalid={!model.isValid()}
         />{/*prevent block cancellation*/}
         <Form.Control.Feedback type="invalid">
-          {model.getDisplayName()} is required
+          {definition.displayName} is required
         </Form.Control.Feedback>
       </Form.Group>
     );
@@ -66,6 +61,6 @@ class Widget extends Component {
 
 export default {
   type,
-  Model,
-  Widget
+  Model: NumberModel,
+  Widget: NumberWidget
 }

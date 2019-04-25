@@ -9,11 +9,20 @@ export const Parameters = {
   [DoDesign.type]: DoDesign
 };
 
-export const deSerializeParameter = (data) => {
-  const Model = getModelByType(data.type);
-  const instance = new Model();
-  instance.deSerialize(data);
-  return instance;
+export const deSerializeParameters = (block, parameterDefinitions) => {
+  const parameterModelsMap = {};
+  parameterDefinitions.forEach(definition => {
+    const name = definition.name;
+    const Model = getModelByType(definition.type);
+    parameterModelsMap[name] = new Model(definition, block);
+  });
+  return parameterModelsMap;
+};
+
+export const serializeParameters = (parameterModelsMap) => {
+  const parameters = {};
+  Object.keys(parameterModelsMap).forEach(name => parameters[name] = parameterModelsMap[name].getValue());
+  return parameters;
 };
 
 const getModelByType = (type) => {
