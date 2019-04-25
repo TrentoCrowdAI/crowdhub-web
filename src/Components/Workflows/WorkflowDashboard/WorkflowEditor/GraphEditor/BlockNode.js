@@ -20,8 +20,8 @@ export class BlockNodeModel extends DefaultNodeModel {
   serialize() {
     return {
       ...super.serialize(),
-      blockType: this.blockType,
-      parameters: serializeParameters(this.parameters)
+      blockType: this.blockType.blockType,
+      parameters: serializeParameters(this.getParameterModelsMap())
     }
   }
 

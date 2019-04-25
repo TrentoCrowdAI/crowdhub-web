@@ -11,11 +11,14 @@ export class DoDesignModel extends AbstractParameterModel {
 
   deSerialize(definition, block) {
     super.deSerialize(definition, block);
-    this.blocksModel = new DesignBlocksModel(definition.designBlockTypes, this.getDesign());
+    this.blocksModel = new DesignBlocksModel(definition.designBlockTypes, this.getDesign().blocks || []);
   }
 
   serialize() {
-    return this.getBlocksModel().serialize();
+    console.log('serialize')
+    return {
+      blocks: this.getBlocksModel().serialize()
+    };
   }
 
   getDesign() {

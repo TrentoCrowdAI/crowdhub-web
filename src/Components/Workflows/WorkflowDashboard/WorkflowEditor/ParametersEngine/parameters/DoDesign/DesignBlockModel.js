@@ -1,5 +1,5 @@
 import uuid from "uuid";
-import {deSerializeParameters} from "../index";
+import {deSerializeParameters, serializeParameters} from "../index";
 
 export class DesignBlockModel {
 
@@ -28,7 +28,8 @@ export class DesignBlockModel {
   serialize() {
     return {
       id: this.id,
-      parameters: this.getParameterModelsMap() // TODO: Serialize parameters
+      type: this.type,
+      parameters: serializeParameters(this.getParameterModelsMap()) // TODO: Serialize parameters
     }
   }
 

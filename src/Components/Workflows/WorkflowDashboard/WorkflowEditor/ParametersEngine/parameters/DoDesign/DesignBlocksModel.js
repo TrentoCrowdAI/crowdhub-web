@@ -6,15 +6,15 @@ export class DesignBlocksModel {
 
   designBlockTypes;
 
-  constructor(designBlockTypes, design) {
-    this.deSerialize(designBlockTypes, design);
+  constructor(designBlockTypes, blocks) { // TODO: Clash con blocks (deSerialized and Pojo)
+    this.deSerialize(designBlockTypes, blocks);
     this.designBlockTypes = designBlockTypes;
   }
 
-  deSerialize(designBlockTypes, design) {
+  deSerialize(designBlockTypes, blocks) {
     this.setBlocks(
-      design.blocks.map(block => {
-        const designBlockType = designBlockTypes.find(designBlockType => designBlockType === block.type);
+      blocks.map(block => {
+        const designBlockType = designBlockTypes.find(designBlockType => designBlockType.type === block.type);
         return new DesignBlockModel(designBlockType, block);
       })
     );
@@ -29,13 +29,12 @@ export class DesignBlocksModel {
   }
 
   clone() {
+
     return new DesignBlocksModel(this.designBlockTypes, this.serialize());
   }
 
   serialize() {
-    return {
-      blocks: this.getBlocks().map(designBlock => designBlock.serialize())
-    }
+    return this.getBlocks().map(designBlock => designBlock.serialize());
   }
 
   isDesignEmpty() {
@@ -45,6 +44,7 @@ export class DesignBlocksModel {
   addBlock(newBlock, newBlockIndex) {
     this.getBlocks()
       .splice(newBlockIndex, 0, newBlock);
+    console.log('after add', this)
   }
 
   swapBlocks(a, b) {

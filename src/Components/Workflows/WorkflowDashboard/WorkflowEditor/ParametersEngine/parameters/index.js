@@ -21,7 +21,7 @@ export const deSerializeParameters = (block, parameterDefinitions) => {
 
 export const serializeParameters = (parameterModelsMap) => {
   const parameters = {};
-  Object.keys(parameterModelsMap).forEach(name => parameters[name] = parameterModelsMap[name].getValue());
+  Object.keys(parameterModelsMap).forEach(name => parameters[name] = parameterModelsMap[name].serialize());
   return parameters;
 };
 

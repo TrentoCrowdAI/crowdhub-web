@@ -1,5 +1,6 @@
 export default class AbstractParameterModel {
 
+  value;
   definition = null;
   block = null;
 
@@ -10,12 +11,15 @@ export default class AbstractParameterModel {
   deSerialize(definition, block) {
     this.definition = definition;
     this.block = block;
-    if (this.getValue() === undefined) {
+    if (!block.parameters || block.parameters[this.getName()] === undefined) {
       this.setValue(this.getDefinition().default);
+    } else {
+      this.value = block.parameters[this.getName()];
     }
   }
 
   serialize () {
+    console.log(this);
     return this.getValue();
   }
 
@@ -32,10 +36,10 @@ export default class AbstractParameterModel {
   }
 
   getValue() {
-    return this.block[this.getName()];
+    return this.value;
   }
 
   setValue(value) {
-    this.block[this.getName()] = value;
+    this.value = value;
   }
 }
