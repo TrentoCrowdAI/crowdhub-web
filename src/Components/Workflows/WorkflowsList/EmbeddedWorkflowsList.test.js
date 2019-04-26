@@ -3,8 +3,8 @@ import {mount} from "enzyme";
 import {MemoryRouter} from "react-router-dom";
 import EmbeddableWorkflowsList, {FetchingWorkflows, FetchingWorkflowsError} from "./EmbeddableWorkflowsList";
 import WorkflowsService from "../../../Services/WorkflowsService";
-import mockedWorkflows from "../../../mock-data/workflows";
-import mockedProject from "../../../mock-data/workflows";
+import {serviceWorkflows} from "../../../mock-data/workflows";
+import mockedProject from "../../../mock-data/projects";
 import {WorkflowsTable} from "./WorkflowsTable";
 import {expectComponent} from "../../../testHelpers/components";
 
@@ -36,7 +36,7 @@ describe('should show the list of workflows', () => {
 
 
   it('shows a loading message while loading', async () => {
-    const getWorkflows = mockGetWorkflowsToReturn(mockedWorkflows);
+    const getWorkflows = mockGetWorkflowsToReturn(serviceWorkflows);
     const wrapper = await mountWorkflowsList();
 
     expect(getWorkflows).toHaveBeenCalled();
@@ -45,7 +45,7 @@ describe('should show the list of workflows', () => {
 
 
   it('shows the list of workflows after loading', async () => {
-    const getWorkflows = mockGetWorkflowsToReturn(mockedWorkflows);
+    const getWorkflows = mockGetWorkflowsToReturn(serviceWorkflows);
     const wrapper = await mountWorkflowsList();
 
     expect(getWorkflows).toHaveBeenCalled();

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Form} from 'react-bootstrap';
 
 import AbstractParameterModel from "../AbstractParameterModel";
-import {Editor} from "@tinymce/tinymce-react/lib/es2015";
+import {Editor} from "@tinymce/tinymce-react";
 
 class HtmlModel extends AbstractParameterModel {
   isValid() {

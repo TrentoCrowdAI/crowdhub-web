@@ -19,12 +19,12 @@ describe('test the creation of a new workflow', () => {
     const createWorkflow = mockCreateWorkflowToFail();
     const wrapper = mountCreateWorkflow();
     const createWorkflowComponent = wrapper.instance();
-    const workflowData = {
+    const workflow = {
       name: 'Workflow1',
       description: 'Description of workflow 1'
     };
 
-    await createWorkflowComponent.handleSubmit(workflowData, {setSubmitting: () => null});
+    await createWorkflowComponent.createNewWorkflow(workflow, {setSubmitting: () => null});
     wrapper.update();
 
     expect(createWorkflow).toHaveBeenCalled();
