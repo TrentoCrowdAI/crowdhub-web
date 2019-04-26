@@ -17,7 +17,6 @@ export class DesignBlocksEditorModalAndButton extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(this.props.templateJustPicked) {
-      console.log('cloned');
       this.designBlocksClonedModel = this.cloneDesignBlocksModel();
       this.props.onModelUpdated();
     }
