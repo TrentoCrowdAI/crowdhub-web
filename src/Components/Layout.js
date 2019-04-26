@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -7,8 +7,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./AppBar";
 import AppRouter from "./AppRouter";
-
-const BASENAME = process.env.REACT_APP_BASENAME || "";
 
 export default class Layout extends Component {
 
@@ -18,7 +16,7 @@ export default class Layout extends Component {
 
   render() {
     return (
-      <Router basename={BASENAME}>
+      <HashRouter>
         <div className="wrapper">
           {/* Left collapsable sidebar */}
           <Sidebar sidebarOpen={this.state.sidebarOpen}/>
@@ -30,7 +28,7 @@ export default class Layout extends Component {
             <AppRouter />
           </div>
         </div>
-      </Router>
+      </HashRouter>
     );
   }
 
