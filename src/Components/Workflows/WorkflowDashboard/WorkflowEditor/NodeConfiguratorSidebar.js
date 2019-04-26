@@ -5,12 +5,13 @@ import ParametersEngine from "./ParametersEngine/ParametersEngine";
 export default ({node, onModelUpdate}) => {
 
   return (
-    <div>
+    <div style={{overflowY: 'auto', maxHeight: '100%'}}>
       <Row>
         <Col>
           <h5>Block parameters</h5>
         </Col>
       </Row>
+
 
       <ParametersEngine
         parametrizedBlock={node}

@@ -6,6 +6,7 @@ export class DesignBlockModel {
   id;
   designBlockTypeDefinition;
   parameterModelsMap;
+  initialParametersMap;
 
   constructor(designBlockTypeDefinition, block) {
     this.deSerialize(designBlockTypeDefinition, block);
@@ -15,7 +16,8 @@ export class DesignBlockModel {
     this.setDesignBlockTypeDefinition(designBlockTypeDefinition);
     this.type = block ? block.type : designBlockTypeDefinition.name;
     this.id = (block && block.id) ? block.id : uuid();
-    this.setParameterModelsMap(deSerializeParameters(block || {}, designBlockTypeDefinition.parameterDefinitions)); // TODO: Replace block with model
+    this.initialParametersMap = block.parameters || {};
+    this.setParameterModelsMap(deSerializeParameters(this, designBlockTypeDefinition.parameterDefinitions));
   }
 
   setDesignBlockTypeDefinition(designBlockTypeDefinition) {
@@ -50,5 +52,10 @@ export class DesignBlockModel {
 
   getParameterDefinitionList() {
     return this.getDesignBlockTypeDefinition().parameterDefinitions;
+  }
+
+
+  getInitialParametersMap(){
+    return this.initialParametersMap;
   }
 }

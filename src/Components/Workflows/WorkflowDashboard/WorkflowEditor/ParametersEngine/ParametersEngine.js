@@ -19,9 +19,14 @@ export default ({parametrizedBlock, onParameterModelUpdate}) => {
             const Component = parameterComponent.Widget;
             return (
               <div key={key}>
-                <Component model={parameterModel}
-                           onModelUpdated={onParameterModelUpdate}/>
-                <hr/>
+                {
+                  parameterModel.shouldDisplay() &&
+                  <div>
+                    <Component model={parameterModel}
+                               onModelUpdated={onParameterModelUpdate}/>
+                    <hr/>
+                  </div>
+                }
               </div>
             );
           } else {

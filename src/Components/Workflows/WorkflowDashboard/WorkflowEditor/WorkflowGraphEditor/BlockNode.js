@@ -7,6 +7,7 @@ import {deSerializeParameters, serializeParameters} from "../ParametersEngine/pa
 export class BlockNodeModel extends DefaultNodeModel {
 
   blockTypeDefinition;
+  initialParametersMap;
   parameterModelsMap;
 
   deSerialize(block, engine) {
@@ -17,11 +18,10 @@ export class BlockNodeModel extends DefaultNodeModel {
         id: uuid()
       }));
     }
-
     super.deSerialize(block, engine);
-
     this.blockTypeDefinition = engine.getBlockTypeDefinition(block.type);
-    this.setParameterModelsMap(deSerializeParameters(block, this.getParameterDefinitionList()));
+    this.initialParametersMap = block.parameters || {};
+    this.setParameterModelsMap(deSerializeParameters(this, this.getParameterDefinitionList()));
   }
 
   serialize() {
@@ -48,6 +48,10 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   getParameterDefinitionList() {
     return this.blockTypeDefinition.parameterDefinitions;
+  }
+
+  getInitialParametersMap(){
+    return this.initialParametersMap;
   }
 }
 

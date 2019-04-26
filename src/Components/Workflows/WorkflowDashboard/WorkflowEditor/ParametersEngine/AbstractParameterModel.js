@@ -1,24 +1,24 @@
 export default class AbstractParameterModel {
 
   value;
-  definition = null;
-  block = null;
+  definition;
+  blockModel;
 
-  constructor(definition, block) {
-    this.deSerialize(definition, block);
+  constructor(definition, blockModel) {
+    this.deSerialize(definition, blockModel);
   }
 
-  deSerialize(definition, block) {
+  deSerialize(definition, blockModel) {
     this.definition = definition;
-    this.block = block;
-    if (!block.parameters || block.parameters[this.getName()] === undefined) {
+    this.blockModel = blockModel;
+    const initialParametersMap = blockModel.getInitialParametersMap();
+    this.setValue(initialParametersMap[this.getName()]);
+    if (this.getValue() === undefined) {
       this.setValue(this.getDefinition().default);
-    } else {
-      this.value = block.parameters[this.getName()];
     }
   }
 
-  serialize () {
+  serialize() {
     return this.getValue();
   }
 
@@ -26,11 +26,11 @@ export default class AbstractParameterModel {
     return false;
   }
 
-  getDefinition () {
+  getDefinition() {
     return this.definition;
   }
 
-  getName () {
+  getName() {
     return this.getDefinition().name;
   }
 
@@ -40,5 +40,26 @@ export default class AbstractParameterModel {
 
   setValue(value) {
     this.value = value;
+  }
+
+  shouldDisplay() {
+    if (this.isOptional()) {
+      return this.isConditionMet();
+    }
+    return true;
+  }
+
+  isOptional() {
+    return !!this.getCondition();
+  }
+
+  isConditionMet() {
+    const condition = this.getCondition();
+    const parameterModelsMap = this.blockModel.getParameterModelsMap();
+    return !!parameterModelsMap[condition].getValue()
+  }
+
+  getCondition() {
+    return this.getDefinition().condition;
   }
 }
