@@ -13,11 +13,11 @@ const DraggableBlockTypeListSidebar = ({blockTypes}) => (
             <Card
               key={blockType.id}
               className="btn-block"
-              style={{backgroundColor: blockType.data.color}}
+              style={{backgroundColor: blockType.color}}
               draggable
               onDragStart={event => event.dataTransfer.setData('blockType', JSON.stringify(blockType))}>
               <Card.Header>
-                {blockType.data.name}
+                {blockType.name}
               </Card.Header>
             </Card>
           ))

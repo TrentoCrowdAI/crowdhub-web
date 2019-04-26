@@ -13,6 +13,10 @@ import WorkflowGraphModel from "./GraphEditor/WorkflowGraphModel";
 import {makeCancellable} from "../../../../Services/utils";
 import BlockTypesService from "../../../../Services/BlockTypesService";
 
+/**
+ * Renders the interface with the 3 columns and mediates the communication between the GraphEditor and the right column.
+ * It also fetches the block types from the server
+ */
 export default class WorkflowEditor extends Component {
 
   graphModel = new WorkflowGraphModel();

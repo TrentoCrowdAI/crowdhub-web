@@ -8,6 +8,8 @@ import WorkflowsService from "../../../Services/WorkflowsService";
  */
 export default class EditWorkflowPage extends Component {
 
+  pendingWorkflowRequest;
+
   state = {
     workflow: null,
     isSaving: false,

@@ -15,7 +15,6 @@ export class DoDesignModel extends AbstractParameterModel {
   }
 
   serialize() {
-    console.log('serialize')
     return {
       blocks: this.getBlocksModel().serialize()
     };

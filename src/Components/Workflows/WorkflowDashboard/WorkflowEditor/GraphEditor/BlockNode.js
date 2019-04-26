@@ -3,6 +3,8 @@ import {DefaultNodeFactory, DefaultNodeModel, DefaultNodeWidget} from "storm-rea
 
 import {deSerializeParameters, serializeParameters} from "../ParametersEngine/parameters";
 
+
+
 export class BlockNodeModel extends DefaultNodeModel {
 
   blockType;
@@ -13,7 +15,7 @@ export class BlockNodeModel extends DefaultNodeModel {
 
     // Find the BlockType definition given the id
     // TODO: It is difficult to differentiate between actual BlockType and BlockType name
-    const blockType = this.blockType = engine.blockTypes.find(blockType => blockType.data.blockType === block.blockType).data;
+    const blockType = this.blockType = engine.blockTypes.find(blockType => blockType.blockType === block.blockType);
     this.setParameterModelsMap(deSerializeParameters(block, blockType.parameterDefinitions));
   }
 
