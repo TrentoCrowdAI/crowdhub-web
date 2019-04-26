@@ -38,9 +38,9 @@ const WorkflowsTableRow = ({workflow, onWorkflowDeleted}) => {
         <Link to={openWorkflowLink}>{workflow.id}</Link>
       </td>
       <td>
-        <Link to={openWorkflowLink}>{workflow.data.name}</Link>
+        <Link to={openWorkflowLink}>{workflow.name}</Link>
       </td>
-      <td>{workflow.data.description}</td>
+      <td>{workflow.description}</td>
       <td>
         <DeleteWorkflowButton workflow={workflow} onWorkflowDeleted={onWorkflowDeleted}/>
       </td>
@@ -59,7 +59,7 @@ const DeleteWorkflowButton = ({workflow, onWorkflowDeleted}) => (
 
     body={
       <div>
-        Are you sure you want to delete "<strong>{workflow.data.name}</strong>"?
+        Are you sure you want to delete "<strong>{workflow.name}</strong>"?
       </div>
     }
   />

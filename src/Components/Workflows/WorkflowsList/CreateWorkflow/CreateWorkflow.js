@@ -38,13 +38,13 @@ export class CreateWorkflowModal extends Component {
     creationError: false
   };
 
-  createNewWorkflow = async (workflowData, {setSubmitting}) => {
+  createNewWorkflow = async (workflow, {setSubmitting}) => {
     setSubmitting(true);
 
     try {
       await WorkflowsService.createWorkflow({
-        projectId: this.props.projectId,
-        data: workflowData
+        ...workflow,
+        projectId: this.props.projectId
       });
       this.onWorkflowCreated();
     } catch (e) {

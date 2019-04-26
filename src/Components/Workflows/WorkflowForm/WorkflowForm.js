@@ -15,19 +15,19 @@ export default class WorkflowForm extends Component {
 
 
   handleSubmit = async (values, formikBag) => {
-    const workflowData = this.valuesToWorkspaceData(values);
-    await this.props.onSubmit(workflowData, formikBag);
+    const workflow = this.valuesToWorkflow(values);
+    await this.props.onSubmit(workflow, formikBag);
   };
 
-  workspaceDataToValues = (workspaceDataFromProps) => {
-    const data = workspaceDataFromProps || {};
+  workflowToValues = (workflowFromProps) => {
+    const data = workflowFromProps || {};
     return {
       name: data.name || '',
       description: data.description || ''
     }
   };
 
-  valuesToWorkspaceData = (values) => {
+  valuesToWorkflow = (values) => {
     return {
       name: values.name,
       description: values.description
@@ -38,7 +38,7 @@ export default class WorkflowForm extends Component {
   render() {
     return (
       <Formik
-        initialValues={this.workspaceDataToValues(this.props.workspaceData)}
+        initialValues={this.workflowToValues(this.props.workflow)}
         onSubmit={this.handleSubmit}
         validationSchema={this.validationSchema}>
 

@@ -50,21 +50,15 @@ export default class WorkflowEditor extends Component {
   onNodeSelected = (selectedNode) => this.setState({selectedNode});
 
   onSavePressed = () => {
-    this.onWorkflowDataEdited();
+    this.onWorkflowEdited();
     this.props.onSave();
   };
 
-  onWorkflowDataEdited = (data) => {
-    const workflow = {
-      ...this.props.workflow
-    };
-    if (data) {
-      workflow.data = {
-        ...workflow.data,
-        ...data
-      };
+  onWorkflowEdited = (workflow) => {
+    if (!workflow) {
+      workflow = this.props.workflow;
     }
-    workflow.data.graph = this.graphModel.serializeDiagram();
+    workflow.graph = this.graphModel.serializeDiagram();
     this.props.onWorkflowEdited(workflow);
   };
 
@@ -91,7 +85,7 @@ export default class WorkflowEditor extends Component {
             <Col xs={7} className="graph-editor-container" style={{display: 'flex'}}>
               <div style={{flex: 1}}>
                 <WorkflowGraphEditor
-                  initialGraph={workflow.data.graph}
+                  initialGraph={workflow.graph}
                   graphModel={this.graphModel}
                   blockTypeDefinitions={blockTypeDefinitions}
                   onNodeSelected={this.onNodeSelected}/>
@@ -112,8 +106,8 @@ export default class WorkflowEditor extends Component {
               }
               {
                 !this.state.selectedNode &&
-                <WorkflowDataEditorSidebar workflowData={this.props.workflow.data}
-                                           onEdit={this.onWorkflowDataEdited}/>
+                <WorkflowDataEditorSidebar workflow={this.props.workflow}
+                                           onEdit={this.onWorkflowEdited}/>
               }
             </Col>
           </Row>
@@ -130,7 +124,7 @@ const WorkflowBreadcrumb = ({workflow}) => (
       <LinkBreadcrumb to={PROJECTS_PATH}>Projects</LinkBreadcrumb>
       <SimpleBreadcrumb>Hello world</SimpleBreadcrumb>
       <SimpleBreadcrumb>Workflows</SimpleBreadcrumb>
-      <SimpleBreadcrumb>{workflow.data.name}</SimpleBreadcrumb>
+      <SimpleBreadcrumb>{workflow.name}</SimpleBreadcrumb>
     </Breadcrumb>
   </div>
 );

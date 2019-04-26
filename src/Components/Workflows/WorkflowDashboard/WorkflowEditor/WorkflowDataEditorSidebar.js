@@ -6,7 +6,7 @@ export default class WorkflowDataEditorSidebar extends Component {
 
   constructor(props) {
     super(props);
-    const {name, description} = props.workflowData;
+    const {name, description} = props.workflow;
     this.state = {
       name,
       description
@@ -23,6 +23,7 @@ export default class WorkflowDataEditorSidebar extends Component {
   });
 
   onBlur = () => this.props.onEdit({
+    ...this.props.workflow,
     name: this.state.name || this.props.name,
     description: this.state.description || this.props.description
   });

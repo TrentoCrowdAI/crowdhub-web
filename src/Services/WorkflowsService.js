@@ -8,23 +8,23 @@ export const Errors = {
   INVALID_WORKFLOW_DATA: 'invalid_workflow_data'
 };
 
-function JSONtoWorkflow(json) {
-  json.projectId = parseInt(json.id_project);
-  delete json.id_project;
+const JSONtoWorkflow = ({id, id_project, data}) => ({
+  id,
+  projectId: parseInt(id_project),
+  ...data
+});
 
-  json.created_at = new Date(json.created_at);
-  json.updated_at = new Date(json.updated_at);
-  json.deleted_ad = new Date(json.deleted_ad);
 
-  return json;
-}
+const workflowToJSON = ({id, projectId, name, description, graph}) => ({
+  id,
+  id_project: projectId,
+  data: {
+    name,
+    description,
+    graph
+  }
+});
 
-function workflowToJSON(workflow) {
-  workflow.id_project = workflow.projectId;
-  delete workflow.projectId;
-
-  return workflow;
-}
 
 export default {
   async getWorkflowsOfProject(project) {
@@ -32,7 +32,7 @@ export default {
     return jsonList.map(JSONtoWorkflow);
   },
 
-  async getWorkflow(id){
+  async getWorkflow(id) {
     const workflow = await getJSON(`${WORKFLOWS_URL}/${id}`);
     return JSONtoWorkflow(workflow);
   },
@@ -43,9 +43,9 @@ export default {
   },
 
   async updateWorkflow(workflow) {
-    console.info('[WorkflowService] updateWorkflow', workflow);
     try {
       const json = workflowToJSON(workflow);
+      console.info('[WorkflowService] updateWorkflow', json);
       return await putJSON(`${WORKFLOWS_URL}/${workflow.id}`, json);
     } catch (e) {
       if (e.response === 400) {
