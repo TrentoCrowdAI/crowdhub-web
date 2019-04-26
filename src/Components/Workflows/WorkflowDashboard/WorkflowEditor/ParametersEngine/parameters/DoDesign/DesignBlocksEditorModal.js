@@ -15,12 +15,13 @@ export class DesignBlocksEditorModalAndButton extends Component {
     this.designBlocksClonedModel = this.cloneDesignBlocksModel();
   }
 
-/*
-
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.designBlocksClonedModel = this.cloneDesignBlocksModel();
+    if(this.props.templateJustPicked) {
+      console.log('cloned');
+      this.designBlocksClonedModel = this.cloneDesignBlocksModel();
+      this.props.onModelUpdated();
+    }
   }
-*/
 
   getModel() {
     return this.props.designModel;

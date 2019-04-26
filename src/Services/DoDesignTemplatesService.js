@@ -4,9 +4,10 @@ import {APP_URL} from "../config";
 
 const DO_DESIGN_TEMPLATE_URL = `${APP_URL}/template-do`;
 
-const JSONtoDoDesignTemplate = (json) => {
-  return json;
-};
+const JSONtoDoDesignTemplate = ({id, data}) => ({
+  id,
+  ...data
+});
 
 export default {
   async getDoDesignTemplates() {

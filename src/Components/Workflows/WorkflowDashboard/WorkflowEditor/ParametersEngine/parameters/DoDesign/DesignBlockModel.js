@@ -14,7 +14,7 @@ export class DesignBlockModel {
   deSerialize(designBlockTypeDefinition, block) {
     this.setDesignBlockTypeDefinition(designBlockTypeDefinition);
     this.type = block ? block.type : designBlockTypeDefinition.name;
-    this.id = block ? block.id : uuid();
+    this.id = (block && block.id) ? block.id : uuid();
     this.setParameterModelsMap(deSerializeParameters(block || {}, designBlockTypeDefinition.parameterDefinitions)); // TODO: Replace block with model
   }
 

@@ -18,15 +18,26 @@ export class PickDesignTemplateModalAndButton extends Component {
   onTemplatePicked = (blocksModel) => {
     this.onHide();
     setTimeout(() => {
-      this.props.designModel.setBlocksModel(blocksModel);
+      this.getDesignModel().setBlocksModel(blocksModel);
       this.props.onModelUpdated();
     }, 200); // TODO: Refactor
   };
 
+  getDesignBlockTypeDefinitions() {
+    return this.getDesignModel().getBlocksModel().getDesignBlockTypeDefinitions();
+  }
+
+  getDesignModel() {
+    return this.props.designModel;
+  }
+
   render() {
     return (
       <div>
-        <PickDesignTemplateModal show={this.state.show} onHide={this.onHide} onTemplatePicked={this.onTemplatePicked}/>
+        <PickDesignTemplateModal show={this.state.show}
+                                 onHide={this.onHide}
+                                 onTemplatePicked={this.onTemplatePicked}
+                                 designBlockTypeDefinitions={this.getDesignBlockTypeDefinitions()}/>
 
         <Button variant="success" onClick={this.onShow} className="btn-block mb-2">Create from a template</Button>
       </div>
@@ -56,6 +67,11 @@ export class PickDesignTemplateModal extends Component {
     }
   };
 
+  onTemplatePicked= (template)=>{
+    const blocksModel=new DesignBlocksModel(this.props.designBlockTypeDefinitions, template.blocks);
+    this.props.onTemplatePicked(blocksModel); // TODO: Rename the prop because one is a object an the other is a model
+  }
+
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.onHide} size="lg">
@@ -74,7 +90,7 @@ export class PickDesignTemplateModal extends Component {
 
           {
             this.state.templates &&
-            <TemplateList templates={this.state.templates} onTemplatePicked={this.props.onTemplatePicked}/>
+            <TemplateList templates={this.state.templates} onTemplatePicked={this.onTemplatePicked}/>
           }
         </Modal.Header>
 
@@ -100,28 +116,17 @@ const TemplateList = ({templates, onTemplatePicked}) => (
   <Container>
     <Row>
       {
-        templates.map(template => {
-          // TODO: Refactor
-          try {
-            const blocksModel = new DesignBlocksModel(template.data);
-
-            return (
-              <Col xs={12} sm={6} key={template.id}>
-                <Card>
-                  <Card.Header>{template.data.name}</Card.Header>
-                  <Card.Body>{template.data.description}</Card.Body>
-                  <Card.Footer>
-                    <Button onClick={() => onTemplatePicked(blocksModel)}>Choose</Button>
-                  </Card.Footer>
-                </Card>
-              </Col>
-            );
-          } catch (e) {
-            return (
-              <div key={template.id}>Error: can't parse template</div>
-            )
-          }
-        })
+        templates.map(template => (
+          <Col xs={12} sm={6} key={template.id}>
+            <Card>
+              <Card.Header>{template.name}</Card.Header>
+              <Card.Body>{template.description}</Card.Body>
+              <Card.Footer>
+                <Button onClick={() => onTemplatePicked(template)}>Choose</Button>
+              </Card.Footer>
+            </Card>
+          </Col>
+        ))
       }
     </Row>
   </Container>

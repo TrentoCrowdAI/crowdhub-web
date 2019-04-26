@@ -8,9 +8,23 @@ import {PickDesignTemplateModalAndButton} from "./PickDesignTemplateModal";
 
 class DoDesignWidget extends Component {
 
+  state = {
+      templateJustPicked: false
+  };
+
   getModel() {
     return this.props.model;
   }
+
+  onModelUpdatedFromTemplate =() =>{
+    this.props.onModelUpdated();
+    this.setState({templateJustPicked: true});
+  };
+
+  onModelUpdatedFromEditor = () => {
+    this.props.onModelUpdated();
+    this.setState({templateJustPicked: false});
+  };
 
   render() {
     const model = this.getModel();
@@ -26,12 +40,13 @@ class DoDesignWidget extends Component {
         {
           model.isDesignEmpty() &&
           <PickDesignTemplateModalAndButton designModel={model}
-                                    onModelUpdated={this.props.onModelUpdated}/>
+                                    onModelUpdated={this.onModelUpdatedFromTemplate}/>
         }
 
         <DesignBlocksEditorModalAndButton designModel={model}
-                                          onModelUpdated={this.props.onModelUpdated}
-                                          buttonText={model.isDesignEmpty() ? 'Create from scratch' : 'Open design editor'}/>
+                                          onModelUpdated={this.onModelUpdatedFromEditor}
+                                          buttonText={model.isDesignEmpty() ? 'Create from scratch' : 'Open design editor'}
+                                          templateJustPicked={this.state.templateJustPicked}/>
       </Form.Group>
     );
   }
