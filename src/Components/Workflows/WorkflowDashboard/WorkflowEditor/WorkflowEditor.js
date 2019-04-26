@@ -4,17 +4,17 @@ import {Breadcrumb, Button, Col, Container, Navbar, Row, Spinner} from "react-bo
 import './WorkflowEditor.css';
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../../common/Breadcrumbs";
 import {PROJECTS_PATH} from "../../../Projects/Projects";
-import GraphEditor from "./GraphEditor/GraphEditor";
+import WorkflowGraphEditor from "./WorkflowGraphEditor/WorkflowGraphEditor";
 import DraggableBlockTypeListSidebar from "./DraggableBlockTypeListSidebar";
 import WorkflowDataEditorSidebar from "./WorkflowDataEditorSidebar";
 import NodeConfiguratorSidebar from "./NodeConfiguratorSidebar";
 import BackButton from "../../../common/BackButton";
-import WorkflowGraphModel from "./GraphEditor/WorkflowGraphModel";
+import WorkflowGraphModel from "./WorkflowGraphEditor/WorkflowGraphModel";
 import {makeCancellable} from "../../../../Services/utils";
-import BlockTypesService from "../../../../Services/BlockTypesService";
+import BlockTypesDefinitionService from "../../../../Services/BlockTypeDefinitionsService";
 
 /**
- * Renders the interface with the 3 columns and mediates the communication between the GraphEditor and the right column.
+ * Renders the interface with the 3 columns and mediates the communication between the WorkflowGraphEditor and the right column.
  * It also fetches the block types from the server
  */
 export default class WorkflowEditor extends Component {
@@ -22,7 +22,7 @@ export default class WorkflowEditor extends Component {
   graphModel = new WorkflowGraphModel();
 
   state = {
-    blockTypes: null,
+    blockTypeDefinitions: null,
     fetchBlockTypesError: false,
 
     selectedNode: null
@@ -35,10 +35,10 @@ export default class WorkflowEditor extends Component {
 
   async fetchBlockTypes() {
     try {
-      this.pendingBlockTypesRequest = makeCancellable(BlockTypesService.getBlockTypes());
-      const blockTypes = await this.pendingBlockTypesRequest.result;
+      this.pendingBlockTypesRequest = makeCancellable(BlockTypesDefinitionService.getBlockTypeDefinitions());
+      const blockTypeDefinitions = await this.pendingBlockTypesRequest.result;
       this.setState({
-        blockTypes,
+        blockTypeDefinitions,
         fetchBlockTypesError: false
       });
     } catch (e) {
@@ -72,28 +72,28 @@ export default class WorkflowEditor extends Component {
 
   render() {
     const {workflow} = this.props;
-    const {blockTypes} = this.state;
+    const {blockTypeDefinitions} = this.state;
 
     return (
       <Container className="full-width" style={{'flex': 1, 'marginTop': '-1em'}}>
         {
-          (!workflow || !blockTypes) &&
+          (!workflow || !blockTypeDefinitions) &&
           <p>Loading ...</p>
         }
 
         {
-          workflow && blockTypes &&
+          workflow && blockTypeDefinitions &&
           <Row className="full-height">
             <Col xs={2} className="light-background">
-              <DraggableBlockTypeListSidebar blockTypes={blockTypes}/>
+              <DraggableBlockTypeListSidebar blockTypeDefinitions={blockTypeDefinitions}/>
             </Col>
 
             <Col xs={7} className="graph-editor-container" style={{display: 'flex'}}>
               <div style={{flex: 1}}>
-                <GraphEditor
+                <WorkflowGraphEditor
                   initialGraph={workflow.data.graph}
                   graphModel={this.graphModel}
-                  blockTypes={blockTypes}
+                  blockTypeDefinitions={blockTypeDefinitions}
                   onNodeSelected={this.onNodeSelected}/>
 
                 <WorkflowBreadcrumb workflow={workflow}/>

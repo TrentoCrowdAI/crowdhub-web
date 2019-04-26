@@ -2,22 +2,22 @@ import React from 'react';
 import {Card, Col, Row} from "react-bootstrap";
 
 
-const DraggableBlockTypeListSidebar = ({blockTypes}) => (
+const DraggableBlockTypeListSidebar = ({blockTypeDefinitions}) => (
   <div>
     <h5>Workflow blocks</h5>
 
     <Row>
       <Col>
         {
-          blockTypes.map(blockType => (
+          blockTypeDefinitions.map(blockTypeDefinitions => (
             <Card
-              key={blockType.id}
+              key={blockTypeDefinitions.id}
               className="btn-block"
-              style={{backgroundColor: blockType.color}}
+              style={{backgroundColor: blockTypeDefinitions.color}}
               draggable
-              onDragStart={event => event.dataTransfer.setData('blockType', JSON.stringify(blockType))}>
+              onDragStart={event => event.dataTransfer.setData('blockTypeDefinition', JSON.stringify(blockTypeDefinitions))}>
               <Card.Header>
-                {blockType.name}
+                {blockTypeDefinitions.displayName}
               </Card.Header>
             </Card>
           ))

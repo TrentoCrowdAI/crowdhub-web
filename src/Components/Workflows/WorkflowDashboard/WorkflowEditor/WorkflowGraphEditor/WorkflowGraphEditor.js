@@ -2,13 +2,44 @@ import React, {Component} from 'react';
 import {DiagramEngine, DiagramWidget} from "storm-react-diagrams";
 import 'storm-react-diagrams/dist/style.min.css';
 import './GraphEditor.css'
-import uuid from 'uuid';
 import {BlockNodeFactory, BlockNodeModel} from "./BlockNode";
 import BlackLinkFactory from "./BlackLinkFactory";
 
-export default class GraphEditor extends Component {
+class WorkflowGraphEngine extends DiagramEngine {
 
-  engine = new DiagramEngine();
+  blockTypeDefinitions;
+
+  constructor(blockTypeDefinitions) {
+    super();
+    this.setBlockTypeDefinitions(blockTypeDefinitions);
+    this.installFactories();
+  }
+
+  setBlockTypeDefinitions(blockTypeDefinitions) {
+    this.blockTypeDefinitions = blockTypeDefinitions;
+  }
+
+  installFactories() {
+    this.installDefaultFactories();
+    this.registerLinkFactory(new BlackLinkFactory());
+    this.getBlockTypeDefinitions().forEach(blockTypeDefinition => this.registerNodeFactory(
+      new BlockNodeFactory(blockTypeDefinition.name)
+    ));
+  }
+
+  getBlockTypeDefinitions() {
+    return this.blockTypeDefinitions;
+  }
+
+  getBlockTypeDefinition(blockType) {
+    return this.getBlockTypeDefinitions().find(definition => definition.name === blockType);
+  }
+
+}
+
+export default class WorkflowGraphEditor extends Component {
+
+  engine;
 
   constructor(props) {
     super(props);
@@ -17,11 +48,9 @@ export default class GraphEditor extends Component {
   }
 
   initGraph = () => {
-    this.engine.installDefaultFactories();
-    this.engine.registerNodeFactory(new BlockNodeFactory());
-    this.engine.registerLinkFactory(new BlackLinkFactory());
+    this.engine = new WorkflowGraphEngine(this.props.blockTypeDefinitions);
     this.engine.setDiagramModel(this.getModel());
-    this.engine.blockTypes = this.props.blockTypes;
+    this.engine.blockTypeDefinitions = this.props.blockTypeDefinitions;
   };
 
   deserializeGraph = (graph) => {
@@ -42,36 +71,31 @@ export default class GraphEditor extends Component {
     }
   };
 
-  isEventCausedByADroppedBlockType = (event) => !!this.getBlockTypeFromEvent(event);
+  isEventCausedByADroppedBlockType = (event) => !!this.getBlockTypeDefinitionFromEvent(event);
 
   onBlockTypeDropped = (event) => {
-    const blockType = this.getBlockTypeFromEvent(event);
+    const blockTypeDefinition = this.getBlockTypeDefinitionFromEvent(event);
     const position = this.getMousePosition(event);
-    this.createNodeFromDroppedBlockType(blockType, position);
+    this.createNodeFromDroppedBlockType(blockTypeDefinition, position);
   };
 
-  getBlockTypeFromEvent = (event) => JSON.parse(event.dataTransfer.getData('blockType'));
+  getBlockTypeDefinitionFromEvent = (event) => JSON.parse(event.dataTransfer.getData('blockTypeDefinition'));
 
   getMousePosition = (event) => this.engine.getRelativeMousePoint(event);
 
-  createNodeFromDroppedBlockType = (blockType, position) => {
-    const node = this.createNodeFromBlockType(blockType, position);
-    this.addNodeToGraph(node, blockType);
+  createNodeFromDroppedBlockType = (blockTypeDefinition, position) => {
+    const node = this.createNodeFromBlockType(blockTypeDefinition, position);
+    this.addNodeToGraph(node, blockTypeDefinition);
   };
 
-  createNodeFromBlockType = (blockType, position) => {
-    const {data} = blockType;
+  createNodeFromBlockType = (blockTypeDefinition, position) => {
     const node = new BlockNodeModel();
 
-    node.deSerialize({
-      ...data,
-
-      id: uuid(),
-
-      ports: data.ports.map(port => ({
-        ...port,
-        id: uuid()
-      })),
+    node.deSerialize({ // I don't want to copy the id
+      name: blockTypeDefinition.displayName,
+      type: blockTypeDefinition.name,
+      ports: blockTypeDefinition.ports,
+      color: blockTypeDefinition.color,
 
       x: position.x,
       y: position.y

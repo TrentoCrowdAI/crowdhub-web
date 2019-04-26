@@ -1,28 +1,33 @@
 import React from 'react';
 import {DefaultNodeFactory, DefaultNodeModel, DefaultNodeWidget} from "storm-react-diagrams";
+import uuid from 'uuid';
 
 import {deSerializeParameters, serializeParameters} from "../ParametersEngine/parameters";
 
-
-
 export class BlockNodeModel extends DefaultNodeModel {
 
-  blockType;
+  blockTypeDefinition;
   parameterModelsMap;
 
   deSerialize(block, engine) {
+    if (!block.id) {
+      block.id = uuid();
+      block.ports = block.ports.map(port => ({
+        ...port,
+        id: uuid()
+      }));
+    }
+
     super.deSerialize(block, engine);
 
-    // Find the BlockType definition given the id
-    // TODO: It is difficult to differentiate between actual BlockType and BlockType name
-    const blockType = this.blockType = engine.blockTypes.find(blockType => blockType.blockType === block.blockType);
-    this.setParameterModelsMap(deSerializeParameters(block, blockType.parameterDefinitions));
+    this.blockTypeDefinition = engine.getBlockTypeDefinition(block.type);
+    this.setParameterModelsMap(deSerializeParameters(block, this.getParameterDefinitionList()));
   }
 
   serialize() {
     return {
       ...super.serialize(),
-      blockType: this.blockType.blockType,
+      type: this.blockTypeDefinition.name,
       parameters: serializeParameters(this.getParameterModelsMap())
     }
   }
@@ -42,7 +47,7 @@ export class BlockNodeModel extends DefaultNodeModel {
   }
 
   getParameterDefinitionList() {
-    return this.blockType.parameterDefinitions;
+    return this.blockTypeDefinition.parameterDefinitions;
   }
 }
 
@@ -67,23 +72,34 @@ export class BlockNodeWidget extends DefaultNodeWidget {
 }
 
 export class BlockNodeFactory extends DefaultNodeFactory {
-  constructor() {
-    super("blockNode");
+
+  blockType;
+
+  constructor(blockType) {
+    super(`${blockType}Factory`);
+    this.setBlockType(blockType);
+  }
+
+  setBlockType(blockType) {
+    this.blockType = blockType;
   }
 
   getType() {
-    return "blockNode";
+    return this.getBlockType();
+  }
+
+  getBlockType() {
+    return this.blockType;
   }
 
   getNewInstance() {
     return new BlockNodeModel();
   }
 
-
   generateReactWidget(diagramEngine, node) {
     return React.createElement(BlockNodeWidget, {
-      node: node,
-      diagramEngine: diagramEngine
+      node,
+      diagramEngine
     });
   }
 }
