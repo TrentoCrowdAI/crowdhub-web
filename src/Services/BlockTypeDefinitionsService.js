@@ -5,7 +5,7 @@ import {APP_URL} from "../config";
 const BLOCK_TYPES_URL = `${APP_URL}/block-types`;
 
 
-const JSONtoBlockTypeDefinition = ({id, data}) => ({
+export const JSONtoBlockTypeDefinition = ({id, data}) => ({
   id,
   name: data.name,
   displayName: data.displayName,

@@ -7,7 +7,6 @@ const type = 'number';
 class NumberModel extends AbstractParameterModel {
   isValid() {
     const value = this.getValue();
-    console.log(typeof value)
     return !this.isRequired() || (typeof value === "number" && !isNaN(value))
   }
 }

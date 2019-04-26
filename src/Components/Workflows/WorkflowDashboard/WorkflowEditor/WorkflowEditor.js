@@ -62,8 +62,6 @@ export default class WorkflowEditor extends Component {
     this.props.onWorkflowEdited(workflow);
   };
 
-  // TODO: Handle deletion of selected block
-
   render() {
     const {workflow} = this.props;
     const {blockTypeDefinitions} = this.state;
