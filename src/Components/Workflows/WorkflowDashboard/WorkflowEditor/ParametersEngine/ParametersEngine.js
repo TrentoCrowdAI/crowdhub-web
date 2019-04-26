@@ -13,7 +13,7 @@ export default ({parametrizedBlock, onParameterModelUpdate}) => {
         parameterDefinitions.map((parameterDefinition) => {
           const parameterComponent = Parameters[parameterDefinition.type];
           const key = `${id}-${parameterDefinition.name}`;
-          const parameterModel = parameterModelsMap[parameterDefinition.name]; // TODO: Handle empty case
+          const parameterModel = parameterModelsMap[parameterDefinition.name];
 
           if (parameterComponent) {
             const Component = parameterComponent.Widget;
@@ -38,7 +38,6 @@ export default ({parametrizedBlock, onParameterModelUpdate}) => {
     </div>
   )
 };
-
 
 const UnsupportedParameter = ({parameter}) => (
   <Alert variant="danger">

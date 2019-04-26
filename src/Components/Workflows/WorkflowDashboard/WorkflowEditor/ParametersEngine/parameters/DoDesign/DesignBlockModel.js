@@ -1,5 +1,6 @@
 import uuid from "uuid";
-import {deSerializeParameters, serializeParameters} from "../index";
+import {deSerializeParameters} from "../serialization";
+import {serializeParameters} from "../serialization";
 
 export class DesignBlockModel {
 

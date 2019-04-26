@@ -2,7 +2,8 @@ import React from 'react';
 import {DefaultNodeFactory, DefaultNodeModel, DefaultNodeWidget} from "storm-react-diagrams";
 import uuid from 'uuid';
 
-import {deSerializeParameters, serializeParameters} from "../ParametersEngine/parameters";
+import {deSerializeParameters} from "../ParametersEngine/parameters/serialization";
+import {serializeParameters} from "../ParametersEngine/parameters/serialization";
 
 export class BlockNodeModel extends DefaultNodeModel {
 
