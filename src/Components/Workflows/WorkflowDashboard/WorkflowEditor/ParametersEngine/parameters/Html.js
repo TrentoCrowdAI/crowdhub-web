@@ -24,12 +24,13 @@ class HtmlWidget extends Component {
 
   render() {
     const model = this.getModel();
+    const definition = model.getDefinition();
 
     return (
       <Form.Group>
-        <Form.Label>{model.getDisplayName()}</Form.Label>
+        <Form.Label>{definition.displayName}</Form.Label>
         <Form.Text className="text-muted">
-          {model.getDescription()}
+          {definition.description}
         </Form.Text>
 
 
