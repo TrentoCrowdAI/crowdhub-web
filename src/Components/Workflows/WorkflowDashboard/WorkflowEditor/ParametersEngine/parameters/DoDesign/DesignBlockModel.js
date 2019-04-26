@@ -4,32 +4,33 @@ import {deSerializeParameters, serializeParameters} from "../index";
 export class DesignBlockModel {
 
   id;
-  designBlockType;
+  designBlockTypeDefinition;
   parameterModelsMap;
 
-  constructor(designBlockType, block) {
-    if (!block) {
-      block = {
-        blockType: designBlockType.type
-      };
-    }
-    this.deSerialize(designBlockType, block);
+  constructor(designBlockTypeDefinition, block) {
+    this.deSerialize(designBlockTypeDefinition, block);
   }
 
-  deSerialize(designBlockType, block) {
-    this.name = designBlockType.name;// TODO: Remove
-    this.type = designBlockType.type;
-    this.designBlockType = designBlockType;
+  deSerialize(designBlockTypeDefinition, block) {
+    this.setDesignBlockTypeDefinition(designBlockTypeDefinition);
+    this.type = block ? block.type : designBlockTypeDefinition.name;
+    this.id = block ? block.id : uuid();
+    this.setParameterModelsMap(deSerializeParameters(block || {}, designBlockTypeDefinition.parameterDefinitions)); // TODO: Replace block with model
+  }
 
-    this.id = block.id || uuid();
-    this.setParameterModelsMap(deSerializeParameters(block, designBlockType.parameterDefinitions));
+  setDesignBlockTypeDefinition(designBlockTypeDefinition) {
+    this.designBlockTypeDefinition = designBlockTypeDefinition;
+  }
+
+  getDesignBlockTypeDefinition() {
+    return this.designBlockTypeDefinition;
   }
 
   serialize() {
     return {
       id: this.id,
       type: this.type,
-      parameters: serializeParameters(this.getParameterModelsMap()) // TODO: Serialize parameters
+      parameters: serializeParameters(this.getParameterModelsMap())
     }
   }
 
@@ -38,7 +39,6 @@ export class DesignBlockModel {
   }
 
   isValid = () => Object.values(this.getParameterModelsMap()).find(parameter => !parameter.isValid()) == null;
-
 
   getParameterModelsMap() {
     return this.parameterModelsMap;
@@ -49,6 +49,6 @@ export class DesignBlockModel {
   }
 
   getParameterDefinitionList() {
-    return this.designBlockType.parameterDefinitions;
+    return this.getDesignBlockTypeDefinition().parameterDefinitions;
   }
 }

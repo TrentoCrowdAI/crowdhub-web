@@ -1,25 +1,22 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Card} from "react-bootstrap";
 
-export default class DraggableDesignBlockTypeList extends Component {
+const DraggableDesignBlockTypeList = ({componentsContainerRef, designBlockTypeDefinitions}) => (
+  <div>
+    <h5>Design blocks</h5>
 
-  render() {
-    return (
-      <div>
-        <h5>Design blocks</h5>
+    <div ref={componentsContainerRef}>
+      {
+        designBlockTypeDefinitions.map(definition => {
+          return (
+            <Card key={definition.name} data-block-type-definition={JSON.stringify(definition)} className="mb-2">
+              <Card.Header>{definition.displayName}</Card.Header>
+            </Card>
+          );
+        })
+      }
+    </div>
+  </div>
+);
 
-        <div ref={this.props.componentsContainerRef}>
-          {
-            this.props.designBlockTypes.map(blockType => {
-              return (
-                <Card key={blockType.type} data-block-type={JSON.stringify(blockType)} className="mb-2">
-                  <Card.Header>{blockType.name}</Card.Header>
-                </Card>
-              );
-            })
-          }
-        </div>
-      </div>
-    );
-  }
-}
+export default DraggableDesignBlockTypeList;

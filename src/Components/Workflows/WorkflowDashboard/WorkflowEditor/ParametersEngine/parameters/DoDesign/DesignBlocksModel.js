@@ -2,60 +2,66 @@ import {DesignBlockModel} from "./DesignBlockModel";
 
 export class DesignBlocksModel {
 
-  blocks;
+  designBlockTypeDefinitions;
+  blockModels;
 
-  designBlockTypes;
-
-  constructor(designBlockTypes, blocks) { // TODO: Clash con blocks (deSerialized and Pojo)
-    this.deSerialize(designBlockTypes, blocks);
-    this.designBlockTypes = designBlockTypes;
+  constructor(designBlockTypeDefinitions, blocks) {
+    this.deSerialize(designBlockTypeDefinitions, blocks);
   }
 
-  deSerialize(designBlockTypes, blocks) {
-    this.setBlocks(
-      blocks.map(block => {
-        const designBlockType = designBlockTypes.find(designBlockType => designBlockType.type === block.type);
-        return new DesignBlockModel(designBlockType, block);
-      })
-    );
+  deSerialize(designBlockTypeDefinitions, blocks) {
+    this.setDesignBlockTypeDefinitions(designBlockTypeDefinitions);
+    this.setBlockModels(blocks.map(block => new DesignBlockModel(
+      this.getDesignBlockTypeDefinition(block.type),
+      block
+    )));
   }
 
-  getBlocks() {
-    return this.blocks;
+  setDesignBlockTypeDefinitions(designBlockTypeDefinitions) {
+    this.designBlockTypeDefinitions = designBlockTypeDefinitions;
   }
 
-  setBlocks(blocks) {
-    this.blocks = blocks;
+  getDesignBlockTypeDefinition(designBlockType) {
+    return this.getDesignBlockTypeDefinitions().find(definition => definition.name === designBlockType);
+  }
+
+  getDesignBlockTypeDefinitions() {
+    return this.designBlockTypeDefinitions;
+  }
+
+  getBlockModels() {
+    return this.blockModels;
+  }
+
+  setBlockModels(blockModels) {
+    this.blockModels = blockModels;
   }
 
   clone() {
-
-    return new DesignBlocksModel(this.designBlockTypes, this.serialize());
+    return new DesignBlocksModel(this.getDesignBlockTypeDefinitions(), this.serialize());
   }
 
   serialize() {
-    return this.getBlocks().map(designBlock => designBlock.serialize());
+    return this.getBlockModels().map(designBlock => designBlock.serialize());
   }
 
   isDesignEmpty() {
-    return this.getBlocks().length === 0;
+    return this.getBlockModels().length === 0;
   }
 
   addBlock(newBlock, newBlockIndex) {
-    this.getBlocks()
-      .splice(newBlockIndex, 0, newBlock);
-    console.log('after add', this)
+    this.getBlockModels().splice(newBlockIndex, 0, newBlock);
   }
 
   swapBlocks(a, b) {
-    const blocks = this.getBlocks();
+    const blocks = this.getBlockModels();
     const temp = blocks[a];
     blocks[a] = blocks[b];
     blocks[b] = temp;
   }
 
   removeBlockById(id) {
-    const blocks = this.getBlocks();
+    const blocks = this.getBlockModels();
     const index = blocks.findIndex(block => block.id === id);
     if (index >= 0) {
       blocks.splice(index, 1);
@@ -63,6 +69,6 @@ export class DesignBlocksModel {
   }
 
   isValid() {
-    return this.getBlocks().find(block => !block.isValid()) == null;
+    return this.getBlockModels().find(block => !block.isValid()) == null;
   }
 }

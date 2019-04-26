@@ -19,7 +19,6 @@ export default class AbstractParameterModel {
   }
 
   serialize () {
-    console.log(this);
     return this.getValue();
   }
 

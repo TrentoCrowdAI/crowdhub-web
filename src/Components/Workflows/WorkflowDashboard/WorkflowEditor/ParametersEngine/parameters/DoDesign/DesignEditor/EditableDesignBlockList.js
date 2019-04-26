@@ -2,39 +2,42 @@ import React, {Component} from 'react';
 import CollapsableCard from "./CollapsableCard";
 import ParametersEngine from "../../../ParametersEngine";
 
-export default class EditableDesignBlockList extends Component {
-  render() {
-    return (
-      <div>
-        <h5>Your job design</h5>
-        <div ref={this.props.componentsContainerRef} style={{minHeight: '100px'}}>
-          {
-            this.props.designModel.getBlocks().map(block => {
-              return (
-                <DesignBlockConfigurator designBlockTypes={this.props.designBlockTypes}
-                                         key={block.id} block={block}
-                                         onParameterModelUpdate={this.props.onParameterModelUpdate}/>
-              );
-            })
-          }
-        </div>
+const EditableDesignBlockList = ({componentsContainerRef, designBlocksModel, onParameterModelUpdate}) => {
+  return (
+    <div>
+      <h5>Your job design</h5>
+      <div ref={componentsContainerRef} style={{minHeight: '100px'}}>
+        {
+          designBlocksModel.getBlockModels().map(designBlockModel => {
+            return (
+              <DesignBlockConfigurator
+                designBlockTypeDefinitions={designBlocksModel.getDesignBlockTypeDefinitions()}
+                key={designBlockModel.getId()}
+                designBlockModel={designBlockModel}
+                onParameterModelUpdate={onParameterModelUpdate}/>
+            );
+          })
+        }
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default EditableDesignBlockList;
 
 
 class DesignBlockConfigurator extends Component {
 
   render() {
-    const block = this.props.block;
+    const {designBlockModel, onParameterModelUpdate} = this.props;
 
     return (
-      <div data-block-id={block.id}>
-        <CollapsableCard title={block.name} invalid={!block.isValid()}>
+      <div data-block-id={designBlockModel.getId()}>
+        <CollapsableCard title={designBlockModel.getDesignBlockTypeDefinition().displayName}
+                         invalid={!designBlockModel.isValid()}>
           <ParametersEngine
-            parametrizedBlock={block}
-            onParameterModelUpdate={this.props.onParameterModelUpdate}/>
+            parametrizedBlock={designBlockModel}
+            onParameterModelUpdate={onParameterModelUpdate}/>
         </CollapsableCard>
       </div>
     );

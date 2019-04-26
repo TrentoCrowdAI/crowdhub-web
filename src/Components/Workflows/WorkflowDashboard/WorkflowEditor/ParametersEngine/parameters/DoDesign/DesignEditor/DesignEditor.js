@@ -6,7 +6,6 @@ import "dragula/dist/dragula.css";
 import DraggableDesignBlockTypeList from "./DraggableDesignBlockTypeList";
 import EditableDesignBlockList from "./EditableDesignBlockList";
 import {DesignBlockModel} from "../DesignBlockModel";
-import DesignBlockTypesService from "../../../../../../../../Services/DesignBlockTypesService";
 
 
 // TODO: Move in EditableDesignBlockList
@@ -23,17 +22,12 @@ const findSiblingIndex = (sibling, siblingsContainer) => {
 
 export default class DesignEditor extends Component {
 
-  state = {
-    designBlockTypes: DesignBlockTypesService.getDesignBlockTypes()
-  };
-
   blockTypesRef = null;
   blocksRef = null;
   drake = null;
 
   constructor(props) {
     super(props);
-
     this.blockTypesRef = React.createRef();
     this.blocksRef = React.createRef();
   }
@@ -94,16 +88,16 @@ export default class DesignEditor extends Component {
   };
 
   assertNextSiblingIndexIsValidGivenInitialBlocks = (nextSiblingIndex) => {
-    if (nextSiblingIndex === 0 || nextSiblingIndex > this.getModel().getBlocks().length) {
+    if (nextSiblingIndex === 0 || nextSiblingIndex > this.getBlockModels().length) {
       throw new Error('invalid nextSiblingIndex given the current blocks array');
     }
   };
 
-  getNewBlockIndexGivenNextSiblingIndex = (nextSibling) => nextSibling === -1 ? this.getModel().getBlocks().length : nextSibling - 1;
+  getNewBlockIndexGivenNextSiblingIndex = (nextSibling) => nextSibling === -1 ? this.getBlockModels().length : nextSibling - 1;
 
   buildNewBlockDataGivenClonedElement = (element) => {
-    const blockType = JSON.parse(element.getAttribute('data-block-type'));
-    return new DesignBlockModel(blockType);
+    const designBlockTypeDefinition = JSON.parse(element.getAttribute('data-block-type-definition'));
+    return new DesignBlockModel(designBlockTypeDefinition);
   };
 
   addBlockDataToTheDesignAndNotify = (newBlock, newBlockIndex) => {
@@ -129,25 +123,27 @@ export default class DesignEditor extends Component {
     return blocks.findIndex(block => block.id === id);
   };
 
-  getBlockIndexGivenNextSiblingIndex = (nextSibling) => nextSibling === -1 ? this.getModel().getBlocks().length - 1 : nextSibling - 1;
+  getBlockIndexGivenNextSiblingIndex = (nextSibling) => nextSibling === -1 ? this.getBlockModels().length - 1 : nextSibling - 1;
 
   getModel() {
     return this.props.designBlocksModel;
   }
 
+  getBlockModels () {
+    return this.getModel().getBlockModels();
+  }
 
   render() {
     return (
       <Row>
         <Col md="6" lg="4">
-          <DraggableDesignBlockTypeList designBlockTypes={this.state.designBlockTypes}
+          <DraggableDesignBlockTypeList designBlockTypeDefinitions={this.getModel().getDesignBlockTypeDefinitions()}
                                         componentsContainerRef={this.blockTypesRef}/>
         </Col>
 
         <Col md="6" lg="8">
-          <EditableDesignBlockList designBlockTypes={this.state.designBlockTypes}
-                                   componentsContainerRef={this.blocksRef}
-                                   designModel={this.getModel()}
+          <EditableDesignBlockList componentsContainerRef={this.blocksRef}
+                                   designBlocksModel={this.getModel()}
                                    onParameterModelUpdate={this.props.onModelUpdated}/>
         </Col>
       </Row>

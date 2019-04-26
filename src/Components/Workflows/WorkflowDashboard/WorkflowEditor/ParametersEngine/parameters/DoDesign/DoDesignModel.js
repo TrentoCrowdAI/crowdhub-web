@@ -7,7 +7,10 @@ export class DoDesignModel extends AbstractParameterModel {
 
   deSerialize(definition, block) {
     super.deSerialize(definition, block);
-    this.blocksModel = new DesignBlocksModel(definition.designBlockTypes, this.getDesign().blocks || []);
+    this.setBlocksModel(new DesignBlocksModel(
+      definition.designBlockTypeDefinitions,
+      this.getDesign().blocks
+    ));
   }
 
   serialize() {
