@@ -6,7 +6,9 @@ const type = 'number';
 
 class NumberModel extends AbstractParameterModel {
   isValid() {
-    return true;
+    const value = this.getValue();
+    console.log(typeof value)
+    return !this.isRequired() || (typeof value === "number" && !isNaN(value))
   }
 }
 
@@ -26,7 +28,7 @@ class NumberWidget extends Component {
 
   onChange = (event) => {
     const {value} = event.target;
-    this.getModel().setValue(value);
+    this.getModel().setValue(parseInt(value));
     this.setState({value});
   };
 
@@ -45,7 +47,7 @@ class NumberWidget extends Component {
           {definition.description}
         </Form.Text>
         <Form.Control type="number"
-                      value={this.state.value}
+                      value={`${this.state.value}`}
                       onChange={this.onChange}
                       onKeyUp={e => e.stopPropagation()}
                       onBlur={this.onBlur}

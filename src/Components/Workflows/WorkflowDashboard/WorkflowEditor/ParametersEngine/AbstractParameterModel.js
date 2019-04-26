@@ -26,6 +26,10 @@ export default class AbstractParameterModel {
     return false;
   }
 
+  isRequired(){
+    return this.getDefinition().required;
+  }
+
   getDefinition() {
     return this.definition;
   }
