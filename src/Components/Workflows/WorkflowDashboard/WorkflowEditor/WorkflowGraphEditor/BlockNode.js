@@ -1,9 +1,11 @@
 import React from 'react';
-import {DefaultNodeFactory, DefaultNodeModel, DefaultNodeWidget} from "storm-react-diagrams";
+import {DefaultNodeFactory, DefaultNodeModel, DefaultNodeWidget, PortWidget} from "storm-react-diagrams";
 import uuid from 'uuid';
 
 import {deSerializeParameters} from "../ParametersEngine/parameters/serialization";
 import {serializeParameters} from "../ParametersEngine/parameters/serialization";
+import {Card} from "react-bootstrap";
+import './BlockNode.css';
 
 export class BlockNodeModel extends DefaultNodeModel {
 
@@ -59,7 +61,7 @@ export class BlockNodeModel extends DefaultNodeModel {
 export class BlockNodeWidget extends DefaultNodeWidget {
 
 
-  render() {
+  renderOld() {
     return (
       <div style={{position: 'relative'}}>
         {
@@ -72,6 +74,33 @@ export class BlockNodeWidget extends DefaultNodeWidget {
 
         {super.render()}
       </div>
+    );
+  }
+
+  render() {
+    return (
+      <Card className="block">
+        <Card.Header>
+
+          <PortWidget name="in" node={this.props.node}/>
+
+          <div style={{marginLeft: 8, marginRight: 8}}>
+            {this.props.node.name}
+          </div>
+
+          <PortWidget name="out" node={this.props.node}/>
+
+          {
+            !this.props.node.isValid() &&
+            <div className="error-triangle-container">
+              <i className="fas fa-exclamation-triangle"/>
+            </div>
+          }
+
+
+
+        </Card.Header>
+      </Card>
     );
   }
 }

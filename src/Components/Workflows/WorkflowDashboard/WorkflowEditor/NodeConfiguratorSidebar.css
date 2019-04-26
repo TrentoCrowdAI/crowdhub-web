@@ -1,0 +1,5 @@
+.parameters-engine-container {
+    max-height: calc(100vh - var(--appBarHeight));
+    overflow-y: auto;
+    overflow-x: hidden;
+}

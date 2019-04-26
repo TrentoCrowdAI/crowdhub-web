@@ -1,6 +1,8 @@
 :root {
   --lightBackground: rgb(233,236,238);
   --lightBackgroundTransparent: rgba(245, 246, 247, 0.9);
+
+  --appBarHeight: 54px;
 }
 
 .light-background,

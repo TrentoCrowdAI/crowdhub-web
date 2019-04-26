@@ -1,0 +1,21 @@
+div.block {
+    position: relative;
+}
+
+div.block div.port.srd-port {
+    height: 30px;
+}
+
+div.block div.card-header {
+    display: flex;
+    justify-content: center;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+div.error-triangle-container {
+    position: absolute;
+    color: red;
+    right: -5px;
+    top: 0;
+}

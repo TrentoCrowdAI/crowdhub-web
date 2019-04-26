@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Breadcrumb, Button, Col, Container, Navbar, Row, Spinner} from "react-bootstrap";
 
 import './WorkflowEditor.css';
-import {LinkBreadcrumb, SimpleBreadcrumb} from "../../../common/Breadcrumbs";
 import {PROJECTS_PATH} from "../../../Projects/Projects";
 import WorkflowGraphEditor from "./WorkflowGraphEditor/WorkflowGraphEditor";
 import DraggableBlockTypeListSidebar from "./DraggableBlockTypeListSidebar";
@@ -12,6 +11,8 @@ import BackButton from "../../../common/BackButton";
 import WorkflowGraphModel from "./WorkflowGraphEditor/WorkflowGraphModel";
 import {makeCancellable} from "../../../../Services/utils";
 import BlockTypesDefinitionService from "../../../../Services/BlockTypeDefinitionsService";
+import WorkflowBreadcrumb from "./WorkflowBreadcrumb";
+import LoadingButton from "../../../common/LoadingButton";
 
 /**
  * Renders the interface with the 3 columns and mediates the communication between the WorkflowGraphEditor and the right column.
@@ -70,7 +71,7 @@ export default class WorkflowEditor extends Component {
       <Container className="full-width" style={{'flex': 1, 'marginTop': '-1em'}}>
         {
           (!workflow || !blockTypeDefinitions) &&
-          <p>Loading ...</p>
+          <LoadingWorkflowEditor/>
         }
 
         {
@@ -115,17 +116,12 @@ export default class WorkflowEditor extends Component {
   }
 }
 
-
-const WorkflowBreadcrumb = ({workflow}) => (
-  <div className="workflow-breadcrumb">
-    <Breadcrumb>
-      <LinkBreadcrumb to={PROJECTS_PATH}>Projects</LinkBreadcrumb>
-      <SimpleBreadcrumb>Hello world</SimpleBreadcrumb>
-      <SimpleBreadcrumb>Workflows</SimpleBreadcrumb>
-      <SimpleBreadcrumb>{workflow.name}</SimpleBreadcrumb>
-    </Breadcrumb>
+const LoadingWorkflowEditor = () => (
+  <div className="loading-spinner-container">
+    <Spinner animation="border" variant="primary"/>
   </div>
 );
+
 
 const WorkflowSaveBar = ({workflow, graphModel, isSaving, onSavePressed}) => {
   const isValid = graphModel.isValid();
@@ -142,19 +138,7 @@ const WorkflowSaveBar = ({workflow, graphModel, isSaving, onSavePressed}) => {
         }
       </div>
 
-      <Button disabled={!isValid || isSaving} onClick={onSavePressed}>
-        {
-          isSaving &&
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          />
-        }
-        <span> Save</span>
-      </Button>
+      <LoadingButton disabled={!isValid || isSaving} isSaving={isSaving} onClick={onSavePressed} text="Save"/>
     </Navbar>
   )
 };
