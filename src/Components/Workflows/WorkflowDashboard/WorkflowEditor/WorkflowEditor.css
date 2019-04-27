@@ -10,7 +10,13 @@ div.container.full-width {
     background-color: var(--lightBackground);
 }
 
+div.workflow-editor-container {
+    flex: 1;
+    margin-top: -1em;
+}
+
 .graph-editor-container {
+    display: flex;
     padding: 0;
     position: relative;
 }
@@ -22,7 +28,6 @@ div.container.full-width {
     margin-left: 15px;
     padding-top: 15px;
 }
-
 
 .workflow-bottom-navbar {
     position: absolute;

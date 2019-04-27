@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import WorkflowEditor from "./WorkflowEditor/WorkflowEditor";
+
 import {makeCancellable} from "../../../Services/utils";
 import WorkflowsService from "../../../Services/WorkflowsService";
+import WorkflowEditorWithFetchedBlockTypes from "./WorkflowEditorWithFetchedBlockTypes";
 
 /**
  * This component shows the WorkflowEditor and loads/save the workflow
@@ -45,10 +46,11 @@ export default class EditWorkflowPage extends Component {
   };
 
   render() {
-    return <WorkflowEditor workflow={this.state.workflow}
-                           onWorkflowEdited={this.onWorkflowEdited}
-                           onSave={this.onSave}
-                           isSaving={this.state.isSaving}
-                           saveError={this.state.saveError}/>;
+    return <WorkflowEditorWithFetchedBlockTypes
+      workflow={this.state.workflow}
+      onWorkflowEdited={this.onWorkflowEdited}
+      onSave={this.onSave}
+      isSaving={this.state.isSaving}
+      saveError={this.state.saveError}/>;
   }
 }

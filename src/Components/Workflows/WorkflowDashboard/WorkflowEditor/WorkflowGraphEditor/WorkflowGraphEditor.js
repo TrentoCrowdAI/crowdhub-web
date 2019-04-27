@@ -135,7 +135,7 @@ export default class WorkflowGraphEditor extends Component {
     return (
       <div onDrop={this.onDrop}
            onDragOver={event => event.preventDefault()}
-           className="full-height">
+           className="diagram-widget-container">
         <DiagramWidget diagramEngine={this.engine}/>
       </div>
     );

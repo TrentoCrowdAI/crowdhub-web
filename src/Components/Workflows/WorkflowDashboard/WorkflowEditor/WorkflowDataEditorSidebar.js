@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Col, Form, Row} from "react-bootstrap";
 
-// TODO: Rename to parameters
+/**
+ * Sidebar to edit the workflow name and description
+ */
 export default class WorkflowDataEditorSidebar extends Component {
 
   constructor(props) {
@@ -27,8 +29,6 @@ export default class WorkflowDataEditorSidebar extends Component {
     name: this.state.name || this.props.name,
     description: this.state.description || this.props.description
   });
-
-
 
   render() {
     return (
