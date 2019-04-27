@@ -11,7 +11,6 @@ class NumberModel extends AbstractParameterModel {
   }
 }
 
-// TODO: This is a copy and paste of Text, improve solution
 class NumberWidget extends Component {
 
   constructor(props) {

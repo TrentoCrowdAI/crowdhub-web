@@ -9,14 +9,14 @@ import {PickDesignTemplateModalAndButton} from "./PickDesignTemplateModal";
 class DoDesignWidget extends Component {
 
   state = {
-      templateJustPicked: false
+    templateJustPicked: false
   };
 
   getModel() {
     return this.props.model;
   }
 
-  onModelUpdatedFromTemplate =() =>{
+  onModelUpdatedFromTemplate = () => {
     this.props.onModelUpdated();
     this.setState({templateJustPicked: true});
   };
@@ -40,7 +40,7 @@ class DoDesignWidget extends Component {
         {
           model.isDesignEmpty() &&
           <PickDesignTemplateModalAndButton designModel={model}
-                                    onModelUpdated={this.onModelUpdatedFromTemplate}/>
+                                            onModelUpdated={this.onModelUpdatedFromTemplate}/>
         }
 
         <DesignBlocksEditorModalAndButton designModel={model}

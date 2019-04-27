@@ -2,8 +2,7 @@ import React from 'react';
 import {DefaultNodeFactory, DefaultNodeModel, DefaultNodeWidget, PortWidget} from "storm-react-diagrams";
 import uuid from 'uuid';
 
-import {deSerializeParameters} from "../ParametersEngine/parameters/serialization";
-import {serializeParameters} from "../ParametersEngine/parameters/serialization";
+import {deSerializeParameters, serializeParameters} from "../ParametersEngine/parameters/serialization";
 import {Card} from "react-bootstrap";
 import './BlockNode.css';
 
@@ -15,16 +14,20 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   deSerialize(block, engine) {
     if (!block.id) {
-      block.id = uuid();
-      block.ports = block.ports.map(port => ({
-        ...port,
-        id: uuid()
-      }));
+      this.initializeBlockWithIds(block);
     }
     super.deSerialize(block, engine);
     this.blockTypeDefinition = engine.getBlockTypeDefinition(block.type);
     this.initialParametersMap = block.parameters || {};
     this.setParameterModelsMap(deSerializeParameters(this, this.getParameterDefinitionList()));
+  }
+
+  initializeBlockWithIds(block) {
+    block.id = uuid();
+    block.ports = block.ports.map(port => ({
+      ...port,
+      id: uuid()
+    }));
   }
 
   serialize() {
@@ -53,52 +56,32 @@ export class BlockNodeModel extends DefaultNodeModel {
     return this.blockTypeDefinition.parameterDefinitions;
   }
 
-  getInitialParametersMap(){
+  getInitialParametersMap() {
     return this.initialParametersMap;
   }
 }
 
 export class BlockNodeWidget extends DefaultNodeWidget {
 
-
-  renderOld() {
-    return (
-      <div style={{position: 'relative'}}>
-        {
-          // TODO: Refactor
-          !this.props.node.isValid() &&
-          <div style={{position: 'absolute', color: 'yellow', right: 0}}>
-            <i className="fas fa-exclamation-triangle"/>
-          </div>
-        }
-
-        {super.render()}
-      </div>
-    );
-  }
-
   render() {
     return (
       <Card className="block">
         <Card.Header>
-
           <PortWidget name="in" node={this.props.node}/>
 
-          <div style={{marginLeft: 8, marginRight: 8}}>
+          <div className="block-name">
             {this.props.node.name}
           </div>
 
           <PortWidget name="out" node={this.props.node}/>
 
           {
+            /* Error warning */
             !this.props.node.isValid() &&
             <div className="error-triangle-container">
               <i className="fas fa-exclamation-triangle"/>
             </div>
           }
-
-
-
         </Card.Header>
       </Card>
     );

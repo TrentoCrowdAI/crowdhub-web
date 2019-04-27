@@ -1,7 +1,6 @@
 import {serverBlockTypeDefinitions, serviceBlockTypeDefinitions} from '../mock-data/block-types';
-import {JSONtoBlockTypeDefinition} from "./BlockTypeDefinitionsService";
+import BlockTypeDefinitionsService, {JSONtoBlockTypeDefinition} from "./BlockTypeDefinitionsService";
 import {mockFetchToReturnJson} from "../testHelpers/services";
-import BlockTypeDefinitionsService from "./BlockTypeDefinitionsService";
 
 
 it('maps between server and service representation', () => {

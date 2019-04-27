@@ -39,5 +39,3 @@ export class DoDesignModel extends AbstractParameterModel {
     return this.getBlocksModel().isDesignEmpty();
   }
 }
-
-

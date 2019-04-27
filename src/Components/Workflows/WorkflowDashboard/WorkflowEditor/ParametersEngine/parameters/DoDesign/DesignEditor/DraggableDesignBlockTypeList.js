@@ -9,7 +9,9 @@ const DraggableDesignBlockTypeList = ({componentsContainerRef, designBlockTypeDe
       {
         designBlockTypeDefinitions.map(definition => {
           return (
-            <Card key={definition.name} data-block-type-definition={JSON.stringify(definition)} className="mb-2">
+            <Card key={definition.name}
+                  data-block-type-definition={JSON.stringify(definition)}
+                  className="mb-2">
               <Card.Header>{definition.displayName}</Card.Header>
             </Card>
           );

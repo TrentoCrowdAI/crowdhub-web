@@ -1,6 +1,5 @@
 import uuid from "uuid";
-import {deSerializeParameters} from "../serialization";
-import {serializeParameters} from "../serialization";
+import {deSerializeParameters, serializeParameters} from "../serialization";
 
 export class DesignBlockModel {
 
@@ -15,14 +14,23 @@ export class DesignBlockModel {
 
   deSerialize(designBlockTypeDefinition, block) {
     this.setDesignBlockTypeDefinition(designBlockTypeDefinition);
-    this.type = block ? block.type : designBlockTypeDefinition.name;
-    this.id = (block && block.id) ? block.id : uuid();
-    this.initialParametersMap = block.parameters || {};
+    block = DesignBlockModel.initializeBlockIfNeeded(block, designBlockTypeDefinition);
+    this.id = block.id;
+    this.type = block.type;
+    this.initialParametersMap = block.parameters;
     this.setParameterModelsMap(deSerializeParameters(this, designBlockTypeDefinition.parameterDefinitions));
   }
 
   setDesignBlockTypeDefinition(designBlockTypeDefinition) {
     this.designBlockTypeDefinition = designBlockTypeDefinition;
+  }
+
+  static initializeBlockIfNeeded (block, designBlockTypeDefinition) {
+    block = block || {};
+    block.id = block.id || uuid();
+    block.type = block.type || designBlockTypeDefinition.name;
+    block.parameters = block.parameters || {};
+    return block;
   }
 
   getDesignBlockTypeDefinition() {

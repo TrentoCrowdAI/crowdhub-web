@@ -5,13 +5,11 @@ import AbstractParameterModel from "../AbstractParameterModel";
 const type = 'boolean';
 
 class BooleanModel extends AbstractParameterModel {
-
   isValid() {
     return true;
   }
 }
 
-// TODO: This is a copy and paste of Text, improve solution
 class BooleanWidget extends Component {
 
   constructor(props) {

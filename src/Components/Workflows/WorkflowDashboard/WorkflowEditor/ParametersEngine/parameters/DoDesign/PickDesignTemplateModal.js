@@ -5,6 +5,8 @@ import DoDesignTemplatesService from "../../../../../../../Services/DoDesignTemp
 import {makeCancellable} from "../../../../../../../Services/utils";
 import {DesignBlocksModel} from "./DesignBlocksModel";
 
+const HIDE_ANIMATION_DURATION = 150;
+
 export class PickDesignTemplateModalAndButton extends Component {
 
   state = {
@@ -13,15 +15,13 @@ export class PickDesignTemplateModalAndButton extends Component {
 
   onShow = () => this.setState({show: true});
 
-  onHide = () => this.setState({show: false});
+  onHide = (afterHided) => this.setState({show: false}, () => setTimeout(afterHided, HIDE_ANIMATION_DURATION));
 
-  onTemplatePicked = (blocksModel) => {
-    this.onHide();
-    setTimeout(() => {
-      this.getDesignModel().setBlocksModel(blocksModel);
-      this.props.onModelUpdated();
-    }, 200); // TODO: Refactor
-  };
+  onDesignBlocksModelPicked = (blocksModel) => this.onHide(() => {
+    this.getDesignModel().setBlocksModel(blocksModel);
+    this.props.onModelUpdated()
+  });
+
 
   getDesignBlockTypeDefinitions() {
     return this.getDesignModel().getBlocksModel().getDesignBlockTypeDefinitions();
@@ -36,7 +36,7 @@ export class PickDesignTemplateModalAndButton extends Component {
       <div>
         <PickDesignTemplateModal show={this.state.show}
                                  onHide={this.onHide}
-                                 onTemplatePicked={this.onTemplatePicked}
+                                 onDesignBlocksModelPicked={this.onDesignBlocksModelPicked}
                                  designBlockTypeDefinitions={this.getDesignBlockTypeDefinitions()}/>
 
         <Button variant="success" onClick={this.onShow} className="btn-block mb-2">Create from a template</Button>
@@ -67,17 +67,17 @@ export class PickDesignTemplateModal extends Component {
     }
   };
 
-  onTemplatePicked= (template)=>{
-    const blocksModel=new DesignBlocksModel(this.props.designBlockTypeDefinitions, template.blocks);
-    this.props.onTemplatePicked(blocksModel); // TODO: Rename the prop because one is a object an the other is a model
-  }
+  onTemplatePicked = (template) => {
+    const blocksModel = new DesignBlocksModel(this.props.designBlockTypeDefinitions, template.blocks);
+    this.props.onDesignBlocksModelPicked(blocksModel);
+  };
 
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.onHide} size="lg">
         <Modal.Header>Pick a design template</Modal.Header>
 
-        <Modal.Header>
+        <Modal.Body>
           {
             this.state.fetchError &&
             <FetchTemplatesError/>
@@ -92,7 +92,7 @@ export class PickDesignTemplateModal extends Component {
             this.state.templates &&
             <TemplateList templates={this.state.templates} onTemplatePicked={this.onTemplatePicked}/>
           }
-        </Modal.Header>
+        </Modal.Body>
 
         <Modal.Footer>
           <Button variant="secondary" onClick={this.props.onHide}>Cancel</Button>

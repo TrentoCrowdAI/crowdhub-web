@@ -113,7 +113,6 @@ class AddChoice extends Component {
   };
 
   render() {
-    // TODO: Refactor the onChange functions
     return (
       <Form.Row>
         <Col md="12" lg="6">

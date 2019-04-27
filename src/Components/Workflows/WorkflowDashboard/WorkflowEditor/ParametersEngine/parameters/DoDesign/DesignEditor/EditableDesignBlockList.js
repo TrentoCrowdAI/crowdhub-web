@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import CollapsableCard from "./CollapsableCard";
 import ParametersEngine from "../../../ParametersEngine";
 
@@ -25,21 +25,13 @@ const EditableDesignBlockList = ({componentsContainerRef, designBlocksModel, onP
 
 export default EditableDesignBlockList;
 
-
-class DesignBlockConfigurator extends Component {
-
-  render() {
-    const {designBlockModel, onParameterModelUpdate} = this.props;
-
-    return (
-      <div data-block-id={designBlockModel.getId()}>
-        <CollapsableCard title={designBlockModel.getDesignBlockTypeDefinition().displayName}
-                         invalid={!designBlockModel.isValid()}>
-          <ParametersEngine
-            parametrizedBlock={designBlockModel}
-            onParameterModelUpdate={onParameterModelUpdate}/>
-        </CollapsableCard>
-      </div>
-    );
-  }
-}
+const DesignBlockConfigurator = ({designBlockModel, onParameterModelUpdate}) => (
+  <div data-block-id={designBlockModel.getId()}>
+    <CollapsableCard title={designBlockModel.getDesignBlockTypeDefinition().displayName}
+                     invalid={!designBlockModel.isValid()}>
+      <ParametersEngine
+        parametrizedBlock={designBlockModel}
+        onParameterModelUpdate={onParameterModelUpdate}/>
+    </CollapsableCard>
+  </div>
+);

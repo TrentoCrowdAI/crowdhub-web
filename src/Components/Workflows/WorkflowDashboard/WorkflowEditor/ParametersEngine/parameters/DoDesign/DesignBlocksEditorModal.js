@@ -6,6 +6,11 @@ import DesignEditor from "./DesignEditor/DesignEditor";
 
 export class DesignBlocksEditorModalAndButton extends Component {
 
+  /**
+   * To not propagate every update on the DesignBlocks to the workflow Blocks, we clone the BlocksModel.
+   */
+  designBlocksClonedModel;
+
   state = {
     show: false
   };
@@ -15,6 +20,12 @@ export class DesignBlocksEditorModalAndButton extends Component {
     this.designBlocksClonedModel = this.cloneDesignBlocksModel();
   }
 
+  /**
+   * If the user picks a template, we need to update get a new clone of the BlocksModel
+   * @param prevProps
+   * @param prevState
+   * @param snapshot
+   */
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(this.props.templateJustPicked) {
       this.designBlocksClonedModel = this.cloneDesignBlocksModel();
@@ -34,6 +45,9 @@ export class DesignBlocksEditorModalAndButton extends Component {
 
   hideModal = () => this.setState({show: false});
 
+  /**
+   * When the user clicks on the 'save' button, we need to get the DoDesignModel and set the clones BlocksModel
+   */
   onSave = () => {
     this.getModel().setBlocksModel(this.designBlocksClonedModel);
     this.props.onModelUpdated();
@@ -66,7 +80,12 @@ class DesignBlocksEditorModal extends Component {
         <Modal.Header>Do block design editor</Modal.Header>
 
         <Modal.Body>
-          <DesignEditor designBlocksModel={designBlocksModel} onModelUpdated={() => this.forceUpdate()}/>
+          <DesignEditor designBlocksModel={designBlocksModel}
+                        onModelUpdated={() => {
+                          // Since we don't have a state to update but we change the models, we need to tell react to
+                          // render again the components
+                          this.forceUpdate()
+                        }}/>
         </Modal.Body>
 
         <Modal.Footer>

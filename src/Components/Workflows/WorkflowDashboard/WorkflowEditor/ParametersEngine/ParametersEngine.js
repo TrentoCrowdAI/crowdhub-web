@@ -2,6 +2,12 @@ import React from 'react';
 import {Alert} from "react-bootstrap";
 import {Parameters} from "./parameters";
 
+/**
+ * Renders components to edit the parameters of a parametrized model.
+ * @param parametrizedBlock object with object with 'getId', 'getParameterDefinitionList' and ' getParameterModelsMap' methods.
+ * @param onParameterModelUpdate
+ * @returns {*}
+ */
 export default ({parametrizedBlock, onParameterModelUpdate}) => {
   const id = parametrizedBlock.getId();
   const parameterModelsMap = parametrizedBlock.getParameterModelsMap();
@@ -32,7 +38,6 @@ export default ({parametrizedBlock, onParameterModelUpdate}) => {
           } else {
             return <UnsupportedParameter key={key} parameter={parameterDefinition}/>
           }
-
         })
       }
     </div>

@@ -12,6 +12,9 @@ const mapParametersArrayToMap = (parameters) => {
   return map;
 };
 
+/**
+ * Map of parameters that aren't based on other parameters
+ */
 export const PrimitiveParameters = mapParametersArrayToMap([
   Text,
   Number,
