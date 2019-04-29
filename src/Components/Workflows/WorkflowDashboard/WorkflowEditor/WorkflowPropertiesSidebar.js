@@ -52,7 +52,7 @@ export default class WorkflowPropertiesSidebar extends Component {
 
   render() {
     return (
-      <div className="d-flex flex-column">
+      <div className="workflow-column">
         <div>
           <Row>
             <Col>

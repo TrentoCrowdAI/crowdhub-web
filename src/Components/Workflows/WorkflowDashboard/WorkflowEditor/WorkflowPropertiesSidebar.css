@@ -7,3 +7,9 @@
     color: red;
     padding-bottom: 8px;
 }
+
+.workflow-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
