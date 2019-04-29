@@ -8,22 +8,40 @@ export const Errors = {
   INVALID_WORKFLOW_DATA: 'invalid_workflow_data'
 };
 
-const JSONtoWorkflow = ({id, id_project, data}) => ({
-  id,
-  projectId: parseInt(id_project),
-  ...data
-});
+const JSONtoWorkflow = ({id, id_project, data}) => {
+  const workflow = {
+    id,
+    projectId: parseInt(id_project),
+    ...data
+  };
+  workflow.graph.nodes.forEach(node => {
+    node.type = node.nodeType;
+    delete node.nodeType;
+    return node;
+  });
+  return workflow;
+};
 
 
-const workflowToJSON = ({id, projectId, name, description, graph}) => ({
-  id,
-  id_project: projectId,
-  data: {
-    name,
-    description,
-    graph
-  }
-});
+const workflowToJSON = ({id, projectId, name, description, graph}) => {
+  const json = {
+    id,
+    id_project: projectId,
+    data: {
+      name,
+      description,
+      graph
+    }
+  };
+
+  json.data.graph.nodes.forEach(node => {
+    node.nodeType = node.type;
+    delete node.type;
+    return node;
+  });
+
+  return json;
+};
 
 
 export default {
