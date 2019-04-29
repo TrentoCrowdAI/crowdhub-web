@@ -39,7 +39,7 @@ export default {
 
   async createWorkflow(workflow) {
     const json = workflowToJSON(workflow);
-    return await postJSON(`${WORKFLOWS_URL}`, json);
+    return await postJSON(WORKFLOWS_URL, json);
   },
 
   async updateWorkflow(workflow) {
@@ -59,5 +59,9 @@ export default {
   async deleteWorkflow(workflow) {
     return await sendDelete(`${WORKFLOWS_URL}/${workflow.id}`);
   },
+
+  async startWorkflow(workflow) {
+    await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
+  }
 
 }

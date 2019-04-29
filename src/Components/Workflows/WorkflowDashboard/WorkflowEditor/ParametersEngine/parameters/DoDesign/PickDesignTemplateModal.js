@@ -117,7 +117,7 @@ const TemplateList = ({templates, onTemplatePicked}) => (
     <Row>
       {
         templates.map(template => (
-          <Col xs={12} sm={6} key={template.id}>
+          <Col xs={12} sm={6} key={template.id} className="mb-2">
             <Card>
               <Card.Header>{template.name}</Card.Header>
               <Card.Body>{template.description}</Card.Body>

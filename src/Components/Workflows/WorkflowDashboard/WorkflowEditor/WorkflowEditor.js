@@ -5,7 +5,7 @@ import './WorkflowEditor.css';
 import {PROJECTS_PATH} from "../../../Projects/Projects";
 import WorkflowGraphEditor from "./WorkflowGraphEditor/WorkflowGraphEditor";
 import DraggableBlockTypeListSidebar from "./DraggableBlockTypeListSidebar";
-import WorkflowDataEditorSidebar from "./WorkflowDataEditorSidebar";
+import WorkflowPropertiesSidebar from "./WorkflowPropertiesSidebar";
 import BlockConfiguratorSidebar from "./BlockConfiguratorSidebar";
 import BackButton from "../../../common/BackButton";
 import WorkflowGraphModel from "./WorkflowGraphEditor/WorkflowGraphModel";
@@ -78,13 +78,13 @@ class LoadedWorkflowEditor extends Component {
           </Col>
 
           {/* Right sidebar */}
-          <Col xs={3} className="light-background">
+          <Col xs={3} className="light-background right-sidebar">
             {
               this.state.selectedNode ?
                 <BlockConfiguratorSidebar node={this.state.selectedNode}
                                           onModelUpdate={() => this.forceUpdate()}/>
                 :
-                <WorkflowDataEditorSidebar workflow={this.props.workflow}
+                <WorkflowPropertiesSidebar workflow={this.props.workflow}
                                            onEdit={this.onWorkflowEdited}/>
             }
           </Col>
@@ -110,7 +110,7 @@ const WorkflowSaveBar = ({workflow, graphModel, isSaving, onSavePressed}) => {
         }
       </div>
 
-      <LoadingButton disabled={!isValid || isSaving} isSaving={isSaving} onClick={onSavePressed} text="Save"/>
+      <LoadingButton disabled={!isValid || isSaving} isSaving={isSaving} onClick={onSavePressed}>Save</LoadingButton>
     </Navbar>
   )
 };

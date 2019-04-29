@@ -68,7 +68,10 @@ class CodeEditorModal extends Component {
 }
 
 const CodeEditor = ({onCodeEdited, code}) => (
-  <div>
+  <div onKeyUp={e => {
+    // prevent block cancellation
+    e.stopPropagation()
+  }}>
     <h5>Editor</h5>
     <AceEditor
       style={{width: '100%'}}

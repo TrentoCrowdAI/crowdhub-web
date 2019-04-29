@@ -1,0 +1,9 @@
+.bottom-button-container {
+    margin-top: auto;
+    margin-bottom: 24px;
+}
+
+.start-workflow-error {
+    color: red;
+    padding-bottom: 8px;
+}

@@ -46,3 +46,7 @@ div.workflow-editor-container {
     flex-direction: column;
     align-items: center;
 }
+
+div.right-sidebar {
+    display: flex;
+}

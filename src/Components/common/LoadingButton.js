@@ -1,8 +1,8 @@
 import {Button, Spinner} from "react-bootstrap";
 import React from "react";
 
-const LoadingButton = ({isSaving, disabled, text, onClick}) => (
-  <Button disabled={disabled} onClick={onClick}>
+const LoadingButton = ({isSaving, disabled, onClick, children, block}) => (
+  <Button disabled={disabled || isSaving} onClick={onClick} className={block ? 'btn-block' : ''}>
     {
       isSaving &&
       <Spinner
@@ -13,7 +13,7 @@ const LoadingButton = ({isSaving, disabled, text, onClick}) => (
         aria-hidden="true"
       />
     }
-    <span> {text}</span>
+    <span> {children}</span>
   </Button>
 );
 
