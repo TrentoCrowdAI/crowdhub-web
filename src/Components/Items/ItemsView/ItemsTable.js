@@ -13,7 +13,7 @@ export class ItemsTable extends Component {
     items
       .map(item => item.data)
       .map(Object.keys)
-      .forEach(key => columnNames[key] = true);
+      .forEach(itemKeys => itemKeys.forEach(key => columnNames[key] = true));
     return Object.keys(columnNames);
   };
 
