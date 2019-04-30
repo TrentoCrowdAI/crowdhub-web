@@ -41,7 +41,7 @@ export default class CreateProject extends Component {
     setSubmitting(true);
 
     try {
-      await ProjectsService.createProject({data: projectData});
+      await ProjectsService.createProject(projectData);
       this.redirectToProjectsList();
     } catch (e) {
       this.onProjectCreationFailed();

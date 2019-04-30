@@ -14,11 +14,14 @@ const JSONtoWorkflow = ({id, id_project, data}) => {
     projectId: parseInt(id_project),
     ...data
   };
-  workflow.graph.nodes.forEach(node => {
-    node.type = node.nodeType;
-    delete node.nodeType;
-    return node;
-  });
+
+  if (workflow.graph) {
+    workflow.graph.nodes.forEach(node => {
+      node.type = node.nodeType;
+      delete node.nodeType;
+      return node;
+    });
+  }
   return workflow;
 };
 
@@ -30,15 +33,20 @@ const workflowToJSON = ({id, projectId, name, description, graph}) => {
     data: {
       name,
       description,
-      graph
     }
   };
 
-  json.data.graph.nodes.forEach(node => {
-    node.nodeType = node.type;
-    delete node.type;
-    return node;
-  });
+  if (graph) {
+    json.data.graph = {...graph};
+    json.data.graph.nodes = json.data.graph.nodes.map(node => {
+      const jsonNode = {
+        ...node,
+        nodeType: node.type
+      };
+      delete jsonNode.type;
+      return jsonNode;
+    });
+  }
 
   return json;
 };
@@ -79,7 +87,8 @@ export default {
   },
 
   async startWorkflow(workflow) {
-    await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
+    const res = await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
+    console.log('[WorkflowService] startWorkflow result:', res);
   }
 
 }

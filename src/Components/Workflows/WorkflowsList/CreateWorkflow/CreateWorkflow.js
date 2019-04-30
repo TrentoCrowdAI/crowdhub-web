@@ -48,6 +48,7 @@ export class CreateWorkflowModal extends Component {
       });
       this.onWorkflowCreated();
     } catch (e) {
+      console.log(e)
       this.onWorkflowCreationError();
     }
 
