@@ -26,13 +26,11 @@ export class IdField extends Component {
 
   onChange = (event) => this.setState({
     id: event.target.value
-  });
-
-  onBlur = () => {
+  }, () => {
     if (this.isNewIdValid()) {
       this.replaceNodeId();
     }
-  };
+  });
 
   isNewIdValid = () => {
     return this.state.id === this.getBlockModel().getId() || this.getGraphModel().isNewIdValid(this.state.id);
@@ -60,7 +58,6 @@ export class IdField extends Component {
         <Form.Control type="text"
                       value={this.state.id}
                       onChange={this.onChange}
-                      onBlur={this.onBlur}
                       isInvalid={!this.isNewIdValid()}
         />
         <Form.Control.Feedback type="invalid">
