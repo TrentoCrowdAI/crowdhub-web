@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import {Col, Form, Row} from "react-bootstrap";
 
-import './WorkflowPropertiesSidebar.css';
-import LoadingButton from "../../../common/LoadingButton";
-import WorkflowsService from "../../../../Services/WorkflowsService";
+import './WorkflowSidebar.css';
+import LoadingButton from "../../../../common/LoadingButton";
+import WorkflowsService from "../../../../../Services/WorkflowsService";
 
 /**
  * Sidebar to edit the workflow name and description
  *
  * TODO: The name Properties was never used inside the project, rename this component
  */
-export default class WorkflowPropertiesSidebar extends Component {
+export default class WorkflowSidebar extends Component {
 
   constructor(props) {
     super(props);

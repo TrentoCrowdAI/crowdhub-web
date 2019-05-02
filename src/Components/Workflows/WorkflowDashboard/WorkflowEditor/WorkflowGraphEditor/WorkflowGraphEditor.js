@@ -1,47 +1,11 @@
 import React, {Component} from 'react';
 import {Alert} from "react-bootstrap";
-import {DiagramEngine, DiagramWidget} from "storm-react-diagrams";
+import {DiagramWidget} from "storm-react-diagrams";
 import 'storm-react-diagrams/dist/style.min.css';
 
 import './WorkflowGraphEditor.css'
-import {BlockNodeFactory, BlockNodeModel} from "./BlockNode";
-import BlackLinkFactory from "./BlackLinkFactory";
-
-class WorkflowGraphEngine extends DiagramEngine {
-
-  blockTypeDefinitions;
-
-  constructor(blockTypeDefinitions) {
-    super();
-    this.setBlockTypeDefinitions(blockTypeDefinitions);
-    this.installFactories();
-  }
-
-  setBlockTypeDefinitions(blockTypeDefinitions) {
-    this.blockTypeDefinitions = blockTypeDefinitions;
-  }
-
-  installFactories() {
-    this.installDefaultFactories();
-    this.registerLinkFactory(new BlackLinkFactory());
-    this.getBlockTypeDefinitions().forEach(blockTypeDefinition => this.registerNodeFactory(
-      new BlockNodeFactory(blockTypeDefinition.name)
-    ));
-  }
-
-  getBlockTypeDefinitions() {
-    return this.blockTypeDefinitions;
-  }
-
-  getBlockTypeDefinition(blockType) {
-    return this.getBlockTypeDefinitions().find(definition => definition.name === blockType);
-  }
-
-  getModel(){
-    return this.getDiagramModel();
-  }
-
-}
+import {BlockNodeModel} from "./models/BlockNodeModel";
+import {WorkflowGraphEngine} from "./WorkflowGraphEngine";
 
 export default class WorkflowGraphEditor extends Component {
 

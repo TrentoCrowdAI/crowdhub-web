@@ -4,11 +4,11 @@ import {Col, Container, Navbar, Row, Spinner} from "react-bootstrap";
 import './WorkflowEditor.css';
 import {PROJECTS_PATH} from "../../../Projects/Projects";
 import WorkflowGraphEditor from "./WorkflowGraphEditor/WorkflowGraphEditor";
-import DraggableBlockTypeListSidebar from "./DraggableBlockTypeListSidebar";
-import WorkflowPropertiesSidebar from "./WorkflowPropertiesSidebar";
-import BlockConfiguratorSidebar from "./BlockConfiguratorSidebar";
+import DraggableBlockTypeListSidebar from "./sidebars/DraggableBlockTypeListSidebar";
+import WorkflowSidebar from "./sidebars/WorkflowSidebar";
+import BlockConfiguratorSidebar from "./sidebars/BlockSidebar/BlockSidebar";
 import BackButton from "../../../common/BackButton";
-import WorkflowGraphModel from "./WorkflowGraphEditor/WorkflowGraphModel";
+import WorkflowGraphModel from "./WorkflowGraphEditor/models/WorkflowGraphModel";
 import WorkflowBreadcrumb from "./WorkflowBreadcrumb";
 import LoadingButton from "../../../common/LoadingButton";
 
@@ -85,8 +85,8 @@ class LoadedWorkflowEditor extends Component {
                                           graphModel={this.graphModel}
                                           onModelUpdate={() => this.forceUpdate()}/>
                 :
-                <WorkflowPropertiesSidebar workflow={this.props.workflow}
-                                           onEdit={this.onWorkflowEdited}/>
+                <WorkflowSidebar workflow={this.props.workflow}
+                                 onEdit={this.onWorkflowEdited}/>
             }
           </Col>
         </Row>
