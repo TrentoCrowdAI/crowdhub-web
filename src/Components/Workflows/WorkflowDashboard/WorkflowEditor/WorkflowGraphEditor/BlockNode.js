@@ -14,7 +14,7 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   deSerialize(block, engine) {
     if (!block.id) {
-      this.initializeBlockWithIds(block);
+      this.initializeBlockWithIds(block, engine);
     }
     super.deSerialize(block, engine);
     this.blockTypeDefinition = engine.getBlockTypeDefinition(block.type);
@@ -22,8 +22,8 @@ export class BlockNodeModel extends DefaultNodeModel {
     this.setParameterModelsMap(deSerializeParameters(this, this.getParameterDefinitionList()));
   }
 
-  initializeBlockWithIds(block) {
-    block.id = uuid();
+  initializeBlockWithIds(block, engine) {
+    block.id = `block_${Object.keys(engine.getModel().getNodes()).length}`;
     block.ports = block.ports.map(port => ({
       ...port,
       id: uuid()
@@ -40,9 +40,9 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   isValid = () => Object.values(this.getParameterModelsMap()).find(parameter => !parameter.isValid()) == null;
 
-  getId() {
-    return this.id;
-  }
+  getId = () => this.id;
+
+  setId = (id) => this.id = id;
 
   getParameterModelsMap() {
     return this.parameterModelsMap;

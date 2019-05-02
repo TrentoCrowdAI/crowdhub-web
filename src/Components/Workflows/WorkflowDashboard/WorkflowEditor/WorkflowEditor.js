@@ -31,7 +31,7 @@ class LoadedWorkflowEditor extends Component {
   graphModel = new WorkflowGraphModel();
 
   state = {
-    selectedNode: null
+    selectedNode: null // TODO: Rename
   };
 
   onNodeSelected = (selectedNode) => this.setState({selectedNode});
@@ -81,7 +81,8 @@ class LoadedWorkflowEditor extends Component {
           <Col xs={3} className="light-background right-sidebar">
             {
               this.state.selectedNode ?
-                <BlockConfiguratorSidebar node={this.state.selectedNode}
+                <BlockConfiguratorSidebar block={this.state.selectedNode}
+                                          graphModel={this.graphModel}
                                           onModelUpdate={() => this.forceUpdate()}/>
                 :
                 <WorkflowPropertiesSidebar workflow={this.props.workflow}
