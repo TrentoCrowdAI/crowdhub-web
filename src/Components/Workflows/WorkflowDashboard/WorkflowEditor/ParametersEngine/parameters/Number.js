@@ -47,10 +47,9 @@ class NumberWidget extends Component {
         <Form.Control type="number"
                       value={`${this.state.value}`}
                       onChange={this.onChange}
-                      onKeyUp={e => e.stopPropagation()}
                       onBlur={this.onBlur}
                       isInvalid={!model.isValid()}
-        />{/*prevent block cancellation*/}
+        />
         <Form.Control.Feedback type="invalid">
           {definition.displayName} is required
         </Form.Control.Feedback>
