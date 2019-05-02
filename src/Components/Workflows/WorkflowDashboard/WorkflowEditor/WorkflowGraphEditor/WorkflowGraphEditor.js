@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import {Alert} from "react-bootstrap";
 import {DiagramEngine, DiagramWidget} from "storm-react-diagrams";
 import 'storm-react-diagrams/dist/style.min.css';
-import './GraphEditor.css'
+
+import './WorkflowGraphEditor.css'
 import {BlockNodeFactory, BlockNodeModel} from "./BlockNode";
 import BlackLinkFactory from "./BlackLinkFactory";
 
@@ -35,16 +37,27 @@ class WorkflowGraphEngine extends DiagramEngine {
     return this.getBlockTypeDefinitions().find(definition => definition.name === blockType);
   }
 
+  getModel(){
+    return this.getDiagramModel();
+  }
+
 }
 
 export default class WorkflowGraphEditor extends Component {
 
   engine;
 
+  state = {
+    deserializationError: false
+  };
+
   constructor(props) {
     super(props);
     this.initGraph();
-    this.deserializeGraph(props.initialGraph);
+  }
+
+  componentDidMount() {
+    this.deserializeGraph(this.props.initialGraph);
   }
 
   initGraph = () => {
@@ -55,8 +68,13 @@ export default class WorkflowGraphEditor extends Component {
 
   deserializeGraph = (graph) => {
     if (graph && graph.id) {
-      this.getModel().deSerializeDiagram(graph, this.engine);
-      this.addSelectedListenerToNodesOfModel();
+      try {
+        this.getModel().deSerializeDiagram(graph, this.engine);
+        this.addSelectedListenerToNodesOfModel();
+      } catch (e) {
+        this.setState({deserializationError: true});
+        console.error('[WorkflowGraphEditor] deserialization error', e);
+      }
     }
   };
 
@@ -132,14 +150,25 @@ export default class WorkflowGraphEditor extends Component {
   getModel = () => this.props.graphModel;
 
   render() {
-    return (
-      <div onDrop={this.onDrop}
-           onDragOver={event => event.preventDefault()}
-           className="diagram-widget-container">
-        <DiagramWidget diagramEngine={this.engine}/>
-      </div>
-    );
+    if (this.state.deserializationError) {
+      return <GraphDeserializationError/>
+    }else {
+      return (
+        <div onDrop={this.onDrop}
+             onDragOver={event => event.preventDefault()}
+             className="diagram-widget-container">
+          <DiagramWidget diagramEngine={this.engine}/>
+        </div>
+      );
+    }
   }
 
 }
 
+const GraphDeserializationError = () => (
+  <div className="deserialization-error-container">
+    <Alert className="deserialization-error" variant="danger">
+      Can't deserialize graph.
+    </Alert>
+  </div>
+);

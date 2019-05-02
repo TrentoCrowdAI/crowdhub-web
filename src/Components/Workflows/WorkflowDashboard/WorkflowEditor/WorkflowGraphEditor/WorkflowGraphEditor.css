@@ -8,3 +8,12 @@
 .diagram-widget-container {
     flex: 1;
 }
+
+div.deserialization-error-container {
+    display: flex;
+    width: 100%;
+}
+
+div.deserialization-error {
+    margin: auto;
+}
