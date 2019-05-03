@@ -22,7 +22,7 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   initializeBlockWithIds(block, engine) {
     block.id = uuid();
-    block.label = engine.getNextBlockLabel();
+    block.label = engine.getModel().getNextBlockLabel();
     block.ports = block.ports.map(port => ({
       ...port,
       id: uuid()

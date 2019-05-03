@@ -19,4 +19,6 @@ export default class WorkflowGraphModel extends DiagramModel {
 
   getBlockByLabelOrNull = (label) => this.getBlocksArray().find(block => block.getLabel() === label);
 
+  getNextBlockLabel = () => `block_${this.getBlocksArray().length}`;
+
 }

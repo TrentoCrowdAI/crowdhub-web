@@ -36,6 +36,4 @@ export class WorkflowGraphEngine extends DiagramEngine {
     return this.getDiagramModel();
   }
 
-  getNextBlockLabel = () => `block_${this.getModel().getBlocksArray().length}`;
-
 }
