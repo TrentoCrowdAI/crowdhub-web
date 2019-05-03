@@ -99,14 +99,12 @@ export default class WorkflowGraphEditor extends Component {
 
   onSelectedNodeChanged = () => {
     const selectedNodes = this.getSelectedNodes();
-
     if (selectedNodes.length === 1) {
       const node = selectedNodes[0];
       this.props.onNodeSelected(node);
     } else {
       this.props.onNodeSelected(null);
     }
-
   };
 
   getSelectedNodes = () => this.getModel().getSelectedItems('node');
@@ -116,7 +114,7 @@ export default class WorkflowGraphEditor extends Component {
   render() {
     if (this.state.deserializationError) {
       return <GraphDeserializationError/>
-    }else {
+    } else {
       return (
         <div onDrop={this.onDrop}
              onDragOver={event => event.preventDefault()}

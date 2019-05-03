@@ -1,9 +1,9 @@
 import React from 'react';
-import {Col, Row} from "react-bootstrap";
+import {Button, ButtonGroup, Col, Dropdown, Form, Row} from "react-bootstrap";
 
 import ParametersEngine from "../../ParametersEngine/ParametersEngine";
 import "./BlockSidebar.css";
-import {IdField} from "./IdField";
+import {BlockLabel} from "./BlockLabel";
 
 export default ({block, graphModel, onModelUpdate}) => (
   <div className="parameters-engine-container"
@@ -17,8 +17,7 @@ export default ({block, graphModel, onModelUpdate}) => (
       </Col>
     </Row>
 
-    {/* The users sees the id as a property, but it isn't a real property, it's the block id */}
-    <IdField
+    <BlockLabel
       blockModel={block}
       graphModel={graphModel}/>
 

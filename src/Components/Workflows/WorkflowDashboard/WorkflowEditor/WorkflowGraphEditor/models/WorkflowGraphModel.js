@@ -2,16 +2,21 @@ import {DiagramModel} from "storm-react-diagrams";
 
 export default class WorkflowGraphModel extends DiagramModel {
 
-  isValid = () => Object.values(this.nodes)
-    .find(node => !node.isValid()) == null;
+  isValid = () => this.getBlocksArray()
+    .find(block => !block.isValid()) == null;
 
-  isNewIdValid = (newId) => newId.length > 0 && !this.getNode(newId);
+  getBlocks = () => this.getNodes();
 
-  replaceBlockId = (node, newId) => {
-    const oldId = node.id;
-    node.id = newId;
-    this.nodes[newId] = node;
-    delete this.nodes[oldId];
-  }
+  getBlocksArray = () => Object.values(this.getBlocks());
+
+  isNewLabelValid = (blockModel, label) => {
+    if (label.length <= 0) {
+      return false;
+    }
+    const blockWithSameLabel = this.getBlockByLabelOrNull(label);
+    return blockWithSameLabel === blockModel || blockWithSameLabel == null;
+  };
+
+  getBlockByLabelOrNull = (label) => this.getBlocksArray().find(block => block.getLabel() === label);
 
 }

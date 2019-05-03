@@ -4,6 +4,7 @@ import uuid from "uuid";
 
 export class BlockNodeModel extends DefaultNodeModel {
 
+  label;
   blockTypeDefinition;
   initialParametersMap;
   parameterModelsMap;
@@ -13,13 +14,15 @@ export class BlockNodeModel extends DefaultNodeModel {
       this.initializeBlockWithIds(block, engine);
     }
     super.deSerialize(block, engine);
+    this.setLabel(block.label);
     this.blockTypeDefinition = engine.getBlockTypeDefinition(block.type);
     this.initialParametersMap = block.parameters || {};
     this.setParameterModelsMap(deSerializeParameters(this, this.getParameterDefinitionList()));
   }
 
   initializeBlockWithIds(block, engine) {
-    block.id = engine.getNextBlockId();
+    block.id = uuid();
+    block.label = engine.getNextBlockLabel();
     block.ports = block.ports.map(port => ({
       ...port,
       id: uuid()
@@ -29,6 +32,7 @@ export class BlockNodeModel extends DefaultNodeModel {
   serialize() {
     return {
       ...super.serialize(),
+      label: this.getLabel(),
       type: this.blockTypeDefinition.name,
       parameters: serializeParameters(this.getParameterModelsMap())
     }
@@ -38,7 +42,11 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   getId = () => this.id;
 
+  getLabel = () => this.label;
+
   setId = (id) => this.id = id;
+
+  setLabel = (label) => this.label = label;
 
   getParameterModelsMap() {
     return this.parameterModelsMap;
