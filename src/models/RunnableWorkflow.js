@@ -1,3 +1,11 @@
+export const RunStates = Object.freeze({
+  RUNTIME_ERROR: 'runtimeError',
+  RUNNING: 'running',
+  FINISHED: 'finished'
+});
+
+const {RUNTIME_ERROR, RUNNING, FINISHED} = RunStates;
+
 export default class RunnableWorkflow {
 
   workflow;
@@ -34,23 +42,47 @@ export default class RunnableWorkflow {
     this.runsListeners.splice(index, 1);
   };
 
+  /**
+   * @returns {boolean} true if the block was started at least one time.
+   */
   wasStarted = () => !!this.getLatestRun();
 
-  isLatestRunRunning = () =>
+  isLatestRunRunning = () => this.getRunningBlocksOfLatestRun().length > 0;
+
+  getRunningBlocksOfLatestRun = () =>
     Object.values(this.getLatestRun().blocks)
-      .find(blockRun => blockRun.state === 'running') != null;
+      .filter(blockRun => blockRun.state === RUNNING);
 
   isLatestRunRuntimeError = () =>
     Object.values(this.getLatestRun().blocks)
-      .find(blockRun => blockRun.state === 'runtimeError') != null;
+      .find(blockRun => blockRun.state === RUNTIME_ERROR) != null;
 
   isLatestRunFinished = () => RunnableWorkflow.isRunFinished(this.getLatestRun());
+
+  static isRunFinished = (run) =>
+    Object.values(run.blocks)
+      .find(blockRun => blockRun.state !== FINISHED) == null;
 
   getFinishedRunsCount = () => this.getFinishedRuns().length;
 
   getFinishedRuns = () => this.getRuns().filter(RunnableWorkflow.isRunFinished);
 
-  static isRunFinished = (run) =>
-    Object.values(run.blocks)
-      .find(blockRun => blockRun.state !== 'finished') == null;
+  /**
+   * @returns {number} number of blocks that may start in a run
+   */
+  getRunnableBlocksCount = () => this.getWorkflow().graph.nodes.length;
+
+  /**
+   * Relative to latest run
+   * @returns {number} number of blocks that are running
+   */
+  getRunningBlocksCount = () => this.getRunningBlocksOfLatestRun().length;
+
+  /**
+   * Relative to latest run
+   * @returns {number} number of finished blocks
+   */
+  getFinishedBlocksCount = () =>
+    Object.values(this.getLatestRun().blocks)
+      .filter(blockRun => blockRun.state === FINISHED).length;
 }

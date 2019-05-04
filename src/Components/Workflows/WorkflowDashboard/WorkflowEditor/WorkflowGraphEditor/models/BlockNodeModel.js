@@ -1,6 +1,9 @@
 import {DefaultNodeModel} from "storm-react-diagrams";
 import {deSerializeParameters, serializeParameters} from "../../ParametersEngine/parameters/serialization";
 import uuid from "uuid";
+import {RunStates, States} from "../../../../../../models/RunnableWorkflow";
+
+const {RUNTIME_ERROR, RUNNING, FINISHED} = RunStates;
 
 export class BlockNodeModel extends DefaultNodeModel {
 
@@ -51,21 +54,15 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   setLabel = (label) => this.label = label;
 
-  getParameterModelsMap() {
-    return this.parameterModelsMap;
-  }
+  getParameterModelsMap = () => this.parameterModelsMap;
 
   setParameterModelsMap(parameterModelsMap) {
     this.parameterModelsMap = parameterModelsMap;
   }
 
-  getParameterDefinitionList() {
-    return this.blockTypeDefinition.parameterDefinitions;
-  }
+  getParameterDefinitionList = () => this.blockTypeDefinition.parameterDefinitions;
 
-  getInitialParametersMap() {
-    return this.initialParametersMap;
-  }
+  getInitialParametersMap = () => this.initialParametersMap;
 
   setBlockRuns = (latestBlockRun, blockRuns) => {
     this.latestBlockRun = latestBlockRun;
@@ -74,17 +71,64 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   getBlockRuns = () => this.blockRuns;
 
+  /**
+   * @returns {boolean} true if the block was started at least one time.
+   */
   wasStarted = () => !!this.latestBlockRun;
 
-  isLatestRunFinished = () => this.wasStarted() && this.latestBlockRun.state === 'finished';
+  isLatestRunFinished = () => this.wasStarted() && this.latestBlockRun.state === FINISHED;
 
-  isLatestRunRunning = () => this.wasStarted() && this.latestBlockRun.state === 'running';
+  isLatestRunRunning = () => this.wasStarted() && this.latestBlockRun.state === RUNNING;
 
-  isLatestRunRuntimeError = () => this.wasStarted() && this.latestBlockRun.state === 'runtimeError';
+  isLatestRunRuntimeError = () => this.wasStarted() && this.latestBlockRun.state === RUNTIME_ERROR;
 
   getFinishedRunsCount = () => this.getFinishedRuns().length;
 
-  getFinishedRuns = () => this.getBlockRuns().filter(run => run.state === 'finished');
+  getFinishedRuns = () => this.getBlockRuns().filter(run => run.state === FINISHED);
+
+  /**
+   * @returns {number} number of blocks that may start in a run. That is, the number of all parents (ascendents)
+   */
+  getRunnableBlocksCount = () => 1 + BlockNodeModel.getAllParentBlocks(this).length;
+
+  /**
+   * @returns {number} number of all parents (ascendents) running
+   */
+  getRunningBlocksCount = () =>
+    [this, ...BlockNodeModel.getAllParentBlocks(this)]
+      .filter(block => block.isLatestRunRunning())
+      .length;
+
+  /**
+   * @returns {number} number of all parents (ascendents) finished
+   */
+  getFinishedBlocksCount = () =>
+    [this, ...BlockNodeModel.getAllParentBlocks(this)]
+      .filter(block => block.isLatestRunFinished())
+      .length;
+
+
+  /**
+   * @returns {NodeModel[]} parent blocks of this block
+   */
+  getParentBlocks = () =>
+    Object.values(this.getPort('in').getLinks())
+      .map(link => link.getSourcePort().getNode());
+
+  /**
+   * Recursively finds all the parents (ascendents) of a block.
+   * @param block
+   * @param parents array of parents already found
+   * @returns {Array} all the parents of a block
+   */
+  static getAllParentBlocks = (block, parents = []) => {
+    const blockParents = block.getParentBlocks();
+    if (blockParents.length > 0) {
+      parents.push(...blockParents);
+      blockParents.forEach(parent => BlockNodeModel.getAllParentBlocks(parent, parents));
+    }
+    return parents;
+  }
 
 }
 
