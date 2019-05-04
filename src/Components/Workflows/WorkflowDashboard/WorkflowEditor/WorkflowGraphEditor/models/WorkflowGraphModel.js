@@ -29,5 +29,9 @@ export default class WorkflowGraphModel extends DiagramModel {
   static getBlockRuns = (runs, block) =>
     runs
       .filter(run => run.blocks.hasOwnProperty(block.getId()))
-      .map(run => run.blocks[block.getId()])
+      .map(run => {
+        const blockRun = run.blocks[block.getId()];
+        blockRun.id = run.id;
+        return blockRun;
+      })
 }

@@ -20,21 +20,21 @@ export class BlockNodeWidget extends DefaultNodeWidget {
           <div className="flags-container">
             {
               /* completed */
-              this.props.node.isCompleted() &&
+              this.props.node.isLatestRunCompleted() &&
               <i className="fas fa-check-circle"/>
             }
 
 
             {
               /* running */
-              this.props.node.isRunning() &&
+              this.props.node.isLatestRunRunning() &&
               <Spinner animation="grow" size="sm"/>
             }
 
 
             {
               /* runtime error */
-              this.props.node.isRuntimeError() &&
+              this.props.node.isLatestRunRuntimeError() &&
               <i className="fas fa-exclamation-circle error"/>
 
             }

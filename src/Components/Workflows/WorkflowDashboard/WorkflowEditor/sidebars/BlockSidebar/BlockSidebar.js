@@ -4,6 +4,7 @@ import {Col, Row} from "react-bootstrap";
 import ParametersEngine from "../../ParametersEngine/ParametersEngine";
 import "./BlockSidebar.css";
 import {BlockLabel} from "./BlockLabel";
+import BlockResultDownloader from "./BlockResultDownloader";
 
 export default ({block, graphModel, onModelUpdate}) => (
   <div className="parameters-engine-container"
@@ -17,17 +18,13 @@ export default ({block, graphModel, onModelUpdate}) => (
       </Col>
     </Row>
 
-    <BlockLabel
-      blockModel={block}
-      graphModel={graphModel}/>
+    <BlockLabel blockModel={block}
+                graphModel={graphModel}/>
 
-    <ParametersEngine
-      parametrizedBlock={block}
-      onParameterModelUpdate={onModelUpdate}/>
+    <ParametersEngine parametrizedBlock={block}
+                      onParameterModelUpdate={onModelUpdate}/>
 
-    {
-      JSON.stringify(block.getBlockRuns())
-    }
+    <BlockResultDownloader blockModel={block}/>
   </div>
 );
 

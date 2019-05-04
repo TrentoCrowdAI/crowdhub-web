@@ -74,13 +74,17 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   getBlockRuns = () => this.blockRuns;
 
-  hasRan = () => !!this.latestBlockRun;
+  wasBlockStarted = () => !!this.latestBlockRun;
 
-  isCompleted = () => this.hasRan() && this.latestBlockRun.state === 'finished';
+  isLatestRunCompleted = () => this.wasBlockStarted() && this.latestBlockRun.state === 'finished';
 
-  isRunning = () => this.hasRan() && this.latestBlockRun.state === 'running';
+  isLatestRunRunning = () => this.wasBlockStarted() && this.latestBlockRun.state === 'running';
 
-  isRuntimeError = () => this.hasRan() && this.latestBlockRun.state === 'runtimeError';
+  isLatestRunRuntimeError = () => this.wasBlockStarted() && this.latestBlockRun.state === 'runtimeError';
+
+  getFinishedRunsCount = () => this.getFinishedRuns().length;
+
+  getFinishedRuns = () => this.getBlockRuns().filter(run => run.state === 'finished');
 
 }
 
