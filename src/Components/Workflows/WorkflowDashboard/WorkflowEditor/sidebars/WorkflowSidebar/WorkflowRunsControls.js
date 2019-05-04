@@ -1,8 +1,19 @@
 import React, {Component} from 'react';
 
-export default class RunsControls extends Component {
-  render(){
-    return <p>asp</p>;
+import ResultDownloader from "../RunsControls/ResultDownloader";
+import RunsService from "../../../../../../Services/rest/RunsService";
+
+export default class WorkflowRunsControls extends Component {
+  render() {
+    const {runnableWorkflow} = this.props;
+    const workflow = runnableWorkflow.getWorkflow();
+    return (
+      <div>
+        <ResultDownloader downloadLinkFactory={run => RunsService.getDownloadLink(run)}
+                          downloadNameFactory={run => `${workflow.name} #${run.id}.csv`}
+                          runnable={runnableWorkflow}/>
+      </div>
+    );
   }
 }
 

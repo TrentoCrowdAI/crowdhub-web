@@ -32,6 +32,25 @@ export default class RunnableWorkflow {
       throw new Error("can't remove a listener that hasn't been added");
     }
     this.runsListeners.splice(index, 1);
-  }
+  };
 
+  wasStarted = () => !!this.getLatestRun();
+
+  isLatestRunRunning = () =>
+    Object.values(this.getLatestRun().blocks)
+      .find(blockRun => blockRun.state === 'running') != null;
+
+  isLatestRunRuntimeError = () =>
+    Object.values(this.getLatestRun().blocks)
+      .find(blockRun => blockRun.state === 'runtimeError') != null;
+
+  isLatestRunFinished = () => RunnableWorkflow.isRunFinished(this.getLatestRun());
+
+  getFinishedRunsCount = () => this.getFinishedRuns().length;
+
+  getFinishedRuns = () => this.getRuns().filter(RunnableWorkflow.isRunFinished);
+
+  static isRunFinished = (run) =>
+    Object.values(run.blocks)
+      .find(blockRun => blockRun.state !== 'finished') == null;
 }

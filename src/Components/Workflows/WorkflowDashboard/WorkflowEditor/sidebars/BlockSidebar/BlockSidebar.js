@@ -4,7 +4,7 @@ import {Col, Row} from "react-bootstrap";
 import ParametersEngine from "../../ParametersEngine/ParametersEngine";
 import "./BlockSidebar.css";
 import {BlockLabel} from "./BlockLabel";
-import BlockResultDownloader from "./BlockResultDownloader";
+import BlockRunsControls from "./BlockRunsControls";
 
 export default ({block, graphModel, onModelUpdate}) => (
   <div className="parameters-engine-container"
@@ -24,7 +24,7 @@ export default ({block, graphModel, onModelUpdate}) => (
     <ParametersEngine parametrizedBlock={block}
                       onParameterModelUpdate={onModelUpdate}/>
 
-    <BlockResultDownloader blockModel={block}/>
+    <BlockRunsControls blockModel={block}/>
   </div>
 );
 

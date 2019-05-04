@@ -20,6 +20,9 @@ export default {
   async getRunsOfWorkflow(workflowId) {
     const jsonList = await getJSON(`${RUNS_URL}?workflowId=${workflowId}`);
     return jsonList.map(JSONtoRun);
-  }
+  },
 
+  getDownloadLink (run) {
+    return `${RUNS_URL}/${run.id}/result?format=csv`;
+  }
 }

@@ -20,7 +20,7 @@ export class BlockNodeWidget extends DefaultNodeWidget {
           <div className="flags-container">
             {
               /* completed */
-              this.props.node.isLatestRunCompleted() &&
+              this.props.node.isLatestRunFinished() &&
               <i className="fas fa-check-circle"/>
             }
 

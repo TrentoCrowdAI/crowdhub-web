@@ -1,6 +1,5 @@
 import React from "react";
-import {Dropdown, Form, Button, ButtonGroup} from "react-bootstrap";
-import CacheService from "../../../../../../Services/rest/CacheService";
+import {Dropdown, Form, ButtonGroup} from "react-bootstrap";
 
 
 /**
@@ -9,24 +8,26 @@ import CacheService from "../../../../../../Services/rest/CacheService";
  * Download results of the block as a CSV file.
  * Download results of the block as a CSV file. (running
  */
-export default ({blockModel}) => (
+export default ({runnable, downloadNameFactory, downloadLinkFactory}) => (
   <Form.Group>
     <Form.Label>Results</Form.Label>
     {
-      !blockModel.wasBlockStarted() &&
+      !runnable.wasStarted() &&
       <BlockNeverRanBefore/>
     }
     {
-      blockModel.isLatestRunRunning() && blockModel.getFinishedRunsCount() === 0 &&
+      runnable.isLatestRunRunning() && runnable.getFinishedRunsCount() === 0 &&
       <BlockRunning/>
     }
     {
-      blockModel.isLatestRunRuntimeError() && blockModel.getFinishedRunsCount() === 0 &&
+      runnable.isLatestRunRuntimeError() && runnable.getFinishedRunsCount() === 0 &&
       <BlockRuntimeError/>
     }
     {
-      blockModel.getFinishedRunsCount() > 0 &&
-      <DownloadButton blockModel={blockModel}/>
+      runnable.getFinishedRunsCount() > 0 &&
+      <DownloadButton runnable={runnable}
+                      downloadNameFactory={downloadNameFactory}
+                      downloadLinkFactory={downloadLinkFactory}/>
     }
   </Form.Group>
 );
@@ -49,19 +50,19 @@ const BlockRuntimeError = () => (
   </Form.Text>
 );
 
-const DownloadButton = ({blockModel}) => {
-  const latestRun = blockModel.getFinishedRuns()[0];
+const DownloadButton = ({runnable, downloadNameFactory, downloadLinkFactory}) => {
+  const latestRun = runnable.getFinishedRuns()[0];
   return (
     <div>
       <Form.Text className="text-muted">
-        Download results of the block as a CSV file.
+        Download results as a CSV file.
       </Form.Text>
       <Dropdown as={ButtonGroup} className="btn-block">
         <a className="btn btn-success" style={{color: 'white'}}
-           href={CacheService.getDownloadLink(latestRun.cacheId)}
-           download={getCacheFileName(blockModel, latestRun)}>
+           href={downloadLinkFactory(latestRun)}
+           download={downloadNameFactory(latestRun)}>
           {
-            blockModel.isLatestRunRunning() ?
+            runnable.isLatestRunRunning() ?
               `Download ${latestRun.id}` :
               'Download latest results'
           }
@@ -71,11 +72,11 @@ const DownloadButton = ({blockModel}) => {
 
         <Dropdown.Menu>
           {
-            blockModel.getFinishedRuns().map((run, index) => (
+            runnable.getFinishedRuns().map((run, index) => (
               <Dropdown.Item key={run.id}
-                             href={CacheService.getDownloadLink(run.cacheId)}
-                             download={getCacheFileName(blockModel, run)}>
-                #{run.id} {index === 0 && blockModel.isLatestRunCompleted() ? '- Latest ' : ''}
+                             href={downloadLinkFactory(run)}
+                             download={downloadNameFactory(run)}>
+                #{run.id} {index === 0 && runnable.isLatestRunFinished() ? '- Latest ' : ''}
               </Dropdown.Item>
             ))
           }
@@ -84,5 +85,3 @@ const DownloadButton = ({blockModel}) => {
     </div>
   );
 };
-
-const getCacheFileName = (blockModel, run) => `${blockModel.getLabel()} #${run.id}.csv`;
