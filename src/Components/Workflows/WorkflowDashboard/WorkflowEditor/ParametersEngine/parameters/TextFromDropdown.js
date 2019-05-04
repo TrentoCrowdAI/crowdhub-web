@@ -39,7 +39,7 @@ class TextFromDropdownWidget extends Component {
           {definition.description}
         </Form.Text>
 
-        <Form.Control as="select" value={model.getValue()} onChange={this.onChangeValue}>
+        <Form.Control as="select" value={model.getValue()} onChange={this.onChangeValue} disabled={this.props.disabled}>
           {
             model.getChoices().map(choice => (
               <option key={choice.value} value={choice.value}>{choice.label}</option>

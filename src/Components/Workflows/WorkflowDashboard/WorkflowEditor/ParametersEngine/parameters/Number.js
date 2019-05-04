@@ -49,7 +49,7 @@ class NumberWidget extends Component {
                       onChange={this.onChange}
                       onBlur={this.onBlur}
                       isInvalid={!model.isValid()}
-        />
+                      disabled={this.props.disabled}/>
         <Form.Control.Feedback type="invalid">
           {definition.displayName} is required
         </Form.Control.Feedback>

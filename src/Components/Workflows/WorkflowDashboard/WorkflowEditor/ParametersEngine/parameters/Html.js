@@ -36,7 +36,8 @@ class HtmlWidget extends Component {
 
         <Editor onEditorChange={this.handleEditorChange}
                 initialValue={model.getValue()}
-                init={{menubar: false}}/>
+                init={{menubar: false}}
+                disabled={this.props.disabled}/>
       </Form.Group>
     );
   }

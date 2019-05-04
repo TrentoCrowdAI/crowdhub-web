@@ -62,7 +62,9 @@ export class DesignBlocksEditorModalAndButton extends Component {
                                  onClose={this.hideModal}
                                  onSave={this.onSave}/>
 
-        <Button className="btn-block" onClick={this.showModal}>{this.props.buttonText}</Button>
+        <Button className="btn-block" onClick={this.showModal} disabled={this.props.disabled}>
+          {this.props.buttonText}
+        </Button>
       </div>
     );
   }

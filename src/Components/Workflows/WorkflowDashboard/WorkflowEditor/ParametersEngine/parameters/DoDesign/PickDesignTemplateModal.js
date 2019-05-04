@@ -39,7 +39,9 @@ export class PickDesignTemplateModalAndButton extends Component {
                                  onDesignBlocksModelPicked={this.onDesignBlocksModelPicked}
                                  designBlockTypeDefinitions={this.getDesignBlockTypeDefinitions()}/>
 
-        <Button variant="success" onClick={this.onShow} className="btn-block mb-2">Create from a template</Button>
+        <Button variant="success" onClick={this.onShow} className="btn-block mb-2" disabled={this.props.disabled}>
+          Create from a template
+        </Button>
       </div>
     )
   }

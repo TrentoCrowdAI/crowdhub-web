@@ -50,7 +50,7 @@ export class BlockLabel extends Component {
                       value={this.state.label}
                       onChange={this.onChange}
                       isInvalid={!this.isNewLabelValid()}
-        />
+                      disabled={this.props.disabled}/>
         <Form.Control.Feedback type="invalid">
           The label must be unique to all the blocks and must be at least one character long.
         </Form.Control.Feedback>

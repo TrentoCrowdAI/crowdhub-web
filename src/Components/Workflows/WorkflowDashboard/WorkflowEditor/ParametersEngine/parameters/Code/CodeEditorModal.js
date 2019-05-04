@@ -22,7 +22,7 @@ export class CodeEditorModalAndButton extends Component {
   render() {
     return (
       <div>
-        <Button className="btn-block" onClick={this.showModal}>Open editor</Button>
+        <Button className="btn-block" onClick={this.showModal} disabled={this.props.disabled}>Open editor</Button>
         <CodeEditorModal show={this.state.show}
                          onClose={this.hideModal}
                          onSave={this.onSave}

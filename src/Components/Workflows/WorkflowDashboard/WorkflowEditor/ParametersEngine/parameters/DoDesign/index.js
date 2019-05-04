@@ -40,13 +40,15 @@ class DoDesignWidget extends Component {
         {
           model.isDesignEmpty() &&
           <PickDesignTemplateModalAndButton designModel={model}
-                                            onModelUpdated={this.onModelUpdatedFromTemplate}/>
+                                            onModelUpdated={this.onModelUpdatedFromTemplate}
+                                            disabled={this.props.disabled}/>
         }
 
         <DesignBlocksEditorModalAndButton designModel={model}
                                           onModelUpdated={this.onModelUpdatedFromEditor}
                                           buttonText={model.isDesignEmpty() ? 'Create from scratch' : 'Open design editor'}
-                                          templateJustPicked={this.state.templateJustPicked}/>
+                                          templateJustPicked={this.state.templateJustPicked}
+                                          disabled={this.props.disabled}/>
       </Form.Group>
     );
   }

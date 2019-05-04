@@ -20,7 +20,7 @@ const WorkflowSidebar = ({runnableWorkflow, onEdit}) => {
           </Col>
         </Row>
 
-        <NameAndDescriptionFields onEdit={onEdit} workflow={workflow}/>
+        <NameAndDescriptionFields onEdit={onEdit} workflow={workflow} disabled={runnableWorkflow.isLatestRunRunning()}/>
       </div>
 
       <div className="bottom-button-container">

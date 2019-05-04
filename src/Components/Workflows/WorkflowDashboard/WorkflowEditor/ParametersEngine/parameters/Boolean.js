@@ -44,7 +44,8 @@ class BooleanWidget extends Component {
         <Form.Check type="checkbox"
                     label={definition.displayName}
                     checked={this.state.value}
-                    onChange={this.onChange}/>
+                    onChange={this.onChange}
+                    disabled={this.props.disabled}/>
       </Form.Group>
     );
   }

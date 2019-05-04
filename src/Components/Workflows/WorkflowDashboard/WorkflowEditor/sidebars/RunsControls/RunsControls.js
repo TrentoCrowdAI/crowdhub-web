@@ -10,8 +10,7 @@ export default ({runnable, downloadNameFactory, downloadLinkFactory, onStart, is
     {
       runnable.isLatestRunRunning() &&
       <div>
-        Workflow is running. In the meanwhile you can't edit the worflow, but you can download the results of previously
-        finished runs.
+        Workflow is running. In the meanwhile Youou can download the results of previously finished runs.
         <RunsProgressBar runnable={runnable}/>
       </div>
     }
@@ -33,7 +32,7 @@ const RunsProgressBar = ({runnable}) => {
   const finishedPercentage = Math.ceil(runnable.getFinishedBlocksCount() / runnable.getRunnableBlocksCount() * 100);
   const runningPercentage = Math.ceil(runnable.getRunningBlocksCount() / runnable.getRunnableBlocksCount() * 100);
   return (
-    <ProgressBar className="mb-2">
+    <ProgressBar className="mb-2" style={{backgroundColor: 'lightgray'}}>
       <ProgressBar animated variant="primary"
                    now={Math.max(1, finishedPercentage)} key={1}/>
       <ProgressBar animated variant="success"

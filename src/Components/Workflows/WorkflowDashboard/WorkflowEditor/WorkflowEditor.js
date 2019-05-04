@@ -22,15 +22,16 @@ export default class WorkflowEditor extends Component {
   componentDidMount() {
     const {runnableWorkflow} = this.props;
     this.graphModel.setRuns(runnableWorkflow.getLatestRun(), runnableWorkflow.getRuns());
-    runnableWorkflow.addRunsListener((latestRun, runs) => {
-      this.graphModel.setRuns(latestRun, runs);
-      this.forceUpdate();
-    });
+    runnableWorkflow.addRunsListener(this.onRunsUpdate);
   }
 
+  onRunsUpdate = (latestRun, runs) => {
+    this.graphModel.setRuns(latestRun, runs);
+    this.forceUpdate();
+  };
 
   componentWillUnmount() {
-    this.props.runnableWorkflow.removeRunsListener(this.graphModel.setRuns);
+    this.props.runnableWorkflow.removeRunsListener(this.onRunsUpdate);
   }
 
   onBlockSelected = (selectedBlock) => this.setState({selectedBlock});
@@ -78,7 +79,7 @@ export default class WorkflowEditor extends Component {
 
             <WorkflowBreadcrumb workflow={workflow}/>
 
-            <WorkflowSaveBar workflow={workflow}
+            <WorkflowSaveBar runnableWorkflow={runnableWorkflow}
                              graphModel={this.graphModel}
                              onSavePressed={this.onSavePressed}
                              isSaving={this.props.isSaving}/>
@@ -90,7 +91,8 @@ export default class WorkflowEditor extends Component {
               this.state.selectedBlock ?
                 <BlockConfiguratorSidebar block={this.state.selectedBlock}
                                           graphModel={this.graphModel}
-                                          onModelUpdate={() => this.forceUpdate()}/>
+                                          onModelUpdate={() => this.forceUpdate()}
+                                          runnableWorkflow={runnableWorkflow}/>
                 :
                 <WorkflowSidebar runnableWorkflow={runnableWorkflow}
                                  onEdit={this.onWorkflowEdited}/>

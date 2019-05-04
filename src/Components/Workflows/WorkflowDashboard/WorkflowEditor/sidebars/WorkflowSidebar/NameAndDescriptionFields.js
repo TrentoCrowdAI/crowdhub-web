@@ -37,7 +37,7 @@ export default class NameAndDescriptionFields extends Component {
             <Form.Group>
               <Form.Label>Name</Form.Label>
               <Form.Control name="name" type="text" value={this.state.name} onChange={this.onChangeName}
-                            onBlur={this.onBlur}/>
+                            onBlur={this.onBlur} disabled={this.props.disabled}/>
             </Form.Group>
           </Col>
         </Row>
@@ -48,7 +48,7 @@ export default class NameAndDescriptionFields extends Component {
             <Form.Group>
               <Form.Label>Description</Form.Label>
               <Form.Control name="description" type="text" as="textarea" value={this.state.description}
-                            onChange={this.onChangeDescription} onBlur={this.onBlur}/>
+                            onChange={this.onChangeDescription} onBlur={this.onBlur} disabled={this.props.disabled}/>
             </Form.Group>
           </Col>
         </Row>

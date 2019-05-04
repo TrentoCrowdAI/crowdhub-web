@@ -41,7 +41,7 @@ class CodeWidget extends Component {
           {definition.description}
         </Form.Text>
 
-        <CodeEditorModalAndButton code={model.getCode()} onUpdateCode={this.onUpdateCode}/>
+        <CodeEditorModalAndButton code={model.getCode()} onUpdateCode={this.onUpdateCode} disabled={this.props.disabled}/>
       </Form.Group>
     );
   }

@@ -6,7 +6,7 @@ import "./BlockSidebar.css";
 import {BlockLabel} from "./BlockLabel";
 import BlockRunsControls from "./BlockRunsControls";
 
-export default ({block, graphModel, onModelUpdate}) => (
+export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
   <div className="parameters-engine-container"
        onKeyUp={e => {
          // prevent block cancellation when backspace is pressed
@@ -19,10 +19,13 @@ export default ({block, graphModel, onModelUpdate}) => (
     </Row>
 
     <BlockLabel blockModel={block}
-                graphModel={graphModel}/>
+                graphModel={graphModel}
+                disabled={runnableWorkflow.isLatestRunRunning()}/>
+
 
     <ParametersEngine parametrizedBlock={block}
-                      onParameterModelUpdate={onModelUpdate}/>
+                      onParameterModelUpdate={onModelUpdate}
+                      disabled={runnableWorkflow.isLatestRunRunning()}/>
 
     <BlockRunsControls blockModel={block}/>
   </div>

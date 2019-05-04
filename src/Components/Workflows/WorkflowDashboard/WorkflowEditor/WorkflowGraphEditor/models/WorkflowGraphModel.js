@@ -22,7 +22,7 @@ export default class WorkflowGraphModel extends DiagramModel {
   getNextBlockLabel = () => `block_${this.getBlocksArray().length}`;
 
   setRuns = (latestRun, runs) => this.getBlocksArray().forEach(block => block.setBlockRuns(
-    WorkflowGraphModel.getBlockRuns([latestRun], block)[0],
+    latestRun ? WorkflowGraphModel.getBlockRuns([latestRun], block)[0] : null,
     WorkflowGraphModel.getBlockRuns(runs, block)
   ));
 

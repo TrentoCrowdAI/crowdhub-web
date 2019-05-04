@@ -8,7 +8,7 @@ import {Parameters} from "./parameters";
  * @param onParameterModelUpdate
  * @returns {*}
  */
-export default ({parametrizedBlock, onParameterModelUpdate}) => {
+export default ({parametrizedBlock, onParameterModelUpdate, disabled}) => {
   const id = parametrizedBlock.getId();
   const parameterModelsMap = parametrizedBlock.getParameterModelsMap();
   const parameterDefinitions = parametrizedBlock.getParameterDefinitionList();
@@ -29,7 +29,8 @@ export default ({parametrizedBlock, onParameterModelUpdate}) => {
                   parameterModel.shouldDisplay() &&
                   <div>
                     <Component model={parameterModel}
-                               onModelUpdated={onParameterModelUpdate}/>
+                               onModelUpdated={onParameterModelUpdate}
+                               disabled={disabled}/>
                     <hr/>
                   </div>
                 }
