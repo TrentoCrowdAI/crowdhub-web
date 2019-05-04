@@ -1,8 +1,8 @@
 import {getJSON, postJSON, putJSON, sendDelete} from "./utils";
-import {APP_URL} from "../../config";
+import {API_URL} from "../../config";
 
 
-const WORKFLOWS_URL = `${APP_URL}/workflows`;
+const WORKFLOWS_URL = `${API_URL}/workflows`;
 
 export const Errors = {
   INVALID_WORKFLOW_DATA: 'invalid_workflow_data'
@@ -61,8 +61,8 @@ export default {
   },
 
   async startWorkflow(workflow) {
-    const res = await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
-    console.log('[WorkflowService] startWorkflow result:', res);
+    const startedRunId = await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
+    return startedRunId;
   }
 
 }

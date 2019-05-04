@@ -9,7 +9,8 @@ export default class BlockRunsControls extends Component {
     return <RunsControls runnable={blockModel}
                          downloadLinkFactory={run => CacheService.getDownloadLink(run.cacheId)}
                          downloadNameFactory={run => `${blockModel.getLabel()} #${run.id}.csv`}
-                         start={null}
+                         startText="Start block"
+                         start={() => console.error('not implemented yet')}
                          isStarting={false}/>;
   }
 }

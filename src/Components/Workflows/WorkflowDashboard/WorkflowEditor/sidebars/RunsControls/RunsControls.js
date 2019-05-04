@@ -4,18 +4,28 @@ import ResultDownloader from "./ResultDownloader";
 import {ProgressBar} from "react-bootstrap";
 import LoadingButton from "../../../../../common/LoadingButton";
 
-export default ({runnable, downloadNameFactory, downloadLinkFactory, start, isStarting}) => (
+export default ({runnable, downloadNameFactory, downloadLinkFactory, onStart, isStarting, startText}) => (
   <div>
+
+    {
+      runnable.isLatestRunRunning() &&
+      <div>
+        Workflow is running. In the meanwhile you can't edit the worflow, but you can download the results of previously
+        finished runs.
+        <RunsProgressBar runnable={runnable}/>
+      </div>
+    }
+
+
     <ResultDownloader downloadLinkFactory={downloadLinkFactory}
                       downloadNameFactory={downloadNameFactory}
                       runnable={runnable}/>
 
     {
-      runnable.isLatestRunRunning() &&
-      <RunsProgressBar/>
+      !runnable.isLatestRunRunning() &&
+      <LoadingButton block onClick={onStart}
+                     isSaving={isStarting}>{startText}</LoadingButton>
     }
-
-    <LoadingButton block onClick={start} isSaving={isStarting}>Start</LoadingButton>
   </div>
 );
 

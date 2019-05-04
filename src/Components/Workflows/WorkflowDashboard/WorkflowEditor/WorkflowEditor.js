@@ -48,6 +48,7 @@ export default class WorkflowEditor extends Component {
     this.props.onWorkflowEdited(workflow);
   };
 
+  getWorkflow = () => this.props.runnableWorkflow.getWorkflow();
 
   render() {
     const {runnableWorkflow, blockTypeDefinitions} = this.props;
@@ -59,9 +60,13 @@ export default class WorkflowEditor extends Component {
         <Row className="full-height">
 
           {/* Left sidebar */}
-          <Col xs={2} className="light-background">
-            <DraggableBlockTypeListSidebar blockTypeDefinitions={blockTypeDefinitions}/>
-          </Col>
+          {
+            !runnableWorkflow.isLatestRunRunning() &&
+            <Col xs={2} className="light-background">
+              <DraggableBlockTypeListSidebar blockTypeDefinitions={blockTypeDefinitions}/>
+            </Col>
+          }
+
 
           {/* Center */}
           <Col xs={7} className="graph-editor-container">

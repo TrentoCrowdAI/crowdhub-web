@@ -1,8 +1,8 @@
 import {getJSON, postJSON, putJSON, sendDelete} from "./utils";
-import {APP_URL} from "../../config";
+import {API_URL} from "../../config";
 
 
-const PROJECTS_URL = `${APP_URL}/projects`;
+const PROJECTS_URL = `${API_URL}/projects`;
 
 export const Errors = {
     INVALID_WORKFLOW_DATA: 'invalid_project_data'

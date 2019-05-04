@@ -1,4 +1,4 @@
-import {APP_URL} from "../../config";
+import {API_URL} from "../../config";
 import {mockFetchToReturnJson} from "../../testHelpers/services";
 import ItemsService from "./ItemsService";
 import mockedItems from '../../mock-data/items';
@@ -16,7 +16,7 @@ describe('import items from CSV file', () => {
 
     await ItemsService.importFromCsvUrl(project, json.csv_url);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/items`, {
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/items`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

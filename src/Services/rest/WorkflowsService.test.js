@@ -1,4 +1,4 @@
-import {APP_URL} from "../../config";
+import {API_URL} from "../../config";
 import {mockFetchToReturnJson} from "../../testHelpers/services";
 import {serverWorkflow, serviceWorkflows} from '../../mock-data/workflows';
 import WorkflowsService from "./WorkflowsService";
@@ -9,7 +9,7 @@ describe('get list of workflows of project', () => {
     mockFetchToReturnJson(serverWorkflow);
     const res = await WorkflowsService.getWorkflowsOfProject(project);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/workflows?projectId=${project.id}`, undefined);
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/workflows?projectId=${project.id}`, undefined);
     expect(res).toEqual(serviceWorkflows);
   });
 });
@@ -19,7 +19,7 @@ describe('create new workflow', () => {
   it('should send a POST to /workflows', async () => {
     await WorkflowsService.createWorkflow(serviceWorkflows[0]);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/workflows`, {
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/workflows`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,6 +35,6 @@ describe('delete a workflow', () => {
     const workflow = serviceWorkflows;
     await WorkflowsService.deleteWorkflow(workflow);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/workflows/${workflow.id}`, {method: 'DELETE'});
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/workflows/${workflow.id}`, {method: 'DELETE'});
   });
 });

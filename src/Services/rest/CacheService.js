@@ -1,7 +1,7 @@
-import {APP_URL} from "../../config";
+import {API_URL} from "../../config";
 
 
-const CACHE_URL = `${APP_URL}/cache`;
+const CACHE_URL = `${API_URL}/cache`;
 
 export default {
 

@@ -1,7 +1,8 @@
 export const RunStates = Object.freeze({
   RUNTIME_ERROR: 'runtimeError', // TODO: Rename to failed
   RUNNING: 'running',
-  FINISHED: 'finished'
+  FINISHED: 'finished',
+  NOT_STARTED: 'not started'
 });
 
 const {RUNTIME_ERROR, RUNNING, FINISHED} = RunStates;

@@ -1,6 +1,6 @@
 import mockedProjects from '../../mock-data/projects';
 import ProjectsService from "./ProjectsService";
-import {APP_URL} from "../../config";
+import {API_URL} from "../../config";
 import {mockFetchToReturnJson} from "../../testHelpers/services";
 
 describe('get list of projects', () => {
@@ -31,7 +31,7 @@ describe('create new project', () => {
     mockFetchToReturnJson(mockedProjects);
     await ProjectsService.createProject(project);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/projects`, {
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/projects`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -48,6 +48,6 @@ describe('delete a project', () => {
     mockFetchToReturnJson(mockedProjects);
     await ProjectsService.deleteProject(project);
 
-    expect(fetch).toHaveBeenCalledWith(`${APP_URL}/projects/${project.id}`, {method: 'DELETE'});
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/projects/${project.id}`, {method: 'DELETE'});
   });
 });
