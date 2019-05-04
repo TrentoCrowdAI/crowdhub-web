@@ -1,5 +1,5 @@
 export const RunStates = Object.freeze({
-  RUNTIME_ERROR: 'runtimeError',
+  RUNTIME_ERROR: 'runtimeError', // TODO: Rename to failed
   RUNNING: 'running',
   FINISHED: 'finished'
 });
@@ -47,17 +47,19 @@ export default class RunnableWorkflow {
    */
   wasStarted = () => !!this.getLatestRun();
 
-  isLatestRunRunning = () => this.getRunningBlocksOfLatestRun().length > 0;
+  isLatestRunRunning = () => !this.wasStarted() ? false :
+    this.getRunningBlocksOfLatestRun().length > 0;
 
-  getRunningBlocksOfLatestRun = () =>
+  getRunningBlocksOfLatestRun = () => !this.wasStarted() ? [] :
     Object.values(this.getLatestRun().blocks)
       .filter(blockRun => blockRun.state === RUNNING);
 
-  isLatestRunRuntimeError = () =>
+  isLatestRunRuntimeError = () => !this.wasStarted() ? false :
     Object.values(this.getLatestRun().blocks)
       .find(blockRun => blockRun.state === RUNTIME_ERROR) != null;
 
-  isLatestRunFinished = () => RunnableWorkflow.isRunFinished(this.getLatestRun());
+  isLatestRunFinished = () => !this.wasStarted() ? false :
+    RunnableWorkflow.isRunFinished(this.getLatestRun());
 
   static isRunFinished = (run) =>
     Object.values(run.blocks)
@@ -82,7 +84,7 @@ export default class RunnableWorkflow {
    * Relative to latest run
    * @returns {number} number of finished blocks
    */
-  getFinishedBlocksCount = () =>
+  getFinishedBlocksCount = () => !this.wasStarted() ? 0 :
     Object.values(this.getLatestRun().blocks)
       .filter(blockRun => blockRun.state === FINISHED).length;
 }
