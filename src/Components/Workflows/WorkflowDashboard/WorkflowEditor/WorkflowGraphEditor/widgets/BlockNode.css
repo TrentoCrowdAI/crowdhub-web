@@ -13,13 +13,15 @@ div.block div.card-header {
     padding-left: 0;
 }
 
-div.error-triangle-container {
+div.flags-container {
     position: absolute;
-    color: red;
     right: -5px;
     top: 0;
 }
 
+div.flags-container .error {
+    color: red;
+}
 
 div.block div.block-name {
     margin-left: 8px;

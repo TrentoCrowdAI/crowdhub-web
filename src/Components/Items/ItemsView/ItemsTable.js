@@ -3,7 +3,7 @@ import {Col, Modal, Row, Table} from "react-bootstrap";
 
 import './ItemsTable.css';
 import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
-import ItemsService from "../../../Services/ItemsService";
+import ItemsService from "../../../Services/rest/ItemsService";
 
 export class ItemsTable extends Component {
 

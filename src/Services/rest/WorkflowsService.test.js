@@ -1,6 +1,6 @@
-import {APP_URL} from "../config";
-import {mockFetchToReturnJson} from "../testHelpers/services";
-import {serverWorkflow, serviceWorkflows} from '../mock-data/workflows';
+import {APP_URL} from "../../config";
+import {mockFetchToReturnJson} from "../../testHelpers/services";
+import {serverWorkflow, serviceWorkflows} from '../../mock-data/workflows';
 import WorkflowsService from "./WorkflowsService";
 
 describe('get list of workflows of project', () => {

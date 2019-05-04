@@ -5,7 +5,7 @@ import {Modal, Table} from "react-bootstrap";
 import {WORKFLOWS_PATH} from "../Workflows";
 import {Link} from "react-router-dom";
 import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
-import WorkflowsService from "../../../Services/WorkflowsService";
+import WorkflowsService from "../../../Services/rest/WorkflowsService";
 
 export const WorkflowsTable = ({workflows, onWorkflowDeleted}) => (
   <Table hover>

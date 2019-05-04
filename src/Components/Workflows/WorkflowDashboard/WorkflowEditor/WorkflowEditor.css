@@ -39,14 +39,6 @@ div.workflow-editor-container {
     border-radius: .25em;
 }
 
-.loading-spinner-container {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
-
 div.right-sidebar {
     display: flex;
 }

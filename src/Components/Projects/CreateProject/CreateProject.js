@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Breadcrumb, Col, Container, Row} from "react-bootstrap";
 
-import ProjectsService from "../../../Services/ProjectsService";
+import ProjectsService from "../../../Services/rest/ProjectsService";
 import ProjectForm from "../ProjectForm/ProjectForm";
 import {PROJECTS_PATH} from "../Projects";
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../common/Breadcrumbs";

@@ -1,7 +1,7 @@
 import React from "react";
 import {mount} from "enzyme";
 
-import WorkflowsService from "../../../../Services/WorkflowsService";
+import WorkflowsService from "../../../../Services/rest/WorkflowsService";
 import {CreateWorkflowModal} from "./CreateWorkflow";
 
 function mockCreateWorkflowToFail() {

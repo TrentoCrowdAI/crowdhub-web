@@ -1,4 +1,4 @@
-import ProjectsService from '../../../Services/ProjectsService';
+import ProjectsService from '../../../Services/rest/ProjectsService';
 import {mount} from "enzyme";
 import React from "react";
 import {MemoryRouter} from "react-router-dom";

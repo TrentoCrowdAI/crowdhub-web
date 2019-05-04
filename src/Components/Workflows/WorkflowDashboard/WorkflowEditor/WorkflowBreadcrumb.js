@@ -3,7 +3,7 @@ import {Breadcrumb, Spinner} from "react-bootstrap";
 
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../../common/Breadcrumbs";
 import {PROJECTS_PATH} from "../../../Projects/Projects";
-import ProjectsService from "../../../../Services/ProjectsService";
+import ProjectsService from "../../../../Services/rest/ProjectsService";
 
 export default class WorkflowBreadcrumb extends Component {
 

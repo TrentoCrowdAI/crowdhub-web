@@ -4,7 +4,7 @@ import {Col, Modal, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {PROJECTS_PATH} from "../Projects";
 import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
-import ProjectsService from "../../../Services/ProjectsService";
+import ProjectsService from "../../../Services/rest/ProjectsService";
 
 export const ProjectsTable = ({projects, onProjectDeleted}) => (
   <Col>

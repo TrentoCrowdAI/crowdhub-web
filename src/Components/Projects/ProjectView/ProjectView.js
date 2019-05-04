@@ -3,8 +3,8 @@ import {Link} from "react-router-dom";
 import {Breadcrumb, Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 
 import {LinkBreadcrumb, SimpleBreadcrumb} from "../../common/Breadcrumbs";
-import ProjectsService from "../../../Services/ProjectsService";
-import {makeCancellable} from "../../../Services/utils";
+import ProjectsService from "../../../Services/rest/ProjectsService";
+import {makeCancellable} from "../../../Services/rest/utils";
 import {redirectToProjectsList} from "../utils/route";
 import {PROJECTS_PATH} from "../Projects";
 import EmbeddableWorkflowsList from "../../Workflows/WorkflowsList/EmbeddableWorkflowsList";

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Alert, Button, Card, Col, Container, Modal, Row} from 'react-bootstrap';
 
-import DoDesignTemplatesService from "../../../../../../../Services/DoDesignTemplatesService";
-import {makeCancellable} from "../../../../../../../Services/utils";
+import DoDesignTemplatesService from "../../../../../../../Services/rest/DoDesignTemplatesService";
+import {makeCancellable} from "../../../../../../../Services/rest/utils";
 import {DesignBlocksModel} from "./DesignBlocksModel";
 
 const HIDE_ANIMATION_DURATION = 150;

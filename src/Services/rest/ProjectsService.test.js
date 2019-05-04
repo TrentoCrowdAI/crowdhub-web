@@ -1,7 +1,7 @@
-import mockedProjects from '../mock-data/projects';
+import mockedProjects from '../../mock-data/projects';
 import ProjectsService from "./ProjectsService";
-import {APP_URL} from "../config";
-import {mockFetchToReturnJson} from "../testHelpers/services";
+import {APP_URL} from "../../config";
+import {mockFetchToReturnJson} from "../../testHelpers/services";
 
 describe('get list of projects', () => {
   it('should send a GET to /jobs and return the array of projects', async () => {

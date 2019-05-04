@@ -1,5 +1,5 @@
 import {getJSON, postJSON, putJSON, sendDelete} from "./utils";
-import {APP_URL} from "../config";
+import {APP_URL} from "../../config";
 
 
 const WORKFLOWS_URL = `${APP_URL}/workflows`;

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Alert, Breadcrumb, Col, Container, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
-import ProjectsService from "../../../Services/ProjectsService";
-import {makeCancellable} from "../../../Services/utils";
+import ProjectsService from "../../../Services/rest/ProjectsService";
+import {makeCancellable} from "../../../Services/rest/utils";
 import {PROJECTS_PATH} from "../Projects";
 import {SimpleBreadcrumb} from "../../common/Breadcrumbs";
 import {ProjectsTable} from "./ProjectsTable";

@@ -9,6 +9,9 @@ export class BlockNodeModel extends DefaultNodeModel {
   initialParametersMap;
   parameterModelsMap;
 
+  latestBlockRun;
+  blockRuns = [];
+
   deSerialize(block, engine) {
     if (!block.id) {
       this.initializeBlockWithIds(block, engine);
@@ -63,4 +66,21 @@ export class BlockNodeModel extends DefaultNodeModel {
   getInitialParametersMap() {
     return this.initialParametersMap;
   }
+
+  setBlockRuns = (latestBlockRun, blockRuns) => {
+    this.latestBlockRun = latestBlockRun;
+    this.blockRuns = blockRuns;
+  };
+
+  getBlockRuns = () => this.blockRuns;
+
+  hasRan = () => !!this.latestBlockRun;
+
+  isCompleted = () => this.hasRan() && this.latestBlockRun.state === 'finished';
+
+  isRunning = () => this.hasRan() && this.latestBlockRun.state === 'running';
+
+  isRuntimeError = () => this.hasRan() && this.latestBlockRun.state === 'runtimeError';
+
 }
+

@@ -1,8 +1,8 @@
-import {APP_URL} from "../config";
-import {mockFetchToReturnJson} from "../testHelpers/services";
+import {APP_URL} from "../../config";
+import {mockFetchToReturnJson} from "../../testHelpers/services";
 import ItemsService from "./ItemsService";
-import mockedItems from '../mock-data/items';
-import mockedProjects from '../mock-data/projects';
+import mockedItems from '../../mock-data/items';
+import mockedProjects from '../../mock-data/projects';
 
 const project = mockedProjects[0];
 

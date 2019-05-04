@@ -1,40 +1,39 @@
 import React, {Component} from 'react';
-import {Col, Container, Navbar, Row, Spinner} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 
 import './WorkflowEditor.css';
-import {PROJECTS_PATH} from "../../../Projects/Projects";
 import WorkflowGraphEditor from "./WorkflowGraphEditor/WorkflowGraphEditor";
 import DraggableBlockTypeListSidebar from "./sidebars/DraggableBlockTypeListSidebar";
-import WorkflowSidebar from "./sidebars/WorkflowSidebar";
+import WorkflowSidebar from "./sidebars/WorkflowSidebar/WorkflowSidebar";
 import BlockConfiguratorSidebar from "./sidebars/BlockSidebar/BlockSidebar";
-import BackButton from "../../../common/BackButton";
 import WorkflowGraphModel from "./WorkflowGraphEditor/models/WorkflowGraphModel";
 import WorkflowBreadcrumb from "./WorkflowBreadcrumb";
-import LoadingButton from "../../../common/LoadingButton";
+import {WorkflowSaveBar} from "./WorkflowSaveBar";
 
-const WorkflowEditor = (props) => {
-  if (!props.workflow || !props.blockTypeDefinitions) {
-    return <LoadingWorkflowEditor/>;
-  } else {
-    return <LoadedWorkflowEditor {...props}/>;
-  }
-};
 
-const LoadingWorkflowEditor = () => (
-  <div className="loading-spinner-container">
-    <Spinner animation="border" variant="primary"/>
-  </div>
-);
-
-class LoadedWorkflowEditor extends Component {
+export default class WorkflowEditor extends Component {
 
   graphModel = new WorkflowGraphModel();
 
   state = {
-    selectedNode: null // TODO: Rename
+    selectedBlock: null
   };
 
-  onNodeSelected = (selectedNode) => this.setState({selectedNode});
+  componentDidMount() {
+    const {runnableWorkflow} = this.props;
+    this.graphModel.setRuns(runnableWorkflow.getLatestRun(), runnableWorkflow.getRuns());
+    runnableWorkflow.addRunsListener((latestRun, runs) => {
+      this.graphModel.setRuns(latestRun, runs);
+      this.forceUpdate();
+    });
+  }
+
+
+  componentWillUnmount() {
+    this.props.runnableWorkflow.removeRunsListener(this.graphModel.setRuns);
+  }
+
+  onBlockSelected = (selectedBlock) => this.setState({selectedBlock});
 
   onSavePressed = () => {
     this.onWorkflowEdited();
@@ -43,14 +42,17 @@ class LoadedWorkflowEditor extends Component {
 
   onWorkflowEdited = (workflow) => {
     if (!workflow) {
-      workflow = this.props.workflow;
+      workflow = this.getWorkflow();
     }
     workflow.graph = this.graphModel.serializeDiagram();
     this.props.onWorkflowEdited(workflow);
   };
 
+
   render() {
-    const {workflow, blockTypeDefinitions} = this.props;
+    const {runnableWorkflow, blockTypeDefinitions} = this.props;
+    const workflow = runnableWorkflow.getWorkflow();
+    const initialGraph = workflow.graph;
 
     return (
       <Container className="full-width workflow-editor-container">
@@ -64,10 +66,10 @@ class LoadedWorkflowEditor extends Component {
           {/* Center */}
           <Col xs={7} className="graph-editor-container">
             <WorkflowGraphEditor
-              initialGraph={workflow.graph}
+              initialGraph={initialGraph}
               graphModel={this.graphModel}
               blockTypeDefinitions={blockTypeDefinitions}
-              onNodeSelected={this.onNodeSelected}/>
+              onBlockSelected={this.onBlockSelected}/>
 
             <WorkflowBreadcrumb workflow={workflow}/>
 
@@ -80,12 +82,12 @@ class LoadedWorkflowEditor extends Component {
           {/* Right sidebar */}
           <Col xs={3} className="light-background right-sidebar">
             {
-              this.state.selectedNode ?
-                <BlockConfiguratorSidebar block={this.state.selectedNode}
+              this.state.selectedBlock ?
+                <BlockConfiguratorSidebar block={this.state.selectedBlock}
                                           graphModel={this.graphModel}
                                           onModelUpdate={() => this.forceUpdate()}/>
                 :
-                <WorkflowSidebar workflow={this.props.workflow}
+                <WorkflowSidebar runnableWorkflow={runnableWorkflow}
                                  onEdit={this.onWorkflowEdited}/>
             }
           </Col>
@@ -95,25 +97,3 @@ class LoadedWorkflowEditor extends Component {
   }
 }
 
-
-const WorkflowSaveBar = ({workflow, graphModel, isSaving, onSavePressed}) => {
-  const isValid = graphModel.isValid();
-  return (
-    <Navbar className="light-background justify-content-between workflow-bottom-navbar">
-      <BackButton text="Return to project" to={`${PROJECTS_PATH}/${workflow.projectId}`}/>
-
-      <div>
-        {
-          !isValid &&
-          <span>
-            <i className="fas fa-exclamation-triangle"/> Workflow contains some errors
-          </span>
-        }
-      </div>
-
-      <LoadingButton disabled={!isValid || isSaving} isSaving={isSaving} onClick={onSavePressed}>Save</LoadingButton>
-    </Navbar>
-  )
-};
-
-export default WorkflowEditor;

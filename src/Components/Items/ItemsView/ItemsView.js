@@ -3,8 +3,8 @@ import {Col, Container, Row} from "react-bootstrap";
 
 import {ItemsImporter} from "./ItemsImporter";
 import {ItemsTable} from "./ItemsTable";
-import ItemsService from "../../../Services/ItemsService";
-import {makeCancellable} from "../../../Services/utils";
+import ItemsService from "../../../Services/rest/ItemsService";
+import {makeCancellable} from "../../../Services/rest/utils";
 
 export class ItemsView extends Component {
 

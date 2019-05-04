@@ -101,9 +101,9 @@ export default class WorkflowGraphEditor extends Component {
     const selectedNodes = this.getSelectedNodes();
     if (selectedNodes.length === 1) {
       const node = selectedNodes[0];
-      this.props.onNodeSelected(node);
+      this.props.onBlockSelected(node);
     } else {
-      this.props.onNodeSelected(null);
+      this.props.onBlockSelected(null);
     }
   };
 

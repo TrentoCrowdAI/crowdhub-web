@@ -1,5 +1,5 @@
-import {serverDoDesignTemplates, serviceDoDesignTemplates} from '../mock-data/template-do';
-import {mockFetchToReturnJson} from "../testHelpers/services";
+import {serverDoDesignTemplates, serviceDoDesignTemplates} from '../../mock-data/template-do';
+import {mockFetchToReturnJson} from "../../testHelpers/services";
 import DoDesignTemplatesService, {JSONtoDoDesignTemplate} from "./DoDesignTemplatesService";
 
 

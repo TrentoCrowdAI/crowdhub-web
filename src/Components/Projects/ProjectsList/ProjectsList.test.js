@@ -2,7 +2,7 @@ import React from 'react';
 import {mount, shallow} from "enzyme";
 import {FetchingProjects, FetchProjectsError, ProjectsList} from "./ProjectsList";
 import {MemoryRouter} from "react-router-dom";
-import ProjectsService from "../../../Services/ProjectsService";
+import ProjectsService from "../../../Services/rest/ProjectsService";
 import mockedProjects from "../../../mock-data/projects";
 import {ProjectsTable, ProjectsTableRow} from "./ProjectsTable";
 import {expectComponent} from "../../../testHelpers/components";

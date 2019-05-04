@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from "enzyme";
 
 import {ImportItemsError, ItemsImporter} from "./ItemsImporter";
-import ItemsService from "../../../Services/ItemsService";
+import ItemsService from "../../../Services/rest/ItemsService";
 import mockedItems from "../../../mock-data/items";
 import mockedProjects from "../../../mock-data/projects";
 import {simulateValueOnInput} from "../../../testHelpers/inputs";

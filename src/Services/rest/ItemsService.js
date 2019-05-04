@@ -1,5 +1,5 @@
 import {getJSON, postJSON, sendDelete} from "./utils";
-import {APP_URL} from "../config";
+import {APP_URL} from "../../config";
 
 
 const ITEMS_URL = `${APP_URL}/items`;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Alert, Button, Col, Container, FormControl, InputGroup, ProgressBar, Row} from "react-bootstrap";
-import ItemsService from "../../../Services/ItemsService";
+import ItemsService from "../../../Services/rest/ItemsService";
 
 export class ItemsImporter extends Component {
 

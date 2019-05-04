@@ -2,7 +2,7 @@ import React from "react";
 import {mount} from "enzyme";
 import {MemoryRouter} from "react-router-dom";
 import EmbeddableWorkflowsList, {FetchingWorkflows, FetchingWorkflowsError} from "./EmbeddableWorkflowsList";
-import WorkflowsService from "../../../Services/WorkflowsService";
+import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import {serviceWorkflows} from "../../../mock-data/workflows";
 import mockedProject from "../../../mock-data/projects";
 import {WorkflowsTable} from "./WorkflowsTable";

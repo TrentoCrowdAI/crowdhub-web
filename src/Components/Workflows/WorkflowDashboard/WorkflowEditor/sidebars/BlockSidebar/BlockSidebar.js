@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, ButtonGroup, Col, Dropdown, Form, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 
 import ParametersEngine from "../../ParametersEngine/ParametersEngine";
 import "./BlockSidebar.css";
@@ -24,6 +24,10 @@ export default ({block, graphModel, onModelUpdate}) => (
     <ParametersEngine
       parametrizedBlock={block}
       onParameterModelUpdate={onModelUpdate}/>
+
+    {
+      JSON.stringify(block.getBlockRuns())
+    }
   </div>
 );
 

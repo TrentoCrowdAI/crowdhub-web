@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Button, Col, Modal, Row} from "react-bootstrap";
 
-import WorkflowsService from "../../../../Services/WorkflowsService";
+import WorkflowsService from "../../../../Services/rest/WorkflowsService";
 import './CreateWorkflow.css';
 import WorkflowForm from "../../WorkflowForm/WorkflowForm";
 
@@ -48,7 +48,6 @@ export class CreateWorkflowModal extends Component {
       });
       this.onWorkflowCreated();
     } catch (e) {
-      console.log(e)
       this.onWorkflowCreationError();
     }
 

@@ -1,5 +1,5 @@
 import {getJSON} from "./utils";
-import {APP_URL} from "../config";
+import {APP_URL} from "../../config";
 
 
 const BLOCK_TYPES_URL = `${APP_URL}/block-types`;

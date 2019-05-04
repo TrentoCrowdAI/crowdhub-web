@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Alert, Col, Container, Row} from "react-bootstrap";
 
-import {makeCancellable} from "../../../Services/utils";
-import WorkflowsService from "../../../Services/WorkflowsService";
+import {makeCancellable} from "../../../Services/rest/utils";
+import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import {CreateWorkflowButton} from "./CreateWorkflow/CreateWorkflow";
 import {WorkflowsTable} from "./WorkflowsTable";
 
