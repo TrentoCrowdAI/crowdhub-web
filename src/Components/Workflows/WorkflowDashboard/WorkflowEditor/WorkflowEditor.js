@@ -21,11 +21,13 @@ export default class WorkflowEditor extends Component {
 
   componentDidMount() {
     const {runnableWorkflow} = this.props;
-    this.graphModel.setRuns(runnableWorkflow.getLatestRun(), runnableWorkflow.getRuns());
+    this.onRunsUpdate(runnableWorkflow.getLatestRun(), runnableWorkflow.getRuns());
     runnableWorkflow.addRunsListener(this.onRunsUpdate);
   }
 
   onRunsUpdate = (latestRun, runs) => {
+    // TODO: The logic to block edit is spread everywhere, can we group it somewhere?
+    this.graphModel.setLocked(this.props.runnableWorkflow.isLatestRunRunning());
     this.graphModel.setRuns(latestRun, runs);
     this.forceUpdate();
   };
