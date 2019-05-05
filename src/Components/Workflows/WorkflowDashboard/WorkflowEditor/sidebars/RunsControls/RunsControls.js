@@ -12,24 +12,23 @@ export default ({runnable, downloadNameFactory, downloadLinkFactory, onStart, is
 
       <Card.Body>
         {
-          runnable.isLatestRunRunning() &&
+          runnable.isRunning() &&
           <div>
-            Workflow is currently running (run #{runnable.getLatestRun().id}).
+            Workflow is currently running (run #{runnable.getLatestRun().getRunId()}).<br/>
             Progress:<br/>
             <RunsProgressBar runnable={runnable}/>
           </div>
         }
 
-        {
-          !runnable.isLatestRunRunning() &&
-          <LoadingButton block onClick={onStart}
-                         isSaving={isStarting}>{startText}</LoadingButton>
-        }
+        <LoadingButton block onClick={onStart}
+                       disabled={!runnable.canStart()}
+                       isSaving={isStarting}>{startText}</LoadingButton>
+
       </Card.Body>
     </Card>
 
     {
-      runnable.getFinishedRunsCount() > 0 &&
+      runnable.getFinishedRuns().length > 0 &&
       <Card className="mt-2">
         <Card.Header>Results</Card.Header>
         <Card.Body>

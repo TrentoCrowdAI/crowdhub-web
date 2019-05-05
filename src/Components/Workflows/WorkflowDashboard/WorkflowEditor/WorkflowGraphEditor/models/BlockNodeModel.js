@@ -1,9 +1,7 @@
 import {DefaultNodeModel} from "storm-react-diagrams";
 import {deSerializeParameters, serializeParameters} from "../../ParametersEngine/parameters/serialization";
 import uuid from "uuid";
-import {RunStates, States} from "../../../../../../models/RunnableWorkflow";
 
-const {RUNTIME_ERROR, RUNNING, FINISHED} = RunStates;
 
 export class BlockNodeModel extends DefaultNodeModel {
 
@@ -64,51 +62,86 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   getInitialParametersMap = () => this.initialParametersMap;
 
-  setBlockRuns = (latestBlockRun, blockRuns) => {
-    this.latestBlockRun = latestBlockRun;
-    this.blockRuns = blockRuns;
+  setRuns = (runs) => {
+    this.latestBlockRun = runs.getLatestRun() ? runs.getLatestRun().getBlockRun(this.getId()) : null; // TODO: To clear
+    this.blockRuns = runs.getBlockRuns(this.getId());
   };
+
 
   getBlockRuns = () => this.blockRuns;
 
   getLatestRun = () => this.latestBlockRun;
+
 
   /**
    * @returns {boolean} true if the block was started at least one time.
    */
   wasStarted = () => !!this.latestBlockRun;
 
-  isLatestRunFinished = () => this.wasStarted() && this.latestBlockRun.state === FINISHED;
+  isRunning = () => this.wasStarted() && this.getLatestRun().isRunning();
 
-  isLatestRunRunning = () => this.wasStarted() && this.latestBlockRun.state === RUNNING;
+  isFailed = () => this.wasStarted() && this.getLatestRun().isFailed();
 
-  isLatestRunRuntimeError = () => this.wasStarted() && this.latestBlockRun.state === RUNTIME_ERROR;
+  isFinished = () => this.wasStarted() && this.getLatestRun().isFinished();
 
-  getFinishedRunsCount = () => this.getFinishedRuns().length;
-
-  getFinishedRuns = () => this.getBlockRuns().filter(run => run.state === FINISHED);
 
   /**
-   * @returns {number} number of blocks that may start in a run. That is, the number of all parents (ascendents)
+   * @returns {number} number of blocks that may start in a run
    */
   getRunnableBlocksCount = () => 1 + BlockNodeModel.getAllParentBlocks(this).length;
 
   /**
-   * @returns {number} number of all parents (ascendents) running
+   * Relative to latest run
+   * @returns {number} number of blocks that are running
    */
   getRunningBlocksCount = () =>
     [this, ...BlockNodeModel.getAllParentBlocks(this)]
-      .filter(block => block.isLatestRunRunning())
+      .filter(block => block.isRunning())
       .length;
 
   /**
-   * @returns {number} number of all parents (ascendents) finished
+   * Relative to latest run
+   * @returns {number} number of finished blocks
    */
   getFinishedBlocksCount = () =>
     [this, ...BlockNodeModel.getAllParentBlocks(this)]
-      .filter(block => block.isLatestRunFinished())
+      .filter(block => block.isFinished())
       .length;
 
+  canStart = () => !this.isRunning();
+
+  canBeEdited = () => !this.isRunning();
+
+
+  getFinishedRuns = () => this.blockRuns.filter(blockRun => blockRun.isFinished());
+
+
+  /* getFinishedRunsCount = () => this.getFinishedRuns().length;
+
+   getFinishedRuns = () => this.getBlockRuns().filter(run => run.state === FINISHED);
+
+   /!**
+    * @returns {number} number of blocks that may start in a run. That is, the number of all parents (ascendents)
+    *!/
+   getRunnableBlocksCount = () => 1 + BlockNodeModel.getAllParentBlocks(this).length;
+
+   /!**
+    * @returns {number} number of all parents (ascendents) running
+    *!/
+   getRunningBlocksCount = () =>
+     [this, ...BlockNodeModel.getAllParentBlocks(this)]
+       .filter(block => block.isLatestRunRunning())
+       .length;
+
+   /!**
+    * @returns {number} number of all parents (ascendents) finished
+    *!/
+   getFinishedBlocksCount = () =>
+     [this, ...BlockNodeModel.getAllParentBlocks(this)]
+       .filter(block => block.isLatestRunFinished())
+       .length;
+
+*/
 
   /**
    * @returns {NodeModel[]} parent blocks of this block
@@ -130,7 +163,7 @@ export class BlockNodeModel extends DefaultNodeModel {
       blockParents.forEach(parent => BlockNodeModel.getAllParentBlocks(parent, parents));
     }
     return parents;
-  }
+  };
 
 }
 

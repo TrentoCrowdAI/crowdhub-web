@@ -23,9 +23,9 @@ export default class WorkflowRunsControls extends Component {
   };
 
   waitForRunStateReceived = (startedRunId) => new Promise((resolve, reject) => {
-    const listener = (latestRun, runs) => {
-      if (runs.find(run => run.id === startedRunId)) {
-        this.props.runnableWorkflow.removeRunsListener(listener);
+    const listener = (runnableWorkflow) => {
+      if (runnableWorkflow.getRuns().containsRun(startedRunId)) {
+        runnableWorkflow.removeRunsListener(listener);
         resolve();
       }
     };

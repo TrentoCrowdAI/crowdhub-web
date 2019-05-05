@@ -6,42 +6,43 @@ import './BlockNode.css';
 export class BlockNodeWidget extends DefaultNodeWidget {
 
   render() {
+    const {node} = this.props;
     return (
       <Card className="block">
         <Card.Header>
-          <PortWidget name="in" node={this.props.node}/>
+          <PortWidget name="in" node={node}/>
 
           <div className="block-name">
-            {this.props.node.name}
+            {node.name}
           </div>
 
-          <PortWidget name="out" node={this.props.node}/>
+          <PortWidget name="out" node={node}/>
 
           <div className="flags-container">
             {
               /* completed */
-              this.props.node.isLatestRunFinished() &&
+              node.isFinished() &&
               <i className="fas fa-check-circle"/>
             }
 
 
             {
               /* running */
-              this.props.node.isLatestRunRunning() &&
+              node.isRunning() &&
               <Spinner animation="grow" size="sm"/>
             }
 
 
             {
               /* runtime error */
-              this.props.node.isLatestRunRuntimeError() &&
+              node.isFailed() &&
               <i className="fas fa-exclamation-circle error"/>
 
             }
 
             {
               /* invalid block parameters */
-              !this.props.node.isValid() &&
+              !node.isValid() &&
               <i className="fas fa-exclamation-triangle error"/>
             }
           </div>

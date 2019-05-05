@@ -21,14 +21,14 @@ export default class WorkflowEditor extends Component {
 
   componentDidMount() {
     const {runnableWorkflow} = this.props;
-    this.onRunsUpdate(runnableWorkflow.getLatestRun(), runnableWorkflow.getRuns());
+    this.onRunsUpdate(runnableWorkflow);
     runnableWorkflow.addRunsListener(this.onRunsUpdate);
   }
 
-  onRunsUpdate = (latestRun, runs) => {
+  onRunsUpdate = (runnableWorkflow) => {
     // TODO: The logic to block edit is spread everywhere, can we group it somewhere?
-    this.graphModel.setLocked(this.props.runnableWorkflow.isLatestRunRunning());
-    this.graphModel.setRuns(latestRun, runs);
+    this.graphModel.setLocked(!runnableWorkflow.canBeEdited());
+    this.graphModel.setRuns(runnableWorkflow.getRuns());
     this.forceUpdate();
   };
 
@@ -64,7 +64,7 @@ export default class WorkflowEditor extends Component {
 
           {/* Left sidebar */}
           {
-            !runnableWorkflow.isLatestRunRunning() &&
+            runnableWorkflow.canBeEdited() &&
             <Col xs={2} className="light-background">
               <DraggableBlockTypeListSidebar blockTypeDefinitions={blockTypeDefinitions}/>
             </Col>

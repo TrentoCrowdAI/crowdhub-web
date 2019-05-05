@@ -7,7 +7,7 @@ import BackButton from "../../../common/BackButton";
 
 export const WorkflowSaveBar = ({runnableWorkflow, graphModel, isSaving, onSavePressed}) => {
   const isValid = graphModel.isValid();
-  const isRunning = runnableWorkflow.isLatestRunRunning();
+  const isRunning = runnableWorkflow.isRunning();
   const workflow = runnableWorkflow.getWorkflow();
   return (
     <Navbar className="light-background justify-content-between workflow-bottom-navbar">

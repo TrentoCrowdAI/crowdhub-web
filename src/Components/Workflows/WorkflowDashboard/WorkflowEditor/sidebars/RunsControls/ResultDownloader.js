@@ -1,21 +1,19 @@
 import React from "react";
-import {ButtonGroup, Dropdown, Form} from "react-bootstrap";
+import {ButtonGroup, Dropdown} from "react-bootstrap";
 
 
 export default ({runnable, downloadNameFactory, downloadLinkFactory}) => {
-  const latestRun = runnable.getFinishedRuns()[0];
+  const latestRun = runnable.getLatestRun();
   return (
-    <Form.Group>
-      <Form.Text className="text-muted">
-        Download results as a CSV file.
-      </Form.Text>
+    <div>
+      Download results as a CSV file
       <Dropdown as={ButtonGroup} className="btn-block">
         <a className="btn btn-success" style={{color: 'white'}}
            href={downloadLinkFactory(latestRun)}
            download={downloadNameFactory(latestRun)}>
           {
-            runnable.isLatestRunRunning() ?
-              `Download #${latestRun.id}` :
+            runnable.isRunning() ?
+              `Download #${latestRun.getRunId()}` :
               'Download latest results'
           }
         </a>
@@ -25,15 +23,15 @@ export default ({runnable, downloadNameFactory, downloadLinkFactory}) => {
         <Dropdown.Menu>
           {
             runnable.getFinishedRuns().map((run, index) => (
-              <Dropdown.Item key={run.id}
+              <Dropdown.Item key={run.getRunId()}
                              href={downloadLinkFactory(run)}
                              download={downloadNameFactory(run)}>
-                #{run.id} {index === 0 && runnable.isLatestRunFinished() ? '- Latest ' : ''}
+                #{run.getRunId()} {index === 0 && runnable.isFinished() ? '- Latest ' : ''}
               </Dropdown.Item>
             ))
           }
         </Dropdown.Menu>
       </Dropdown>
-    </Form.Group>
+    </div>
   );
 };

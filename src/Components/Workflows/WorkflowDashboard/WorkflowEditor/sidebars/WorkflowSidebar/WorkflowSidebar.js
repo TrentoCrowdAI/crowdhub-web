@@ -18,7 +18,7 @@ export default ({runnableWorkflow, onEdit}) => {
           <hr/>
           <NameAndDescriptionFields onEdit={onEdit}
                                     workflow={workflow}
-                                    disabled={runnableWorkflow.isLatestRunRunning()}/>
+                                    disabled={runnableWorkflow.isRunning()}/>
         </div>}
       bottom={<WorkflowRunsControls runnableWorkflow={runnableWorkflow}/>}/>
   );

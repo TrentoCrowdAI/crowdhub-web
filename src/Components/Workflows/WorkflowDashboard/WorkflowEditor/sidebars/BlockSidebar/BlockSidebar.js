@@ -19,14 +19,14 @@ export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
         <hr/>
         <BlockLabel blockModel={block}
                     graphModel={graphModel}
-                    disabled={runnableWorkflow.isLatestRunRunning()}/>
+                    disabled={!runnableWorkflow.canBeEdited()}/>
 
         <ParametersEngine parametrizedBlock={block}
                           onParameterModelUpdate={onModelUpdate}
-                          disabled={runnableWorkflow.isLatestRunRunning()}/>
+                          disabled={!runnableWorkflow.canBeEdited()}/>
       </div>
     }
-    bottom={<BlockRunsControls blockModel={block}/>}
+    bottom={<BlockRunsControls blockModel={block} runnableWorkflow={runnableWorkflow}/>}
   />
 );
 

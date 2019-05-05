@@ -19,8 +19,8 @@ export default class WorkflowDashboard extends Component {
   };
 
   componentDidMount = async () => {
-    await this.fetchRunnableWorkflow();
-    RunnableWorkflowService.startWatchingRunsStatus(this.state.runnableWorkflow);
+    const runnableWorkflow = await this.fetchRunnableWorkflow();
+    RunnableWorkflowService.startWatchingRunsStatus(runnableWorkflow);
   };
 
   async fetchRunnableWorkflow() {
@@ -29,6 +29,7 @@ export default class WorkflowDashboard extends Component {
       this.runnableWorkflowRequest = makeCancellable(RunnableWorkflowService.getRunnableWorkflow(id));
       const runnableWorkflow = await this.runnableWorkflowRequest.result;
       this.setState({runnableWorkflow});
+      return runnableWorkflow;
     } catch (e) {
       console.error(e);
       // TODO: redirectToProjectsList(this);

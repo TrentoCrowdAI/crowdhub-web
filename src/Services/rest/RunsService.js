@@ -1,22 +1,28 @@
 import {getJSON} from "./utils";
 import {API_URL} from "../../config";
+import Run from "../../models/Run";
+import BlockRun from "../../models/BlockRun";
+import Runs from "../../models/Runs";
 
 const RUNS_URL = `${API_URL}/runs`;
 
 const JSONtoRun = ({id, data, created_at}) => {
-  const blockRuns = data;
-  Object.keys(blockRuns).forEach(blockId => {
-    blockRuns[blockId].cacheId = blockRuns[blockId].id_cache;
-    delete blockRuns[blockId].id_cache;
+  const blockRuns = [];
+  Object.keys(data).forEach(blockId => {
+    const blockRun = data[blockId];
+
+    blockRuns.push(new BlockRun(
+      blockRun.state,
+      id,
+      blockRun.id_cache,
+      blockId
+    ));
   });
-  return {
-    createdAt: new Date(created_at),
-    id,
-    blocks: blockRuns
-  };
+
+  return new Run(id, blockRuns, new Date(created_at)); // TODO: Is the id duplicated?
 };
 
-const runsComparator = (a, b) => b.createdAt - a.createdAt;
+const runsComparator = (a, b) => b.getCreatedAt() - a.getCreatedAt();
 
 export default {
 
@@ -24,7 +30,7 @@ export default {
     const jsonList = await getJSON(`${RUNS_URL}?workflowId=${workflowId}`);
     const runs = jsonList.map(JSONtoRun);
     runs.sort(runsComparator);
-    return runs;
+    return new Runs(runs);
   },
 
   getDownloadLink(run) {
