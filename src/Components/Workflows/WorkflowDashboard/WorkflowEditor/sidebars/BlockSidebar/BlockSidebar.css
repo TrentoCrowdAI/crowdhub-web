@@ -1,7 +1,0 @@
-.parameters-engine-container {
-    flex: 1;
-
-    max-height: calc(100vh - var(--appBarHeight));
-    overflow-y: auto;
-    overflow-x: hidden;
-}

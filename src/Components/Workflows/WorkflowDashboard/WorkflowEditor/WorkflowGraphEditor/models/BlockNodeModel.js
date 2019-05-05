@@ -71,6 +71,8 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   getBlockRuns = () => this.blockRuns;
 
+  getLatestRun = () => this.latestBlockRun;
+
   /**
    * @returns {boolean} true if the block was started at least one time.
    */

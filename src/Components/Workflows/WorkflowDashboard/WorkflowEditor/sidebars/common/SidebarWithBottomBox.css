@@ -1,0 +1,20 @@
+.sidebar-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    max-height: calc(100vh - var(--appBarHeight));
+}
+
+.title-and-center-container{
+    flex: 1;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.bottom-container {
+    margin-top: auto;
+    margin-bottom: 24px;
+    padding-top: 1em;
+}

@@ -1,29 +1,43 @@
 import React from "react";
+import {Card, ProgressBar} from "react-bootstrap";
 
 import ResultDownloader from "./ResultDownloader";
-import {ProgressBar} from "react-bootstrap";
 import LoadingButton from "../../../../../common/LoadingButton";
+import "./RunsControls.css";
 
 export default ({runnable, downloadNameFactory, downloadLinkFactory, onStart, isStarting, startText}) => (
   <div>
+    <Card>
+      <Card.Header>Execution</Card.Header>
+
+      <Card.Body>
+        {
+          runnable.isLatestRunRunning() &&
+          <div>
+            Workflow is currently running (run #{runnable.getLatestRun().id}).
+            Progress:<br/>
+            <RunsProgressBar runnable={runnable}/>
+          </div>
+        }
+
+        {
+          !runnable.isLatestRunRunning() &&
+          <LoadingButton block onClick={onStart}
+                         isSaving={isStarting}>{startText}</LoadingButton>
+        }
+      </Card.Body>
+    </Card>
 
     {
-      runnable.isLatestRunRunning() &&
-      <div>
-        Workflow is running. In the meanwhile Youou can download the results of previously finished runs.
-        <RunsProgressBar runnable={runnable}/>
-      </div>
-    }
-
-
-    <ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                      downloadNameFactory={downloadNameFactory}
-                      runnable={runnable}/>
-
-    {
-      !runnable.isLatestRunRunning() &&
-      <LoadingButton block onClick={onStart}
-                     isSaving={isStarting}>{startText}</LoadingButton>
+      runnable.getFinishedRunsCount() > 0 &&
+      <Card className="mt-2">
+        <Card.Header>Results</Card.Header>
+        <Card.Body>
+          <ResultDownloader downloadLinkFactory={downloadLinkFactory}
+                            downloadNameFactory={downloadNameFactory}
+                            runnable={runnable}/>
+        </Card.Body>
+      </Card>
     }
   </div>
 );
@@ -32,11 +46,23 @@ const RunsProgressBar = ({runnable}) => {
   const finishedPercentage = Math.ceil(runnable.getFinishedBlocksCount() / runnable.getRunnableBlocksCount() * 100);
   const runningPercentage = Math.ceil(runnable.getRunningBlocksCount() / runnable.getRunnableBlocksCount() * 100);
   return (
-    <ProgressBar className="mb-2" style={{backgroundColor: 'lightgray'}}>
-      <ProgressBar animated variant="primary"
-                   now={Math.max(1, finishedPercentage)} key={1}/>
-      <ProgressBar animated variant="success"
-                   now={runningPercentage} key={2}/>
-    </ProgressBar>
+    <div>
+      <ProgressBar className="progress-bars-container">
+        <ProgressBar animated variant="primary" now={Math.max(1, finishedPercentage)} key={1}/>
+        <ProgressBar animated variant="success" now={runningPercentage} key={2}/>
+      </ProgressBar>
+
+      {/* Legend */}
+      <div className="progress-bar-legend">
+        <div className="legend-item">
+          <div className="progress-bar-sample progress-bar bg-primary progress-bar-striped"/>
+          Finished blocks
+        </div>
+        <div className="legend-item">
+          <div className="progress-bar-sample progress-bar bg-success progress-bar-striped"/>
+          Running blocks
+        </div>
+      </div>
+    </div>
   );
 };

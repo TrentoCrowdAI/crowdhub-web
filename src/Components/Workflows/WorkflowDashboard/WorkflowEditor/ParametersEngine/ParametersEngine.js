@@ -28,10 +28,10 @@ export default ({parametrizedBlock, onParameterModelUpdate, disabled}) => {
                 {
                   parameterModel.shouldDisplay() &&
                   <div>
+                    <hr/>
                     <Component model={parameterModel}
                                onModelUpdated={onParameterModelUpdate}
                                disabled={disabled}/>
-                    <hr/>
                   </div>
                 }
               </div>
