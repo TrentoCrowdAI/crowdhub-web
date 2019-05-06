@@ -27,17 +27,14 @@ export default ({runnable, downloadNameFactory, downloadLinkFactory, onStart, is
       </Card.Body>
     </Card>
 
-    {
-      runnable.getFinishedRuns().length > 0 &&
-      <Card className="mt-2">
-        <Card.Header>Results</Card.Header>
-        <Card.Body>
-          <ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                            downloadNameFactory={downloadNameFactory}
-                            runnable={runnable}/>
-        </Card.Body>
-      </Card>
-    }
+    <Card className="mt-2">
+      <Card.Header>Results</Card.Header>
+      <Card.Body>
+        <ResultDownloader downloadLinkFactory={downloadLinkFactory}
+                          downloadNameFactory={downloadNameFactory}
+                          runnable={runnable}/>
+      </Card.Body>
+    </Card>
   </div>
 );
 

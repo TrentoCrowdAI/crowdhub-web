@@ -1,6 +1,7 @@
 import {DefaultNodeModel} from "storm-react-diagrams";
 import {deSerializeParameters, serializeParameters} from "../../ParametersEngine/parameters/serialization";
 import uuid from "uuid";
+import Runs from "../../../../../../models/Runs";
 
 
 export class BlockNodeModel extends DefaultNodeModel {
@@ -12,7 +13,7 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   latestBlockRun;
   blockRuns = [];
-  _runs;
+  _runs = new Runs([]);
 
   deSerialize(block, engine) {
     if (!block.id) {
@@ -111,7 +112,7 @@ export class BlockNodeModel extends DefaultNodeModel {
       .length;
 
   // TODO: clear
-  canStart = () => !this.isRunning()  && (this._runs.getLatestRun() == null || !this._runs.getLatestRun().isRunning());
+  canStart = () => !this.isRunning() && (this._runs.getLatestRun() == null || !this._runs.getLatestRun().isRunning());
 
   canBeEdited = () => !this.isRunning();
 
