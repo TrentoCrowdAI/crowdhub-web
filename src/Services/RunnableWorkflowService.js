@@ -17,7 +17,7 @@ export default {
   },
 
 
-  startWatchingRunsStatus(runnableWorkflow) {
+  startWatchingRunsStatus(runnableWorkflow, pollInterval = DEFAULT_POLL_INTERVAL) {
     if (this.pollInterval != null) {
       throw new Error('multiple watching not implemented yet');
     }
@@ -25,7 +25,7 @@ export default {
     this.pollInterval = setInterval(async () => {
       const runs = await RunsService.getRunsOfWorkflow(workflowId);
       runnableWorkflow.setRuns(runs);
-    }, DEFAULT_POLL_INTERVAL);
+    }, pollInterval);
   },
 
 

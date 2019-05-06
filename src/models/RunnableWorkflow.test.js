@@ -1,8 +1,7 @@
 import RunnableWorkflow from "./RunnableWorkflow";
-import {RunStates} from "./BlockRun";
+import BlockRun, {RunStates} from "./BlockRun";
 import Runs from "./Runs";
 import Run from "./Run";
-import BlockRun from "./BlockRun";
 
 const {FAILED, RUNNING} = RunStates;
 
