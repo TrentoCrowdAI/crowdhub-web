@@ -19,7 +19,7 @@ export const JSONtoRun = ({id, data, created_at}) => {
     ));
   });
 
-  return new Run(id, blockRuns, new Date(created_at)); // TODO: Is the id duplicated?
+  return new Run(id, blockRuns, new Date(created_at));
 };
 
 const runsComparator = (a, b) => b.getCreatedAt() - a.getCreatedAt();

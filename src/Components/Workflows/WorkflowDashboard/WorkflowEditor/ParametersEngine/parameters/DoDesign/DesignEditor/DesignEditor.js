@@ -102,7 +102,7 @@ export default class DesignEditor extends Component {
 
   addBlockDataToTheDesignAndNotify = (newBlock, newBlockIndex) => {
     this.getModel().addBlock(newBlock, newBlockIndex);
-    this.forceUpdate(); //T TODO: PRova a rimuovere aggiornando lo stato
+    this.forceUpdate();
   };
 
   onBlockSorted = (element, nextSiblingIndex) => {

@@ -4,6 +4,7 @@ import {makeCancellable} from "../../../Services/rest/utils";
 import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import WorkflowEditorContainer from "./WorkflowEditor/WorkflowEditorContainer";
 import RunnableWorkflowService from "../../../Services/RunnableWorkflowService";
+import {redirectToProjectsList} from "../../Projects/utils/route";
 
 /**
  * This component shows the WorkflowEditor and loads/save the workflow
@@ -19,21 +20,21 @@ export default class WorkflowDashboard extends Component {
   };
 
   componentDidMount = async () => {
-    const runnableWorkflow = await this.fetchRunnableWorkflow();
-    RunnableWorkflowService.startWatchingRunsStatus(runnableWorkflow);
+    try {
+      const runnableWorkflow = await this.fetchRunnableWorkflow();
+      RunnableWorkflowService.startWatchingRunsStatus(runnableWorkflow);
+    } catch (e) {
+      redirectToProjectsList(this);
+    }
   };
 
   async fetchRunnableWorkflow() {
     const id = this.getWorkflowIdFromUrl();
-    try {
-      this.runnableWorkflowRequest = makeCancellable(RunnableWorkflowService.getRunnableWorkflow(id));
-      const runnableWorkflow = await this.runnableWorkflowRequest.result;
-      this.setState({runnableWorkflow});
-      return runnableWorkflow;
-    } catch (e) {
-      console.error(e);
-      // TODO: redirectToProjectsList(this);
-    }
+
+    this.runnableWorkflowRequest = makeCancellable(RunnableWorkflowService.getRunnableWorkflow(id));
+    const runnableWorkflow = await this.runnableWorkflowRequest.result;
+    this.setState({runnableWorkflow});
+    return runnableWorkflow;
   }
 
   getWorkflowIdFromUrl = () => this.props.match.params.id;
