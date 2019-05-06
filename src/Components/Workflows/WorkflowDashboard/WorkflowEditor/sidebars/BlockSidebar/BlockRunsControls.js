@@ -10,7 +10,7 @@ export default class BlockRunsControls extends Component {
                          downloadLinkFactory={run => CacheService.getDownloadLink(run.getCacheId())}
                          downloadNameFactory={run => `${blockModel.getLabel()} #${run.getRunId()}.csv`}
                          startText="Start block"
-                         start={() => console.error('not implemented yet')}
+                         onStart={() => console.error('not implemented yet')}
                          isStarting={false}/>;
   }
 }

@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import RunsService from "../../../../../../Services/rest/RunsService";
 import RunsControls from "../RunsControls/RunsControls";
 import WorkflowsService from "../../../../../../Services/rest/WorkflowsService";
+import {Alert} from "react-bootstrap";
 
 export default class WorkflowRunsControls extends Component {
 
@@ -38,11 +39,22 @@ export default class WorkflowRunsControls extends Component {
     const {isStarting} = this.state;
     const {runnableWorkflow} = this.props;
     const workflow = runnableWorkflow.getWorkflow();
-    return <RunsControls runnable={runnableWorkflow}
-                         downloadLinkFactory={run => RunsService.getDownloadLink(run)}
-                         downloadNameFactory={run => `${workflow.name} #${run.id}.csv`}
-                         startText="Start workflow"
-                         onStart={this.startWorkflow}
-                         isStarting={isStarting}/>;
+    return (
+      <div>
+        {
+          this.state.startError &&
+          <Alert variant="danger">
+            Can't start workflow!
+          </Alert>
+        }
+
+        <RunsControls runnable={runnableWorkflow}
+                      downloadLinkFactory={run => RunsService.getDownloadLink(run)}
+                      downloadNameFactory={run => `${workflow.name} #${run.id}.csv`}
+                      startText="Start workflow"
+                      onStart={this.startWorkflow}
+                      isStarting={isStarting}/>
+      </div>
+    );
   }
 }
