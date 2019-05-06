@@ -1,9 +1,12 @@
 import {WorkflowGraphEngine} from "../WorkflowGraphEngine";
 import WorkflowGraphModel from "./WorkflowGraphModel";
 import {BlockNodeModel} from "./BlockNodeModel";
-import {RunStates} from "../../../../../../models/RunnableWorkflow";
+import {RunStates} from "../../../../../../models/BlockRun";
+import Runs from "../../../../../../models/Runs";
+import Run from "../../../../../../models/Run";
+import BlockRun from "../../../../../../models/BlockRun";
 
-const {RUNTIME_ERROR, RUNNING, FINISHED} = RunStates;
+const {RUNNING, FINISHED} = RunStates;
 
 const workflow = {
   graph: {
@@ -41,9 +44,10 @@ engine.setDiagramModel(graphModel);
 const block = new BlockNodeModel();
 block.deSerialize(workflow.graph.nodes[2], engine);
 
+
 createTest(
   block,
-  [],
+  new Runs([]),
   {
     wasStarted: false,
     isRunning: false,
@@ -55,9 +59,14 @@ createTest(
   }
 );
 
+
 createTest(
   block,
-  [{id: 1, state: RUNNING}],
+  new Runs([
+    new Run(1, [
+      new BlockRun(RUNNING, 1, 1, 'c')
+    ])
+  ]),
   {
     wasStarted: true,
     isRunning: true,
@@ -71,7 +80,30 @@ createTest(
 
 createTest(
   block,
-  [{id: 1, state: FINISHED}],
+  new Runs([
+    new Run(1, [
+      new BlockRun(RUNNING, 1, 1, 'a')
+    ])
+  ]),
+  {
+    wasStarted: false,
+    isRunning: false,
+    isFailed: false,
+    isFinished: false,
+    runnableBlocksCount: 3,
+    finishedCount: 0,
+    runningCount: 0
+  }
+);
+
+
+createTest(
+  block,
+  new Runs([
+    new Run(1, [
+      new BlockRun(FINISHED, 1, 1, 'c')
+    ])
+  ]),
   {
     wasStarted: true,
     isRunning: false,
@@ -84,11 +116,12 @@ createTest(
 );
 
 
+
 function createTest(block, runs, expected) {
 
   it('wasStarted()', () => {
     // given
-    block.setBlockRuns(runs[0], runs);
+    block.setRuns(runs);
 
     // when
     const wasStarted = block.wasStarted();
@@ -97,23 +130,23 @@ function createTest(block, runs, expected) {
     expect(wasStarted).toBe(expected.wasStarted);
   });
 
-  it('isLatestRunRunning()', () => {
+  it('isRunning()', () => {
     // given
-    block.setBlockRuns(runs[0], runs);
+    block.setRuns(runs);
 
     // when
-    const running = block.isLatestRunRunning();
+    const running = block.isRunning();
 
     // then
     expect(running).toBe(expected.isRunning);
   });
 
-  it('isLatestRunRuntimeError()', () => {
+  it('isFailed()', () => {
     // given
-    block.setBlockRuns(runs[0], runs);
+    block.setRuns(runs);
 
     // when
-    const failed = block.isLatestRunRuntimeError();
+    const failed = block.isFailed();
 
     // then
     expect(failed).toBe(expected.isFailed);
@@ -121,7 +154,7 @@ function createTest(block, runs, expected) {
 
   it('getFinishedBlocksCount()', () => {
     // given
-    block.setBlockRuns(runs[0], runs);
+    block.setRuns(runs);
 
     // when
     const finishedBlocks = block.getFinishedBlocksCount();
@@ -132,7 +165,7 @@ function createTest(block, runs, expected) {
 
   it('getRunningBlocksCount()', () => {
     // given
-    block.setBlockRuns(runs[0], runs);
+    block.setRuns(runs);
 
     // when
     const running = block.getRunningBlocksCount();

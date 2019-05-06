@@ -12,6 +12,7 @@ export class BlockNodeModel extends DefaultNodeModel {
 
   latestBlockRun;
   blockRuns = [];
+  _runs;
 
   deSerialize(block, engine) {
     if (!block.id) {
@@ -63,6 +64,7 @@ export class BlockNodeModel extends DefaultNodeModel {
   getInitialParametersMap = () => this.initialParametersMap;
 
   setRuns = (runs) => {
+    this._runs = runs;
     this.latestBlockRun = runs.getLatestRun() ? runs.getLatestRun().getBlockRun(this.getId()) : null; // TODO: To clear
     this.blockRuns = runs.getBlockRuns(this.getId());
   };
@@ -108,40 +110,14 @@ export class BlockNodeModel extends DefaultNodeModel {
       .filter(block => block.isFinished())
       .length;
 
-  canStart = () => !this.isRunning();
+  // TODO: clear
+  canStart = () => !this.isRunning()  && (this._runs.getLatestRun() == null || !this._runs.getLatestRun().isRunning());
 
   canBeEdited = () => !this.isRunning();
 
 
   getFinishedRuns = () => this.blockRuns.filter(blockRun => blockRun.isFinished());
 
-
-  /* getFinishedRunsCount = () => this.getFinishedRuns().length;
-
-   getFinishedRuns = () => this.getBlockRuns().filter(run => run.state === FINISHED);
-
-   /!**
-    * @returns {number} number of blocks that may start in a run. That is, the number of all parents (ascendents)
-    *!/
-   getRunnableBlocksCount = () => 1 + BlockNodeModel.getAllParentBlocks(this).length;
-
-   /!**
-    * @returns {number} number of all parents (ascendents) running
-    *!/
-   getRunningBlocksCount = () =>
-     [this, ...BlockNodeModel.getAllParentBlocks(this)]
-       .filter(block => block.isLatestRunRunning())
-       .length;
-
-   /!**
-    * @returns {number} number of all parents (ascendents) finished
-    *!/
-   getFinishedBlocksCount = () =>
-     [this, ...BlockNodeModel.getAllParentBlocks(this)]
-       .filter(block => block.isLatestRunFinished())
-       .length;
-
-*/
 
   /**
    * @returns {NodeModel[]} parent blocks of this block

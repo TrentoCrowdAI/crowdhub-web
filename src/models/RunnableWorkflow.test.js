@@ -1,6 +1,10 @@
-import RunnableWorkflow, {RunStates} from "./RunnableWorkflow";
+import RunnableWorkflow from "./RunnableWorkflow";
+import {RunStates} from "./BlockRun";
+import Runs from "./Runs";
+import Run from "./Run";
+import BlockRun from "./BlockRun";
 
-const {RUNTIME_ERROR, RUNNING, FINISHED} = RunStates;
+const {FAILED, RUNNING} = RunStates;
 
 
 const workflow = {
@@ -17,24 +21,9 @@ const workflow = {
 
 createTest(
   workflow,
-  [],
+  new Runs([]),
   {
     wasStarted: false,
-    isRunning: false,
-    isFailed: false,
-    isFinished: false,
-    runnableBlocksCount: 3,
-    finishedCount: 0,
-    runningCount: 0
-  }
-);
-
-
-createTest(
-  workflow,
-  [{blocks: {}}],
-  {
-    wasStarted: true,
     isRunning: false,
     isFailed: false,
     isFinished: true,
@@ -46,11 +35,11 @@ createTest(
 
 createTest(
   workflow,
-  [{
-    blocks: {
-      a: {state: RUNNING}
-    }
-  }],
+  new Runs([
+    new Run(1, [
+      new BlockRun(RUNNING, 1, 1, 'a')
+    ])
+  ]),
   {
     wasStarted: true,
     isRunning: true,
@@ -64,11 +53,11 @@ createTest(
 
 createTest(
   workflow,
-  [{
-    blocks: {
-      a: {state: RUNTIME_ERROR}
-    }
-  }],
+  new Runs([
+    new Run(1, [
+      new BlockRun(FAILED, 1, 1, 'a')
+    ])
+  ]),
   {
     wasStarted: true,
     isRunning: false,
@@ -80,7 +69,9 @@ createTest(
   }
 );
 
+
 function createTest(workflow, runs, expected) {
+
   it('wasStarted()', () => {
     // given
     const runnable = new RunnableWorkflow(workflow, runs);
@@ -92,23 +83,23 @@ function createTest(workflow, runs, expected) {
     expect(wasStarted).toBe(expected.wasStarted);
   });
 
-  it('isLatestRunRunning()', () => {
+  it('isRunning()', () => {
     // given
     const runnable = new RunnableWorkflow(workflow, runs);
 
     // when
-    const running = runnable.isLatestRunRunning();
+    const running = runnable.isRunning();
 
     // then
     expect(running).toBe(expected.isRunning);
   });
 
-  it('isLatestRunRuntimeError()', () => {
+  it('isFailed()', () => {
     // given
     const runnable = new RunnableWorkflow(workflow, runs);
 
     // when
-    const failed = runnable.isLatestRunRuntimeError();
+    const failed = runnable.isFailed();
 
     // then
     expect(failed).toBe(expected.isFailed);

@@ -6,7 +6,7 @@ import Runs from "../../models/Runs";
 
 const RUNS_URL = `${API_URL}/runs`;
 
-const JSONtoRun = ({id, data, created_at}) => {
+export const JSONtoRun = ({id, data, created_at}) => {
   const blockRuns = [];
   Object.keys(data).forEach(blockId => {
     const blockRun = data[blockId];
