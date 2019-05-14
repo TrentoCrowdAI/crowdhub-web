@@ -6,6 +6,7 @@ import {BlockLabel} from "./BlockLabel";
 import BlockRunsControls from "./BlockRunsControls";
 import SidebarWithBottomBox from "../common/SidebarWithBottomBox";
 
+// TODO: Remove Sidebar component
 export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
 
   <SidebarWithBottomBox
@@ -24,9 +25,11 @@ export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
         <ParametersEngine parametrizedBlock={block}
                           onParameterModelUpdate={onModelUpdate}
                           disabled={!runnableWorkflow.canBeEdited()}/>
+
+        <BlockRunsControls blockModel={block} runnableWorkflow={runnableWorkflow}/>
       </div>
     }
-    bottom={<BlockRunsControls blockModel={block} runnableWorkflow={runnableWorkflow}/>}
+    bottom={<div></div>}
   />
 );
 

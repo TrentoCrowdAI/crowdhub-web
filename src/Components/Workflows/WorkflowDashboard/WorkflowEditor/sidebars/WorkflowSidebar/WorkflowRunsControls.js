@@ -49,8 +49,8 @@ export default class WorkflowRunsControls extends Component {
         }
 
         <RunsControls runnable={runnableWorkflow}
-                      downloadLinkFactory={run => RunsService.getDownloadLink(run)}
-                      downloadNameFactory={run => `${workflow.name} #${run.id}.csv`}
+                      downloadLinkFactory={(run, format) => RunsService.getDownloadLink(run, format)}
+                      downloadNameFactory={(run, format) => `${workflow.name} #${run.id}.${format}`}
                       startText="Start workflow"
                       onStart={this.startWorkflow}
                       isStarting={isStarting}/>

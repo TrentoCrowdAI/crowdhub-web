@@ -33,7 +33,7 @@ export default {
     return new Runs(runs);
   },
 
-  getDownloadLink(run) {
-    return `${RUNS_URL}/${run.id}/result?format=csv`;
+  getDownloadLink(run, format) {
+    return `${RUNS_URL}/${run.id}/result?format=${format}`;
   }
 }

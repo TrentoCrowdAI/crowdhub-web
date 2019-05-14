@@ -1,0 +1,7 @@
+.format-toggle-group .btn-group {
+    width: 100%;
+}
+
+.format-toggle-group label {
+    cursor: pointer;
+}
