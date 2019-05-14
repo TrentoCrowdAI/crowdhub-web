@@ -10,6 +10,7 @@ import SidebarWithBottomBox from "../common/SidebarWithBottomBox";
  */
 export default ({runnableWorkflow, onEdit}) => {
   const workflow = runnableWorkflow.getWorkflow();
+  // TODO: Remove Sidebar component
   return (
     <SidebarWithBottomBox
       title="Workflow properties"
@@ -19,7 +20,9 @@ export default ({runnableWorkflow, onEdit}) => {
           <NameAndDescriptionFields onEdit={onEdit}
                                     workflow={workflow}
                                     disabled={runnableWorkflow.isRunning()}/>
+
+          <WorkflowRunsControls runnableWorkflow={runnableWorkflow}/>
         </div>}
-      bottom={<WorkflowRunsControls runnableWorkflow={runnableWorkflow}/>}/>
+      bottom={<div></div>}/>
   );
 };
