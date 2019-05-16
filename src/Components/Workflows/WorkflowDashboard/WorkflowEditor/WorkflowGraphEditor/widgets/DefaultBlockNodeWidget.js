@@ -1,9 +1,9 @@
 import React from 'react';
 import {DefaultNodeWidget, PortWidget} from "storm-react-diagrams";
 import {Card, Spinner} from "react-bootstrap";
-import './BlockNode.css';
+import './DefaultBlockNode.css';
 
-export class BlockNodeWidget extends DefaultNodeWidget {
+export class DefaultBlockNodeWidget extends DefaultNodeWidget {
 
   render() {
     const {node} = this.props;

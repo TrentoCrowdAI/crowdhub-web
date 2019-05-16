@@ -1,9 +1,9 @@
-import {BlockNodeFactory} from "./BlockNodeFactory";
+import {DefaultBlockNodeFactory} from "./DefaultBlockNodeFactory";
 import {DoBlockNodeFactory} from "./DoBlockNodeFactory";
 
 const nodeFactories = [
   DoBlockNodeFactory,
-  BlockNodeFactory
+  DefaultBlockNodeFactory
 ];
 
 export default {

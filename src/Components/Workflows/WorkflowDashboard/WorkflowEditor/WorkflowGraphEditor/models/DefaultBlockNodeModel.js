@@ -4,7 +4,7 @@ import uuid from "uuid";
 import Runs from "../../../../../../models/Runs";
 
 
-export class BlockNodeModel extends DefaultNodeModel {
+export class DefaultBlockNodeModel extends DefaultNodeModel {
 
   label;
   blockTypeDefinition;
@@ -91,14 +91,14 @@ export class BlockNodeModel extends DefaultNodeModel {
   /**
    * @returns {number} number of blocks that may start in a run
    */
-  getRunnableBlocksCount = () => 1 + BlockNodeModel.getAllParentBlocks(this).length;
+  getRunnableBlocksCount = () => 1 + DefaultBlockNodeModel.getAllParentBlocks(this).length;
 
   /**
    * Relative to latest run
    * @returns {number} number of blocks that are running
    */
   getRunningBlocksCount = () =>
-    [this, ...BlockNodeModel.getAllParentBlocks(this)]
+    [this, ...DefaultBlockNodeModel.getAllParentBlocks(this)]
       .filter(block => block.isRunning())
       .length;
 
@@ -107,7 +107,7 @@ export class BlockNodeModel extends DefaultNodeModel {
    * @returns {number} number of finished blocks
    */
   getFinishedBlocksCount = () =>
-    [this, ...BlockNodeModel.getAllParentBlocks(this)]
+    [this, ...DefaultBlockNodeModel.getAllParentBlocks(this)]
       .filter(block => block.isFinished())
       .length;
 
@@ -137,7 +137,7 @@ export class BlockNodeModel extends DefaultNodeModel {
     const blockParents = block.getParentBlocks();
     if (blockParents.length > 0) {
       parents.push(...blockParents);
-      blockParents.forEach(parent => BlockNodeModel.getAllParentBlocks(parent, parents));
+      blockParents.forEach(parent => DefaultBlockNodeModel.getAllParentBlocks(parent, parents));
     }
     return parents;
   };

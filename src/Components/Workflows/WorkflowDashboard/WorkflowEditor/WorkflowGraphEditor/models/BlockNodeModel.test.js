@@ -1,6 +1,6 @@
 import {WorkflowGraphEngine} from "../WorkflowGraphEngine";
 import WorkflowGraphModel from "./WorkflowGraphModel";
-import {BlockNodeModel} from "./BlockNodeModel";
+import {DefaultBlockNodeModel} from "./DefaultBlockNodeModel";
 import BlockRun, {RunStates} from "../../../../../../models/BlockRun";
 import Runs from "../../../../../../models/Runs";
 import Run from "../../../../../../models/Run";
@@ -40,7 +40,7 @@ const engine = new WorkflowGraphEngine([{
 const graphModel = new WorkflowGraphModel();
 engine.setDiagramModel(graphModel);
 
-const block = new BlockNodeModel();
+const block = new DefaultBlockNodeModel();
 block.deSerialize(workflow.graph.nodes[2], engine);
 
 

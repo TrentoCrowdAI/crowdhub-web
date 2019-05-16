@@ -1,5 +1,5 @@
 import WorkflowGraphModel from "./WorkflowGraphModel";
-import {BlockNodeModel} from "./BlockNodeModel";
+import {DefaultBlockNodeModel} from "./DefaultBlockNodeModel";
 
 describe('test generation of block labels', () => {
   it("should generate the label 'block_0' for the first block", () => {
@@ -16,7 +16,7 @@ describe('test generation of block labels', () => {
   it("should generate the label 'block_1' for the second block", () => {
     // given
     const model = new WorkflowGraphModel();
-    model.addNode(new BlockNodeModel());
+    model.addNode(new DefaultBlockNodeModel());
 
     // when
     const label = model.getNextBlockLabel();
@@ -53,7 +53,7 @@ describe('test validation of user provided block label', () => {
   });
 
   const mockBlockModel = (label) => {
-    const block = new BlockNodeModel();
+    const block = new DefaultBlockNodeModel();
     block.getLabel = () => label;
     return block;
   };

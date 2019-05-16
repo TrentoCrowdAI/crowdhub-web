@@ -1,10 +1,9 @@
 import {DefaultNodeFactory} from "storm-react-diagrams";
-import {BlockNodeModel} from "../models/BlockNodeModel";
+import {DefaultBlockNodeModel} from "../models/DefaultBlockNodeModel";
 import React from "react";
-import {BlockNodeWidget} from "../widgets/BlockNodeWidget";
+import {DefaultBlockNodeWidget} from "../widgets/DefaultBlockNodeWidget";
 
-// TODO: Rename to DefaultBlockNodeFactory
-export class BlockNodeFactory extends DefaultNodeFactory {
+export class DefaultBlockNodeFactory extends DefaultNodeFactory {
 
   blockType;
 
@@ -30,11 +29,11 @@ export class BlockNodeFactory extends DefaultNodeFactory {
   }
 
   getNewInstance() {
-    return new BlockNodeModel();
+    return new DefaultBlockNodeModel();
   }
 
   generateReactWidget(diagramEngine, node) {
-    return React.createElement(BlockNodeWidget, {
+    return React.createElement(DefaultBlockNodeWidget, {
       node,
       diagramEngine
     });

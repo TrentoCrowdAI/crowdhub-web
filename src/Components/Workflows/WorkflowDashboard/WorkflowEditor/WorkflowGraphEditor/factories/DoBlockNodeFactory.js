@@ -1,9 +1,9 @@
 import React from "react";
-import {BlockNodeWidget} from "../widgets/BlockNodeWidget";
-import {BlockNodeFactory} from "./BlockNodeFactory";
+import {DefaultBlockNodeWidget} from "../widgets/DefaultBlockNodeWidget";
+import {DefaultBlockNodeFactory} from "./DefaultBlockNodeFactory";
 import {DoBlockNodeModel} from "../models/DoBlockNodeModel";
 
-export class DoBlockNodeFactory extends BlockNodeFactory {
+export class DoBlockNodeFactory extends DefaultBlockNodeFactory {
 
   static supportsBlockType (blockType) {
     return blockType === "do";
@@ -19,7 +19,7 @@ export class DoBlockNodeFactory extends BlockNodeFactory {
   }
 
   generateReactWidget(diagramEngine, node) {
-    return React.createElement(BlockNodeWidget, {
+    return React.createElement(DefaultBlockNodeWidget, {
       node,
       diagramEngine
     });

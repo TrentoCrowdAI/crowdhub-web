@@ -4,7 +4,7 @@ import {DiagramWidget} from "storm-react-diagrams";
 import 'storm-react-diagrams/dist/style.min.css';
 
 import './WorkflowGraphEditor.css'
-import {BlockNodeModel} from "./models/BlockNodeModel";
+import {DefaultBlockNodeModel} from "./models/DefaultBlockNodeModel";
 import {WorkflowGraphEngine} from "./WorkflowGraphEngine";
 
 export default class WorkflowGraphEditor extends Component {
@@ -71,7 +71,7 @@ export default class WorkflowGraphEditor extends Component {
   };
 
   createNodeFromBlockType = (blockTypeDefinition, position) => {
-    const node = new BlockNodeModel();
+    const node = new DefaultBlockNodeModel();
 
     node.deSerialize({ // I don't want to copy the id
       name: blockTypeDefinition.displayName,

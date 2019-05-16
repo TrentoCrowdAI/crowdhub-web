@@ -1,9 +1,9 @@
-import {BlockNodeModel} from "./BlockNodeModel";
+import {DefaultBlockNodeModel} from "./DefaultBlockNodeModel";
 import {RunStates} from "../../../../../../models/BlockRun";
 
 const {FAILED, RUNNING, FINISHED} = RunStates;
 
-export class DoBlockNodeModel extends BlockNodeModel {
+export class DoBlockNodeModel extends DefaultBlockNodeModel {
 
 
   setRuns(runs) {
