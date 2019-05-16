@@ -12,17 +12,17 @@ const workflow = {
     nodes: [
       {
         id: 'a',
-        type: 'do',
+        type: 'lambda',
         ports: [{id: 'a_in', name: 'in', type: 'default'}, {id: 'a_out', name: 'out', type: 'default'}]
       },
       {
         id: 'b',
-        type: 'do',
+        type: 'lambda',
         ports: [{id: 'b_in', name: 'in', type: 'default'}, {id: 'b_out', name: 'out', type: 'default'}]
       },
       {
         id: 'c',
-        type: 'do',
+        type: 'lambda',
         ports: [{id: 'c_in', name: 'in', type: 'default'}, {id: 'c_out', name: 'out', type: 'default'}]
       },
     ],
@@ -34,7 +34,7 @@ const workflow = {
 };
 
 const engine = new WorkflowGraphEngine([{
-  name: 'do',
+  name: 'lambda',
   parameterDefinitions: []
 }]);
 const graphModel = new WorkflowGraphModel();
