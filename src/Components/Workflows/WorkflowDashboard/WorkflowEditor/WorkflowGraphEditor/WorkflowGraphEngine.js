@@ -1,6 +1,6 @@
 import {DiagramEngine} from "storm-react-diagrams";
 import BlackLinkFactory from "./factories/BlackLinkFactory";
-import {BlockNodeFactory} from "./factories/BlockNodeFactory";
+import nodeFactories from "./factories/nodeFactories";
 
 export class WorkflowGraphEngine extends DiagramEngine {
 
@@ -19,9 +19,10 @@ export class WorkflowGraphEngine extends DiagramEngine {
   installFactories() {
     this.installDefaultFactories();
     this.registerLinkFactory(new BlackLinkFactory());
-    this.getBlockTypeDefinitions().forEach(blockTypeDefinition => this.registerNodeFactory(
-      new BlockNodeFactory(blockTypeDefinition.name)
-    ));
+    this.getBlockTypeDefinitions().forEach(blockTypeDefinition => {
+      const Factory = nodeFactories.getNodeFactoryForBlockType(blockTypeDefinition.name);
+      this.registerNodeFactory(new Factory(blockTypeDefinition.name));
+    });
   }
 
   getBlockTypeDefinitions() {

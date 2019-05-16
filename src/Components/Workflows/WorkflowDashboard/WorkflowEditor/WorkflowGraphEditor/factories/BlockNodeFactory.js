@@ -3,9 +3,14 @@ import {BlockNodeModel} from "../models/BlockNodeModel";
 import React from "react";
 import {BlockNodeWidget} from "../widgets/BlockNodeWidget";
 
+// TODO: Rename to DefaultBlockNodeFactory
 export class BlockNodeFactory extends DefaultNodeFactory {
 
   blockType;
+
+  static supportsBlockType (blockType) {
+    return true;
+  }
 
   constructor(blockType) {
     super(`${blockType}Factory`);
