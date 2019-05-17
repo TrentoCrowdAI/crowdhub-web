@@ -97,7 +97,9 @@ export default class WorkflowEditor extends Component {
                                           runnableWorkflow={runnableWorkflow}/>
                 :
                 <WorkflowSidebar runnableWorkflow={runnableWorkflow}
-                                 onEdit={this.onWorkflowEdited}/>
+                                 onEdit={this.onWorkflowEdited}
+                                 graphModel={this.graphModel}
+                                 onModelUpdate={() => this.forceUpdate()}/>
             }
           </Col>
         </Row>

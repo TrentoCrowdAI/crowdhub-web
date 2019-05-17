@@ -1,6 +1,22 @@
 import {DiagramModel} from "storm-react-diagrams";
+import BlockingContextsModel from "./BlockingContextsModel";
 
 export default class WorkflowGraphModel extends DiagramModel {
+
+  blockingContexts = new BlockingContextsModel();
+
+  deSerialize(data, engine) {
+    super.deSerialize(data, engine);
+    this.blockingContexts.deSerialize(data.blockingContexts || []);
+  }
+
+
+  serialize() {
+    return {
+      ...super.serialize(),
+      blockingContexts: this.blockingContexts.serialize()
+    }
+  }
 
   isValid = () => this.getBlocksArray()
     .find(block => !block.isValid()) == null;
@@ -22,4 +38,8 @@ export default class WorkflowGraphModel extends DiagramModel {
   getNextBlockLabel = () => `block_${this.getBlocksArray().length}`;
 
   setRuns = (runs) => this.getBlocksArray().forEach(block => block.setRuns(runs));
+
+  getBlockingContexts() {
+    return this.blockingContexts;
+  }
 }

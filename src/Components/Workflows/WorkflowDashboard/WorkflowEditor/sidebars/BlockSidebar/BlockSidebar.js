@@ -4,12 +4,11 @@ import ParametersEngine from "../../ParametersEngine/ParametersEngine";
 import "./BlockSidebar.css";
 import {BlockLabel} from "./BlockLabel";
 import BlockRunsControls from "./BlockRunsControls";
-import SidebarWithBottomBox from "../common/SidebarWithBottomBox";
+import SidebarWithTitle from "../common/SidebarWithTitle";
 
-// TODO: Remove Sidebar component
 export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
 
-  <SidebarWithBottomBox
+  <SidebarWithTitle
     title="Block parameters"
     center={
       <div className="parameters-engine-container"
@@ -29,7 +28,6 @@ export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
         <BlockRunsControls blockModel={block} runnableWorkflow={runnableWorkflow}/>
       </div>
     }
-    bottom={<div></div>}
   />
 );
 

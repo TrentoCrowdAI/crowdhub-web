@@ -1,9 +1,9 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
 
-import "./SidebarWithBottomBox.css";
+import "./SidebarWithTitle.css";
 
-export default ({title, center, bottom}) => (
+export default ({title, center}) => (
   <div className="sidebar-column">
     <div className="title-and-center-container">
       <Row>
@@ -13,11 +13,6 @@ export default ({title, center, bottom}) => (
       </Row>
 
       {center}
-    </div>
-
-    <div className="bottom-container">
-      <hr/>
-      {bottom}
     </div>
   </div>
 );
