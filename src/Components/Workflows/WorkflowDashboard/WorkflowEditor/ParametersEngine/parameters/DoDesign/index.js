@@ -32,7 +32,6 @@ class DoDesignWidget extends Component {
 
     return (
       <Form.Group>
-        <Form.Label>{definition.displayName}</Form.Label>
         <Form.Text className="text-muted">
           {definition.description}
         </Form.Text>

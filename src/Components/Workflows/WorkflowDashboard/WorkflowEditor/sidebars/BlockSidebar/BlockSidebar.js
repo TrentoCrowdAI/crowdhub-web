@@ -23,7 +23,8 @@ export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
 
         <ParametersEngine parametrizedBlock={block}
                           onParameterModelUpdate={onModelUpdate}
-                          disabled={!runnableWorkflow.canBeEdited()}/>
+                          disabled={!runnableWorkflow.canBeEdited()}
+                          parametersInCard/>
 
         <BlockRunsControls blockModel={block} runnableWorkflow={runnableWorkflow}/>
       </div>

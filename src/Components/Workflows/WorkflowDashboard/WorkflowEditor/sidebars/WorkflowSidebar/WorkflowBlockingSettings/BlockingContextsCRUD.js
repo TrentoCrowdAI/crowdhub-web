@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
-import {Button, Col, Form, Table} from "react-bootstrap";
-import uuid from 'uuid';
+import {Form, Table} from "react-bootstrap";
 
 import './BlockingContextsCRUD.css';
-import RandomColorPicker from "./RandomColorPicker";
+import CreateBlockingContext from "./CreateBlockingContext";
 
 export default class BlockingContextsCRUD extends Component {
 
@@ -20,13 +19,12 @@ export default class BlockingContextsCRUD extends Component {
     const model = this.getBlockingContextsModel();
     return (
       <div>
-        <h6>Blocking contexts</h6>
+        <Form.Text className="text-muted">
+          <strong>Blocking contexts</strong>
+        </Form.Text>
 
         <BlockingContextsTable model={model}/>
-
-        <span>Add blocking context</span>
-
-        <AddBlockingContext onAdd={this.onAddBlockingContext}/>
+        <CreateBlockingContext onAdd={this.onAddBlockingContext}/>
       </div>
     );
   }
@@ -46,6 +44,15 @@ class BlockingContextsTable extends Component {
   render() {
     const model = this.getBlockingContextsModel();
     const contexts = model.getContexts();
+
+    if (contexts.length <= 0) {
+      return (
+        <Form.Text className="text-muted">
+          No blocking contexts created yet in this workflow
+        </Form.Text>
+      )
+    }
+
     return (
       <Table striped bordered hover size="sm">
         <thead>
@@ -74,55 +81,6 @@ class BlockingContextsTable extends Component {
         }
         </tbody>
       </Table>
-    );
-  }
-}
-
-class AddBlockingContext extends Component {
-
-  state = {
-    name: '',
-    color: null
-  };
-
-  onNameChange = (e) => this.setState({name: e.target.value});
-
-  onChangeColor = (color) => this.setState({color});
-
-  isValid = () => this.state.name.length > 0;
-
-  onAdd = () => {
-    this.props.onAdd({
-      id: uuid(),
-      name: this.state.name,
-      color: this.state.color
-    });
-    this.setState({name: '', color: null});
-  };
-
-  render() {
-    const {name, color} = this.state;
-    return (
-      <Form.Row>
-        <Col xs="12">
-          <Form.Group>
-            <Form.Control name="name"
-                          type="text"
-                          placeholder="Blocking context name"
-                          value={name}
-                          onChange={this.onNameChange}/>
-          </Form.Group>
-
-        </Col>
-        <Col xs="8">
-          <RandomColorPicker color={color} onChange={this.onChangeColor}/>
-        </Col>
-        <Col xs="4">
-          <Button className="btn-block"
-                  disabled={!this.isValid()}
-                  onClick={this.onAdd}>Add</Button>
-        </Col>
-      </Form.Row>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Col, Form, Row} from "react-bootstrap";
+import {Form} from "react-bootstrap";
+import {ParameterContainerCard} from "../../ParametersEngine/ParametersEngine";
 
 export default class NameAndDescriptionFields extends Component {
 
@@ -32,26 +33,16 @@ export default class NameAndDescriptionFields extends Component {
     return (
       <div>
         {/* Name */}
-        <Row>
-          <Col>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control name="name" type="text" value={this.state.name} onChange={this.onChangeName}
-                            onBlur={this.onBlur} disabled={this.props.disabled}/>
-            </Form.Group>
-          </Col>
-        </Row>
 
-        {/* Description */}
-        <Row>
-          <Col>
-            <Form.Group>
-              <Form.Label>Description</Form.Label>
-              <Form.Control name="description" type="text" as="textarea" value={this.state.description}
-                            onChange={this.onChangeDescription} onBlur={this.onBlur} disabled={this.props.disabled}/>
-            </Form.Group>
-          </Col>
-        </Row>
+        <ParameterContainerCard title="Name">
+          <Form.Control name="name" type="text" value={this.state.name} onChange={this.onChangeName}
+                        onBlur={this.onBlur} disabled={this.props.disabled}/>
+        </ParameterContainerCard>
+
+        <ParameterContainerCard title="Description">
+          <Form.Control name="description" type="text" as="textarea" value={this.state.description}
+                        onChange={this.onChangeDescription} onBlur={this.onBlur} disabled={this.props.disabled}/>
+        </ParameterContainerCard>
       </div>
     );
   }

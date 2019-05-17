@@ -6,6 +6,22 @@ div.container.full-width {
     height: 100%;
 }
 
+
+div.editor-left-sidebar {
+    min-width: 6em;
+    flex-grow: 0;
+}
+
+div.editor-center {
+    flex-grow: 2;
+}
+
+div.editor-right-sidebar {
+    flex-grow: 1;
+    max-width: 25em;
+}
+
+
 .light-background {
     background-color: var(--lightBackground);
 }
@@ -42,6 +58,11 @@ div.workflow-editor-container {
     border-radius: .25em;
 }
 
-div.right-sidebar {
+div.editor-right-sidebar {
     display: flex;
+}
+
+
+div.right-sidebar-parameter {
+    margin-bottom: .25em;
 }

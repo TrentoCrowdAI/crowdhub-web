@@ -2,16 +2,17 @@ import React, {Component} from 'react';
 import {Form} from 'react-bootstrap';
 
 import BlockingContextsCRUD from "./BlockingContextsCRUD";
+import {ParameterContainerCard} from "../../../ParametersEngine/ParametersEngine";
 
 export default class WorkflowBlockingSettings extends Component {
 
   render() {
     const {graphModel, onModelUpdate} = this.props;
     return (
-      <div>
+      <ParameterContainerCard title="Blocking workers">
         <WorkflowBlockingCheckbox graphModel={graphModel} onModelUpdate={onModelUpdate}/>
         <BlockingContextsCRUD graphModel={graphModel} onModelUpdate={onModelUpdate}/>
-      </div>
+      </ParameterContainerCard>
     );
   }
 
@@ -26,9 +27,9 @@ class WorkflowBlockingCheckbox extends Component {
     this.renderCheckboxIndeterminateState();
   }
 
-  onChange= ()=> {
+  onChange = () => {
     const blockingContextsModel = this.getBlockingContextsModel();
-    if(this.isIndeterminate() || !blockingContextsModel.areSomeBlockingContextsEnabled()) {
+    if (this.isIndeterminate() || !blockingContextsModel.areSomeBlockingContextsEnabled()) {
       blockingContextsModel.mutateToSingleBlockingContextForAllDoBlocks()
     } else {
       blockingContextsModel.removeAllBlockingContexts();
@@ -41,20 +42,19 @@ class WorkflowBlockingCheckbox extends Component {
     const blockingContextsModel = this.getBlockingContextsModel();
     this.renderCheckboxIndeterminateState();
     return (
-      <Form.Group>
-        <Form.Label>
-          Blocking workers
-        </Form.Label>
-        <Form.Text className="text-muted">
-          If checked, one worker will be able to work only on one job of this workflow. When indeterminate, workers
-          won't be able to work on job of the same blocking context
-        </Form.Text>
-        <Form.Check ref={this.checkboxRef}
-                    type="checkbox"
-                    label="Block workers"
-                    value={blockingContextsModel.areSomeBlockingContextsEnabled()}
-        onChange={this.onChange}/>
-      </Form.Group>
+      <div>
+        <Form.Group>
+          <Form.Text className="text-muted">
+            If checked, one worker will be able to work only on one job of this workflow. When indeterminate, workers
+            won't be able to work on job of the same blocking context
+          </Form.Text>
+          <Form.Check ref={this.checkboxRef}
+                      type="checkbox"
+                      label="Block workers"
+                      value={blockingContextsModel.areSomeBlockingContextsEnabled()}
+                      onChange={this.onChange}/>
+        </Form.Group>
+      </div>
     );
   }
 

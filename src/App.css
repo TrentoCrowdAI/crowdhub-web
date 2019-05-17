@@ -1,41 +1,49 @@
 :root {
-  --lightBackground: rgb(233,236,238);
-  --lightBackgroundTransparent: rgba(245, 246, 247, 0.9);
+    --lightBackground: rgb(233, 236, 238);
+    --lightBackgroundTransparent: rgba(245, 246, 247, 0.9);
 
-  --appBarHeight: 54px;
+    --appBarHeight: 54px;
+
+    --separatorColor: rgba(0, 0, 0, .2);
 }
 
 .light-background,
 .navbar.light-background {
-  background-color: var(--lightBackground);
+    background-color: var(--lightBackground);
 }
 
 button.button-link {
-  border: none;
-  background-color: transparent;
+    border: none;
+    background-color: transparent;
 }
 
 /* Tables */
 td > a,
 td > a:hover {
-  color: black;
+    color: black;
 }
 
 /* Forms */
-.form-buttons .btn:first-child{
-  margin-right: auto;
+.form-buttons .btn:first-child {
+    margin-right: auto;
 }
 
 
 /* Headers */
 div.row.header-row {
-  margin-top: .5em;
-  margin-bottom: 1em;
+    margin-top: .5em;
+    margin-bottom: 1em;
 }
 
 
 /* Icons */
 a.icon-button {
-  margin-right: .5em;
-  cursor: pointer;
+    margin-right: .5em;
+    cursor: pointer;
+}
+
+
+/* hr */
+hr {
+    border-color: var(--separatorColor);
 }

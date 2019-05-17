@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Form} from "react-bootstrap";
+import {ParameterContainerCard} from "../../ParametersEngine/ParametersEngine";
 
 export class BlockLabel extends Component {
 
@@ -41,20 +42,21 @@ export class BlockLabel extends Component {
 
   render() {
     return (
-      <Form.Group>
-        <Form.Label>Label</Form.Label>
-        <Form.Text className="text-muted">
-          Label of the block
-        </Form.Text>
-        <Form.Control type="text"
-                      value={this.state.label}
-                      onChange={this.onChange}
-                      isInvalid={!this.isNewLabelValid()}
-                      disabled={this.props.disabled}/>
-        <Form.Control.Feedback type="invalid">
-          The label must be unique to all the blocks and must be at least one character long.
-        </Form.Control.Feedback>
-      </Form.Group>
+      <ParameterContainerCard title="Label">
+        <Form.Group>
+          <Form.Text className="text-muted">
+            Label of the block
+          </Form.Text>
+          <Form.Control type="text"
+                        value={this.state.label}
+                        onChange={this.onChange}
+                        isInvalid={!this.isNewLabelValid()}
+                        disabled={this.props.disabled}/>
+          <Form.Control.Feedback type="invalid">
+            The label must be unique to all the blocks and must be at least one character long.
+          </Form.Control.Feedback>
+        </Form.Group>
+      </ParameterContainerCard>
     );
   }
 }

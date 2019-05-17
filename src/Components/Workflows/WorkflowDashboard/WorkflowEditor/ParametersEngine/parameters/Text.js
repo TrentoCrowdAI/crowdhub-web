@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Form} from 'react-bootstrap';
 import AbstractParameterModel from "../AbstractParameterModel";
 
+//  TODO: Show in a dialog in the sidebar
 class TextModel extends AbstractParameterModel {
 
   isValid() {
@@ -45,7 +46,6 @@ class TextWidget extends Component {
 
     return (
       <Form.Group>
-        <Form.Label>{definition.displayName}</Form.Label>
         <Form.Text className="text-muted">
           {definition.description}
         </Form.Text>

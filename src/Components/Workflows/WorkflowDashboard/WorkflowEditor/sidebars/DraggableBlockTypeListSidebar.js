@@ -4,7 +4,7 @@ import {Card, Col, Row} from "react-bootstrap";
 
 const DraggableBlockTypeListSidebar = ({blockTypeDefinitions}) => (
   <div>
-    <h5>Workflow blocks</h5>
+    <h5>Blocks</h5>
 
     <Row>
       <Col>

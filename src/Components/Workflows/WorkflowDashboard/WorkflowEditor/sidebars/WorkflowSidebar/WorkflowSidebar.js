@@ -21,7 +21,6 @@ export default ({runnableWorkflow, onEdit, onModelUpdate, graphModel}) => {
                                     workflow={workflow}
                                     disabled={runnableWorkflow.isRunning()}/>
 
-          <hr/>
           <WorkflowBlockingSettings graphModel={graphModel}
                                     onModelUpdate={onModelUpdate}/>
 

@@ -65,14 +65,14 @@ export default class WorkflowEditor extends Component {
           {/* Left sidebar */}
           {
             runnableWorkflow.canBeEdited() &&
-            <Col xs={2} className="light-background">
+            <Col className="editor-left-sidebar light-background">
               <DraggableBlockTypeListSidebar blockTypeDefinitions={blockTypeDefinitions}/>
             </Col>
           }
 
 
           {/* Center */}
-          <Col xs={7} className="graph-editor-container">
+          <Col className="editor-center graph-editor-container">
             <WorkflowGraphEditor
               initialGraph={initialGraph}
               graphModel={this.graphModel}
@@ -88,7 +88,7 @@ export default class WorkflowEditor extends Component {
           </Col>
 
           {/* Right sidebar */}
-          <Col xs={3} className="light-background right-sidebar">
+          <Col className="editor-right-sidebar light-background">
             {
               this.state.selectedBlock ?
                 <BlockConfiguratorSidebar block={this.state.selectedBlock}
