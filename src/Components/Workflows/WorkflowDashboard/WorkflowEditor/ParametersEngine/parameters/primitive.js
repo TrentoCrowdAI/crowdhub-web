@@ -5,6 +5,7 @@ import TextFromDropdown from './TextFromDropdown';
 import Html from './Html';
 import ChoiceBuilder from './ChoiceBuilder';
 import Code from './Code';
+import BlockingContext from "./BlockingContext/BlockingContext";
 
 const mapParametersArrayToMap = (parameters) => {
   const map = {};
@@ -22,5 +23,6 @@ export const PrimitiveParameters = mapParametersArrayToMap([
   TextFromDropdown,
   Html,
   ChoiceBuilder,
-  Code
+  Code,
+  BlockingContext
 ]);

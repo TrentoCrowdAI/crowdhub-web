@@ -1,0 +1,12 @@
+div.blocking-context-color-box {
+    width: var(--color-box-side);
+    height: var(--color-box-side);
+    border-radius: 25%;
+    float: left;
+    margin-right: 8px;
+}
+
+
+.blocking-context-drop-down-item {
+    padding: 8px;
+}
