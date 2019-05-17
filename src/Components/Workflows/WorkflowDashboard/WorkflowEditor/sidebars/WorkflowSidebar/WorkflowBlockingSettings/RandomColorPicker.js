@@ -46,6 +46,7 @@ export default class RandomColorPicker extends Component {
                   onClick={this.pickRandomColor}
                   style={{
                     backgroundColor: color,
+                    borderColor: color,
                     color: getTextColorVisibleOnBackground(color)
                   }}>
             <i className="fas fa-sync-alt"/>

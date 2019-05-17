@@ -6,15 +6,31 @@ import RandomColorPicker from "./RandomColorPicker";
 
 export default class CreateBlockingContext extends Component {
 
+  togglePopoverButton = React.createRef();
+
   state = {
     show: false
   };
 
-  container = React.createRef();
+  onShowPopover = ({target}) => {
+    this.setState({show: true, target});
+    this.fixPopoverPosition();
+  };
 
-  // TODO: Fix position of popver
-
-  onShowPopover = ({target}) => this.setState({show: true, target});
+  /**
+   * This fix should be necessary. According to the react-bootstrap documentation, we can attach the popover to the div
+   * that contains the button to show the popover and the position should be automatically set.
+   * But, even after specifying the target and the container of the Overlay, the popover continues to appear on the top
+   * left corner of the screen.
+   * @returns {never}
+   */
+  fixPopoverPosition = () => setImmediate(() => {
+    const overlay = document.getElementById('create-blocking-context-popover');
+    const button = this.togglePopoverButton.current;
+    const buttonRect = button.getBoundingClientRect();
+    overlay.style.top = `${buttonRect.top}px`;
+    overlay.style.left = `${buttonRect.left - buttonRect.width}px`;
+  });
 
   onCreated = (context) => {
     this.setState({show: false});
@@ -23,19 +39,17 @@ export default class CreateBlockingContext extends Component {
 
   render() {
     return (
-      <div >
-        <Button className="btn-block" onClick={this.onShowPopover} ref={this.container}>Add blocking context</Button>
-        {
-          this.container.current &&
-          <Overlay
-            show={this.state.show}
-            placement="left-start"
-            constainer={this.container.current}
-            target={this.container.current}>
+      <div>
+        <Button className="btn-block"
+                onClick={this.onShowPopover}
+                ref={this.togglePopoverButton}>Add blocking context</Button>
+        <Overlay
+          id="create-blocking-context-popover-container"
+          show={this.state.show}
+          placement="left-end">
 
-            <CreateBlockingContextPopover onCreated={this.onCreated}/>
-          </Overlay>
-        }
+          <CreateBlockingContextPopover onCreated={this.onCreated}/>
+        </Overlay>
       </div>
     );
   }
@@ -71,7 +85,8 @@ class CreateBlockingContextPopover extends Component {
   render() {
     const {name, color} = this.state;
     return (
-      <Popover title="Create blocking context" id="a">
+      <Popover title="Create blocking context"
+               id="create-blocking-context-popover" placement="left">
         <Form.Row>
           <Col xs="12">
             <Form.Group>
