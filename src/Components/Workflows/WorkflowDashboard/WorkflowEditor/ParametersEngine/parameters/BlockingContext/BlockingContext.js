@@ -3,6 +3,7 @@ import {Dropdown, Form} from "react-bootstrap";
 
 import AbstractParameterModel from "../../AbstractParameterModel";
 import "./BlockingContext.css";
+import {getTextColorVisibleOnBackground} from "../../../../../../utils/colors";
 
 const type = 'blockingContext';
 
@@ -34,7 +35,7 @@ class BlockingContextParameterWidget extends Component {
     this.getModel().setBlockingContextId(id);
     this.props.onModelUpdated();
   };
-  // TODO: Color the button with the color of the context block
+
   render() {
     const model = this.getModel();
     const definition = model.getDefinition();
@@ -47,18 +48,34 @@ class BlockingContextParameterWidget extends Component {
         </Form.Text>
 
         <Dropdown>
-          <Dropdown.Toggle className="btn-block">
-            {
-              model.isBlockingContextSelected() ?
-                this.getBlockingContextName(model.getBlockingContextId()) :
-                'None'
-            }
-          </Dropdown.Toggle>
+          {
+            this.renderToggle()
+          }
 
           <BlockingContextsDropdownMenu contexts={blockingContextsModel.getContexts()}
                                         onContextSelected={this.onBlockingContextSelected}/>
         </Dropdown>
       </Form.Group>
+    );
+  }
+
+  renderToggle() {
+    const model = this.getModel();
+    if (!model.isBlockingContextSelected()) {
+      return <Dropdown.Toggle className="btn-block">None</Dropdown.Toggle>;
+    }
+
+
+    const context = this.getBlockingContextsModel().getBlockingContextById(model.getBlockingContextId());
+    return (
+      <Dropdown.Toggle className="btn-block"
+                       style={{
+                         backgroundColor: context.color,
+                         border: context.color,
+                         color: getTextColorVisibleOnBackground(context.color)
+                       }}>
+        {context.name}
+      </Dropdown.Toggle>
     );
   }
 }

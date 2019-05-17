@@ -2,14 +2,18 @@ import React from 'react';
 import {DefaultNodeWidget, PortWidget} from "storm-react-diagrams";
 import {Card, Spinner} from "react-bootstrap";
 import './DefaultBlockNode.css';
+import {getTextColorVisibleOnBackground} from "../../../../../utils/colors";
 
 export class DefaultBlockNodeWidget extends DefaultNodeWidget {
 
   render() {
     const {node} = this.props;
-    // TODO: Change text color according to background color
+
     return (
-      <Card className="block" style={{backgroundColor: node.getColor()}}>
+      <Card className="block" style={{
+        backgroundColor: node.getColor(),
+        color: getTextColorVisibleOnBackground(node.getColor())
+      }}>
         <Card.Header>
           <PortWidget name="in" node={node}/>
 
