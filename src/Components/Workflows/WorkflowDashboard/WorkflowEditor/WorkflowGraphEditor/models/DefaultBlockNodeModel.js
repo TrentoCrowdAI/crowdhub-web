@@ -54,6 +54,10 @@ export class DefaultBlockNodeModel extends DefaultNodeModel {
 
   setLabel = (label) => this.label = label;
 
+  getColor() {
+    return '#F7F7F7'
+  };
+
   getParameterModelsMap = () => this.parameterModelsMap;
 
   setParameterModelsMap(parameterModelsMap) {
@@ -64,7 +68,7 @@ export class DefaultBlockNodeModel extends DefaultNodeModel {
 
   getInitialParametersMap = () => this.initialParametersMap;
 
-  setRuns (runs){
+  setRuns(runs) {
     this._runs = runs;
     this.latestBlockRun = runs.getLatestRun() ? runs.getLatestRun().getBlockRun(this.getId()) : null; // TODO: To clear
     this.blockRuns = runs.getBlockRuns(this.getId());

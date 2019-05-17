@@ -23,6 +23,10 @@ export default class BlockingContextsModel {
     return this.contexts;
   }
 
+  getBlockingContextById (id) {
+    return this.getContexts().find(context => context.id === id)
+  }
+
   removeContext(toRemove) {
     const index = this.contexts.indexOf(toRemove);
     if (index >= 0) {

@@ -7,8 +7,9 @@ export class DefaultBlockNodeWidget extends DefaultNodeWidget {
 
   render() {
     const {node} = this.props;
+    // TODO: Change text color according to background color
     return (
-      <Card className="block">
+      <Card className="block" style={{backgroundColor: node.getColor()}}>
         <Card.Header>
           <PortWidget name="in" node={node}/>
 

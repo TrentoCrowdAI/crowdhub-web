@@ -24,16 +24,15 @@ class BlockingContextParameterWidget extends Component {
     return this.props.model;
   }
 
-  getBlockingContextsModel = () => this.getModel().blockModel.parent.getBlockingContexts();
+  getBlockingContextsModel = () => this.getModel().blockModel.getBlockingContexts();
 
   getBlockingContextName = (id) => this.getBlockingContextsModel()
-    .getContexts()
-    .find(context => context.id === id).name;
+    .getBlockingContextById(id).name;
 
 
   onBlockingContextSelected = ({id}) => {
     this.getModel().setBlockingContextId(id);
-    this.forceUpdate();
+    this.props.onModelUpdated();
   };
   // TODO: Color the button with the color of the context block
   render() {

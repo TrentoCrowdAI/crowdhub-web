@@ -10,6 +10,24 @@ export class DoBlockNodeModel extends DefaultBlockNodeModel {
     this.blockRuns = DoBlockRunAdapter.adaptRuns(runs, this.getId());
   }
 
+
+  getColor () {
+    const blockingContextModel = this.getBlockingContextModelParameter();
+    if (!blockingContextModel.isBlockingContextSelected()) {
+      return super.getColor();
+    }
+    return this.getBlockingContexts().getBlockingContextById(
+      blockingContextModel.getBlockingContextId()
+    ).color;
+  }
+
+  getBlockingContextModelParameter () {
+    return this.getParameterModelsMap()['blockingContextId'];
+  }
+
+  getBlockingContexts () {
+    return this.parent.getBlockingContexts();
+  }
 }
 
 
