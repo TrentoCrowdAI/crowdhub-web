@@ -65,7 +65,7 @@ export default class WorkflowEditor extends Component {
     const initialGraph = workflow.graph;
 
     return (
-      <Container className="full-width workflow-editor-container">
+      <Container className="full-width workflow-editor-container" id="workflow-editor">
         <Row className="full-height">
 
           {/* Left sidebar */}
