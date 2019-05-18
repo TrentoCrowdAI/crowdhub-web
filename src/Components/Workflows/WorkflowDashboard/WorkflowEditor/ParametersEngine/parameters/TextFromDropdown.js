@@ -33,7 +33,7 @@ class TextFromDropdownWidget extends Component {
     const definition = model.getDefinition();
 
     return (
-      <Form.Group>
+      <div>
         <Form.Text className="text-muted">
           {definition.description}
         </Form.Text>
@@ -45,7 +45,7 @@ class TextFromDropdownWidget extends Component {
             ))
           }
         </Form.Control>
-      </Form.Group>
+      </div>
     );
   }
 }

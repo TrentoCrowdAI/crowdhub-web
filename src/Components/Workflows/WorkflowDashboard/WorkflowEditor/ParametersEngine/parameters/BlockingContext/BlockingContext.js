@@ -42,7 +42,7 @@ class BlockingContextParameterWidget extends Component {
     const blockingContextsModel = this.getBlockingContextsModel();
 
     return (
-      <Form.Group>
+      <div>
         <Form.Text className="text-muted">
           {definition.description}
         </Form.Text>
@@ -55,7 +55,7 @@ class BlockingContextParameterWidget extends Component {
           <BlockingContextsDropdownMenu contexts={blockingContextsModel.getContexts()}
                                         onContextSelected={this.onBlockingContextSelected}/>
         </Dropdown>
-      </Form.Group>
+      </div>
     );
   }
 

@@ -6,6 +6,7 @@ import Html from './Html';
 import ChoiceBuilder from './ChoiceBuilder';
 import Code from './Code';
 import BlockingContext from "./BlockingContext/BlockingContext";
+import DoBlockCost from "./DoBlockCost";
 
 const mapParametersArrayToMap = (parameters) => {
   const map = {};
@@ -24,5 +25,6 @@ export const PrimitiveParameters = mapParametersArrayToMap([
   Html,
   ChoiceBuilder,
   Code,
-  BlockingContext
+  BlockingContext,
+  DoBlockCost
 ]);

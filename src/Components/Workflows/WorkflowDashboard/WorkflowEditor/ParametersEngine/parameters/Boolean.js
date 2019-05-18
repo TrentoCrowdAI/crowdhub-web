@@ -34,7 +34,7 @@ class BooleanWidget extends Component {
     const definition = model.getDefinition();
 
     return (
-      <Form.Group>
+      <div>
         <Form.Text className="text-muted">
           {definition.description}
         </Form.Text>
@@ -43,7 +43,7 @@ class BooleanWidget extends Component {
                     checked={this.state.value}
                     onChange={this.onChange}
                     disabled={this.props.disabled}/>
-      </Form.Group>
+      </div>
     );
   }
 }

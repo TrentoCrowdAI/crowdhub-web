@@ -39,7 +39,7 @@ class NumberWidget extends Component {
     const definition = model.getDefinition();
 
     return (
-      <Form.Group>
+      <div>
         <Form.Text className="text-muted">
           {definition.description}
         </Form.Text>
@@ -52,7 +52,7 @@ class NumberWidget extends Component {
         <Form.Control.Feedback type="invalid">
           {definition.displayName} is required
         </Form.Control.Feedback>
-      </Form.Group>
+      </div>
     );
   }
 }

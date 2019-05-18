@@ -31,7 +31,7 @@ class DoDesignWidget extends Component {
     const definition = model.getDefinition();
 
     return (
-      <Form.Group>
+      <div>
         <Form.Text className="text-muted">
           {definition.description}
         </Form.Text>
@@ -48,7 +48,7 @@ class DoDesignWidget extends Component {
                                           buttonText={model.isDesignEmpty() ? 'Create from scratch' : 'Open design editor'}
                                           templateJustPicked={this.state.templateJustPicked}
                                           disabled={this.props.disabled}/>
-      </Form.Group>
+      </div>
     );
   }
 }
