@@ -3,11 +3,13 @@ export default class Run {
   id;
   blockRuns;
   createdAt;
+  workflowId;
 
-  constructor(id, blockRuns, createdAt) {
+  constructor(id, blockRuns, createdAt, workflowId) {
     this.id = id;
     this.blockRuns = blockRuns;
     this.createdAt = createdAt;
+    this.workflowId = workflowId;
   }
 
   getId = () => this.id;
@@ -19,6 +21,8 @@ export default class Run {
   getBlockRun = (blockId) => this.getBlockRuns().find(blockRun => blockRun.getBlockId() === blockId);
 
   getCreatedAt = () => this.createdAt;
+
+  getWorkflowId = () => this.workflowId;
 
   isRunning = () => this.getRunningBlockRuns().length > 0;
 

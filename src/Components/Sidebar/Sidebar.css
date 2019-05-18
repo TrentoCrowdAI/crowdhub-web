@@ -29,14 +29,6 @@
     margin-left: 0;
 }
 
-li.sidebar-link {
-    color: var(--sidebarLink);
-    cursor: pointer;
-    background-color: initial;
-}
-
-li.sidebar-link a.active {
-    color: var(--sidebarActiveLink);
-    background-color: initial;
-    border: none;
+ul.sidebar-list li {
+    list-style: none;
 }

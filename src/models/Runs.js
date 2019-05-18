@@ -13,4 +13,6 @@ export default class Runs {
   getBlockRuns = (blockId) => this.runs.map(run => run.getBlockRun(blockId)).filter(blockRun => !!blockRun);
 
   getFinishedRuns = () => this.runs.filter(run => run.isFinished());
+
+  getRunningRuns = () => this.runs.filter(run => run.isRunning());
 }

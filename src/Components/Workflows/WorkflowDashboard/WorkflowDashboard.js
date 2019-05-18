@@ -28,16 +28,25 @@ export default class WorkflowDashboard extends Component {
     }
   };
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.getWorkflowIdFromUrl() !== this.getWorkflowIdFromSpecifiedProps(prevProps)) {
+      this.componentWillUnmount();
+      this.componentDidMount();
+    }
+  }
+
   async fetchRunnableWorkflow() {
     const id = this.getWorkflowIdFromUrl();
-
+    this.setState({runnableWorkflow: null});
     this.runnableWorkflowRequest = makeCancellable(RunnableWorkflowService.getRunnableWorkflow(id));
     const runnableWorkflow = await this.runnableWorkflowRequest.result;
     this.setState({runnableWorkflow});
     return runnableWorkflow;
   }
 
-  getWorkflowIdFromUrl = () => this.props.match.params.id;
+  getWorkflowIdFromUrl = () => this.getWorkflowIdFromSpecifiedProps(this.props);
+
+  getWorkflowIdFromSpecifiedProps = (props) => props.match.params.id;
 
   componentWillUnmount = () => {
     this.runnableWorkflowRequest.cancel();
