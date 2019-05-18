@@ -1,6 +1,7 @@
 import {Button, Spinner} from "react-bootstrap";
 import React from "react";
 
+// TODO: Rename isSaving to isLoading
 const LoadingButton = ({isSaving, disabled, onClick, children, block}) => (
   <Button disabled={disabled || isSaving} onClick={onClick} className={block ? 'btn-block' : ''}>
     {

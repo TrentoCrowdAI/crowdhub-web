@@ -19,6 +19,12 @@ export default class WorkflowEditor extends Component {
     selectedBlock: null
   };
 
+  constructor(props){
+    super(props);
+    const {runnableWorkflow} = this.props;
+    this.graphModel.workflowId = runnableWorkflow.getWorkflow().id;
+  }
+
   componentDidMount() {
     const {runnableWorkflow} = this.props;
     this.onRunsUpdate(runnableWorkflow);

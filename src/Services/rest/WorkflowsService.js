@@ -63,6 +63,9 @@ export default {
   async startWorkflow(workflow) {
     const startedRunId = await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
     return startedRunId;
-  }
+  },
 
+  async estimateDoBlockCost (workflowId, blockId) {
+    return await postJSON(`${WORKFLOWS_URL}/${workflowId}/${blockId}/estimated-cost`);
+  }
 }
