@@ -1,5 +1,5 @@
 import React from 'react';
-import AppBar from './AppBar';
+import AppBar from './Appbar/AppBar';
 import shallow from "enzyme/shallow";
 
 
