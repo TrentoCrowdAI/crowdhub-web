@@ -58,6 +58,10 @@ export class DefaultBlockNodeModel extends DefaultNodeModel {
     return '#F7F7F7'
   };
 
+  getPortsAsList () {
+    return Object.values(this.getPorts());
+  }
+
   getParameterModelsMap = () => this.parameterModelsMap;
 
   setParameterModelsMap(parameterModelsMap) {
