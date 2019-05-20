@@ -7,6 +7,7 @@ import {makeCancellable} from "../../../Services/rest/utils";
 import {PROJECTS_PATH} from "../Projects";
 import {SimpleBreadcrumb} from "../../common/Breadcrumbs";
 import {ProjectsTable} from "./ProjectsTable";
+import LoadingContainer from "../../common/LoadingContainer";
 
 
 export class ProjectsList extends Component {
@@ -48,38 +49,30 @@ export class ProjectsList extends Component {
             <Link className="btn btn-primary" to={`${PROJECTS_PATH}/new`}>New</Link>
           </Col>
         </Row>
-        <Row>
-          {
-            !this.state.projects && !this.state.fetchError &&
-            <FetchingProjects/>
-          }
 
-          {
-            !this.state.projects && this.state.fetchError &&
-            <FetchProjectsError/>
-          }
+        <LoadingContainer loading={!this.state.projects && !this.state.fetchError}>
+          <Row>
+            {
+              !this.state.projects && this.state.fetchError &&
+              <FetchProjectsError/>
+            }
 
-          {
-            this.state.projects && this.state.projects.length === 0 &&
-            <NoProjects/>
-          }
+            {
+              this.state.projects && this.state.projects.length === 0 &&
+              <NoProjects/>
+            }
 
-          {
-            this.state.projects && this.state.projects.length > 0 &&
-            <ProjectsTable projects={this.state.projects} onProjectDeleted={this.fetchProjects}/>
-          }
+            {
+              this.state.projects && this.state.projects.length > 0 &&
+              <ProjectsTable projects={this.state.projects} onProjectDeleted={this.fetchProjects}/>
+            }
+          </Row>
+        </LoadingContainer>
 
-        </Row>
       </Container>
     )
   }
 }
-
-export const FetchingProjects = () => (
-  <Col>
-    <p>Fetching projects ...</p>
-  </Col>
-);
 
 export const NoProjects = () => (
   <Col>

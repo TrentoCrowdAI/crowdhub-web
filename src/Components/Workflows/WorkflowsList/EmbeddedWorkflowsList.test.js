@@ -1,12 +1,12 @@
 import React from "react";
 import {mount} from "enzyme";
 import {MemoryRouter} from "react-router-dom";
-import EmbeddableWorkflowsList, {FetchingWorkflows, FetchingWorkflowsError} from "./EmbeddableWorkflowsList";
+import EmbeddableWorkflowsList, {FetchingWorkflowsError} from "./EmbeddableWorkflowsList";
 import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import {serviceWorkflows} from "../../../mock-data/workflows";
 import mockedProject from "../../../mock-data/projects";
 import {WorkflowsTable} from "./WorkflowsTable";
-import {expectComponent} from "../../../testHelpers/components";
+import {expectComponent, expectIsLoading} from "../../../testHelpers/components";
 
 const project = mockedProject[0];
 
@@ -40,7 +40,7 @@ describe('should show the list of workflows', () => {
     const wrapper = await mountWorkflowsList();
 
     expect(getWorkflows).toHaveBeenCalled();
-    expectComponent(wrapper, FetchingWorkflows);
+    expectIsLoading(wrapper);
   });
 
 

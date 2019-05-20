@@ -4,3 +4,7 @@ img.user-avatar {
     height: 2em;
     border-radius: 50%;
 }
+
+div.balances-container {
+    min-width: 18em;
+}

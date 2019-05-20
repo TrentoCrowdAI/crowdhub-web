@@ -5,6 +5,7 @@ import {makeCancellable} from "../../../Services/rest/utils";
 import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import {CreateWorkflowButton} from "./CreateWorkflow/CreateWorkflow";
 import {WorkflowsTable} from "./WorkflowsTable";
+import LoadingContainer from "../../common/LoadingContainer";
 
 export default class EmbeddableWorkflowsList extends Component {
 
@@ -50,32 +51,26 @@ export default class EmbeddableWorkflowsList extends Component {
           </Col>
         </Row>
 
-        <Row>
-          <Col>
-            {
-              !this.state.workflows &&
-              <FetchingWorkflows/>
-            }
+        <LoadingContainer loading={!this.state.workflows && !this.state.fetchError}>
+          <Row>
+            <Col>
+              {
+                this.state.fetchError &&
+                <FetchingWorkflowsError/>
+              }
 
-            {
-              this.state.fetchError &&
-              <FetchingWorkflowsError/>
-            }
-
-            {
-              this.state.workflows &&
-              <WorkflowsTable workflows={this.state.workflows}
-                              onWorkflowDeleted={this.fetchWorkflows}/>
-            }
-          </Col>
-        </Row>
+              {
+                this.state.workflows &&
+                <WorkflowsTable workflows={this.state.workflows}
+                                onWorkflowDeleted={this.fetchWorkflows}/>
+              }
+            </Col>
+          </Row>
+        </LoadingContainer>
       </Container>
     );
   }
 }
-
-
-export const FetchingWorkflows = () => <p>Fetching workflows...</p>;
 
 export const FetchingWorkflowsError = () => (
   <Col>

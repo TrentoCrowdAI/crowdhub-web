@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Spinner} from "react-bootstrap";
 
 import {makeCancellable} from "../../../../Services/rest/utils";
 import BlockTypesDefinitionService from "../../../../Services/rest/BlockTypeDefinitionsService";
 import WorkflowEditor from "./WorkflowEditor";
 import "./WorkflowEditorContainer.css";
+import LoadingContainer from "../../../common/LoadingContainer";
 
 export default class WorkflowEditorContainer extends Component {
 
@@ -40,17 +40,11 @@ export default class WorkflowEditorContainer extends Component {
 
 
   render() {
-    // TODO: Handle error
-    if (this.state.fetchingBlockTypeDefinitions || !this.props.runnableWorkflow) {
-      return <LoadingWorkflowEditor/>
-    } else {
-      return <WorkflowEditor  {...this.props} blockTypeDefinitions={this.state.blockTypeDefinitions}/>
-    }
+    return (
+      <LoadingContainer loading={this.state.fetchingBlockTypeDefinitions || !this.props.runnableWorkflow}>
+        <WorkflowEditor  {...this.props} blockTypeDefinitions={this.state.blockTypeDefinitions}/>
+      </LoadingContainer>
+    )
   }
 }
 
-const LoadingWorkflowEditor = () => (
-  <div className="loading-spinner-container">
-    <Spinner animation="border" variant="primary"/>
-  </div>
-);

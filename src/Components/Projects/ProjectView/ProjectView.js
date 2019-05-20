@@ -9,6 +9,7 @@ import {redirectToProjectsList} from "../utils/route";
 import {PROJECTS_PATH} from "../Projects";
 import EmbeddableWorkflowsList from "../../Workflows/WorkflowsList/EmbeddableWorkflowsList";
 import {ItemsView} from "../../Items/ItemsView/ItemsView";
+import LoadingContainer from "../../common/LoadingContainer";
 
 
 export default class ProjectView extends Component {
@@ -42,38 +43,30 @@ export default class ProjectView extends Component {
           </SimpleBreadcrumb>
         </Breadcrumb>
 
-        {
-          !this.state.project &&
-          <FetchingProject/>
-        }
+        <LoadingContainer loading={!this.state.project}>
+            <Row>
+              <ProjectData project={this.state.project}/>
 
-        {
-          this.state.project &&
-          <Row>
-            <ProjectData project={this.state.project}/>
+              <div style={{width: '100%'}}>
+                <hr/>
 
-            <div style={{width: '100%'}}>
-              <hr/>
+                <Tabs defaultActiveKey="workflow">
+                  <Tab eventKey="workflow" title="Workflows">
+                    <EmbeddableWorkflowsList project={this.state.project}/>
+                  </Tab>
 
-              <Tabs defaultActiveKey="workflow">
-                <Tab eventKey="workflow" title="Workflows">
-                  <EmbeddableWorkflowsList project={this.state.project}/>
-                </Tab>
-
-                <Tab eventKey="items" title="Items">
-                  <ItemsView project={this.state.project}/>
-                </Tab>
-              </Tabs>
-            </div>
-          </Row>
-        }
+                  <Tab eventKey="items" title="Items">
+                    <ItemsView project={this.state.project}/>
+                  </Tab>
+                </Tabs>
+              </div>
+            </Row>
+        </LoadingContainer>
 
       </Container>
     );
   }
 }
-
-const FetchingProject = () => (<p>Fetching ...</p>);
 
 function ProjectData({project}) {
   return (

@@ -8,24 +8,48 @@ import "./CreateBlockingContext.css";
 export default class CreateBlockingContext extends Component {
 
   togglePopoverButton = React.createRef();
+  popoverContent = React.createRef();
 
   state = {
     show: false
   };
 
-  onShowPopover = () => this.setState({show: true});
+  showPopover = () => {
+    this.setState({show: true});
+    this.registerListenerToClosePopoverWhenUserClicksOutside();
+  };
 
+  registerListenerToClosePopoverWhenUserClicksOutside() {
+    document.body.addEventListener('click', this.clickListenerToClosePopoverWhenUserClicksOutside);
+  }
+
+  clickListenerToClosePopoverWhenUserClicksOutside = (e) => {
+    const popoverContent = this.popoverContent.current;
+    const clickInPopover = e.path.indexOf(popoverContent) >= 0;
+    if (!clickInPopover) {
+      this.hidePopover();
+    }
+  };
 
   onCreated = (context) => {
-    this.setState({show: false});
+    this.hidePopover();
     this.props.onAdd(context);
   };
+
+  hidePopover = () => {
+    this.setState({show: false});
+    this.unregisterListenerToClosePopoverWhenUserClicksOutside();
+  };
+
+  unregisterListenerToClosePopoverWhenUserClicksOutside() {
+    document.body.removeEventListener('click', this.clickListenerToClosePopoverWhenUserClicksOutside);
+  }
 
   render() {
     return (
       <div>
         <Button className="btn-block"
-                onClick={this.onShowPopover}
+                onClick={this.showPopover}
                 ref={this.togglePopoverButton}>Add blocking context</Button>
         <Overlay
           id="create-blocking-context-popover-container"
@@ -35,8 +59,11 @@ export default class CreateBlockingContext extends Component {
           container={document.getElementById('workflow-editor')}>
 
           <Popover title="Create blocking context"
-                   id="create-blocking-context-popover" placement="left">
-            <CreateBlockingContextPopover onCreated={this.onCreated}/>
+                   id="create-blocking-context-popover"
+                   placement="left">
+            <div ref={this.popoverContent}>
+              <CreateBlockingContextPopover onCreated={this.onCreated}/>
+            </div>
           </Popover>
         </Overlay>
       </div>
@@ -48,7 +75,6 @@ export default class CreateBlockingContext extends Component {
 
 
 class CreateBlockingContextPopover extends Component {
-
 
   state = {
     name: '',

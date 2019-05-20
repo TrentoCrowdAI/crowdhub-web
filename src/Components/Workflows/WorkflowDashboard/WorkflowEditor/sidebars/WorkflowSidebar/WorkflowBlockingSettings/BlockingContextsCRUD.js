@@ -54,11 +54,11 @@ class BlockingContextsTable extends Component {
     }
 
     return (
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size="sm" className="blocking-contexts-table">
         <thead>
         <tr>
           <th/>
-          <th>Name</th>
+          <th className="name-column">Name</th>
           <th/>
         </tr>
         </thead>

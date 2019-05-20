@@ -9,3 +9,6 @@ div.color-box {
 }
 
 
+table.blocking-contexts-table th.name-column {
+    width: 100%;
+}

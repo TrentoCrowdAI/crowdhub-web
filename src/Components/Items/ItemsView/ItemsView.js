@@ -5,6 +5,7 @@ import {ItemsImporter} from "./ItemsImporter";
 import {ItemsTable} from "./ItemsTable";
 import ItemsService from "../../../Services/rest/ItemsService";
 import {makeCancellable} from "../../../Services/rest/utils";
+import LoadingContainer from "../../common/LoadingContainer";
 
 export class ItemsView extends Component {
 
@@ -52,22 +53,12 @@ export class ItemsView extends Component {
           </Row>
         </Container>
 
-        <Container className="items-table-container">
-          {
-            !this.state.items &&
-            <FetchingItems/>
-          }
-
-          {
-            this.state.items &&
+        <LoadingContainer loading={!this.state.items}>
+          <Container className="items-table-container">
             <ItemsTable items={this.state.items} onItemDeleted={this.onItemDeleted}/>
-          }
-        </Container>
+          </Container>
+        </LoadingContainer>
       </div>
     )
   }
 }
-
-const FetchingItems = () => (
-  <Container><p>Loading items ...</p></Container>
-);

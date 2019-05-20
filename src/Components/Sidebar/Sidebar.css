@@ -1,6 +1,6 @@
 :root {
     --sidebarWidth: 300px;
-    --sidebarBackground: #404E67;
+    --sidebarBackground: #E9ECEF;
     --sidebarActiveLink: #F8877C;
     --sidebarLink: #FDFDFE;
 }
@@ -17,7 +17,6 @@
     margin-left: calc(-1 * var(--sidebarWidth));
 
     background: var(--sidebarBackground);
-    color: #fff;
     transition: all 0.3s;
 }
 
@@ -29,6 +28,17 @@
     margin-left: 0;
 }
 
+ul {
+    padding: 0 1em;
+}
+
 ul.sidebar-list li {
     list-style: none;
+    border-bottom: 1px solid var(--separatorColor);;
+    padding-bottom: .5em;
+    margin-bottom: .5em;
+}
+
+ul.sidebar-list li:last-child {
+    border-bottom: none;
 }

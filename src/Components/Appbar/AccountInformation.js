@@ -5,6 +5,7 @@ import userAvatar from "../../images/user-avatar.svg";
 import "./AccountInformation.css";
 import {makeCancellable} from "../../Services/rest/utils";
 import AccountBalanceService from "../../Services/rest/AccountBalanceService";
+import LoadingContainer from "../common/LoadingContainer";
 
 export default class AccountInformation extends Component {
   render() {
@@ -31,7 +32,7 @@ class AccountInformationPreview extends Component {
     return (
       <div>
         <span>User name</span>
-        <img className="user-avatar" src={userAvatar}/>
+        <img className="user-avatar" src={userAvatar} alt="user avatar"/>
       </div>
     );
   }
@@ -67,7 +68,7 @@ class PlatformBalances extends Component {
   componentWillUnmount = () => this.pendingBalancesRequest.cancel();
 
   fetchBalances = async () => {
-    this.setState({balances: null, fetchError:false});
+    this.setState({balances: null, fetchError: false});
     try {
       this.pendingBalancesRequest = makeCancellable(AccountBalanceService.getBalances());
       const balances = await this.pendingBalancesRequest.result;
@@ -79,24 +80,22 @@ class PlatformBalances extends Component {
 
   render() {
     return (
-      <div>
+      <div className="balances-container">
         <h6>Balances</h6>
 
-        {
-          !this.state.balances && !this.state.fetchError &&
-          <p>Fetching balances ...</p>
-        }
+        <LoadingContainer loading={!this.state.balances && !this.state.fetchError}>
 
-        {
-          !this.state.balances && this.state.fetchError &&
-          <p>Error</p>
-        }
+          {
+            !this.state.balances && this.state.fetchError &&
+            <p>Error</p>
+          }
 
+          {
+            this.state.balances && !this.state.fetchError &&
+            this.renderBalances()
+          }
 
-        {
-          this.state.balances && !this.state.fetchError &&
-          this.renderBalances()
-        }
+        </LoadingContainer>
       </div>
     );
   }

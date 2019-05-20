@@ -1,11 +1,11 @@
 import React from 'react';
 import {mount, shallow} from "enzyme";
-import {FetchingProjects, FetchProjectsError, ProjectsList} from "./ProjectsList";
+import {FetchProjectsError, ProjectsList} from "./ProjectsList";
 import {MemoryRouter} from "react-router-dom";
 import ProjectsService from "../../../Services/rest/ProjectsService";
 import mockedProjects from "../../../mock-data/projects";
 import {ProjectsTable, ProjectsTableRow} from "./ProjectsTable";
-import {expectComponent} from "../../../testHelpers/components";
+import {expectComponent, expectIsLoading} from "../../../testHelpers/components";
 
 describe("should show the list of projects", () => {
 
@@ -37,7 +37,7 @@ describe("should show the list of projects", () => {
     const wrapper = await mountProjectsList();
 
     expect(getProjects).toHaveBeenCalled();
-    expectComponent(wrapper, FetchingProjects);
+    expectIsLoading(wrapper);
 
   });
 
