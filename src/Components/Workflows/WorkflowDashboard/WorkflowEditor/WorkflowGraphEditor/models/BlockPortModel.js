@@ -2,6 +2,11 @@ import {DefaultPortModel} from "storm-react-diagrams";
 
 export default class BlockPortModel extends DefaultPortModel {
 
+
+  constructor(isInput, name, label, id) {
+    super(isInput, name, label, id);
+  }
+
   canLinkToPort(port) {
     if (!super.canLinkToPort(port)) {
       return false;
