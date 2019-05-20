@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Form} from 'react-bootstrap';
 
-import AbstractParameterModel from "../AbstractParameterModel";
+import AbstractParameterModel from "../../AbstractParameterModel";
 import {Editor} from "@tinymce/tinymce-react";
+import HtmlModalEditor from "./HtmlModalEditor";
 
 class HtmlModel extends AbstractParameterModel {
   isValid() {
@@ -25,6 +26,7 @@ class HtmlWidget extends Component {
   render() {
     const model = this.getModel();
     const definition = model.getDefinition();
+    const EditorComponent = this.getEditor();
 
     return (
       <Form.Group>
@@ -32,14 +34,24 @@ class HtmlWidget extends Component {
           {definition.description}
         </Form.Text>
 
-
-        <Editor onEditorChange={this.handleEditorChange}
-                initialValue={model.getValue()}
-                init={{menubar: false}}
-                disabled={this.props.disabled}/>
+        <EditorComponent onEditorChange={this.handleEditorChange}
+                         initialValue={model.getValue()}
+                         init={{menubar: false}}
+                         disabled={this.props.disabled}
+                         title={definition.displayName}/>
       </Form.Group>
     );
   }
+
+  getEditor() {
+    const model = this.getModel();
+    const definition = model.getDefinition();
+    if (definition.editorInModal) {
+      return HtmlModalEditor;
+    }
+    return Editor;
+  }
+
 }
 
 export default {
