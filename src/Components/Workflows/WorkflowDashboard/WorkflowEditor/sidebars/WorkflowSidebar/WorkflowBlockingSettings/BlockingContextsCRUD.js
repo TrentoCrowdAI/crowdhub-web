@@ -11,8 +11,7 @@ export default class BlockingContextsCRUD extends Component {
 
   onAddBlockingContext = (context) => {
     this.getBlockingContextsModel().addContext(context);
-    this.forceUpdate();
-    console.log(context);
+    this.props.onModelUpdate();
   };
 
   render() {
@@ -23,7 +22,7 @@ export default class BlockingContextsCRUD extends Component {
           <strong>Blocking contexts</strong>
         </Form.Text>
 
-        <BlockingContextsTable model={model}/>
+        <BlockingContextsTable model={model} onModelUpdate={this.props.onModelUpdate}/>
         <CreateBlockingContext onAdd={this.onAddBlockingContext}/>
       </div>
     );
@@ -36,7 +35,7 @@ class BlockingContextsTable extends Component {
   onRemoveContext = (context) => {
     const model = this.getBlockingContextsModel();
     model.removeContext(context);
-    this.forceUpdate();
+    this.props.onModelUpdate();
   };
 
   getBlockingContextsModel = () => this.props.model;

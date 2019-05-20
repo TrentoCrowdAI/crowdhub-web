@@ -90,7 +90,7 @@ export default class WorkflowGraphEditor extends Component {
   addNodeToGraph = (node) => {
     this.addSelectedListener(node);
     this.getModel().addNode(node);
-    this.forceUpdate();
+    this.props.onModelUpdate();
   };
 
   addSelectedListener = (node) => node.addListener({

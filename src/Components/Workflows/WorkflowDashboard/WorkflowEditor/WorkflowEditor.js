@@ -19,7 +19,7 @@ export default class WorkflowEditor extends Component {
     selectedBlock: null
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     const {runnableWorkflow} = this.props;
     this.graphModel.workflowId = runnableWorkflow.getWorkflow().id;
@@ -35,6 +35,10 @@ export default class WorkflowEditor extends Component {
     // TODO: The logic to block edit is spread everywhere, can we group it somewhere?
     this.graphModel.setLocked(!runnableWorkflow.canBeEdited());
     this.graphModel.setRuns(runnableWorkflow.getRuns());
+    this.onModelUpdated();
+  };
+
+  onModelUpdated = () => {
     this.forceUpdate();
   };
 
@@ -83,7 +87,8 @@ export default class WorkflowEditor extends Component {
               initialGraph={initialGraph}
               graphModel={this.graphModel}
               blockTypeDefinitions={blockTypeDefinitions}
-              onBlockSelected={this.onBlockSelected}/>
+              onBlockSelected={this.onBlockSelected}
+              onModelUpdate={this.onModelUpdated}/>
 
             <WorkflowBreadcrumb workflow={workflow}/>
 
@@ -99,13 +104,13 @@ export default class WorkflowEditor extends Component {
               this.state.selectedBlock ?
                 <BlockConfiguratorSidebar block={this.state.selectedBlock}
                                           graphModel={this.graphModel}
-                                          onModelUpdate={() => this.forceUpdate()}
+                                          onModelUpdate={this.onModelUpdated}
                                           runnableWorkflow={runnableWorkflow}/>
                 :
                 <WorkflowSidebar runnableWorkflow={runnableWorkflow}
                                  onEdit={this.onWorkflowEdited}
                                  graphModel={this.graphModel}
-                                 onModelUpdate={() => this.forceUpdate()}/>
+                                 onModelUpdate={this.onModelUpdated}/>
             }
           </Col>
         </Row>
