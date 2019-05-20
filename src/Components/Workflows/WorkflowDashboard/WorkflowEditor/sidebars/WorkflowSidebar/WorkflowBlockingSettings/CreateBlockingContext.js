@@ -25,7 +25,7 @@ export default class CreateBlockingContext extends Component {
 
   clickListenerToClosePopoverWhenUserClicksOutside = (e) => {
     const popoverContent = this.popoverContent.current;
-    const clickInPopover = e.path.indexOf(popoverContent) >= 0;
+    const clickInPopover = e.composedPath().indexOf(popoverContent) >= 0;
     if (!clickInPopover) {
       this.hidePopover();
     }

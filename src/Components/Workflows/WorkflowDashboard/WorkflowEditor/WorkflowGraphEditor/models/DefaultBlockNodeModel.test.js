@@ -1,9 +1,9 @@
 import {WorkflowGraphEngine} from "../WorkflowGraphEngine";
 import WorkflowGraphModel from "./WorkflowGraphModel";
 import {DefaultBlockNodeModel} from "./DefaultBlockNodeModel";
-import BlockRun, {RunStates} from "../../../../../../models/BlockRun";
-import Runs from "../../../../../../models/Runs";
-import Run from "../../../../../../models/Run";
+import BlockRun, {RunStates} from "../../../../../../Services/RunnableWorkflowService/models/BlockRun";
+import Runs from "../../../../../../Services/RunnableWorkflowService/models/Runs";
+import Run from "../../../../../../Services/RunnableWorkflowService/models/Run";
 
 const {RUNNING, FINISHED} = RunStates;
 

@@ -1,8 +1,8 @@
 import {getJSON} from "./utils";
 import {API_URL} from "../../config";
-import Run from "../../models/Run";
-import BlockRun from "../../models/BlockRun";
-import Runs from "../../models/Runs";
+import Run from "../RunnableWorkflowService/models/Run";
+import BlockRun from "../RunnableWorkflowService/models/BlockRun";
+import Runs from "../RunnableWorkflowService/models/Runs";
 
 const RUNS_URL = `${API_URL}/runs`;
 

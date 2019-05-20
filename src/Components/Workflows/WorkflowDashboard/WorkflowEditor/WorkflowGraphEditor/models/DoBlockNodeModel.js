@@ -1,5 +1,5 @@
 import {DefaultBlockNodeModel} from "./DefaultBlockNodeModel";
-import {DoBlockRunAdapter} from "../../../../../../adapters/DoBlockRunAdapter";
+import {DoBlockRunAdapter} from "../../../../../../Services/RunnableWorkflowService/adapters/DoBlockRunAdapter";
 
 export class DoBlockNodeModel extends DefaultBlockNodeModel {
 

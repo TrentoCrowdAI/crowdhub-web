@@ -1,6 +1,6 @@
-import WorkflowsService from "./rest/WorkflowsService";
-import RunnableWorkflow from "../models/RunnableWorkflow";
-import RunsService from "./rest/RunsService";
+import WorkflowsService from "../rest/WorkflowsService";
+import RunnableWorkflow from "./models/RunnableWorkflow";
+import RunsService from "../rest/RunsService";
 
 const DEFAULT_POLL_INTERVAL = 5000;
 

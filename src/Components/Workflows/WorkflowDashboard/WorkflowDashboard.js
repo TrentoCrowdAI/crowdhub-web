@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {makeCancellable} from "../../../Services/rest/utils";
 import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import WorkflowEditorContainer from "./WorkflowEditor/WorkflowEditorContainer";
-import RunnableWorkflowService from "../../../Services/RunnableWorkflowService";
+import RunnableWorkflowService from "../../../Services/RunnableWorkflowService/RunnableWorkflowService";
 import {redirectToProjectsList} from "../../Projects/utils/route";
 
 /**

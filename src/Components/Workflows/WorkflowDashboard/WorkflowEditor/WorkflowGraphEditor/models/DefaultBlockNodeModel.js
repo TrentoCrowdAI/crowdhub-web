@@ -1,7 +1,7 @@
 import {DefaultNodeModel} from "storm-react-diagrams";
 import {deSerializeParameters, serializeParameters} from "../../ParametersEngine/parameters/serialization";
 import uuid from "uuid";
-import Runs from "../../../../../../models/Runs";
+import Runs from "../../../../../../Services/RunnableWorkflowService/models/Runs";
 
 
 export class DefaultBlockNodeModel extends DefaultNodeModel {

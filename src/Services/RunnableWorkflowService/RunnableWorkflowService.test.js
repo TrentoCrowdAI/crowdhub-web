@@ -1,8 +1,8 @@
-import WorkflowsService from "./rest/WorkflowsService";
-import RunsService from "./rest/RunsService";
-import Runs from "../models/Runs";
+import WorkflowsService from "../rest/WorkflowsService";
+import RunsService from "../rest/RunsService";
+import Runs from "./models/Runs";
 import RunnableWorkflowService from "./RunnableWorkflowService";
-import RunnableWorkflow from "../models/RunnableWorkflow";
+import RunnableWorkflow from "./models/RunnableWorkflow";
 
 test('should retrieve the workflow and the runs', async () => {
   // given
