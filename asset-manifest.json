@@ -1,17 +1,18 @@
 {
-  "main.css": "/servant-web/static/css/main.3cd6e16f.chunk.css",
-  "main.js": "/servant-web/static/js/main.0eb17391.chunk.js",
-  "main.js.map": "/servant-web/static/js/main.0eb17391.chunk.js.map",
+  "main.css": "/servant-web/static/css/main.cb518174.chunk.css",
+  "main.js": "/servant-web/static/js/main.f704d162.chunk.js",
+  "main.js.map": "/servant-web/static/js/main.f704d162.chunk.js.map",
   "runtime~main.js": "/servant-web/static/js/runtime~main.23ab9975.js",
   "runtime~main.js.map": "/servant-web/static/js/runtime~main.23ab9975.js.map",
-  "static/css/2.f74dca56.chunk.css": "/servant-web/static/css/2.f74dca56.chunk.css",
-  "static/js/2.e7ec1af3.chunk.js": "/servant-web/static/js/2.e7ec1af3.chunk.js",
-  "static/js/2.e7ec1af3.chunk.js.map": "/servant-web/static/js/2.e7ec1af3.chunk.js.map",
+  "static/css/2.11a391b8.chunk.css": "/servant-web/static/css/2.11a391b8.chunk.css",
+  "static/js/2.311d9331.chunk.js": "/servant-web/static/js/2.311d9331.chunk.js",
+  "static/js/2.311d9331.chunk.js.map": "/servant-web/static/js/2.311d9331.chunk.js.map",
   "index.html": "/servant-web/index.html",
-  "precache-manifest.d5fc88c65888dd58fe1818af73a34aa3.js": "/servant-web/precache-manifest.d5fc88c65888dd58fe1818af73a34aa3.js",
+  "precache-manifest.87fc4747e59ade53ce48e7c25f713190.js": "/servant-web/precache-manifest.87fc4747e59ade53ce48e7c25f713190.js",
   "service-worker.js": "/servant-web/service-worker.js",
-  "static/css/2.f74dca56.chunk.css.map": "/servant-web/static/css/2.f74dca56.chunk.css.map",
-  "static/css/main.3cd6e16f.chunk.css.map": "/servant-web/static/css/main.3cd6e16f.chunk.css.map",
+  "static/css/2.11a391b8.chunk.css.map": "/servant-web/static/css/2.11a391b8.chunk.css.map",
+  "static/css/main.cb518174.chunk.css.map": "/servant-web/static/css/main.cb518174.chunk.css.map",
   "static/media/all.min.css": "/servant-web/static/media/fa-solid-900.ff8d9f8a.ttf",
-  "static/media/menu.svg": "/servant-web/static/media/menu.7d88ba55.svg"
+  "static/media/menu.svg": "/servant-web/static/media/menu.7d88ba55.svg",
+  "static/media/user-avatar.svg": "/servant-web/static/media/user-avatar.d4a7540a.svg"
 }
