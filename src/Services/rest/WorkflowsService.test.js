@@ -32,9 +32,28 @@ describe('create new workflow', () => {
 
 describe('delete a workflow', () => {
   it('should send a DELETE to /workflows/:id', async () => {
-    const workflow = serviceWorkflows;
+    const workflow = serviceWorkflows[0];
     await WorkflowsService.deleteWorkflow(workflow);
 
     expect(fetch).toHaveBeenCalledWith(`${API_URL}/workflows/${workflow.id}`, {method: 'DELETE'});
+  });
+});
+
+describe('estimate the cost of a do block', () => {
+  it('should send a POST to /workflows/:id/:blockId', async () => {
+    // given
+    const workflowId = 123;
+    const blockId = 234;
+
+    // when
+    await WorkflowsService.estimateDoBlockCost(workflowId, blockId);
+
+    // then
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/workflows/${workflowId}/${blockId}/estimated-cost`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   });
 });

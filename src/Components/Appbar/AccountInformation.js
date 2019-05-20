@@ -39,7 +39,7 @@ class AccountInformationPreview extends Component {
 }
 
 
-class AccountInformationPopoverContent extends Component {
+export class AccountInformationPopoverContent extends Component {
   render() {
     return (
       <div>
@@ -54,7 +54,7 @@ class AccountInformationPopoverContent extends Component {
 }
 
 
-class PlatformBalances extends Component {
+export class PlatformBalances extends Component {
 
   pendingBalancesRequest;
 
@@ -84,7 +84,6 @@ class PlatformBalances extends Component {
         <h6>Balances</h6>
 
         <LoadingContainer loading={!this.state.balances && !this.state.fetchError}>
-
           {
             !this.state.balances && this.state.fetchError &&
             <p>Error</p>
@@ -94,7 +93,6 @@ class PlatformBalances extends Component {
             this.state.balances && !this.state.fetchError &&
             this.renderBalances()
           }
-
         </LoadingContainer>
       </div>
     );

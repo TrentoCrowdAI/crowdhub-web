@@ -11,12 +11,26 @@ export default {
 
   _cachedBalance: null,
 
-  async getBalances() { // TODO: This method is doing too much: split caching and request
-    if(this._cachedBalance) {
-      return this._cachedBalance;
+  async getBalances() {
+    if (this._isBalancesCached()) {
+      return this._getCachedBalance();
     }
     const json = await getJSON(ACCOUNT_BALANCE_URL);
-    this._cachedBalance = JSONtoBalances(json);
+    const balances = JSONtoBalances(json);
+    this._cacheBalances(balances);
+    return balances;
+  },
+
+  _isBalancesCached() {
+    return !!this._getCachedBalance();
+  },
+
+  _getCachedBalance() {
     return this._cachedBalance;
+  },
+
+  _cacheBalances(balances) {
+    this._cachedBalance = balances;
   }
 }
+
