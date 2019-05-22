@@ -16,14 +16,21 @@ export default class BlockingContextsCRUD extends Component {
 
   render() {
     const model = this.getBlockingContextsModel();
+    const {disabled} = this.props;
     return (
       <div>
         <Form.Text className="text-muted">
           <strong>Blocking contexts</strong>
         </Form.Text>
 
-        <BlockingContextsTable model={model} onModelUpdate={this.props.onModelUpdate}/>
-        <CreateBlockingContext onAdd={this.onAddBlockingContext}/>
+        <BlockingContextsTable model={model}
+                               onModelUpdate={this.props.onModelUpdate}
+                               disabled={disabled}/>
+
+        {
+          !disabled &&
+          <CreateBlockingContext onAdd={this.onAddBlockingContext}/>
+        }
       </div>
     );
   }
@@ -43,6 +50,7 @@ class BlockingContextsTable extends Component {
   render() {
     const model = this.getBlockingContextsModel();
     const contexts = model.getContexts();
+    const {disabled} = this.props;
 
     if (contexts.length <= 0) {
       return (
@@ -58,7 +66,11 @@ class BlockingContextsTable extends Component {
         <tr>
           <th/>
           <th className="name-column">Name</th>
-          <th/>
+
+          {
+            !disabled &&
+            <th/>
+          }
         </tr>
         </thead>
         <tbody>
@@ -70,11 +82,14 @@ class BlockingContextsTable extends Component {
                 <div className="color-box" style={{backgroundColor: context.color}}/>
               </td>
               <td>{context.name}</td>
-              <td>
-                <a className="icon-button delete" onClick={() => this.onRemoveContext(context)}>
-                  <i className="fas fa-trash-alt"/>
-                </a>
-              </td>
+              {
+                !disabled &&
+                <td>
+                  <a className="icon-button delete" onClick={() => this.onRemoveContext(context)}>
+                    <i className="fas fa-trash-alt"/>
+                  </a>
+                </td>
+              }
             </tr>
           ))
         }

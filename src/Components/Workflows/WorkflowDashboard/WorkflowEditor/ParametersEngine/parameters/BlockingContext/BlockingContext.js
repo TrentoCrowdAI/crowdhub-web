@@ -36,6 +36,8 @@ class BlockingContextParameterWidget extends Component {
     this.props.onModelUpdated();
   };
 
+  isDisabled = () => this.props.disabled;
+
   render() {
     const model = this.getModel();
     const definition = model.getDefinition();
@@ -62,13 +64,14 @@ class BlockingContextParameterWidget extends Component {
   renderToggle() {
     const model = this.getModel();
     if (!model.isBlockingContextSelected()) {
-      return <Dropdown.Toggle className="btn-block">None</Dropdown.Toggle>;
+      return <Dropdown.Toggle disabled={this.isDisabled()} className="btn-block">None</Dropdown.Toggle>;
     }
 
 
     const context = this.getBlockingContextsModel().getBlockingContextById(model.getBlockingContextId());
     return (
-      <Dropdown.Toggle className="btn-block"
+      <Dropdown.Toggle disabled={this.isDisabled()}
+                       className="btn-block"
                        style={{
                          backgroundColor: context.color,
                          border: context.color,

@@ -11,6 +11,7 @@ import WorkflowBlockingSettings from "./WorkflowBlockingSettings/WorkflowBlockin
  */
 export default ({runnableWorkflow, onEdit, onModelUpdate, graphModel}) => {
   const workflow = runnableWorkflow.getWorkflow();
+  const disabled = runnableWorkflow.isRunning();
   return (
     <SidebarWithTitle
       title="Workflow properties"
@@ -19,10 +20,11 @@ export default ({runnableWorkflow, onEdit, onModelUpdate, graphModel}) => {
           <hr/>
           <NameAndDescriptionFields onEdit={onEdit}
                                     workflow={workflow}
-                                    disabled={runnableWorkflow.isRunning()}/>
+                                    disabled={disabled}/>
 
           <WorkflowBlockingSettings graphModel={graphModel}
-                                    onModelUpdate={onModelUpdate}/>
+                                    onModelUpdate={onModelUpdate}
+                                    disabled={disabled}/>
 
           <WorkflowRunsControls runnableWorkflow={runnableWorkflow}/>
         </div>

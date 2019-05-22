@@ -4,19 +4,17 @@ import {Form} from 'react-bootstrap';
 import BlockingContextsCRUD from "./BlockingContextsCRUD";
 import {ParameterContainerCard} from "../../../ParametersEngine/ParametersEngine";
 
-export default class WorkflowBlockingSettings extends Component {
-
-  render() {
-    const {graphModel, onModelUpdate} = this.props;
-    return (
-      <ParameterContainerCard title="Blocking workers">
-        <WorkflowBlockingCheckbox graphModel={graphModel} onModelUpdate={onModelUpdate}/>
-        <BlockingContextsCRUD graphModel={graphModel} onModelUpdate={onModelUpdate}/>
-      </ParameterContainerCard>
-    );
-  }
-
-}
+const WorkflowBlockingSettings = ({graphModel, onModelUpdate, disabled}) => (
+  <ParameterContainerCard title="Blocking workers">
+    <WorkflowBlockingCheckbox graphModel={graphModel}
+                              onModelUpdate={onModelUpdate}
+                              disabled={disabled}/>
+    <BlockingContextsCRUD graphModel={graphModel}
+                          onModelUpdate={onModelUpdate}
+                          disabled={disabled}/>
+  </ParameterContainerCard>
+);
+export default WorkflowBlockingSettings;
 
 
 class WorkflowBlockingCheckbox extends Component {
@@ -52,7 +50,8 @@ class WorkflowBlockingCheckbox extends Component {
                       type="checkbox"
                       label="Block workers"
                       value={blockingContextsModel.areSomeBlockingContextsEnabled()}
-                      onChange={this.onChange}/>
+                      onChange={this.onChange}
+                      disabled={this.props.disabled}/>
         </Form.Group>
       </div>
     );
