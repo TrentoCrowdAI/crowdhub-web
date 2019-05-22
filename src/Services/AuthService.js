@@ -1,9 +1,14 @@
-/* global gapi auth2 */
+/* global gapi */
 
-
+/**
+ * AuthService uses the Google Platform Library to authenticate users. This library is loaded from a script specified in
+ * the index.html, where you can also find the client id.
+ * Since the script exposes a global object gapi at an unknown time, this Service need to be initialized.
+ * The initialization process will periodically check if the library is loaded until it can find the gapi global object
+ */
 const AuthService = {
 
-  authChangeListeners: [],
+  _authChangeListeners: [],
   auth2: null,
 
   async init() {
@@ -12,6 +17,11 @@ const AuthService = {
     this._notifyListeners();
   },
 
+  /**
+   * Wait until the Google Platform Library exposes the gapi global object
+   * @returns {Promise<any>}
+   * @private
+   */
   _waitForGapiToLoad() {
     return new Promise(resolve => {
       const interval = setInterval(() => {
@@ -23,6 +33,11 @@ const AuthService = {
     });
   },
 
+  /**
+   * Request to the Google Platform Library to load the auth2 module
+   * @returns {Promise<any>}
+   * @private
+   */
   _loadAuth2Api() {
     return new Promise(resolve => {
       gapi.load('auth2', function () {
@@ -33,10 +48,11 @@ const AuthService = {
   },
 
   addOnAuthChangeListener(listener) {
-    this.authChangeListeners.push(listener);
+    this._authChangeListeners.push(listener);
   },
 
   renderSignInButton(containerId, onSignedIn) {
+    this.assertInitialized();
     gapi.signin2.render(containerId, {
       onSuccess: () => {
         onSignedIn();
@@ -46,7 +62,7 @@ const AuthService = {
   },
 
   _notifyListeners() {
-    this.authChangeListeners.forEach(listener => listener())
+    this._authChangeListeners.forEach(listener => listener())
   },
 
   isInitialized() {
@@ -54,10 +70,12 @@ const AuthService = {
   },
 
   isSignedIn() {
+    this.assertInitialized();
     return this.auth2.isSignedIn.get();
   },
 
   signOut() {
+    this.assertInitialized();
     return new Promise(resolve => this.auth2.signOut().then(() => {
       resolve();
       this._notifyListeners();
@@ -65,11 +83,19 @@ const AuthService = {
   },
 
   getBearerToken () {
+    this.assertInitialized();
     return this.auth2.currentUser.get().getAuthResponse().id_token;
   },
 
   getUserInfo(){
+    this.assertInitialized();
     return this.auth2.currentUser.get().getBasicProfile();
+  },
+
+  assertInitialized () {
+    if(!this.isInitialized()) {
+      throw new Error('AuthService not initialized');
+    }
   }
 
 };

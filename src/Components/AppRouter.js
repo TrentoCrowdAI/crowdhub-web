@@ -5,9 +5,11 @@ import {Projects, PROJECTS_PATH} from "./Projects/Projects";
 import Workflows, {WORKFLOWS_PATH} from "./Workflows/Workflows";
 import AuthService from '../Services/AuthService';
 import Login, {LOGIN_PATH} from "./Login/Login";
+import LoadingContainer from "./common/LoadingContainer";
 
 
-export default class AppRouter extends Component {
+export default class AuthenticatedAppRouter extends Component {
+
   state = {
     authServiceInitialized: false
   };
@@ -28,24 +30,30 @@ export default class AppRouter extends Component {
 
   renderInitializingAuthService() {
     return (
-      <p>Caricamento ...</p>
+      <div style={{height: '100vh'}}>
+        <LoadingContainer loading/>
+      </div>
     );
   }
 
   renderRouter() {
     return (
-      <Switch>
-        <PrivateRoute path={PROJECTS_PATH} component={Projects}/>
-        <PrivateRoute path={WORKFLOWS_PATH} component={Workflows}/>
-
-        <NotLoggedInRoute path={LOGIN_PATH} component={Login}/>
-
-        {/* default */}
-        <Route render={() => (<Redirect to={PROJECTS_PATH}/>)}/>
-      </Switch>
+      <AppRouter/>
     );
   }
 }
+
+const AppRouter = () => (
+  <Switch>
+    <PrivateRoute path={PROJECTS_PATH} component={Projects}/>
+    <PrivateRoute path={WORKFLOWS_PATH} component={Workflows}/>
+
+    <NotLoggedInRoute path={LOGIN_PATH} component={Login}/>
+
+    {/* default */}
+    <Route render={() => (<Redirect to={PROJECTS_PATH}/>)}/>
+  </Switch>
+);
 
 const PrivateRoute = ({path, component: Component}) => (
   <Route path={path}
@@ -59,7 +67,7 @@ const PrivateRoute = ({path, component: Component}) => (
 const NotLoggedInRoute = ({path, component: Component}) => (
   <Route path={path}
          render={() => AuthService.isSignedIn() ?
-           <Redirect to={PROJECTS_PATH}/>:
+           <Redirect to={PROJECTS_PATH}/> :
            <Component/>
          }/>
 );

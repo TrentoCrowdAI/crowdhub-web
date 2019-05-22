@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./Appbar/AppBar";
-import AppRouter from "./AppRouter";
+import AuthenticatedAppRouter from "./AppRouter";
 import AuthService from "../Services/AuthService";
 
 export default class Layout extends Component {
@@ -37,7 +37,7 @@ export default class Layout extends Component {
               <AppBar onToggleSidebar={this.onToggleSidebar}/>
             }
 
-            <AppRouter/>
+            <AuthenticatedAppRouter/>
           </div>
         </div>
       </HashRouter>
