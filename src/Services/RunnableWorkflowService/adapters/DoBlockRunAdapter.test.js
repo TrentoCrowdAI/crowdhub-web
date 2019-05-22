@@ -49,6 +49,16 @@ createTest([
   isFinished: true
 });
 
+createTest([
+  new Run(1, [
+    new BlockRun(RUNNING, 1, null, 'a')
+  ], new Date())
+], {
+  isRunning: true,
+  isFailed: false,
+  isFinished: false
+});
+
 
 function createTest(runs, expected) {
 

@@ -1,6 +1,6 @@
 import {RunStates} from "../models/BlockRun";
 
-const {FAILED, RUNNING, FINISHED} = RunStates;
+const {FAILED, RUNNING, FINISHED, NOT_STARTED} = RunStates;
 
 export class DoBlockRunAdapter {
 
@@ -10,9 +10,11 @@ export class DoBlockRunAdapter {
 
   constructor(run, blockId) {
     this.blockId = blockId;
-    this.publishRun = run.getBlockRun(blockId);
-    this.waitRun = run.getBlockRun(`${blockId}_wait`);
+    this.publishRun = DoBlockRunAdapter._getBlockRunOrNotStarted(run, blockId);
+    this.waitRun = DoBlockRunAdapter._getBlockRunOrNotStarted(run, `${blockId}_wait`);
   }
+
+  static _getBlockRunOrNotStarted = (run, blockId) => run.getBlockRun(blockId) || {getState: () => NOT_STARTED};
 
   static adaptRuns(runs, blockId) {
     return runs.runs.map(run => new DoBlockRunAdapter(run, blockId));
