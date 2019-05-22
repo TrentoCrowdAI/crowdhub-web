@@ -63,7 +63,7 @@ export class PlatformBalances extends Component {
     fetchError: false
   };
 
-  componentDidMount = () => this.fetchBalances();
+  componentDidMount = async () => await this.fetchBalances();
 
   componentWillUnmount = () => this.pendingBalancesRequest.cancel();
 
@@ -98,7 +98,7 @@ export class PlatformBalances extends Component {
     );
   }
 
-  static prepareNumber = (balance) => balance.toFixed(2);
+  static prepareNumber = (balance) => typeof balance === "number" ? balance.toFixed(2) : "not available";
 
   renderBalances = () => {
     const {tolokaSandbox, tolokaNormal, f8} = this.state.balances;

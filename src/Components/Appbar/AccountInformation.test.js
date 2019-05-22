@@ -9,8 +9,8 @@ import mockedAccountBalances from '../../mock-data/account-balances';
 
 describe('should show the balances of the account', () => {
 
-  const mockGetBlances = () => {
-    const getBalances = jest.fn(() => new Promise((resolve) => resolve(mockedAccountBalances)));
+  const mockGetBlances = (balances = mockedAccountBalances) => {
+    const getBalances = jest.fn(() => new Promise((resolve) => resolve(balances)));
     AccountBalanceService.getBalances = getBalances;
     return getBalances;
   };
@@ -27,17 +27,37 @@ describe('should show the balances of the account', () => {
     expectIsLoading(wrapper);
   });
 
-  it('shows the balance after loading', () => {
+  const mountAndWaitForRequestToBalances = async () => {
+    const wrapper = await mount(<AccountInformationPopoverContent/>);
+    await wrapper.update();
+    await wrapper.update();
+    return wrapper;
+  };
+
+  it('shows the balance after loading', async () => {
     // given
     const getBalances = mockGetBlances();
 
     // when
-    const wrapper = mount(<AccountInformationPopoverContent/>);
-    wrapper.update();
+    const wrapper = await mountAndWaitForRequestToBalances();
 
     // then
     expect(getBalances).toHaveBeenCalled();
     expectComponent(wrapper, PlatformBalances);
+  });
+
+  it("shows 'not available' on one balance if that balance is not available", async () => {
+    // given
+    mockGetBlances({
+      ...mockedAccountBalances,
+      f8: 'not available'
+    });
+
+    // when
+    const wrapper = await mountAndWaitForRequestToBalances();
+
+    // then
+    expect(wrapper.html()).toContain("not available");
   });
 
 });
