@@ -8,7 +8,6 @@ export default class BlockRunsControls extends Component {
     const {blockModel} = this.props;
     return <RunsControls runnable={blockModel}
                          downloadLinkFactory={(run, format) => CacheService.getDownloadLink(run.getCacheId(), format)}
-                         downloadNameFactory={(run, format) => `${blockModel.getLabel()} #${run.getRunId()}.${format}`}
                          startText="Start block"
                          onStart={() => console.error('not implemented yet')}
                          isStarting={false}/>;

@@ -5,7 +5,7 @@ import ResultDownloader from "./ResultDownloader";
 import LoadingButton from "../../../../../common/LoadingButton";
 import "./RunsControls.css";
 
-export default ({runnable, downloadNameFactory, downloadLinkFactory, onStart, isStarting, startText}) => (
+export default ({runnable, downloadLinkFactory, onStart, isStarting, startText}) => (
   <div>
     <Card>
       <Card.Header>Execution</Card.Header>
@@ -31,7 +31,6 @@ export default ({runnable, downloadNameFactory, downloadLinkFactory, onStart, is
       <Card.Header>Results</Card.Header>
       <Card.Body>
         <ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                          downloadNameFactory={downloadNameFactory}
                           runnable={runnable}/>
       </Card.Body>
     </Card>

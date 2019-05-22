@@ -21,7 +21,6 @@ describe('no results', () => {
 });
 
 const downloadLinkFactory = (run) => `http://localhost/${run.getRunId()}`;
-const downloadNameFactory = (run) => `Download ${run.getRunId()}`;
 
 describe('test the latest results button', ()=>{
   it('should display the button to download the latest result', () => {
@@ -33,7 +32,6 @@ describe('test the latest results button', ()=>{
 
     // when
     const wrapper = mount(<ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                                            downloadNameFactory={downloadNameFactory}
                                             runnable={runnable}/>);
 
     // then
@@ -43,7 +41,6 @@ describe('test the latest results button', ()=>{
     expect(button.prop('id')).toBe(1);
     expect(button.prop('isLatest')).toBe(true);
     expect(button.prop('link')).toBe('http://localhost/1');
-    expect(button.prop('downloadName')).toBe('Download 1');
 
     expect(button.html()).toContain("Download latest result");
   });
@@ -58,7 +55,6 @@ describe('test the latest results button', ()=>{
 
     // when
     const wrapper = mount(<ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                                            downloadNameFactory={downloadNameFactory}
                                             runnable={runnable}/>);
 
     // then
@@ -68,7 +64,6 @@ describe('test the latest results button', ()=>{
     expect(button.prop('id')).toBe(1);
     expect(button.prop('isLatest')).toBe(false);
     expect(button.prop('link')).toBe('http://localhost/1');
-    expect(button.prop('downloadName')).toBe('Download 1');
 
     expect(button.html()).toContain("Download #1");
   });
@@ -82,7 +77,6 @@ describe('test the dropdown', () => {
       getFinishedRuns: () => [{getRunId: () => 1}]
     };
     const wrapper = mount(<ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                                            downloadNameFactory={downloadNameFactory}
                                             runnable={runnable}/>);
 
     // when
@@ -100,7 +94,6 @@ describe('test the dropdown', () => {
       getFinishedRuns: () => [{getRunId: () => 1}]
     };
     const wrapper = mount(<ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                                            downloadNameFactory={downloadNameFactory}
                                             runnable={runnable}/>);
 
     // when

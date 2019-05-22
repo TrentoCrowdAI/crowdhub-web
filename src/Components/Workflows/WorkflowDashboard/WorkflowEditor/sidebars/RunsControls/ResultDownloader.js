@@ -14,7 +14,7 @@ export default class ResultDownloader extends Component {
   onChangeDownloadFormat = (downloadFormat) => this.setState({downloadFormat});
 
   render() {
-    const {runnable, downloadNameFactory, downloadLinkFactory} = this.props;
+    const {runnable, downloadLinkFactory} = this.props;
     if (runnable.getFinishedRuns().length <= 0) {
       return (
         <NoResultsMessage/>
@@ -41,7 +41,6 @@ export default class ResultDownloader extends Component {
 
         <Dropdown as={ButtonGroup} className="btn-block">
           <LatestDownloadButton link={downloadLinkFactory(latestFinishedRun, selectedFormat)}
-                                downloadName={downloadNameFactory(latestFinishedRun, selectedFormat)}
                                 isLatest={!runnable.isRunning()}
                                 id={latestFinishedRun.getRunId()}/>
 
@@ -52,7 +51,6 @@ export default class ResultDownloader extends Component {
               runnable.getFinishedRuns().map((run, index) => (
                 <DropdownDownload key={run.getRunId()}
                                   link={downloadLinkFactory(run, selectedFormat)}
-                                  downloadName={downloadNameFactory(run, selectedFormat)}
                                   isLatest={!runnable.isRunning() && index === 0}
                                   id={run.getRunId()}/>
               ))
@@ -66,14 +64,14 @@ export default class ResultDownloader extends Component {
 
 export const NoResultsMessage = () => (<span>No results available yet</span>);
 
-export const LatestDownloadButton = ({link, downloadName, isLatest, id}) => (
-  <a className="btn btn-success" style={{color: 'white'}} href={link} download={downloadName}>
+export const LatestDownloadButton = ({link, isLatest, id}) => (
+  <a className="btn btn-success" style={{color: 'white'}} href={link} target="_blank">
     {isLatest ? 'Download latest results' : `Download #${id}`}
   </a>
 );
 
-export const DropdownDownload = ({link, downloadName, isLatest, id}) => (
-  <Dropdown.Item href={link} download={downloadName}>
+export const DropdownDownload = ({link, isLatest, id}) => (
+  <Dropdown.Item href={link} target="_blank">
     #{id} {isLatest ? '- Latest ' : ''}
   </Dropdown.Item>
 );
