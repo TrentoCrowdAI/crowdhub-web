@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
-import {Button, OverlayTrigger, Popover} from "react-bootstrap";
-
-import userAvatar from "../../images/user-avatar.svg";
+import {OverlayTrigger, Popover} from "react-bootstrap";
 import "./AccountInformation.css";
 import {makeCancellable} from "../../Services/rest/utils";
 import AccountBalanceService from "../../Services/rest/AccountBalanceService";
 import LoadingContainer from "../common/LoadingContainer";
+import AuthService from "../../Services/AuthService";
+import LoadingButton from "../common/LoadingButton";
+import {LOGIN_PATH} from "../Login/Login";
+import {Redirect} from "react-router-dom";
 
 export default class AccountInformation extends Component {
   render() {
     return (
       <OverlayTrigger
         placement="bottom"
+        trigger="click"
         overlay={
           <Popover id="account-information-popover"
                    title="Account information">
@@ -29,10 +32,11 @@ export default class AccountInformation extends Component {
 
 class AccountInformationPreview extends Component {
   render() {
+    const userInfo = AuthService.getUserInfo();
     return (
       <div>
-        <span>User name</span>
-        <img className="user-avatar" src={userAvatar} alt="user avatar"/>
+        <span>{userInfo.getName()}</span>
+        <img className="user-avatar" src={userInfo.getImageUrl()} alt="user avatar"/>
       </div>
     );
   }
@@ -115,9 +119,34 @@ export class PlatformBalances extends Component {
 
 
 class LogoutButton extends Component {
+
+  state = {
+    loggingOut: false,
+    loggedOut: false
+  };
+
+  onLogout = async () => {
+    this.setState({loggingOut: true});
+    try {
+      await AuthService.signOut();
+      this.setState({loggedOut: true});
+    } catch (e) {
+      console.error(e);
+      // TODO: Handle error
+    }
+    this.setState({loggingOut: false});
+  };
+
   render() {
+    if (this.state.loggedOut) {
+      return this.renderRedirect();
+    }
     return (
-      <Button className="btn-block">Logout</Button>
+      <LoadingButton isSaving={this.state.loggingOut} onClick={this.onLogout} block>Logout</LoadingButton>
     );
   }
+
+  renderRedirect = () => (
+    <Redirect to={LOGIN_PATH}/>
+  );
 }

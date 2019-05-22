@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import Sidebar from './Sidebar/Sidebar';
 import AppBar from "./Appbar/AppBar";
 import AppRouter from "./AppRouter";
+import AuthService from "../Services/AuthService";
 
 export default class Layout extends Component {
 
@@ -14,18 +15,29 @@ export default class Layout extends Component {
     sidebarOpen: false
   };
 
+  componentDidMount() {
+    AuthService.addOnAuthChangeListener(() => this.forceUpdate());
+  }
+
   render() {
+    const showSidebarAndAppBar = AuthService.isInitialized() && AuthService.isSignedIn();
     return (
       <HashRouter>
         <div className="wrapper">
-          {/* Left collapsable sidebar */}
-          <Sidebar sidebarOpen={this.state.sidebarOpen}/>
+          {
+            /* Left collapsable sidebar */
+            showSidebarAndAppBar &&
+            <Sidebar sidebarOpen={this.state.sidebarOpen}/>
+          }
 
           {/* Main content */}
           <div className="content" style={{'display': 'flex', 'flexDirection': 'column'}}>
-            <AppBar onToggleSidebar={this.onToggleSidebar}/>
+            {
+              showSidebarAndAppBar &&
+              <AppBar onToggleSidebar={this.onToggleSidebar}/>
+            }
 
-            <AppRouter />
+            <AppRouter/>
           </div>
         </div>
       </HashRouter>

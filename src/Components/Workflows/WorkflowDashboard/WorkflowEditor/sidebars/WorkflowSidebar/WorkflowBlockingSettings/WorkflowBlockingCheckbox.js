@@ -45,7 +45,6 @@ export default class WorkflowBlockingCheckbox extends Component {
   renderCheckboxIndeterminateState() {
     const checkbox = this.checkboxRef.current;
     if (checkbox) {
-      console.log('inde',  this.isIndeterminate());
       checkbox.indeterminate = this.isIndeterminate();
     }
   }
