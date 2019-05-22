@@ -1,3 +1,5 @@
+export const DEFAULT_WORKER_BLOCKED_MESSAGE =  "<p><h1>Thank you</h1>You've already worked on another job related to this project</p>";
+
 export default class BlockingContextsModel {
 
   graphModel;
@@ -52,7 +54,8 @@ export default class BlockingContextsModel {
 
   static getDefaultContext = () => ({
     name: 'Default',
-    color: '#ffaff3'
+    color: '#ffaff3',
+    workerBlockedMessage: "<p><h1>Thank you</h1>You've already worked on another job related to this project</p>"
   });
 
   _enableContextForAllDoBlocks() {

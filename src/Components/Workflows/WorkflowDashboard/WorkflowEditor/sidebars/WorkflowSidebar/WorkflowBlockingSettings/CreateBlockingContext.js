@@ -4,6 +4,7 @@ import {Button, Col, Form, Overlay, Popover} from "react-bootstrap";
 
 import RandomColorPicker from "./RandomColorPicker";
 import "./CreateBlockingContext.css";
+import {DEFAULT_WORKER_BLOCKED_MESSAGE} from "../../../WorkflowGraphEditor/models/BlockingContextsModel";
 
 export default class CreateBlockingContext extends Component {
 
@@ -91,7 +92,8 @@ class CreateBlockingContextPopover extends Component {
     this.props.onCreated({
       id: uuid(),
       name: this.state.name,
-      color: this.state.color
+      color: this.state.color,
+      workerBlockedMessage: DEFAULT_WORKER_BLOCKED_MESSAGE
     });
     this.setState({name: '', color: null});
   };
@@ -109,7 +111,6 @@ class CreateBlockingContextPopover extends Component {
                           value={name}
                           onChange={this.onNameChange}/>
           </Form.Group>
-
         </Col>
         <Col xs="8">
           <RandomColorPicker color={color} onChange={this.onChangeColor}/>

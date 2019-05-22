@@ -12,3 +12,8 @@ div.color-box {
 table.blocking-contexts-table th.name-column {
     width: 100%;
 }
+
+
+td.actions-cell div.actions {
+    min-width: 3em;
+}
