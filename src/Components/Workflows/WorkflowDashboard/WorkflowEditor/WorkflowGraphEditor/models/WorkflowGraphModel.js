@@ -3,7 +3,7 @@ import BlockingContextsModel from "./BlockingContextsModel";
 
 export default class WorkflowGraphModel extends DiagramModel {
 
-  blockingContexts = new BlockingContextsModel();
+  blockingContexts = new BlockingContextsModel(this);
 
   deSerialize(data, engine) {
     super.deSerialize(data, engine);

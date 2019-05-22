@@ -1,3 +1,5 @@
+import {DoBlockNodeModel} from "./DoBlockNodeModel";
+
 export const DEFAULT_WORKER_BLOCKED_MESSAGE = "<p><h1>Thank you</h1>You've already worked on another job related to this project</p>";
 
 export default class BlockingContextsModel {
@@ -12,7 +14,6 @@ export default class BlockingContextsModel {
   deSerialize(contexts) {
     this.setContexts(contexts);
   }
-
 
   setContexts(contexts) {
     this.contexts = contexts;
@@ -33,13 +34,9 @@ export default class BlockingContextsModel {
   removeContext(toRemove) {
     const index = this.contexts.indexOf(toRemove);
     if (index >= 0) {
-      this._disableBlockingContext(toRemove);
+      this._disableContextForAllDoBlocks(toRemove);
       this.contexts.splice(index, 1);
     }
-  }
-
-  _disableBlockingContext(context) {
-    // TODO: Search all do block that use this and disable
   }
 
   addContext(context) {
@@ -54,27 +51,49 @@ export default class BlockingContextsModel {
   }
 
   static getDefaultContext = () => ({
+    id: 'default-blocking-context',
     name: 'Default',
     color: '#ffaff3',
     workerBlockedMessage: "<p><h1>Thank you</h1>You've already worked on another job related to this project</p>"
   });
 
-  _enableContextForAllDoBlocks() {
+  _enableContextForAllDoBlocks = (context) =>
+    this.getBlockingContextModelsOfDoBlocks()
+      .forEach(blockingContextModel => blockingContextModel.setBlockingContextId(context.id));
 
+  getBlockingContextModelsOfDoBlocks = () => this.getDoBlockModels()
+    .map(block => block.getBlockingContextModelParameter());
+
+  getDoBlockModels() {
+    return this.graphModel.getBlocksArray().filter(block => block instanceof DoBlockNodeModel);
   }
 
   removeAllBlockingContexts() {
-    this.contexts.forEach(context => this.removeContext(context));
+    this.contexts.forEach(context => {
+      this._disableContextForAllDoBlocks(context);
+      this.removeContext(context)
+    });
   }
 
-  isSignleBlockingContextEnabledForAllDoBlocks() {
+  _disableContextForAllDoBlocks = (context) =>
+    this.getBlockingContextModelsOfDoBlocks()
+      .filter(blockingContextModel => blockingContextModel.getBlockingContextId() === context.id)
+      .forEach(blockingContextModel => blockingContextModel.setBlockingContextId(null));
 
-  }
 
-  areSomeBlockingContextsEnabled() {
+  isSingleBlockingContextEnabledForAllDoBlocks = () => {
+    const onlyOneContext = this.getContexts().length === 1;
+    const blocks = this.graphModel.getBlocksArray();
+    const blocksWithEnabledBlockingContext = this.getBlockingContextModelsOfDoBlocks()
+      .filter(blockingContextModel => !!blockingContextModel.getBlockingContextId());
+    return onlyOneContext && blocks.length === blocksWithEnabledBlockingContext.length;
+  };
 
-  }
 
+  areSomeBlockingContextsEnabled = () =>
+    this.getBlockingContextModelsOfDoBlocks()
+      .filter(blockingContextModel => !!blockingContextModel.getBlockingContextId())
+      .length > 0;
 
 }
 

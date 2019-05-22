@@ -16,6 +16,7 @@ export default class WorkflowBlockingCheckbox extends Component {
     } else {
       blockingContextsModel.removeAllBlockingContexts();
     }
+    this.props.onModelUpdate();
   };
 
   getBlockingContextsModel = () => this.props.graphModel.getBlockingContexts();
@@ -33,7 +34,7 @@ export default class WorkflowBlockingCheckbox extends Component {
           <Form.Check ref={this.checkboxRef}
                       type="checkbox"
                       label="Block workers"
-                      value={blockingContextsModel.areSomeBlockingContextsEnabled()}
+                      checked={blockingContextsModel.areSomeBlockingContextsEnabled()}
                       onChange={this.onChange}
                       disabled={this.props.disabled}/>
         </Form.Group>
@@ -44,6 +45,7 @@ export default class WorkflowBlockingCheckbox extends Component {
   renderCheckboxIndeterminateState() {
     const checkbox = this.checkboxRef.current;
     if (checkbox) {
+      console.log('inde',  this.isIndeterminate());
       checkbox.indeterminate = this.isIndeterminate();
     }
   }
@@ -51,6 +53,6 @@ export default class WorkflowBlockingCheckbox extends Component {
   isIndeterminate() {
     const blockingContextsModel = this.getBlockingContextsModel();
     return blockingContextsModel.areSomeBlockingContextsEnabled() &&
-      !blockingContextsModel.isSignleBlockingContextEnabledForAllDoBlocks();
+      !blockingContextsModel.isSingleBlockingContextEnabledForAllDoBlocks();
   }
 }

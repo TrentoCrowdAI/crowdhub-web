@@ -82,6 +82,7 @@ class BlockingContextsTable extends Component {
           <BlockingContextsTableRow key={context.id}
                                     context={context}
                                     disabled={this.isDisabled()}
+                                    blockingContextsModel={this.getBlockingContextsModel()}
                                     onModelUpdate={this.props.onModelUpdate}/>
         ))
       }
@@ -90,7 +91,7 @@ class BlockingContextsTable extends Component {
   );
 }
 
-const BlockingContextsTableRow = ({context, disabled, onModelUpdate}) => (
+const BlockingContextsTableRow = ({context, disabled, blockingContextsModel, onModelUpdate}) => (
   <tr>
     <td className="color-box-container">
       <div className="color-box" style={{backgroundColor: context.color}}/>
@@ -103,10 +104,13 @@ const BlockingContextsTableRow = ({context, disabled, onModelUpdate}) => (
         <div className="actions">
 
           {/* edit */}
-          <EditBlockingContextModalAndButton context={context} onModelUpdate={onModelUpdate}/>
+          <EditBlockingContextModalAndButton context={context}
+                                             onModelUpdate={onModelUpdate}/>
 
           {/* delete */}
-          <DeleteBlockingContextCell context={context} onModelUpdate={onModelUpdate}/>
+          <DeleteBlockingContextCell blockingContextsModel={blockingContextsModel}
+                                     context={context}
+                                     onModelUpdate={onModelUpdate}/>
         </div>
 
       </td>
@@ -116,12 +120,15 @@ const BlockingContextsTableRow = ({context, disabled, onModelUpdate}) => (
 
 
 class DeleteBlockingContextCell extends Component {
+
   // TODO: Ask confirmation to the user
   onRemoveContext = (context) => {
     const model = this.getBlockingContextsModel();
     model.removeContext(context);
     this.props.onModelUpdate();
   };
+
+  getBlockingContextsModel = () => this.props.blockingContextsModel;
 
   render() {
     const {context} = this.props;
