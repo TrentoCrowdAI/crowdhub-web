@@ -15,7 +15,7 @@ export default class WorkflowRunsControls extends Component {
   startWorkflow = async () => {
     this.setState({isStarting: true, startError: false});
     try {
-      const startedRunId = await WorkflowsService.startWorkflow(this.getWorkflow());
+      const startedRunId = await WorkflowsService.saveAndStartWorkflow(this.getWorkflow());
       await this.waitForRunStateReceived(startedRunId);
     } catch (e) {
       this.setState({startError: true});
@@ -38,7 +38,6 @@ export default class WorkflowRunsControls extends Component {
   render() {
     const {isStarting} = this.state;
     const {runnableWorkflow} = this.props;
-    const workflow = runnableWorkflow.getWorkflow();
     return (
       <div>
         {

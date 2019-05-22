@@ -43,6 +43,7 @@ export default {
   },
 
   async updateWorkflow(workflow) {
+    console.log("[WorkflowsSerivice] updateWorkflow()");
     try {
       const json = workflowToJSON(workflow);
       console.info('[WorkflowService] updateWorkflow', json);
@@ -60,7 +61,14 @@ export default {
     return await sendDelete(`${WORKFLOWS_URL}/${workflow.id}`);
   },
 
+  async saveAndStartWorkflow (workflow) {
+    console.log("[WorkflowsSerivice] saveAndStartWorkflow()");
+    await this.updateWorkflow(workflow);
+    await this.startWorkflow(workflow);
+  },
+
   async startWorkflow(workflow) {
+    console.log("[WorkflowsSerivice] startWorkflow()");
     const startedRunId = await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
     return startedRunId;
   },

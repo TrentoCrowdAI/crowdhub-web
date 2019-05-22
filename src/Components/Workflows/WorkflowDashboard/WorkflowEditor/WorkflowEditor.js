@@ -39,6 +39,8 @@ export default class WorkflowEditor extends Component {
   };
 
   onModelUpdated = () => {
+    console.log("[WorkflowEditor] onModelUpdated()");
+    this.onWorkflowEdited();
     this.forceUpdate();
   };
 
@@ -49,7 +51,7 @@ export default class WorkflowEditor extends Component {
   onBlockSelected = (selectedBlock) => this.setState({selectedBlock});
 
   onSavePressed = () => {
-    this.onWorkflowEdited();
+    this.onModelUpdated();
     this.props.onSave();
   };
 
