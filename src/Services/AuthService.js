@@ -19,7 +19,7 @@ const AuthService = {
           clearInterval(interval);
           resolve();
         }
-      });
+      }, 100);
     });
   },
 
@@ -62,6 +62,10 @@ const AuthService = {
       resolve();
       this._notifyListeners();
     }));
+  },
+
+  getBearerToken () {
+    return this.auth2.currentUser.get().getAuthResponse().id_token;
   },
 
   getUserInfo(){

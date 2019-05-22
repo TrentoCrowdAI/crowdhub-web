@@ -1,5 +1,9 @@
-async function sendAndParseJSON(url, params) {
-  const res = await fetch(url, params);
+import AuthService from "../AuthService";
+
+async function sendAndParseJSON(url, options) {
+  options = getOptionsWithAuthorizationHeadersIfSignedIn(options);
+  const res = await fetch(url, options);
+
 
   if (!isResponseOk(res)) {
     const error = new Error('HTTP response code not 200');
@@ -10,10 +14,24 @@ async function sendAndParseJSON(url, params) {
   return await res.json();
 }
 
+const getOptionsWithAuthorizationHeadersIfSignedIn = (options) => {
+  if (!AuthService.isInitialized() || !AuthService.isSignedIn()) {
+    return options;
+  }
+  return getOptionsWithAuthorizationHeaders(options);
+};
+
+const getOptionsWithAuthorizationHeaders = (options) => {
+  options = options || {};
+  options.headers = options.headers || {};
+  options.headers.Authorization = `Bearer ${AuthService.getBearerToken()}`
+  return options;
+};
+
 export const isResponseOk = (res) => res.status >= 200 && res.status <= 299;
 
-export async function getJSON(url, params) {
-  return await sendAndParseJSON(url, params);
+export async function getJSON(url, options) {
+  return await sendAndParseJSON(url, options);
 }
 
 export async function postJSON(url, data) {
@@ -41,7 +59,6 @@ export async function sendDelete(url) {
     method: 'DELETE'
   });
 }
-
 
 
 export function makeCancellable(request) {
