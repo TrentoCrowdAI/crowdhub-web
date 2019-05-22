@@ -4,6 +4,7 @@ import {Editor} from "@tinymce/tinymce-react";
 
 import {ignoreEventAnd} from "../../../../../../utils/events";
 import RandomColorPicker from "./RandomColorPicker";
+import {isBlockingContextValid} from "../../../WorkflowGraphEditor/models/BlockingContextsModel";
 
 export class EditBlockingContextModalAndButton extends Component {
 
@@ -73,6 +74,8 @@ class EditBlockingContextModal extends Component {
     this.setState({workerBlockedMessage});
   };
 
+  getBlockingContextFromState = () => ({...this.state});
+
   render() {
     const {name, color, workerBlockedMessage} = this.state;
     // TODO: Handle disabled state
@@ -108,7 +111,9 @@ class EditBlockingContextModal extends Component {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={this.onCancel}>Cancel</Button>
-          <Button className="confirm" onClick={this.onSave}>Save</Button>
+          <Button className="confirm"
+                  onClick={this.onSave}
+                  disabled={!isBlockingContextValid(this.getBlockingContextFromState())}>Save</Button>
         </Modal.Footer>
       </Modal>
     );

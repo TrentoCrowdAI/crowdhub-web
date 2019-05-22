@@ -4,7 +4,10 @@ import {Button, Col, Form, Overlay, Popover} from "react-bootstrap";
 
 import RandomColorPicker from "./RandomColorPicker";
 import "./CreateBlockingContext.css";
-import {DEFAULT_WORKER_BLOCKED_MESSAGE} from "../../../WorkflowGraphEditor/models/BlockingContextsModel";
+import {
+  DEFAULT_WORKER_BLOCKED_MESSAGE,
+  isBlockingContextValid
+} from "../../../WorkflowGraphEditor/models/BlockingContextsModel";
 
 export default class CreateBlockingContext extends Component {
 
@@ -79,21 +82,20 @@ class CreateBlockingContextPopover extends Component {
 
   state = {
     name: '',
-    color: null
+    color: null,
+    workerBlockedMessage: DEFAULT_WORKER_BLOCKED_MESSAGE
   };
 
   onNameChange = (e) => this.setState({name: e.target.value});
 
   onChangeColor = (color) => this.setState({color});
 
-  isValid = () => this.state.name.length > 0;
+  getBlockingContextFromState = () => ({...this.state});
 
   onAdd = () => {
     this.props.onCreated({
       id: uuid(),
-      name: this.state.name,
-      color: this.state.color,
-      workerBlockedMessage: DEFAULT_WORKER_BLOCKED_MESSAGE
+      ...this.getBlockingContextFromState()
     });
     this.setState({name: '', color: null});
   };
@@ -117,7 +119,7 @@ class CreateBlockingContextPopover extends Component {
         </Col>
         <Col xs="4">
           <Button className="btn-block"
-                  disabled={!this.isValid()}
+                  disabled={!isBlockingContextValid(this.getBlockingContextFromState())}
                   onClick={this.onAdd}>Add</Button>
         </Col>
       </Form.Row>

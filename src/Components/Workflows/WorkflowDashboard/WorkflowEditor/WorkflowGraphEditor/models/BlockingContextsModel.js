@@ -1,4 +1,4 @@
-export const DEFAULT_WORKER_BLOCKED_MESSAGE =  "<p><h1>Thank you</h1>You've already worked on another job related to this project</p>";
+export const DEFAULT_WORKER_BLOCKED_MESSAGE = "<p><h1>Thank you</h1>You've already worked on another job related to this project</p>";
 
 export default class BlockingContextsModel {
 
@@ -17,6 +17,7 @@ export default class BlockingContextsModel {
   setContexts(contexts) {
     this.contexts = contexts;
   }
+
   serialize() {
     return this.getContexts();
   }
@@ -25,7 +26,7 @@ export default class BlockingContextsModel {
     return this.contexts;
   }
 
-  getBlockingContextById (id) {
+  getBlockingContextById(id) {
     return this.getContexts().find(context => context.id === id)
   }
 
@@ -76,3 +77,8 @@ export default class BlockingContextsModel {
 
 
 }
+
+
+export const isBlockingContextValid = ({name, workerBlockedMessage}) =>
+  name && name.length >= 0 && workerBlockedMessage
+  && workerBlockedMessage.length >= 0;
