@@ -97,7 +97,8 @@ export default class WorkflowEditor extends Component {
             <WorkflowSaveBar runnableWorkflow={runnableWorkflow}
                              graphModel={this.graphModel}
                              onSavePressed={this.onSavePressed}
-                             isSaving={this.props.isSaving}/>
+                             isSaving={this.props.isSaving}
+                             saveError={this.props.saveError}/>
           </Col>
 
           {/* Right sidebar */}
