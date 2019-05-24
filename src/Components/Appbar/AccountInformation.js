@@ -142,7 +142,7 @@ class LogoutButton extends Component {
       return this.renderRedirect();
     }
     return (
-      <LoadingButton isSaving={this.state.loggingOut} onClick={this.onLogout} block>Logout</LoadingButton>
+      <LoadingButton isLoading={this.state.loggingOut} onClick={this.onLogout} block>Logout</LoadingButton>
     );
   }
 

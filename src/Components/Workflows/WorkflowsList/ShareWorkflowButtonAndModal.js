@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from "react";
-import {Alert, Button, Modal, Form} from "react-bootstrap";
+import {Alert, Button, Form, Modal} from "react-bootstrap";
 
 import {ignoreEventAnd} from "../../utils/events";
 import LoadingButton from "../../common/LoadingButton";
@@ -113,7 +113,7 @@ export class ShareModal extends Component {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={this.onCancel} disabled={isSaving}>Cancel</Button>
-          <LoadingButton onClick={this.onSave} disabled={isFetching} isSaving={isSaving}>Save</LoadingButton>
+          <LoadingButton onClick={this.onSave} disabled={isFetching} isLoading={isSaving}>Save</LoadingButton>
         </Modal.Footer>
       </Modal>
     );
