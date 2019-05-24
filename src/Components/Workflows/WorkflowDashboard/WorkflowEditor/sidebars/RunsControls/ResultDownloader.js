@@ -65,7 +65,7 @@ export default class ResultDownloader extends Component {
 export const NoResultsMessage = () => (<span>No results available yet</span>);
 
 export const LatestDownloadButton = ({link, isLatest, id}) => (
-  <a className="btn btn-success" style={{color: 'white'}} href={link} target="_blank">
+  <a className="btn btn-success" style={{color: 'white'}} href={link} target="_blank" rel="noopener noreferrer">
     {isLatest ? 'Download latest results' : `Download #${id}`}
   </a>
 );

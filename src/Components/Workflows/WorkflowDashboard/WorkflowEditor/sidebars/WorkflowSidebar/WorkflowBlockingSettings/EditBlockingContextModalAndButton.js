@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
 import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 import {Editor} from "@tinymce/tinymce-react";
