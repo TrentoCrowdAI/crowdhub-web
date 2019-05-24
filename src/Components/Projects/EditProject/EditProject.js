@@ -9,8 +9,6 @@ import {LinkBreadcrumb, SimpleBreadcrumb} from "../../common/Breadcrumbs";
 
 export default class EditProject extends Component {
 
-  state = {};
-
   constructor(props) {
     super(props);
     this.state = {

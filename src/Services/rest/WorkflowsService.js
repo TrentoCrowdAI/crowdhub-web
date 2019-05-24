@@ -15,13 +15,14 @@ const JSONtoWorkflow = ({id, id_project, data}) => ({
 });
 
 
-const workflowToJSON = ({id, projectId, name, description, graph}) => ({
+const workflowToJSON = ({id, projectId, name, description, graph, shared}) => ({
   id,
   id_project: projectId,
   data: {
     name,
     description,
-    graph
+    graph,
+    shared
   }
 });
 
@@ -56,6 +57,7 @@ export default {
       }
     }
   },
+
 
   async deleteWorkflow(workflow) {
     return await sendDelete(`${WORKFLOWS_URL}/${workflow.id}`);

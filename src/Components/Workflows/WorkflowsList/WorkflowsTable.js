@@ -6,8 +6,9 @@ import {WORKFLOWS_PATH} from "../Workflows";
 import {Link} from "react-router-dom";
 import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
 import WorkflowsService from "../../../Services/rest/WorkflowsService";
+import {ShareWorkflowButtonAndModal} from "./ShareWorkflowButtonAndModal";
 
-export const WorkflowsTable = ({workflows, onWorkflowDeleted}) => (
+export const WorkflowsTable = ({workflows, onWorkflowUpdated, onWorkflowDeleted}) => (
   <Table hover>
     <thead>
     <tr>
@@ -42,6 +43,7 @@ const WorkflowsTableRow = ({workflow, onWorkflowDeleted}) => {
       </td>
       <td>{workflow.description}</td>
       <td>
+        <ShareWorkflowButtonAndModal workflow={workflow}/>
         <DeleteWorkflowButton workflow={workflow} onWorkflowDeleted={onWorkflowDeleted}/>
       </td>
     </tr>
