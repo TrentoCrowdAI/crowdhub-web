@@ -57,7 +57,9 @@ class DoBlockCostWidget extends Component {
       <div>
         {this.renderEstimatedCost()}
 
-        <LoadingButton block onClick={this.estimateCost} isSaving={this.state.estimating}>
+        <LoadingButton block onClick={this.estimateCost}
+                       isLoading={this.state.estimating}
+                       disabled={this.props.disabled}>
           Estimate cost
         </LoadingButton>
       </div>

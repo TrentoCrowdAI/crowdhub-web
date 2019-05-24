@@ -6,7 +6,7 @@ import {BlockLabel} from "./BlockLabel";
 import BlockRunsControls from "./BlockRunsControls";
 import SidebarWithTitle from "../common/SidebarWithTitle";
 
-export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
+export default ({block, graphModel, onModelUpdate, runnableWorkflow, disabled, readOnly}) => (
 
   <SidebarWithTitle
     title="Block parameters"
@@ -19,14 +19,17 @@ export default ({block, graphModel, onModelUpdate, runnableWorkflow}) => (
         <hr/>
         <BlockLabel blockModel={block}
                     graphModel={graphModel}
-                    disabled={!runnableWorkflow.canBeEdited()}/>
+                    disabled={disabled}/>
 
         <ParametersEngine parametrizedBlock={block}
                           onParameterModelUpdate={onModelUpdate}
-                          disabled={!runnableWorkflow.canBeEdited()}
+                          disabled={disabled}
                           parametersInCard/>
 
-        <BlockRunsControls blockModel={block} runnableWorkflow={runnableWorkflow}/>
+        <BlockRunsControls blockModel={block}
+                           runnableWorkflow={runnableWorkflow}
+                           disabled={disabled}
+                           readOnly={readOnly}/>
       </div>
     }
   />

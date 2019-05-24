@@ -37,7 +37,7 @@ export default class WorkflowRunsControls extends Component {
 
   render() {
     const {isStarting} = this.state;
-    const {runnableWorkflow} = this.props;
+    const {runnableWorkflow, readOnly} = this.props;
     return (
       <div>
         {
@@ -51,7 +51,8 @@ export default class WorkflowRunsControls extends Component {
                       downloadLinkFactory={(run, format) => RunsService.getDownloadLink(run, format)}
                       startText="Start workflow"
                       onStart={this.startWorkflow}
-                      isStarting={isStarting}/>
+                      isStarting={isStarting}
+                      readOnly={readOnly}/>
       </div>
     );
   }

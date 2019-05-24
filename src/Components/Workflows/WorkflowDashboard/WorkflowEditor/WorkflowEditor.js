@@ -32,8 +32,7 @@ export default class WorkflowEditor extends Component {
   }
 
   onRunsUpdate = (runnableWorkflow) => {
-    // TODO: The logic to block edit is spread everywhere, can we group it somewhere?
-    this.graphModel.setLocked(!runnableWorkflow.canBeEdited());
+    this.graphModel.setLocked(this.isEditDisabled());
     this.graphModel.setRuns(runnableWorkflow.getRuns());
     this.onModelUpdated();
   };
@@ -65,6 +64,10 @@ export default class WorkflowEditor extends Component {
 
   getWorkflow = () => this.props.runnableWorkflow.getWorkflow();
 
+  isReadOnly = () => this.props.readOnly;
+
+  isEditDisabled = () => this.isReadOnly() || !this.props.runnableWorkflow.canBeEdited();
+
   render() {
     const {runnableWorkflow, blockTypeDefinitions} = this.props;
     const workflow = runnableWorkflow.getWorkflow();
@@ -76,7 +79,7 @@ export default class WorkflowEditor extends Component {
 
           {/* Left sidebar */}
           {
-            runnableWorkflow.canBeEdited() &&
+            !this.isEditDisabled() &&
             <Col className="editor-left-sidebar light-background">
               <DraggableBlockTypeListSidebar blockTypeDefinitions={blockTypeDefinitions}/>
             </Col>
@@ -94,11 +97,15 @@ export default class WorkflowEditor extends Component {
 
             <WorkflowBreadcrumb workflow={workflow}/>
 
-            <WorkflowSaveBar runnableWorkflow={runnableWorkflow}
-                             graphModel={this.graphModel}
-                             onSavePressed={this.onSavePressed}
-                             isSaving={this.props.isSaving}
-                             saveError={this.props.saveError}/>
+            {
+              !this.isReadOnly() &&
+              <WorkflowSaveBar runnableWorkflow={runnableWorkflow}
+                               graphModel={this.graphModel}
+                               onSavePressed={this.onSavePressed}
+                               isSaving={this.props.isSaving}
+                               saveError={this.props.saveError}
+                               disabled={this.isEditDisabled()}/>
+            }
           </Col>
 
           {/* Right sidebar */}
@@ -108,12 +115,16 @@ export default class WorkflowEditor extends Component {
                 <BlockConfiguratorSidebar block={this.state.selectedBlock}
                                           graphModel={this.graphModel}
                                           onModelUpdate={this.onModelUpdated}
-                                          runnableWorkflow={runnableWorkflow}/>
+                                          runnableWorkflow={runnableWorkflow}
+                                          readOnly={this.isReadOnly()}
+                                          disabled={this.isEditDisabled()}/>
                 :
                 <WorkflowSidebar runnableWorkflow={runnableWorkflow}
                                  onEdit={this.onWorkflowEdited}
                                  graphModel={this.graphModel}
-                                 onModelUpdate={this.onModelUpdated}/>
+                                 onModelUpdate={this.onModelUpdated}
+                                 readOnly={this.isReadOnly()}
+                                 disabled={this.isEditDisabled()}/>
             }
           </Col>
         </Row>

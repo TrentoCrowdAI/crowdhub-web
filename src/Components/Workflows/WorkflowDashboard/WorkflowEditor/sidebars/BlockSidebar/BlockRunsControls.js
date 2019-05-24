@@ -14,6 +14,7 @@ export default class BlockRunsControls extends Component {
                          downloadLinkFactory={(run, format) => CacheService.getDownloadLink(run.getCacheId(), format)}
                          startText="Start block"
                          onStart={() => console.error('not implemented yet')}
-                         isStarting={false}/>;
+                         isStarting={false}
+                         readOnly={this.props.readOnly}/>;
   }
 }

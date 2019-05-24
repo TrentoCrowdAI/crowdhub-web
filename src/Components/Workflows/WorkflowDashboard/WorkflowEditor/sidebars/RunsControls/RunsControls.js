@@ -5,36 +5,47 @@ import ResultDownloader from "./ResultDownloader";
 import LoadingButton from "../../../../../common/LoadingButton";
 import "./RunsControls.css";
 
-export default ({runnable, downloadLinkFactory, onStart, isStarting, startText}) => (
+export default (props) => (
   <div>
-    <Card>
-      <Card.Header>Execution</Card.Header>
+    {
+      !props.readOnly &&
+      <ExecutionCard {...props}/>
+    }
 
-      <Card.Body>
-        {
-          runnable.isRunning() &&
-          <div>
-            Workflow is currently running (run #{runnable.getLatestRun().getRunId()}).<br/>
-            Progress:<br/>
-            <RunsProgressBar runnable={runnable}/>
-          </div>
-        }
-
-        <LoadingButton block onClick={onStart}
-                       disabled={!runnable.canStart()}
-                       isSaving={isStarting}>{startText}</LoadingButton>
-
-      </Card.Body>
-    </Card>
-
-    <Card className="mt-2">
-      <Card.Header>Results</Card.Header>
-      <Card.Body>
-        <ResultDownloader downloadLinkFactory={downloadLinkFactory}
-                          runnable={runnable}/>
-      </Card.Body>
-    </Card>
+    <ResultsCard {...props}/>
   </div>
+);
+
+const ExecutionCard = ({runnable, downloadLinkFactory, onStart, isStarting, startText}) => (
+  <Card>
+    <Card.Header>Execution</Card.Header>
+
+    <Card.Body>
+      {
+        runnable.isRunning() &&
+        <div>
+          Workflow is currently running (run #{runnable.getLatestRun().getRunId()}).<br/>
+          Progress:<br/>
+          <RunsProgressBar runnable={runnable}/>
+        </div>
+      }
+
+      <LoadingButton block onClick={onStart}
+                     disabled={!runnable.canStart()}
+                     isLoading={isStarting}>{startText}</LoadingButton>
+
+    </Card.Body>
+  </Card>
+);
+
+const ResultsCard = ({runnable, downloadLinkFactory}) => (
+  <Card className="mt-2">
+    <Card.Header>Results</Card.Header>
+    <Card.Body>
+      <ResultDownloader downloadLinkFactory={downloadLinkFactory}
+                        runnable={runnable}/>
+    </Card.Body>
+  </Card>
 );
 
 const RunsProgressBar = ({runnable}) => {

@@ -12,12 +12,10 @@ export default class HtmlModalEditor extends Component {
 
   hideModal = () => this.setState({show: false});
 
-
-
   render() {
     return (
       <div>
-        <Button className="btn-block" onClick={this.showModal}>Open editor</Button>
+        <Button disabled={this.props.disabled} className="btn-block" onClick={this.showModal}>Open editor</Button>
 
         <Modal show={this.state.show} size="lg">
           <Modal.Header>{this.props.title}</Modal.Header>

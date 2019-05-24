@@ -9,9 +9,9 @@ import WorkflowBlockingSettings from "./WorkflowBlockingSettings/WorkflowBlockin
  * Sidebar to edit the workflow name and description
  *
  */
-export default ({runnableWorkflow, onEdit, onModelUpdate, graphModel}) => {
+export default ({runnableWorkflow, onEdit, onModelUpdate, graphModel, readOnly}) => {
   const workflow = runnableWorkflow.getWorkflow();
-  const disabled = runnableWorkflow.isRunning();
+  const disabled = readOnly;
   return (
     <SidebarWithTitle
       title="Workflow properties"
@@ -26,7 +26,8 @@ export default ({runnableWorkflow, onEdit, onModelUpdate, graphModel}) => {
                                     onModelUpdate={onModelUpdate}
                                     disabled={disabled}/>
 
-          <WorkflowRunsControls runnableWorkflow={runnableWorkflow}/>
+          <WorkflowRunsControls runnableWorkflow={runnableWorkflow}
+                                readOnly={readOnly}/>
         </div>
       }/>
   );

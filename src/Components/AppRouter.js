@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 
 import {Projects, PROJECTS_PATH} from "./Projects/Projects";
-import Workflows, {WORKFLOWS_PATH} from "./Workflows/Workflows";
+import {PUBLIC_WORKFLOWS_PATH, PublicWorkflows, Workflows, WORKFLOWS_PATH} from "./Workflows/Workflows";
 import AuthService from '../Services/AuthService';
 import Login, {LOGIN_PATH} from "./Login/Login";
 import LoadingContainer from "./common/LoadingContainer";
@@ -45,10 +45,15 @@ export default class AuthenticatedAppRouter extends Component {
 
 const AppRouter = () => (
   <Switch>
+    {/* private routes */}
     <PrivateRoute path={PROJECTS_PATH} component={Projects}/>
     <PrivateRoute path={WORKFLOWS_PATH} component={Workflows}/>
 
+    {/* only public routes */}
     <NotLoggedInRoute path={LOGIN_PATH} component={Login}/>
+
+    {/* private or public routes */}
+    <Route path={PUBLIC_WORKFLOWS_PATH} component={PublicWorkflows}/>
 
     {/* default */}
     <Route render={() => (<Redirect to={PROJECTS_PATH}/>)}/>
