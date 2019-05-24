@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {Alert, Button, Modal} from "react-bootstrap";
 import {ignoreEventAnd} from "../utils/events";
+import LoadingButton from "./LoadingButton";
 
 
 export class DeleteButtonAndModal extends Component {
@@ -85,7 +86,10 @@ export class DeleteModal extends Component {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={this.onCancel} disabled={this.state.deleting}>Cancel</Button>
-          <Button variant="danger" className="confirm" onClick={this.onConfirmDeletion} disabled={this.state.deleting}>Delete</Button>
+          <LoadingButton variant="danger"
+                         className="confirm"
+                         onClick={this.onConfirmDeletion}
+                         isLoading={this.state.deleting}>Delete</LoadingButton>
         </Modal.Footer>
       </Modal>
     );

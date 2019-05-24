@@ -1,8 +1,11 @@
 import {Button, Spinner} from "react-bootstrap";
 import React from "react";
 
-const LoadingButton = ({isLoading, disabled, onClick, children, block}) => (
-  <Button disabled={disabled || isLoading} onClick={onClick} className={block ? 'btn-block' : ''}>
+const LoadingButton = ({isLoading, disabled, onClick, children, block, variant}) => (
+  <Button disabled={disabled || isLoading}
+          onClick={onClick}
+          className={block ? 'btn-block' : ''}
+          variant={variant || 'primary'}>
     {
       isLoading &&
       <Spinner
