@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {PROJECTS_PATH} from "../Projects";
 import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
 import ProjectsService from "../../../Services/rest/ProjectsService";
+import ShareProjectButtonAndModal from "./ShareProjectButtonAndModal";
 
 export const ProjectsTable = ({projects, onProjectDeleted}) => (
   <Col>
@@ -30,11 +31,9 @@ export const ProjectsTable = ({projects, onProjectDeleted}) => (
 
 export const ProjectsTableRow = ({project, onProjectDeleted}) => {
   const openProjectLink = `${PROJECTS_PATH}/${project.id}`;
-  const editProjectLink = `${PROJECTS_PATH}/${project.id}/edit`;
 
   return (
     <tr>
-
       <td>
         <Link to={openProjectLink}>{project.id}</Link>
       </td>
@@ -43,14 +42,20 @@ export const ProjectsTableRow = ({project, onProjectDeleted}) => {
       </td>
       <td>{project.data.description}</td>
       <td>
-
-        <Link to={editProjectLink} className="icon-button">
-          <i className="fas fa-edit"/>
-        </Link>
-
+        <ShareProjectButtonAndModal/>
+        <EditButton project={project}/>
         <DeleteProjectButton project={project} onProjectDeleted={onProjectDeleted}/>
       </td>
     </tr>
+  );
+};
+
+const EditButton = ({project}) => {
+  const editProjectLink = `${PROJECTS_PATH}/${project.id}/edit`;
+  return (
+    <Link to={editProjectLink} className="icon-button">
+      <i className="fas fa-edit"/>
+    </Link>
   );
 };
 
