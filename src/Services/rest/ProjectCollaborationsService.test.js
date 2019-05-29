@@ -1,7 +1,9 @@
-import ProjectCollaborations, {ProjectCollaborationToJSON} from "./ProjectCollaborationsService";
+import {HTTPService, ProjectCollaborationToJSON} from "./ProjectCollaborationsService";
 import {expectFetchToHaveBeenCalledWith, mockFetchToReturnJson} from "../../testHelpers/services";
 import {API_URL} from "../../config";
 import {serverProjectCollaborations, serviceProjectCollaborations} from "../../mock-data/project-collaborations";
+
+const ProjectCollaborations = HTTPService;
 
 describe('get collaborations of a project', () => {
   it('should send a GET to /project-collaborations/:id', async () => {

@@ -11,8 +11,8 @@ const JSONToProjectCollaboration = ({id, id_project, id_user}) => ({
 
 export const ProjectCollaborationToJSON = ({id, projectId, userId}) => ({
   id,
-  id_project: projectId,
-  id_user: userId
+  projectId,
+  userId
 });
 
 export default {
@@ -30,4 +30,5 @@ export default {
   async deleteCollaboration(collaborationId) {
     await sendDelete(`${PROJECT_COLLABORATIONS_URL}/${collaborationId}`);
   }
-}
+};
+

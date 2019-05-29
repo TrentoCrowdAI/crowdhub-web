@@ -16,8 +16,9 @@ export const mockFetchToReturnJson = (object) => jest.spyOn(global, 'fetch')
 
 
 export const expectFetchToHaveBeenCalledWith = (url, method, body) =>
-  expect(fetch).toHaveBeenCalledWith(url, {
+  // TODO: Code below too complex, refactor it
+  expect(fetch).toHaveBeenCalledWith(url, method ? {
     method,
     body: body ? JSON.stringify(body) : undefined,
     headers: body ? {'Content-Type': 'application/json'} : undefined
-  });
+  } : undefined);

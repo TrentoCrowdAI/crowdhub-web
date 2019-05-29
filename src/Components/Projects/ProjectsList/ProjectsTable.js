@@ -5,7 +5,8 @@ import {Link} from "react-router-dom";
 import {PROJECTS_PATH} from "../Projects";
 import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
 import ProjectsService from "../../../Services/rest/ProjectsService";
-import ShareProjectButtonAndModal from "./ShareProjectButtonAndModal";
+import ShareProjectButtonAndModal from "./ShareProjectButtonAndModal/ShareProjectButtonAndModal";
+import "./ProjectsTable.css";
 
 export const ProjectsTable = ({projects, onProjectDeleted}) => (
   <Col>
@@ -41,8 +42,8 @@ export const ProjectsTableRow = ({project, onProjectDeleted}) => {
         <Link to={openProjectLink}>{project.data.name}</Link>
       </td>
       <td>{project.data.description}</td>
-      <td>
-        <ShareProjectButtonAndModal/>
+      <td className="actions-cell">
+        <ShareProjectButtonAndModal project={project}/>
         <EditButton project={project}/>
         <DeleteProjectButton project={project} onProjectDeleted={onProjectDeleted}/>
       </td>
