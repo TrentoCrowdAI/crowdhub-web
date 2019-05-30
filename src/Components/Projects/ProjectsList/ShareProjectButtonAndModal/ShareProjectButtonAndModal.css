@@ -1,0 +1,7 @@
+div.collaborator-row {
+    padding: .25em;
+}
+
+div.collaborator-row .action {
+    display: flex;
+}

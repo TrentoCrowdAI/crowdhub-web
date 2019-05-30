@@ -7,6 +7,7 @@ import AddNewCollaboration from "./AddNewCollaboration";
 import LoadingContainer from "../../../common/LoadingContainer";
 import ProjectCollaborationsService from "../../../../Services/rest/ProjectCollaborationsService";
 import CollaborationsList from "./CollaborationsList";
+import "./ShareProjectButtonAndModal.css";
 
 export default class ShareProjectButtonAndModal extends Component {
 

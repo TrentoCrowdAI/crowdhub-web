@@ -68,14 +68,14 @@ class Collaboration extends Component {
     const {email, imageUrl} = user || {};
     return (
       (
-        <ListGroupItem>
+        <ListGroupItem className="collaborator-row">
           <LoadingContainer loading={isFetching}>
             <Row>
               <Col xs={2}>
                 <img alt="user avatar" width="100%" src={imageUrl}/>
               </Col>
               <Col xs={7}>{email}</Col>
-              <Col xs={3}>
+              <Col xs={3} className="action">
                 <LoadingButton isLoading={isRemoving} onClick={this.onRemoveUser}
                                variant="danger">Remove</LoadingButton>
               </Col>

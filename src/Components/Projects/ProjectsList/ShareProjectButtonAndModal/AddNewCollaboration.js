@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import {Button, Col, Form, ListGroup, Row} from "react-bootstrap";
+import {Button, Col, Form, ListGroup, ListGroupItem, Row} from "react-bootstrap";
 import UsersService, {USER_SUGGETION_MIN_EMAIL_LENGTH} from "../../../../Services/rest/UsersService";
 import LoadingContainer from "../../../common/LoadingContainer";
-import ListGroupItem from "react-bootstrap/es/ListGroupItem";
 import ProjectCollaborationsService from "../../../../Services/rest/ProjectCollaborationsService";
 import LoadingButton from "../../../common/LoadingButton";
 
@@ -24,7 +23,9 @@ export default class AddNewCollaboration extends Component {
 
   filterUserAlreadyCollaborating = (users) => {
     const collaboratorIds = this.getUserIdsOfCollaborators();
-    return users.filter(user => collaboratorIds.find(collaboratorId => collaboratorId === user.id) == null);
+    return users
+      .filter(user => this.props.project.ownerId !== user.id)
+      .filter(user => collaboratorIds.find(collaboratorId => collaboratorId === user.id) == null);
   };
 
   getUserIdsOfCollaborators = () => this.getCollaborations().map(collaboration => collaboration.userId);
@@ -76,17 +77,17 @@ class SuggestedUser extends Component {
     const {isAdding, added} = this.state;
     const {email, imageUrl} = this.props;
     return (
-      <ListGroupItem>
+      <ListGroupItem className="collaborator-row">
         <Row>
           <Col xs={2}>
             <img alt="user avatar" width="100%" src={imageUrl}/>
           </Col>
           <Col xs={7}>{email}</Col>
-          <Col xs={3}>
+          <Col xs={3} className="action">
             {
               added ?
-                <Button disabled variant="success">Added</Button> :
-                <LoadingButton isLoading={isAdding} onClick={this.onAddUser}>Add</LoadingButton>
+                <Button className="btn-block" disabled variant="success">Added</Button> :
+                <LoadingButton block isLoading={isAdding} onClick={this.onAddUser}>Add</LoadingButton>
             }
           </Col>
         </Row>
@@ -156,6 +157,7 @@ class AutocompleteField extends Component {
     return (
       <div>
         <Form.Control
+          className="mb-2"
           value={value}
           onChange={(e) => this.onInputChange(e.target.value)}/>
 
