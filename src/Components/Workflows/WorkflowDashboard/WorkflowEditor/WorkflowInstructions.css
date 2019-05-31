@@ -1,0 +1,10 @@
+button.instructions-trigger {
+    position: absolute;
+    right: 0;
+    height: 48px;
+    margin-right: 15px;
+    margin-top: 15px;
+    background-color: var(--lightBackground);
+    color: black;
+    border: none
+}

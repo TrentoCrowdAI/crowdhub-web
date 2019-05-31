@@ -9,6 +9,7 @@ import BlockConfiguratorSidebar from "./sidebars/BlockSidebar/BlockSidebar";
 import WorkflowGraphModel from "./WorkflowGraphEditor/models/WorkflowGraphModel";
 import WorkflowBreadcrumb from "./WorkflowBreadcrumb";
 import {WorkflowSaveBar} from "./WorkflowSaveBar";
+import WorkflowInstructions from "./WorkflowInstructions";
 
 
 export default class WorkflowEditor extends Component {
@@ -96,6 +97,7 @@ export default class WorkflowEditor extends Component {
               onModelUpdate={this.onModelUpdated}/>
 
             <WorkflowBreadcrumb workflow={workflow}/>
+            <WorkflowInstructions/>
 
             {
               !this.isReadOnly() &&
@@ -132,4 +134,3 @@ export default class WorkflowEditor extends Component {
     );
   }
 }
-
