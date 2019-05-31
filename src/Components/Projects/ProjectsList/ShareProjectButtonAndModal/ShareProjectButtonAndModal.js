@@ -73,9 +73,10 @@ class ShareProjectModal extends Component {
 
   render() {
     const {fetchError, collaborations, isFetching} = this.state;
+    const project = this.getProject();
     return (
       <Modal show={this.props.show}>
-        <Modal.Header>Sharing preferences of project ...</Modal.Header>
+        <Modal.Header>Sharing preferences of project #{project.id}</Modal.Header>
         <Modal.Body>
           <LoadingContainer loading={isFetching}>
             {
@@ -86,7 +87,7 @@ class ShareProjectModal extends Component {
             }
 
             <AddNewCollaboration collaborations={collaborations}
-                                 project={this.getProject()}
+                                 project={project}
                                  onCollaborationAdded={this.onCollaborationAdded}/>
             <CollaborationsList collaborations={collaborations}
                                 onCollaborationDeleted={this.onCollaborationDeleted}/>

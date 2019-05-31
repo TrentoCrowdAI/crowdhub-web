@@ -94,7 +94,7 @@ export default class WorkflowForm extends Component {
 
               <ButtonToolbar className="form-buttons">
                 <Button variant="secondary" onClick={this.props.onCancel}>Cancel</Button>
-                <Button type="submit">{this.props.submitText}</Button>
+                <Button type="submit">Create</Button>
               </ButtonToolbar>
 
             </Form>

@@ -3,7 +3,7 @@ import {Alert, Button, Col, Modal, Row} from "react-bootstrap";
 
 import WorkflowsService from "../../../../Services/rest/WorkflowsService";
 import './CreateWorkflow.css';
-import WorkflowForm from "../../WorkflowForm/WorkflowForm";
+import WorkflowForm from "./WorkflowForm";
 
 
 export class CreateWorkflowButton extends Component {
@@ -74,7 +74,6 @@ export class CreateWorkflowModal extends Component {
 
           <WorkflowForm
             onCancel={this.props.onCancel}
-            submitText="Create"
             onSubmit={this.createNewWorkflow}/>
         </Modal.Body>
       </Modal>

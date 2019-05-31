@@ -76,6 +76,7 @@ export class ShareWorkflowModal extends Component {
       this.setState({isSaving: true, saveError: false});
       await WorkflowsService.updateWorkflow(this.state.workflow);
       this.setState({isSaving: false, saveError: false});
+      this.props.onWorkflowSharedOrUnshared();
       this.props.onClose();
     } catch (e) {
       this.setState({isSaving: false, saveError: true});

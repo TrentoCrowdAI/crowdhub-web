@@ -2,6 +2,13 @@ div.collaborator-row {
     padding: .25em;
 }
 
+
+div.collaborator-row img.user-avatar {
+    width: 3em;
+    height: 3em;
+    /*border-radius: 25%;*/
+}
+
 div.collaborator-row .action {
     display: flex;
 }

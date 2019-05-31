@@ -72,7 +72,7 @@ class Collaboration extends Component {
           <LoadingContainer loading={isFetching}>
             <Row>
               <Col xs={2}>
-                <img alt="user avatar" width="100%" src={imageUrl}/>
+                <img alt="user avatar" className="user-avatar" src={imageUrl}/>
               </Col>
               <Col xs={7}>{email}</Col>
               <Col xs={3} className="action">

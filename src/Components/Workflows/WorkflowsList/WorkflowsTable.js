@@ -7,8 +7,9 @@ import {Link} from "react-router-dom";
 import {DeleteButtonAndModal} from "../../common/DeleteButtonAndModal";
 import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import {ShareWorkflowButtonAndModal} from "./ShareWorkflowButtonAndModal";
+import "./WorkflowTable.css";
 
-export const WorkflowsTable = ({workflows, onWorkflowUpdated, onWorkflowDeleted}) => (
+export const WorkflowsTable = ({workflows, onWorkflowUpdated, onWorkflowDeleted, onWorkflowSharedOrUnshared}) => (
   <Table hover>
     <thead>
     <tr>
@@ -23,14 +24,15 @@ export const WorkflowsTable = ({workflows, onWorkflowUpdated, onWorkflowDeleted}
       workflows.map(workflow => (
         <WorkflowsTableRow workflow={workflow}
                            key={workflow.id}
-                           onWorkflowDeleted={onWorkflowDeleted}/>
+                           onWorkflowDeleted={onWorkflowDeleted}
+                           onWorkflowSharedOrUnshared={onWorkflowSharedOrUnshared}/>
       ))
     }
     </tbody>
   </Table>
 );
 
-const WorkflowsTableRow = ({workflow, onWorkflowDeleted}) => {
+const WorkflowsTableRow = ({workflow, onWorkflowDeleted, onWorkflowSharedOrUnshared}) => {
   const openWorkflowLink = `${WORKFLOWS_PATH}/${workflow.id}`;
 
   return (
@@ -40,10 +42,11 @@ const WorkflowsTableRow = ({workflow, onWorkflowDeleted}) => {
       </td>
       <td>
         <Link to={openWorkflowLink}>{workflow.name}</Link>
+        <i className={`share-status-icon fas ${workflow.shared ? 'fa-unlock' : 'fa-lock'}`}/>
       </td>
       <td>{workflow.description}</td>
       <td>
-        <ShareWorkflowButtonAndModal workflow={workflow}/>
+        <ShareWorkflowButtonAndModal workflow={workflow} onWorkflowSharedOrUnshared={onWorkflowSharedOrUnshared}/>
         <DeleteWorkflowButton workflow={workflow} onWorkflowDeleted={onWorkflowDeleted}/>
       </td>
     </tr>

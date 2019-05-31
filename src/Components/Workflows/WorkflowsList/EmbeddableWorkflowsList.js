@@ -12,7 +12,9 @@ export default class EmbeddableWorkflowsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectId: props.project.id
+      projectId: props.project.id,
+      workflows: null,
+      fetchError:false
     };
   }
 
@@ -62,7 +64,8 @@ export default class EmbeddableWorkflowsList extends Component {
               {
                 this.state.workflows &&
                 <WorkflowsTable workflows={this.state.workflows}
-                                onWorkflowDeleted={this.fetchWorkflows}/>
+                                onWorkflowDeleted={this.fetchWorkflows}
+                                onWorkflowSharedOrUnshared={this.fetchWorkflows}/>
               }
             </Col>
           </Row>
