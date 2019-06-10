@@ -38,11 +38,12 @@ const ExecutionCard = ({runnable, downloadLinkFactory, onStart, isStarting, star
   </Card>
 );
 
-const ResultsCard = ({runnable, downloadLinkFactory}) => (
+const ResultsCard = ({runnable, downloadLinkFactory, downloadNameFactory}) => (
   <Card className="mt-2">
     <Card.Header>Results</Card.Header>
     <Card.Body>
       <ResultDownloader downloadLinkFactory={downloadLinkFactory}
+                        downloadNameFactory={downloadNameFactory}
                         runnable={runnable}/>
     </Card.Body>
   </Card>

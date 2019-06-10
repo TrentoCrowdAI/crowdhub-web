@@ -14,7 +14,7 @@ async function sendAndParseJSON(url, options) {
   return await res.json();
 }
 
-const getOptionsWithAuthorizationHeadersIfSignedIn = (options) => {
+export const getOptionsWithAuthorizationHeadersIfSignedIn = (options) => {
   if (!AuthService.isInitialized() || !AuthService.isSignedIn()) {
     return options;
   }

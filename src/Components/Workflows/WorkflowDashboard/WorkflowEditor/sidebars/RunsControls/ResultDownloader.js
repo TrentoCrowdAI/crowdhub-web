@@ -1,6 +1,10 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React, {Component} from "react";
 import {ButtonGroup, ButtonToolbar, Dropdown, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
 import './ResultDownloader.css';
+import {ignoreEventAnd} from "../../../../../utils/events";
+import DownloadsService from "../../../../../../Services/DownloadsService";
 
 // TODO: Move this declaration on Service
 const DownloadFormats = ['json', 'csv'];
@@ -14,7 +18,7 @@ export default class ResultDownloader extends Component {
   onChangeDownloadFormat = (downloadFormat) => this.setState({downloadFormat});
 
   render() {
-    const {runnable, downloadLinkFactory} = this.props;
+    const {runnable, downloadLinkFactory, downloadNameFactory} = this.props;
     if (runnable.getFinishedRuns().length <= 0) {
       return (
         <NoResultsMessage/>
@@ -41,6 +45,7 @@ export default class ResultDownloader extends Component {
 
         <Dropdown as={ButtonGroup} className="btn-block">
           <LatestDownloadButton link={downloadLinkFactory(latestFinishedRun, selectedFormat)}
+                                name={downloadNameFactory(latestFinishedRun, selectedFormat)}
                                 isLatest={!runnable.isRunning()}
                                 id={latestFinishedRun.getRunId()}/>
 
@@ -51,6 +56,7 @@ export default class ResultDownloader extends Component {
               runnable.getFinishedRuns().map((run, index) => (
                 <DropdownDownload key={run.getRunId()}
                                   link={downloadLinkFactory(run, selectedFormat)}
+                                  name={downloadNameFactory(latestFinishedRun, selectedFormat)}
                                   isLatest={!runnable.isRunning() && index === 0}
                                   id={run.getRunId()}/>
               ))
@@ -64,14 +70,16 @@ export default class ResultDownloader extends Component {
 
 export const NoResultsMessage = () => (<span>No results available yet</span>);
 
-export const LatestDownloadButton = ({link, isLatest, id}) => (
-  <a className="btn btn-success" style={{color: 'white'}} href={link} target="_blank" rel="noopener noreferrer">
+export const LatestDownloadButton = ({link, name, isLatest, id}) => (
+  <a className="btn btn-success"
+     style={{color: 'white'}}
+     onClick={ignoreEventAnd(() => DownloadsService.downloadAndSave(link, name))}>
     {isLatest ? 'Download latest results' : `Download #${id}`}
   </a>
 );
 
-export const DropdownDownload = ({link, isLatest, id}) => (
-  <Dropdown.Item href={link} target="_blank">
+export const DropdownDownload = ({link, name, isLatest, id}) => (
+  <Dropdown.Item onClick={ignoreEventAnd(() => DownloadsService.download(link, name))}>
     #{id} {isLatest ? '- Latest ' : ''}
   </Dropdown.Item>
 );
