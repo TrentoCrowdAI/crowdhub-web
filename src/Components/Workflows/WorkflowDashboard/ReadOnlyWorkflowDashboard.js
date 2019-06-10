@@ -4,6 +4,8 @@ import WorkflowEditorContainer from "./WorkflowEditor/WorkflowEditorContainer";
 import RunnableWorkflowService from "../../../Services/RunnableWorkflowService/RunnableWorkflowService";
 import {redirectToProjectsList} from "../../Projects/utils/route";
 import {makeCancellable} from "../../../Services/rest/utils";
+import PublicWorkflowsService from "../../../Services/rest/PublicWorkflowsService";
+import Runs from "../../../Services/RunnableWorkflowService/models/Runs";
 
 export default class ReadOnlyWorkflowDashboard extends Component {
 
@@ -13,11 +15,25 @@ export default class ReadOnlyWorkflowDashboard extends Component {
     runnableWorkflow: null
   };
 
+  constructor (props) {
+    super(props);
+    this.initializeRunnableWorkflowService();
+  }
+
+  initializeRunnableWorkflowService () {
+    RunnableWorkflowService.WorkflowsService = PublicWorkflowsService;
+    // currently we don't support the view of runs when the workflow is viewed in public mode
+    RunnableWorkflowService.RunsService = {
+      getRunsOfWorkflow: () => new Runs([])
+    };
+  }
+
   componentDidMount = async () => {
     try {
       const runnableWorkflow = await this.fetchRunnableWorkflow();
       RunnableWorkflowService.startWatchingRunsStatus(runnableWorkflow);
     } catch (e) {
+      console.error(e);
       redirectToProjectsList(this);
     }
   };

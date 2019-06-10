@@ -66,3 +66,8 @@ div.editor-right-sidebar {
 div.right-sidebar-parameter {
     margin-bottom: .25em;
 }
+
+div.read-only {
+    height: 100vh;
+    padding-top: 1.5em;
+}

@@ -55,6 +55,8 @@ const AppRouter = () => (
     {/* private or public routes */}
     <Route path={PUBLIC_WORKFLOWS_PATH} component={PublicWorkflows}/>
 
+    <Route path="/semplice" component={() => <p>ok</p>}/>
+
     {/* default */}
     <Route render={() => (<Redirect to={PROJECTS_PATH}/>)}/>
   </Switch>

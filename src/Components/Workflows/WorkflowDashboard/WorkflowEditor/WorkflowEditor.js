@@ -75,7 +75,8 @@ export default class WorkflowEditor extends Component {
     const initialGraph = workflow.graph;
 
     return (
-      <Container className="full-width workflow-editor-container" id="workflow-editor">
+      <Container className={this.getStyleClasses()}
+                 id="workflow-editor">
         <Row className="full-height">
 
           {/* Left sidebar */}
@@ -132,5 +133,13 @@ export default class WorkflowEditor extends Component {
         </Row>
       </Container>
     );
+  }
+
+  getStyleClasses(){
+    const classes = ['full-width', 'workflow-editor-container'];
+    if (this.isReadOnly()) {
+      classes.push('read-only');
+    }
+    return classes.join(' ');
   }
 }

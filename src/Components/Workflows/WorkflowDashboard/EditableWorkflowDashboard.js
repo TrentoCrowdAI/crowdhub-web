@@ -3,6 +3,8 @@ import React from 'react';
 import WorkflowsService from "../../../Services/rest/WorkflowsService";
 import WorkflowEditorContainer from "./WorkflowEditor/WorkflowEditorContainer";
 import ReadOnlyWorkflowDashboard from "./ReadOnlyWorkflowDashboard";
+import RunnableWorkflowService from "../../../Services/RunnableWorkflowService/RunnableWorkflowService";
+import RunsService from "../../../Services/rest/RunsService";
 
 /**
  * This component shows the WorkflowEditor and loads/save the workflow
@@ -13,6 +15,12 @@ export default class EditableWorkflowDashboard extends ReadOnlyWorkflowDashboard
     super(props);
     this.state.isSaving = false;
     this.state.saveError = false;
+    this.initializeRunnableWorkflowService();
+  }
+
+  initializeRunnableWorkflowService () {
+    RunnableWorkflowService.WorkflowsService = WorkflowsService;
+    RunnableWorkflowService.RunsService = RunsService;
   }
 
   onSave = async () => {

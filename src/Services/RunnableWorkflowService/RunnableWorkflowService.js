@@ -6,12 +6,15 @@ const DEFAULT_POLL_INTERVAL = 5000;
 
 export default {
 
+  WorkflowsService,
+  RunsService,
+
   pollInterval: null,
 
   async getRunnableWorkflow(workflowId) {
     const [workflow, runs] = await Promise.all([
-      WorkflowsService.getWorkflow(workflowId),
-      RunsService.getRunsOfWorkflow(workflowId)
+      this.WorkflowsService.getWorkflow(workflowId),
+      this.RunsService.getRunsOfWorkflow(workflowId)
     ]);
     return new RunnableWorkflow(workflow, runs);
   },
@@ -23,7 +26,7 @@ export default {
     }
     const workflowId = runnableWorkflow.getWorkflow().id;
     this.pollInterval = setInterval(async () => {
-      const runs = await RunsService.getRunsOfWorkflow(workflowId);
+      const runs = await this.RunsService.getRunsOfWorkflow(workflowId);
       runnableWorkflow.setRuns(runs);
     }, pollInterval);
   },

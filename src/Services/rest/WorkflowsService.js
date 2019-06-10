@@ -8,7 +8,7 @@ export const Errors = {
   INVALID_WORKFLOW_DATA: 'invalid_workflow_data'
 };
 
-const JSONtoWorkflow = ({id, id_project, data}) => ({
+export const JSONtoWorkflow = ({id, id_project, data}) => ({
   id,
   projectId: parseInt(id_project),
   ...data
