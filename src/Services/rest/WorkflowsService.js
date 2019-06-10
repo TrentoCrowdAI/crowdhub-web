@@ -66,13 +66,12 @@ export default {
   async saveAndStartWorkflow (workflow) {
     console.log("[WorkflowsSerivice] saveAndStartWorkflow()");
     await this.updateWorkflow(workflow);
-    await this.startWorkflow(workflow);
+    return await this.startWorkflow(workflow);
   },
 
   async startWorkflow(workflow) {
     console.log("[WorkflowsSerivice] startWorkflow()");
-    const startedRunId = await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
-    return startedRunId;
+    return await postJSON(`${WORKFLOWS_URL}/${workflow.id}/start`);
   },
 
   async estimateDoBlockCost (workflowId, blockId) {
