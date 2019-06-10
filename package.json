@@ -25,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api-dev.herokuapp.com\" REACT_WEBAPP_URL=\"https://trentocrowdai.github.io/servant-web\" npm run build",
+    "predeploy": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api-dev.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/servant-web\" npm run build",
     "deploy": "gh-pages -d build"
   },
   "proxy": "http://localhost:3000",
