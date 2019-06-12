@@ -1,3 +1,6 @@
+> This is the repository of the servant frontend.
+> [Link to the backend](https://github.com/TrentoCrowdAI/servant-api/)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 The webapp is hosted on [Github pages](https://trentocrowdai.github.io/servant-web).
