@@ -36,6 +36,8 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
-### `npm run deploy`
+### `npm run deployDev` and `npm run deployProd`
 
-Builds the app for production and the publish it on Github Pages.
+Builds the app and then publishes it on Github Pages. The difference between the two commands is that `deployDev` builds
+the app that will consume the APIs from the development server, while `deployProd` build the app that will use the production
+server.

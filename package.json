@@ -25,8 +25,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api-dev.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/servant-web\" npm run build",
-    "deploy": "gh-pages -d build"
+    "predeployDev": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api-dev.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/servant-web\" npm run build",
+    "predeployProd": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/servant-web\"  npm run build",
+    "deployDev": "gh-pages -d build",
+    "deployProd": "gh-pages -d build"
   },
   "proxy": "http://localhost:3000",
   "eslintConfig": {
