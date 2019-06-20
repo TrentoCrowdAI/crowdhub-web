@@ -1,5 +1,5 @@
 {
-  "name": "servant-web",
+  "name": "crowdhub-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -25,8 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeployDev": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api-dev.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/servant-web\" npm run build",
-    "predeployProd": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/servant-web\"  npm run build",
+    "predeployDev": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api-dev.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/crowdhub-web\" npm run build",
+    "predeployProd": "REACT_APP_SERVER_URL=\"https://crowdai-servant-api.herokuapp.com\" REACT_APP_WEBAPP_URL=\"https://trentocrowdai.github.io/crowdhub-web\"  npm run build",
     "deployDev": "gh-pages -d build",
     "deployProd": "gh-pages -d build"
   },
@@ -45,5 +45,5 @@
     "gh-pages": "^2.0.1",
     "react-test-renderer": "^16.8.6"
   },
-  "homepage": "https://trentocrowdai.github.io/servant-web"
+  "homepage": "https://trentocrowdai.github.io/crowdhub-web"
 }

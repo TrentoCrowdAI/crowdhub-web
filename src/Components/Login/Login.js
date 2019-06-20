@@ -32,7 +32,7 @@ export default class Login extends Component {
     return (
       <Container>
         <Jumbotron style={{marginTop: '3em', textAlign: 'center'}}>
-          <h1>Welcome to Servant</h1>
+          <h1>Welcome to Crowdhub</h1>
           <p>
             Please login with your Google account to continue
           </p>
