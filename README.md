@@ -1,12 +1,12 @@
-> This is the repository of the servant frontend.
-> [Link to the backend](https://github.com/TrentoCrowdAI/servant-api/)
+> This is the repository of the crowdhub frontend.
+> [Link to the backend](https://github.com/TrentoCrowdAI/crowdhub-api)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The webapp is hosted on [Github pages](https://trentocrowdai.github.io/servant-web).
+The webapp is hosted on [Github pages](https://trentocrowdai.github.io/crowdhub-web).
 
 ## Documentation
-You can find the developer and user documentation on the [wiki of this repository](https://github.com/TrentoCrowdAI/servant-web/wiki).
+You can find the developer and user documentation on the [wiki of this repository](https://github.com/TrentoCrowdAI/crowdhub-web/wiki).
 
 ## Available Scripts
 
