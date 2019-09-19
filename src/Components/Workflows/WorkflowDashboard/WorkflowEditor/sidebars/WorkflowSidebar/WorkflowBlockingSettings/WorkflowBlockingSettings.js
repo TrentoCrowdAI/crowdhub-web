@@ -5,7 +5,7 @@ import {ParameterContainerCard} from "../../../ParametersEngine/ParametersEngine
 import WorkflowBlockingCheckbox from "./WorkflowBlockingCheckbox";
 
 const WorkflowBlockingSettings = ({graphModel, onModelUpdate, disabled}) => (
-  <ParameterContainerCard title="Blocking workers">
+  <ParameterContainerCard title="Experimental groups">
     <WorkflowBlockingCheckbox graphModel={graphModel}
                               onModelUpdate={onModelUpdate}
                               disabled={disabled}/>

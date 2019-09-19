@@ -62,7 +62,7 @@ export default class CreateBlockingContext extends Component {
           target={this.togglePopoverButton.current}
           container={document.getElementById('workflow-editor')}>
 
-          <Popover title="Create blocking context"
+          <Popover title="Create experimental group"
                    id="create-blocking-context-popover"
                    placement="left">
             <div ref={this.popoverContent}>
@@ -109,7 +109,7 @@ class CreateBlockingContextPopover extends Component {
           <Form.Group>
             <Form.Control name="name"
                           type="text"
-                          placeholder="Blocking context name"
+                          placeholder="Experimental group name"
                           value={name}
                           onChange={this.onNameChange}/>
           </Form.Group>
