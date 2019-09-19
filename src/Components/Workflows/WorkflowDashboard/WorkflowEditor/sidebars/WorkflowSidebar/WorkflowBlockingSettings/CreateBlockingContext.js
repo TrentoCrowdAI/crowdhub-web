@@ -54,7 +54,7 @@ export default class CreateBlockingContext extends Component {
       <div>
         <Button className="btn-block"
                 onClick={this.showPopover}
-                ref={this.togglePopoverButton}>Add blocking context</Button>
+                ref={this.togglePopoverButton}>Add experimental group</Button>
         <Overlay
           id="create-blocking-context-popover-container"
           show={this.state.show}
