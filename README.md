@@ -1,9 +1,12 @@
+> This is the repository of the crowdhub frontend.
+> [Link to the backend](https://github.com/TrentoCrowdAI/crowdhub-api)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The webapp is hosted on [Github pages](https://trentocrowdai.github.io/servant-web).
+The webapp is hosted on [Github pages](https://trentocrowdai.github.io/crowdhub-web).
 
 ## Documentation
-You can find the developer and user documentation on the [wiki of this repository](https://github.com/TrentoCrowdAI/servant-web/wiki).
+You can find the developer and user documentation on the [wiki of this repository](https://github.com/TrentoCrowdAI/crowdhub-web/wiki).
 
 ## Available Scripts
 
@@ -33,6 +36,8 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
-### `npm run deploy`
+### `npm run deployDev` and `npm run deployProd`
 
-Builds the app for production and the publish it on Github Pages.
+Builds the app and then publishes it on Github Pages. The difference between the two commands is that `deployDev` builds
+the app that will consume the APIs from the development server, while `deployProd` build the app that will use the production
+server.

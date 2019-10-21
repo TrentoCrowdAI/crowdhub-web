@@ -28,12 +28,11 @@ export default class WorkflowBlockingCheckbox extends Component {
       <div>
         <Form.Group>
           <Form.Text className="text-muted">
-            If checked, one worker will be able to work only on one job of this workflow. When indeterminate, workers
-            won't be able to work on job of the same blocking context
+          If checked, workers will be able to work only on one experimental group of this workflow.
           </Form.Text>
           <Form.Check ref={this.checkboxRef}
                       type="checkbox"
-                      label="Block workers"
+                      label="Should workers participate in more than one experimental group?"
                       checked={blockingContextsModel.areSomeBlockingContextsEnabled()}
                       onChange={this.onChange}
                       disabled={this.props.disabled}/>

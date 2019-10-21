@@ -21,7 +21,7 @@ export default class BlockingContextsCRUD extends Component {
     return (
       <div>
         <Form.Text className="text-muted">
-          <strong>Blocking contexts</strong>
+          <strong>Experimental groups</strong>
         </Form.Text>
 
         <BlockingContextsTable model={model}
@@ -57,7 +57,7 @@ class BlockingContextsTable extends Component {
 
   renderNoBlockingContextsYet = () => (
     <Form.Text className="text-muted">
-      No blocking contexts created yet in this workflow
+      No experimental groups created yet in this workflow.
     </Form.Text>
   );
 

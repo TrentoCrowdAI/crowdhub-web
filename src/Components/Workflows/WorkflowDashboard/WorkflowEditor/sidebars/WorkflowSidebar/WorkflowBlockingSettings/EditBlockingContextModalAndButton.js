@@ -83,7 +83,7 @@ class EditBlockingContextModal extends Component {
     return (
       <Modal show={this.props.show} size="xl">
         <Modal.Header>
-          Blocking context editor
+          Experimental group editor
         </Modal.Header>
 
         <Modal.Body>
@@ -92,7 +92,7 @@ class EditBlockingContextModal extends Component {
               <Form.Group>
                 <Form.Control name="name"
                               type="text"
-                              placeholder="Blocking context name"
+                              placeholder="Experimental group name"
                               value={name}
                               onChange={this.onNameChange}/>
               </Form.Group>
