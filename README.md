@@ -1,7 +1,19 @@
-> This is the repository of the crowdhub frontend.
-> [Link to the backend](https://github.com/TrentoCrowdAI/crowdhub-api)
+# CrowdHub
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CrowdHub sits on top of major crowdsourcing platforms to intelligently assists customers in performing crowdsourcing tasks.
+
+Paper: [CrowdHub: Extending crowdsourcing platforms for the controlled evaluation of tasks designs](https://arxiv.org/abs/1909.02800).
+
+[![Watch the video](./public/video-preview.png)](https://drive.google.com/file/d/1sNbreDkoVYnbrRFJ4A4kWAHajJiUMP9l/view)
+
+
+# crowdhub-web
+
+This repository contains the client-side code of CrowdHub.
+
+[Link to the backend](https://github.com/TrentoCrowdAI/crowdhub-api)
+
+This project was bootstrapped using [Create React App](https://github.com/facebook/create-react-app).
 
 The webapp is hosted on [Github pages](https://trentocrowdai.github.io/crowdhub-web).
 

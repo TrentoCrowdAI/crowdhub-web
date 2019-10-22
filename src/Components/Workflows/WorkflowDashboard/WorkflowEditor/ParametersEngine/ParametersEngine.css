@@ -1,9 +1,10 @@
 div.parameter-container-line-separator {
-    border-bottom: 1px solid;
-    border-bottom-color: var(--separatorColor);
-    margin-bottom: .5em;
+  border-bottom: 1px solid;
+  border-bottom-color: var(--separatorColor);
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
 }
 
 div.parameter-container-line-separator:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }

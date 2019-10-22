@@ -1,8 +1,7 @@
-import React, {Component} from "react";
-import {Form} from "react-bootstrap";
+import React, { Component } from 'react';
+import { Form } from 'react-bootstrap';
 
 export default class WorkflowBlockingCheckbox extends Component {
-
   checkboxRef = React.createRef();
 
   componentDidMount() {
@@ -11,8 +10,11 @@ export default class WorkflowBlockingCheckbox extends Component {
 
   onChange = () => {
     const blockingContextsModel = this.getBlockingContextsModel();
-    if (this.isIndeterminate() || !blockingContextsModel.areSomeBlockingContextsEnabled()) {
-      blockingContextsModel.mutateToSingleBlockingContextForAllDoBlocks()
+    if (
+      this.isIndeterminate() ||
+      !blockingContextsModel.areSomeBlockingContextsEnabled()
+    ) {
+      blockingContextsModel.mutateToSingleBlockingContextForAllDoBlocks();
     } else {
       blockingContextsModel.removeAllBlockingContexts();
     }
@@ -28,14 +30,17 @@ export default class WorkflowBlockingCheckbox extends Component {
       <div>
         <Form.Group>
           <Form.Text className="text-muted">
-          If checked, workers will be able to work only on one experimental group of this workflow.
+            If checked, workers will be able to work only on one experimental
+            group of this workflow.
           </Form.Text>
-          <Form.Check ref={this.checkboxRef}
-                      type="checkbox"
-                      label="Should workers participate in more than one experimental group?"
-                      checked={blockingContextsModel.areSomeBlockingContextsEnabled()}
-                      onChange={this.onChange}
-                      disabled={this.props.disabled}/>
+          <Form.Check
+            ref={this.checkboxRef}
+            type="checkbox"
+            label="Should workers participate in only one experimental group?"
+            checked={blockingContextsModel.areSomeBlockingContextsEnabled()}
+            onChange={this.onChange}
+            disabled={this.props.disabled}
+          />
         </Form.Group>
       </div>
     );
@@ -50,7 +55,9 @@ export default class WorkflowBlockingCheckbox extends Component {
 
   isIndeterminate() {
     const blockingContextsModel = this.getBlockingContextsModel();
-    return blockingContextsModel.areSomeBlockingContextsEnabled() &&
-      !blockingContextsModel.isSingleBlockingContextEnabledForAllDoBlocks();
+    return (
+      blockingContextsModel.areSomeBlockingContextsEnabled() &&
+      !blockingContextsModel.isSingleBlockingContextEnabledForAllDoBlocks()
+    );
   }
 }
