@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "14f22fbed8146dbf3b497bb32d8491b0",
-    "url": "/crowdhub-web/static/media/fa-regular-400.14f22fbe.woff"
+    "revision": "9230982faf6ed4d1dab07babfb813777",
+    "url": "/crowdhub-web/static/media/fa-regular-400.9230982f.ttf"
   },
   {
-    "revision": "b98ab0d5e314a2aaefd2",
-    "url": "/crowdhub-web/static/css/main.98ff09fc.chunk.css"
+    "revision": "f7490770b4950efb43c9",
+    "url": "/crowdhub-web/static/css/main.aac55081.chunk.css"
   },
   {
     "revision": "8a4537b461898e6d1cef",
@@ -24,12 +24,12 @@ self.__precacheManifest = [
     "url": "/crowdhub-web/static/media/menu.7d88ba55.svg"
   },
   {
-    "revision": "85b063debeb5d5f079776ac1a9c924cb",
-    "url": "/crowdhub-web/static/media/fa-brands-400.85b063de.woff"
-  },
-  {
     "revision": "0425d661f34ffa46604c9dfa344c03bb",
     "url": "/crowdhub-web/static/media/fa-brands-400.0425d661.woff2"
+  },
+  {
+    "revision": "b6579220162705be426ad4db0dc43f6b",
+    "url": "/crowdhub-web/static/media/fa-regular-400.b6579220.eot"
   },
   {
     "revision": "451b51d8700fb035bcaaa9e8710b384a",
@@ -40,24 +40,20 @@ self.__precacheManifest = [
     "url": "/crowdhub-web/static/media/fa-brands-400.189c0326.ttf"
   },
   {
-    "revision": "b6579220162705be426ad4db0dc43f6b",
-    "url": "/crowdhub-web/static/media/fa-regular-400.b6579220.eot"
+    "revision": "85b063debeb5d5f079776ac1a9c924cb",
+    "url": "/crowdhub-web/static/media/fa-brands-400.85b063de.woff"
   },
   {
-    "revision": "b98ab0d5e314a2aaefd2",
-    "url": "/crowdhub-web/static/js/main.c347e4f1.chunk.js"
+    "revision": "f7490770b4950efb43c9",
+    "url": "/crowdhub-web/static/js/main.ce546305.chunk.js"
+  },
+  {
+    "revision": "14f22fbed8146dbf3b497bb32d8491b0",
+    "url": "/crowdhub-web/static/media/fa-regular-400.14f22fbe.woff"
   },
   {
     "revision": "772a0f14c850c8b0dfe283a95857583e",
     "url": "/crowdhub-web/static/media/fa-regular-400.772a0f14.woff2"
-  },
-  {
-    "revision": "9230982faf6ed4d1dab07babfb813777",
-    "url": "/crowdhub-web/static/media/fa-regular-400.9230982f.ttf"
-  },
-  {
-    "revision": "3a19eb0134e93ea0caa5826f5fb7b642",
-    "url": "/crowdhub-web/static/media/fa-brands-400.3a19eb01.svg"
   },
   {
     "revision": "8cd2768111e3091948920a3ad11f96c6",
@@ -68,23 +64,27 @@ self.__precacheManifest = [
     "url": "/crowdhub-web/static/media/fa-solid-900.1898ebd2.eot"
   },
   {
-    "revision": "db525089f5101b59a66184d109e6f917",
-    "url": "/crowdhub-web/static/media/fa-solid-900.db525089.woff"
+    "revision": "b1161bce5381a5fa7aacc073e1a01dd3",
+    "url": "/crowdhub-web/static/media/fa-solid-900.b1161bce.ttf"
+  },
+  {
+    "revision": "3a19eb0134e93ea0caa5826f5fb7b642",
+    "url": "/crowdhub-web/static/media/fa-brands-400.3a19eb01.svg"
   },
   {
     "revision": "4cc04a31c42f2f9d951547bbce75960b",
     "url": "/crowdhub-web/static/media/fa-solid-900.4cc04a31.woff2"
   },
   {
-    "revision": "b1161bce5381a5fa7aacc073e1a01dd3",
-    "url": "/crowdhub-web/static/media/fa-solid-900.b1161bce.ttf"
+    "revision": "db525089f5101b59a66184d109e6f917",
+    "url": "/crowdhub-web/static/media/fa-solid-900.db525089.woff"
   },
   {
     "revision": "544e6025f578d309e219",
     "url": "/crowdhub-web/static/css/2.f24e5707.chunk.css"
   },
   {
-    "revision": "8e3e7df8dd35f6ddd68338fe0eb6b68a",
+    "revision": "51041c753816397c89fee2a5123064cd",
     "url": "/crowdhub-web/index.html"
   }
 ];

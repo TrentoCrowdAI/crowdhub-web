@@ -1,17 +1,17 @@
 {
-  "main.css": "/crowdhub-web/static/css/main.98ff09fc.chunk.css",
-  "main.js": "/crowdhub-web/static/js/main.c347e4f1.chunk.js",
-  "main.js.map": "/crowdhub-web/static/js/main.c347e4f1.chunk.js.map",
+  "main.css": "/crowdhub-web/static/css/main.aac55081.chunk.css",
+  "main.js": "/crowdhub-web/static/js/main.ce546305.chunk.js",
+  "main.js.map": "/crowdhub-web/static/js/main.ce546305.chunk.js.map",
   "runtime~main.js": "/crowdhub-web/static/js/runtime~main.1e88c36a.js",
   "runtime~main.js.map": "/crowdhub-web/static/js/runtime~main.1e88c36a.js.map",
   "static/css/2.f24e5707.chunk.css": "/crowdhub-web/static/css/2.f24e5707.chunk.css",
   "static/js/2.eab8cd4a.chunk.js": "/crowdhub-web/static/js/2.eab8cd4a.chunk.js",
   "static/js/2.eab8cd4a.chunk.js.map": "/crowdhub-web/static/js/2.eab8cd4a.chunk.js.map",
   "index.html": "/crowdhub-web/index.html",
-  "precache-manifest.d7d6b76538e2371b0ac890f00ab77fee.js": "/crowdhub-web/precache-manifest.d7d6b76538e2371b0ac890f00ab77fee.js",
+  "precache-manifest.6fc79ff36f2ddd5800cd9ebd16170faf.js": "/crowdhub-web/precache-manifest.6fc79ff36f2ddd5800cd9ebd16170faf.js",
   "service-worker.js": "/crowdhub-web/service-worker.js",
   "static/css/2.f24e5707.chunk.css.map": "/crowdhub-web/static/css/2.f24e5707.chunk.css.map",
-  "static/css/main.98ff09fc.chunk.css.map": "/crowdhub-web/static/css/main.98ff09fc.chunk.css.map",
+  "static/css/main.aac55081.chunk.css.map": "/crowdhub-web/static/css/main.aac55081.chunk.css.map",
   "static/media/all.min.css": "/crowdhub-web/static/media/fa-solid-900.db525089.woff",
   "static/media/menu.svg": "/crowdhub-web/static/media/menu.7d88ba55.svg"
 }
