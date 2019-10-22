@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/crowdhub-web/precache-manifest.46ecb88f78ae2511913fe89424ba4df7.js"
+  "/crowdhub-web/precache-manifest.d7d6b76538e2371b0ac890f00ab77fee.js"
 );
 
 workbox.clientsClaim();
