@@ -1,6 +1,6 @@
 # CrowdHub
 
-CrowdHub sits on top of major crowdsourcing platforms to intelligently assists customers in performing crowdsourcing tasks.
+CrowdHub sits on top of major crowdsourcing platforms to intelligently assist customers in performing crowdsourcing tasks.
 
 Paper: [CrowdHub: Extending crowdsourcing platforms for the controlled evaluation of tasks designs](https://arxiv.org/abs/1909.02800).
 
