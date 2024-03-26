@@ -16,7 +16,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
     "storm-react-diagrams": "^5.2.1",
-    "tinymce": "^5.0.3",
+    "tinymce": "^7.0.0",
     "uuid": "^3.3.2",
     "yup": "^0.27.0"
   },
