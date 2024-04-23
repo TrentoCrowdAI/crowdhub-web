@@ -42,7 +42,7 @@
   ],
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "^5.0.0",
     "react-test-renderer": "^16.8.6"
   },
   "homepage": "https://trentocrowdai.github.io/crowdhub-web"
